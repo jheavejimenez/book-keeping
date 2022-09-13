@@ -1,14 +1,11 @@
-import Input from "./components/Input/Input";
-import Button from "./components/Button/Button";
-import Login from "./components/Login/Login";
-
+import Dashboard from "./pages/Admin/Dashboard";
 
 function App() {
-  return (
-    <div className="App">
-      <Login />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Dashboard/>
+        </div>
+    );
 }
 
 export default App;
