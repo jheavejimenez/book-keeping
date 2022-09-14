@@ -7,6 +7,7 @@ function Signup() {
     const [loading, setLoading] = useState(false)
 
     const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
     const [employeeName, setEmployeeName] = useState('')
     const [companyName, setCompanyName] = useState('')
@@ -15,7 +16,7 @@ function Signup() {
         e.preventDefault();
         try {
             setLoading(true)
-            const {error} = await supabase.auth.signInWithOtp({email},
+            await supabase.auth.signUp({email, password},
                 {
                     data: {
                         username: username,
@@ -25,8 +26,6 @@ function Signup() {
                     }
                 }
             )
-            if (error) throw error
-            alert('Check your email for the login link!')
         } catch (error) {
             alert(error.error_description || error.message)
         } finally {
@@ -56,6 +55,14 @@ function Signup() {
                                             placeHolder={"Username"}
                                             value={username}
                                             onChange={(e) => setUsername(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className={"mt-4"}>
+                                        <Input
+                                            type={"password"}
+                                            placeHolder={"Password"}
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
                                         />
                                     </div>
                                     <div className={"mt-4"}>
