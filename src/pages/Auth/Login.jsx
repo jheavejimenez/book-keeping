@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import { supabase } from "../../utils/supabaseClient";
 
 function Login() {
     return (
