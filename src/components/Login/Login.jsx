@@ -17,7 +17,7 @@ function Login() {
                                 <Input type={"password"} placeHolder={"Password"}/>
                             </div>
                             <div className={"flex flex-col place-items-center"}>
-                                <Button text={"Login"}/>
+                                <Button text={"Login"} path={"/dashboard"}/>
                                 <a href="#" className={"text-sm text-blue-600 hover:underline mt-5"}>Forgot
                                     password?</a>
                                 <a href={"/Signup"} className={"text-sm text-blue-600 hover:underline mt-5"}>Sign Up</a>
