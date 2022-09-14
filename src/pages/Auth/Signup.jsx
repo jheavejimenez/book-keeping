@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../Button/Button";
-import Input from "../Input/Input";
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
 
 function Signup() {
     return (
@@ -8,7 +8,7 @@ function Signup() {
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className={"px-8 py-6 mt-4 text-left bg-white shadow-lg w-96"}>
                     <h3 className={"text-2xl font-bold text-center"}>Signup</h3>
-                    <form action="">
+                    <form action="src/pages/Auth/Signup">
                         <div className={"mt-4"}>
                             <div>
                                 <Input placeHolder={"Username"} type={"text"}/>
