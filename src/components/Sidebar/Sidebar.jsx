@@ -6,7 +6,7 @@ function Sidebar () {
         <>
             {/* Dashboard */}
             <div
-                className={"fixed flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-blue-900 dark:bg-gray-900 " + 
+                className={"fixed flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-cyan-500 dark:bg-cyan-500 " + 
                 "h-full text-white transition-all duration-300 border-none z-10 sidebar"}
             >
                 <div className={"overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow"}>
@@ -181,7 +181,7 @@ function Sidebar () {
                                 </a>
                             </li>
                         </ul>
-                        <p className="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2021</p>
+                        <p className="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2022</p>
                     </div>
                 </div>
         </>

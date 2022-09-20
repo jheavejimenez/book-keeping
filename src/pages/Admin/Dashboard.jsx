@@ -8,17 +8,17 @@ function Dashboard() {
     return (
         <>
             <div
-                className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white"}>
+                className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-100 text-black dark:text-white"}>
 
                 {/*header*/}
-                <div className={"fixed w-full flex items-center justify-between h-14 text-white z-10"}>
+                <div className={"fixed w-full flex items-center justify-between h-14 text-white bg-gray-100 z-10"}>
                     <div
-                        className={"flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 border-none"}>
+                        className={"flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-gray-100 text-black border-none"}>
                         <img className={"w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden"}
                             src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" alt="" />
                         <span className="hidden md:block">ADMIN</span>
                     </div>
-                    <div className={"flex justify-between items-center h-14 bg-blue-800 dark:bg-gray-800 header-right"}>
+                    <div className={"flex justify-between items-center h-14 bg-gray-100 text-black header-right"}>
                         <div
                             className={"bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200"}>
                             <button className={"outline-none focus:outline-none"}>
@@ -53,14 +53,14 @@ function Dashboard() {
                 {/*sidebar*/}
                 <Sidebar />
                 {/*end of sidebar*/}
-                <div className={"flex justify-between items-center h-14 bg-blue-800 dark:bg-gray-800 header-right"}>
+                <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                     
                 </div>
                 <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                     {/*statistics cards*/}
                     <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4"}>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-800 shadow-lg rounded-md" +
+                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md" +
                                 " flex items-center justify-between p-3 border-b-4 border-blue-600 " +
                                 "dark:border-gray-600 text-white font-medium group"
                             }
@@ -82,7 +82,7 @@ function Dashboard() {
                             </div>
                         </div>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-800 shadow-lg rounded-md" +
+                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md" +
                                 " flex items-center justify-between p-3 border-b-4 border-blue-600" +
                                 " dark:border-gray-600 text-white font-medium group"
                             }>
@@ -103,7 +103,7 @@ function Dashboard() {
                             </div>
                         </div>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-800 shadow-lg rounded-md " +
+                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md " +
                                 "flex items-center justify-between p-3 border-b-4 border-blue-600 " +
                                 "dark:border-gray-600 text-white font-medium group"
                             }>
@@ -121,7 +121,7 @@ function Dashboard() {
                             </div>
                         </div>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-800 shadow-lg rounded-md " +
+                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md " +
                                 "flex items-center justify-between p-3 border-b-4 " +
                                 "border-blue-600 dark:border-gray-600 text-white font-medium group"
                             }>
