@@ -8,15 +8,15 @@ function ClientTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={"text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"}>
-                                <th className={"px-4 py-3"}>Client</th>
-                                <th className={"px-4 py-3"}>Amount</th>
-                                <th className={"px-4 py-3"}>Status</th>
-                                <th className={"px-4 py-3"}>Date</th>
+                            <tr className={"text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
+                                <th className={"px-4 py-3 text-black"}>Client</th>
+                                <th className={"px-4 py-3 text-black"}>Amount</th>
+                                <th className={"px-4 py-3 text-black"}>Status</th>
+                                <th className={"px-4 py-3 text-black"}>Date</th>
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"}>
-                            <tr className={"bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -28,7 +28,7 @@ function ClientTable() {
                                         </div>
                                         <div>
                                             <p className={"font-semibold"}>Hans Burger</p>
-                                            <p className={"text-xs text-gray-600 dark:text-gray-400"}>10x
+                                            <p className={"text-xs text-black dark:text-black"}>10x
                                                 Developer</p>
                                         </div>
                                     </div>
@@ -40,7 +40,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>15-01-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -52,7 +52,7 @@ function ClientTable() {
                                         </div>
                                         <div>
                                             <p className={"font-semibold"}>Jolina Angelie</p>
-                                            <p className={"text-xs text-gray-600 dark:text-gray-400"}>Unemployed</p>
+                                            <p className={"text-xs text-black dark:text-black"}>Unemployed</p>
                                         </div>
                                     </div>
                                 </td>
@@ -63,7 +63,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>23-03-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className="px-4 py-3">
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -75,7 +75,7 @@ function ClientTable() {
                                         </div>
                                         <div>
                                             <p className={"font-semibold"}>Dave Li</p>
-                                            <p className={"text-xs text-gray-600 dark:text-gray-400"}>Influencer</p>
+                                            <p className={"text-xs text-black dark:text-black"}>Influencer</p>
                                         </div>
                                     </div>
                                 </td>
@@ -86,7 +86,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>09-02-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -98,7 +98,7 @@ function ClientTable() {
                                         </div>
                                         <div>
                                             <p className={"font-semibold"}>Rulia Joberts</p>
-                                            <p className={"text-xs text-gray-600 dark:text-gray-400"}>Actress</p>
+                                            <p className={"text-xs text-black dark:text-black"}>Actress</p>
                                         </div>
                                     </div>
                                 </td>
@@ -109,7 +109,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>17-04-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -121,7 +121,7 @@ function ClientTable() {
                                         </div>
                                         <div>
                                             <p className={"font-semibold"}>Hitney Wouston</p>
-                                            <p className={"text-xs text-gray-600 dark:text-gray-400"}>Singer</p>
+                                            <p className={"text-xs text-black dark:text-black"}>Singer</p>
                                         </div>
                                     </div>
                                 </td>
@@ -136,7 +136,7 @@ function ClientTable() {
                         </table>
                     </div>
                     <div
-                        className={"grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"}>
+                        className={"grid px-4 py-3 text-xs font-semibold tracking-wide text-black uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-black dark:bg-gray-100"}>
                         <span className={"flex items-center col-span-3"}> Showing 21-30 of 100 </span>
                         <span className={"col-span-2"}></span>
                         <span className={"flex col-span-4 mt-2 sm:mt-auto sm:justify-end"}>
