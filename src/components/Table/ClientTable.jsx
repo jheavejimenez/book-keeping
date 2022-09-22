@@ -10,10 +10,6 @@ function ClientTable() {
                         <table className={"w-full"}>
                             <thead>
                             <tr className={"text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
-                                <th className={"px-4 py-3 text-black"}>Client</th>
-                                <th className={"px-4 py-3 text-black"}>Amount</th>
-                                <th className={"px-4 py-3 text-black"}>Status</th>
-                                <th className={"px-4 py-3 text-black"}>Date</th>
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y"}>
