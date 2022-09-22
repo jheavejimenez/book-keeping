@@ -16,7 +16,7 @@ function ClientTable() {
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"}>
-                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-black"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -40,7 +40,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>15-01-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-black"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -63,7 +63,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>23-03-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-black"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className="px-4 py-3">
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -86,7 +86,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>09-02-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-black"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
@@ -109,7 +109,7 @@ function ClientTable() {
                                 </td>
                                 <td className={"px-4 py-3 text-sm"}>17-04-2021</td>
                             </tr>
-                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-900 text-black dark:text-black"}>
+                            <tr className={"bg-gray-50 dark:bg-gray-100 hover:bg-gray-300 text-black dark:text-black"}>
                                 <td className={"px-4 py-3"}>
                                     <div className={"flex items-center text-sm"}>
                                         <div className={"relative hidden w-8 h-8 mr-3 rounded-full md:block"}>
