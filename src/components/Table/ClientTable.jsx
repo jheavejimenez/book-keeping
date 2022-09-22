@@ -1,7 +1,9 @@
 import React from "react";
+import TableHeading from "./TableHeading";
 import TableRow from "./TableRow";
 
 function ClientTable() {
+    const data = ["client", "amount", "date", "status"];
     return (
         <>
             <div className={"mt-4 mx-4"}>
@@ -9,14 +11,19 @@ function ClientTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={"text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
-                                <th className={"px-4 py-3 text-black"}>Client</th>
-                                <th className={"px-4 py-3 text-black"}>Amount</th>
-                                <th className={"px-4 py-3 text-black"}>Status</th>
-                                <th className={"px-4 py-3 text-black"}>Date</th>
-                            </tr>
+                                <tr className={"text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-300 bg-gray-50"}>
+                                    {
+                                        data.map((item,index)=>(
+                                            <TableHeading 
+                                            key={index}
+                                            text={item}
+                                            />  
+                                        ))
+                                    }
+                                
+                                </tr>
                             </thead>
-                            <tbody className={"bg-white divide-y"}>
+                            <tbody className={"bg-white divide-y divide-gray-100"}>
                                 <TableRow
                                     documentID={"1"}
                                     senderName={"Jheave"}
@@ -28,7 +35,7 @@ function ClientTable() {
                         </table>
                     </div>
                     <div
-                        className={"grid px-4 py-3 text-xs font-semibold tracking-wide text-black uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-black dark:bg-gray-100"}>
+                        className={"grid px-4 py-3 text-xs font-semibold tracking-wide text-black uppercase border-t border-gray-300 bg-gray-50 sm:grid-cols-9"}>
                         <span className={"flex items-center col-span-3"}> Showing 21-30 of 100 </span>
                         <span className={"col-span-2"}></span>
                         <span className={"flex col-span-4 mt-2 sm:mt-auto sm:justify-end"}>
