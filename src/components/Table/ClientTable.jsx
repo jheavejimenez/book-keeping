@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableRow from "./TableRow";
+import axios from "axios";
 
 function ClientTable() {
+    const [data, setData] = useState([]);
+
+
+    useEffect(() => {
+        // const interval = setInterval(() => {
+        // }, 10000)
+        // return () => {
+        //     clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
+        // };
+    },[]);
+
     return (
         <>
             <div className={"mt-4 mx-4"}>
@@ -13,13 +25,7 @@ function ClientTable() {
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y"}>
-                                <TableRow
-                                    documentID={"1"}
-                                    senderName={"Jheave"}
-                                    fileName={"test.jpeg"}
-                                    timeStamp={"september 19 2022"}
-                                    status={"Approve"}
-                                />
+
                             </tbody>
                         </table>
                     </div>
