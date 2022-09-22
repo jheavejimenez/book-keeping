@@ -35,7 +35,7 @@ function Login() {
                     ) : (
                         <>
                             <h3 className={"text-2xl font-bold text-center"}>Login</h3>
-                            <form onSubmit={handleSubmit}>
+                            <form>
                                 <div className={"mt-4"}>
                                     <div>
                                         <Input
@@ -46,7 +46,7 @@ function Login() {
                                         />
                                     </div>
                                     <div className={"flex flex-col place-items-center"}>
-                                        <Button text={"Login"}/>
+                                        <Button path={"/dashboard"} text={"Login"}/>
                                         <a href="src/pages/Auth/Login#"
                                            className={"text-sm text-blue-600 hover:underline mt-5"}>Forgot
                                             password?</a>
