@@ -3,7 +3,7 @@ import Input from "../../components/Input/Input";
 import {supabase} from "../../utils/supabaseClient";
 import Button from "../../components/Button/Button";
 
-function Signup() {
+function Signup(credentials) {
     const [loading, setLoading] = useState(false)
 
     const [username, setUsername] = useState('')
@@ -16,7 +16,7 @@ function Signup() {
         e.preventDefault();
         try {
             setLoading(true)
-            await supabase.auth.signUp({email, password},
+             await supabase.auth.signUp({email, password},
                 {
                     data: {
                         username: username,
@@ -90,7 +90,7 @@ function Signup() {
                                         />
                                     </div>
                                     <div className={"flex flex-col place-items-center mt-5"}>
-                                        <Button text={"Sign up with magic link"}/>
+                                        <Button text={"Sign up"}/>
                                         <a href={"/"} className={"text-sm text-blue-600 hover:underline mt-5"}>Already
                                             Have an
                                             Account ? Login</a>
