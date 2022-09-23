@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Input from "../../components/Input/Input";
-import {supabase} from "../../utils/supabaseClient";
+import { supabase } from "../../utils/supabaseClient";
 import Button from "../../components/Button/Button";
 
 function Signup(credentials) {
@@ -16,16 +16,15 @@ function Signup(credentials) {
         e.preventDefault();
         try {
             setLoading(true)
-             await supabase.auth.signUp({email, password},
-                {
-                    data: {
-                        username: username,
-                        email: email,
-                        employee_name: employeeName,
-                        company: companyName,
-                    }
+            await supabase.auth.signUp({ email, password })
+            const user = await prisma.user.create({
+                data: {
+                    username: username,
+                    email: email,
+                    employee_name: employeeName,
+                    company: companyName,
                 }
-            )
+            });
         } catch (error) {
             alert(error.error_description || error.message)
         } finally {
@@ -41,7 +40,7 @@ function Signup(credentials) {
                             <h3 className={"text-2xl font-bold text-center"}>Sending magic link to email</h3>
                             <div className="flex items-center justify-center">
                                 <div
-                                    className="w-12 h-12 border-t-2 border-b-2 border-gray-900 rounded-full animate-spin"/>
+                                    className="w-12 h-12 border-t-2 border-b-2 border-gray-900 rounded-full animate-spin" />
                             </div>
                         </div>
                     ) : (
@@ -90,7 +89,7 @@ function Signup(credentials) {
                                         />
                                     </div>
                                     <div className={"flex flex-col place-items-center mt-5"}>
-                                        <Button text={"Sign up"}/>
+                                        <Button text={"Sign up"} />
                                         <a href={"/"} className={"text-sm text-blue-600 hover:underline mt-5"}>Already
                                             Have an
                                             Account ? Login</a>
