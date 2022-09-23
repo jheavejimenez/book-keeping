@@ -3,9 +3,10 @@ import Input from "../../components/Input/Input";
 import { supabase } from "../../utils/supabaseClient";
 import Button from "../../components/Button/Button";
 
+
 function Signup(credentials) {
     const [loading, setLoading] = useState(false)
-
+    const prisma = new PrismaClient()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
@@ -17,14 +18,6 @@ function Signup(credentials) {
         try {
             setLoading(true)
             await supabase.auth.signUp({ email, password })
-            const user = await prisma.user.create({
-                data: {
-                    username: username,
-                    email: email,
-                    employee_name: employeeName,
-                    company: companyName,
-                }
-            });
         } catch (error) {
             alert(error.error_description || error.message)
         } finally {
