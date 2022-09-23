@@ -5,13 +5,18 @@ import axios from "axios";
 function ClientTable() {
     const [data, setData] = useState([]);
 
-
+    const getData = async () => {
+        const res = await axios.get("http://localhost:3000/data");
+        setData(res.data);
+    }
     useEffect(() => {
-        // const interval = setInterval(() => {
-        // }, 10000)
-        // return () => {
-        //     clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
-        // };
+        getData();
+        const interval = setInterval(() => {
+            getData();
+        }, 10000)
+        return () => {
+            clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
+        };
     },[]);
 
     return (
@@ -25,7 +30,12 @@ function ClientTable() {
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y"}>
+                            {
+                                data.map((item) => (
+                                    <TableRow key={item.id} SenderName={item.sender}/>
+                                ))
 
+                            }
                             </tbody>
                         </table>
                     </div>
