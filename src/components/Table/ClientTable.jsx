@@ -5,14 +5,21 @@ import axios from "axios";
 function ClientTable() {
     const [data, setData] = useState([]);
 
+    const fakeData = async () => {
+        const response = await axios.get("http://localhost:3000/data");
+        setData(response.data);
+    } 
 
     useEffect(() => {
-        // const interval = setInterval(() => {
-        // }, 10000)
-        // return () => {
-        //     clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
-        // };
+        fakeData();
+        const interval = setInterval(() => {
+        fakeData();
+        }, 10000)
+        return () => {
+            clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
+        };
     },[]);
+    
 
     return (
         <>
@@ -25,7 +32,15 @@ function ClientTable() {
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y"}>
-
+                                {data.map((item) => (
+                                    <TableRow
+                                        key={item.id}
+                                        SenderName={item.sender}
+                                        fileName={item.file}
+                                        timeStamp={item.timstamp}
+                                        status={item.status}
+                                    />)
+                                )}
                             </tbody>
                         </table>
                     </div>

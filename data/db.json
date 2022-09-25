@@ -28,5 +28,27 @@
       "timestamp": "2019-01-01 12:00:00",
       "status": "Approved"
     }
+  ],
+  "titleHeader": [
+    {
+      "docID": "DocId",
+      "key": "id"
+    },
+    {
+      "sender": "Sender",
+      "key": "sender"
+    },
+    {
+      "file": "File",
+      "key": "file"
+    },
+    {
+      "timeStamp": "Timestamp",
+      "key": "timestamp"
+    },
+    {
+      "status": "Status",
+      "key": "status"
+    }
   ]
 }
