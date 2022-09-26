@@ -62,7 +62,7 @@ function Dashboard() {
                         <div
                             className={"bg-blue-300 text-black shadow-lg rounded-md" +
                                 " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                                " text-white font-medium group"
+                                " text-white font-medium group h-32"
                             }
                         >
                             <div
@@ -70,11 +70,19 @@ function Dashboard() {
                                     "rounded-full transition-all duration-300 transform group-hover:rotate-12"
                                 }
                             >
-                                <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                    className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 60 60" stroke="currentColor"
+                                    className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>                                
+                                    <g>
+                                        <path strokeWidth="3" d="M37,22H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25c0.552,0,1-0.448,1-1S37.552,22,37,22z"/>
+                                        <path strokeWidth="3" d="M12,16h10c0.552,0,1-0.448,1-1s-0.448-1-1-1H12c-0.552,0-1,0.448-1,1S11.448,16,12,16z"/>
+                                        <path strokeWidth="3" d="M38,31c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25C37.552,32,38,31.552,38,31z"/>
+                                        <path strokeWidth="3" d="M30,39c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h17C29.552,40,30,39.552,30,39z"/>
+                                        <path strokeWidth="3" d="M12,46c-0.552,0-1,0.448-1,1s0.448,1,1,1h14c0.552,0,1-0.448,1-1s-0.448-1-1-1H12z"/>
+                                        <path strokeWidth="3" d="M3,2h29v14h14v17h2V14.586L33.414,0H1v60h31v-2H3V2z M34,3.414L44.586,14H34V3.414z"/>
+                                        <path strokeWidth="3" d="M35,36v24h24V36H35z M57,58H37V38h9v12.586l-4.293-4.293l-1.414,1.414L47,54.414l6.707-6.707l-1.414-1.414L48,50.586V38h9   V58z"/>
+                                    </g>
                                 </svg>
+   
                             </div>
                             <div className={"text-right"}>
                                 <p className={"text-2xl"}>326</p>
@@ -82,62 +90,76 @@ function Dashboard() {
                             </div>
                         </div>
                         <div
-                            className={"bg-blue-300 text-black shadow-lg rounded-md" +
-                                " flex items-center justify-between p-3 border-b-4 border-blue-500 " +
+                            className={"bg-lime-200 text-black shadow-lg rounded-md" +
+                                " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
                                 " text-white font-medium group"
                             }>
                             <div
                                 className={"flex justify-center items-center" +
                                     " w-14 h-14 bg-white rounded-full transition-all " +
                                     "duration-300 transform group-hover:rotate-12"
-                                }>
-                                <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                    className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                }
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" viewBox="0 0 490 490" stroke="currentColor"
+                                    className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>       
+                                    <g id="bold_copy_37_">
+                                        <path strokeWidth="2" d="M245,0C109.684,0,0,109.684,0,245s109.684,245,245,245s245-109.684,245-245S380.316,0,245,0z M245,459.375   c-118.213,0-214.375-96.163-214.375-214.375S126.787,30.625,245,30.625S459.375,126.787,459.375,245S363.212,459.375,245,459.375z"/>
+                                        <polygon points="266.836,286.987 275.196,114.874 214.788,114.874 223.532,286.987  "/>
+                                        <path strokeWidth="2" d="M245.184,305.974c-20.136,0-34.178,14.424-34.178,34.576c0,19.738,13.674,34.576,34.178,34.576   c20.503,0,33.825-14.823,33.825-34.576C278.611,320.399,265.304,305.974,245.184,305.974z"/>
+                                    </g>
                                 </svg>
+
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>557</p>
-                                <p>Orders</p>
+                                <p className={"text-2xl"}>245</p>
+                                <p>Total Requested Files</p>
                             </div>
                         </div>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md" +
-                                " flex items-center justify-between p-3 border-b-4 border-blue-500 " +
+                            className={"bg-red-300 text-black shadow-lg rounded-md" +
+                                " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
                                 " text-white font-medium group"
                             }>
                             <div
                                 className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
-                                <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 60 60" stroke="currentColor"
                                     className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                    <g>
+                                        <path strokeWidth="3" d="M37,22H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25c0.552,0,1-0.448,1-1S37.552,22,37,22z"/>
+                                        <path strokeWidth="3" d="M12,16h10c0.552,0,1-0.448,1-1s-0.448-1-1-1H12c-0.552,0-1,0.448-1,1S11.448,16,12,16z"/>
+                                        <path strokeWidth="3" d="M38,31c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25C37.552,32,38,31.552,38,31z"/>
+                                        <path strokeWidth="3" d="M30,39c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h17C29.552,40,30,39.552,30,39z"/>
+                                        <path strokeWidth="3" d="M12,46c-0.552,0-1,0.448-1,1s0.448,1,1,1h14c0.552,0,1-0.448,1-1s-0.448-1-1-1H12z"/>
+                                        <path strokeWidth="3" d="M3,2h29v14h14v17h2V14.586L33.414,0H1v60h31v-2H3V2z M34,3.414L44.586,14H34V3.414z"/>
+                                        <path strokeWidth="3" d="M35,36v24h24V36H35z M57,58h-9V45.414l4.293,4.293l1.414-1.414L47,41.586l-6.707,6.707l1.414,1.414L46,45.414V58h-9V38h20   V58z"/>
+                                    </g>
                                 </svg>
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>$11,257</p>
-                                <p>Sales</p>
+                                <p className={"text-2xl"}>202</p>
+                                <p>All Outgoing Files</p>
                             </div>
                         </div>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md" +
-                                " flex items-center justify-between p-3 border-b-4 border-blue-500 " +
+                            className={"bg-green-300 text-black shadow-lg rounded-md" +
+                                " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
                                 " text-white font-medium group"
                             }>
                             <div
                                 className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
-                                <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" viewBox="0 0 330 330" stroke="currentColor"
                                     className={"stroke-current text-blue-800 dark:text-gray-800 transform" +
                                         " transition-transform duration-500 ease-in-out"
-                                    }>
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    }>                                    
+                                    <g>
+                                        <path strokeWidth="3" d="M165,0C74.019,0,0,74.019,0,165s74.019,165,165,165s165-74.019,165-165S255.981,0,165,0z M165,300   c-74.44,0-135-60.561-135-135S90.56,30,165,30s135,60.561,135,135S239.439,300,165,300z"/>
+                                        <path strokeWidth="3" d="M226.872,106.664l-84.854,84.853l-38.89-38.891c-5.857-5.857-15.355-5.858-21.213-0.001   c-5.858,5.858-5.858,15.355,0,21.213l49.496,49.498c2.813,2.813,6.628,4.394,10.606,4.394c0.001,0,0,0,0.001,0   c3.978,0,7.793-1.581,10.606-4.393l95.461-95.459c5.858-5.858,5.858-15.355,0-21.213   C242.227,100.807,232.73,100.806,226.872,106.664z"/>
+                                    </g>
                                 </svg>
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>$75,257</p>
-                                <p>Balances</p>
+                                <p className={"text-2xl"}>123</p>
+                                <p>Total Files Completed</p>
                             </div>
                         </div>
                     </div>
