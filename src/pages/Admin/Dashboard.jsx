@@ -60,8 +60,8 @@ function Dashboard() {
                     {/*statistics cards*/}
                     <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4"}>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md" +
-                                " flex items-center justify-between p-3 border-b-4 border-blue-500 " +
+                            className={"bg-blue-300 text-black shadow-lg rounded-md" +
+                                " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
                                 " text-white font-medium group"
                             }
                         >
@@ -77,12 +77,12 @@ function Dashboard() {
                                 </svg>
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>1,257</p>
-                                <p>Visitors</p>
+                                <p className={"text-2xl"}>326</p>
+                                <p>All incoming files</p>
                             </div>
                         </div>
                         <div
-                            className={"bg-blue-500 dark:bg-gray-100 text-black shadow-lg rounded-md" +
+                            className={"bg-blue-300 text-black shadow-lg rounded-md" +
                                 " flex items-center justify-between p-3 border-b-4 border-blue-500 " +
                                 " text-white font-medium group"
                             }>
