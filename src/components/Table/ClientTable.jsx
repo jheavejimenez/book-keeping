@@ -37,7 +37,7 @@ function ClientTable() {
                                         key={item.id}
                                         SenderName={item.sender}
                                         fileName={item.file}
-                                        timeStamp={item.timstamp}
+                                        timeStamp={item.timestamp}
                                         status={item.status}
                                     />)
                                 )}

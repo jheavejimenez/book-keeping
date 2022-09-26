@@ -62,7 +62,7 @@ function Dashboard() {
                         <div
                             className={"bg-blue-300 text-black shadow-lg rounded-md" +
                                 " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                                " text-white font-medium group h-32"
+                                " text-white font-medium group h-28"
                             }
                         >
                             <div
@@ -118,7 +118,7 @@ function Dashboard() {
                         <div
                             className={"bg-red-300 text-black shadow-lg rounded-md" +
                                 " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                                " text-white font-medium group"
+                                " text-white font-medium group h-28"
                             }>
                             <div
                                 className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
