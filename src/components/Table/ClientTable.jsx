@@ -10,15 +10,12 @@ function ClientTable() {
     const fakeData = async () => {
         const response = await axios.get("http://localhost:3000/data");
         setData(response.data);
-    } 
+    }
 
     const fakeTitleTable = async () => {
         const response = await axios.get("http://localhost:3000/titleHeader");
         setTitleTable(response.data[0].title);
-        // console.log(response.data[0].title);
-        console.log(titleTable);
 
-        
     }
 
     useEffect(() => {
@@ -31,9 +28,9 @@ function ClientTable() {
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
-    },[]);
-    
-    
+    }, []);
+
+
     return (
         <>
             <div className={"mt-4 mx-4"}>
@@ -41,26 +38,25 @@ function ClientTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            {/* {titleTable.map((item) => (
-                                <TableHeading
-                                    text={item.title}
-                                />
-
-                            ))} */}
                             <tr className={"text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
-                            
+                                {titleTable.map((item) => (
+                                    <TableHeading
+                                        text={item}
+                                    />
+
+                                ))}
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y"}>
-                                {data.map((item) => (
-                                    <TableRow
-                                        key={item.id}
-                                        SenderName={item.sender}
-                                        fileName={item.file}
-                                        timeStamp={item.timestamp}
-                                        status={item.status}
-                                    />)
-                                )}
+                            {data.map((item) => (
+                                <TableRow
+                                    key={item.id}
+                                    SenderName={item.sender}
+                                    fileName={item.file}
+                                    timeStamp={item.timestamp}
+                                    status={item.status}
+                                />)
+                            )}
                             </tbody>
                         </table>
                     </div>
