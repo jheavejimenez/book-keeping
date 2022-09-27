@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "json-server": "json-server --watch data/db.json",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
