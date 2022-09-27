@@ -5,14 +5,14 @@
       "sender": "John",
       "file": "file1.pdf",
       "timestamp": "2019-01-01 12:00:00",
-      "status": "pending"
+      "status": "Pending"
     },
     {
       "id": "2",
       "sender": "Lawrence",
       "file": "file2.pdf",
       "timestamp": "2019-01-01 12:00:00",
-      "status": "pending"
+      "status": "Pending"
     },
     {
       "id": "3",

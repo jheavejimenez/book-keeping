@@ -18,6 +18,11 @@ function Dashboard() {
                             src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" alt="" />
                         <span className="hidden md:block">ADMIN</span>
                     </div>
+
+                    <div
+                        className={"flex items-center justify-start md:justify-center text-3xl pl-3 w-14 md:w-64 h-14 bg-blue-400 text-white border-none"}>
+                        <span className="hidden md:block">Dashboard</span>
+                    </div>
                     <div className={"flex justify-between items-center h-14 bg-blue-400 text-black header-right"}>
                         <div
                             className={"bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200"}>
