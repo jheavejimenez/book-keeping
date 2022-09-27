@@ -20,7 +20,7 @@ function Sidebar () {
                         <li>
                             <a href={"/Dashboard"}
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
-                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-white-500 pr-6"}
+                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg className="w-5 h-5" 
@@ -43,7 +43,7 @@ function Sidebar () {
                         <li>
                             <a href="#"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
-                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-white-500 pr-6"}
+                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg className="w-5 h-5" 
@@ -70,7 +70,7 @@ function Sidebar () {
                         <li>
                             <a href={"/Incoming"}
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
-                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-white-500 pr-6"}
+                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg className="w-5 h-5" 
@@ -97,7 +97,7 @@ function Sidebar () {
                         <li>
                             <a href="#"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
-                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-white-500 pr-6"}
+                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg className="w-5 h-5" 
@@ -127,7 +127,7 @@ function Sidebar () {
                         <li>
                             <a href="#"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
-                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-white-500 pr-6"}
+                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg className="w-5 h-5" 
@@ -150,7 +150,7 @@ function Sidebar () {
                         <li>
                             <a href="#"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
-                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-white-500 pr-6"}
+                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg className="w-5 h-5" 

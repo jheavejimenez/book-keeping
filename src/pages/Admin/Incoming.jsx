@@ -1,5 +1,9 @@
+/* eslint-disable react/style-prop-object */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
+import TitleCard from "../../components/Card/TitleCard";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import ClientTable from "../../components/Table/ClientTable";
 
 function Incoming() {
     return (
@@ -45,6 +49,29 @@ function Incoming() {
                     </div>
                 </div>
                 {/*end of header*/}
+
+                {/*sidebar*/}
+                <Sidebar />
+
+                <div className={"flex justify-between items-center h-14 bg-white header-right"}>
+                    
+                </div>
+                
+                <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+                    <TitleCard 
+                        titleText={"Incoming Documents"}
+                    />
+
+                    <div className="mt-4 mx-4">
+                        <span className="ml-2 text-sm font-medium tracking-wide truncate">Filter by Type </span>                           
+                        {/* insert dropdown here */}
+                    </div>
+
+                    {/*client table*/}
+                    <ClientTable />
+                </div>
+
+                
         </div>
     )
 }
