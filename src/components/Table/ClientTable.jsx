@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from "react";
 import TableRow from "./TableRow";
 import axios from "axios";
+import TableHeading from "./TableHeading";
 
 function ClientTable() {
     const [data, setData] = useState([]);
+    const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
         const response = await axios.get("http://localhost:3000/data");
         setData(response.data);
     } 
 
+    const fakeTitleTable = async () => {
+        const response = await axios.get("http://localhost:3000/titleHeader");
+        setTitleTable(response.data[0].title);
+        // console.log(response.data[0].title);
+        console.log(titleTable);
+
+        
+    }
+
     useEffect(() => {
         fakeData();
+        fakeTitleTable();
         const interval = setInterval(() => {
-        fakeData();
+            fakeData();
+            fakeTitleTable();
         }, 10000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     },[]);
     
-
+    
     return (
         <>
             <div className={"mt-4 mx-4"}>
@@ -28,7 +41,14 @@ function ClientTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
+                            {/* {titleTable.map((item) => (
+                                <TableHeading
+                                    text={item.title}
+                                />
+
+                            ))} */}
                             <tr className={"text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
+                            
                             </tr>
                             </thead>
                             <tbody className={"bg-white divide-y"}>
@@ -37,7 +57,7 @@ function ClientTable() {
                                         key={item.id}
                                         SenderName={item.sender}
                                         fileName={item.file}
-                                        timeStamp={item.timstamp}
+                                        timeStamp={item.timestamp}
                                         status={item.status}
                                     />)
                                 )}

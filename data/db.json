@@ -31,24 +31,7 @@
   ],
   "titleHeader": [
     {
-      "docID": "DocId",
-      "key": "id"
-    },
-    {
-      "sender": "Sender",
-      "key": "sender"
-    },
-    {
-      "file": "File",
-      "key": "file"
-    },
-    {
-      "timeStamp": "Timestamp",
-      "key": "timestamp"
-    },
-    {
-      "status": "Status",
-      "key": "status"
+      "title":["DocID","Sender","File","Timestamp","Status","Action"]
     }
   ]
 }
