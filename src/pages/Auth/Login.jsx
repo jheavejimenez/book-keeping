@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Logo from "../../../src/assets/MindWorxLogo.png"
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import {supabase} from "../../utils/supabaseClient";
@@ -33,13 +34,25 @@ function Login() {
                             </div>
                         </div>
                     ) : (
-                        <>
-                            <h3 className={"text-2xl font-bold text-center"}>Login</h3>
+                        <>  
+                            <div>
+                                <img src={Logo} alt="logo" className={"w-3/4 mx-auto pb-8"}/>
+                                <h3 className={"text-2xl font-bold text-center"}>LOGIN</h3>
+                            </div>
+                            
                             <form onSubmit={handleSubmit}>
                                 <div className={"mt-4"}>
                                     <div>
                                         <Input
-                                            placeHolder={"Email"}
+                                            placeHolder={"Username"}
+                                            type={"text"}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <Input
+                                            placeHolder={"Password"}
                                             type={"text"}
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
@@ -48,12 +61,15 @@ function Login() {
                                     <div className={"flex flex-col place-items-center"}>
                                         <Button  text={"Login"}/>
                                         <a href="src/pages/Auth/Login#"
-                                           className={"text-sm text-blue-600 hover:underline mt-5"}>Forgot
+                                           className={"text-sm text-black-600 hover:underline mt-5 "}>Forgot
                                             password?</a>
-                                        <a href={"/Signup"} className={"text-sm text-blue-600 hover:underline mt-5"}>Sign
-                                            Up</a>
+                                        <div className="border-t-2 w-80 mt-5 ">
+                                            <a href={"/Signup"} className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-5 "}>Create
+                                            an account today !</a>
+                                        </div>
                                     </div>
                                 </div>
+                                
                             </form>
                         </>
                     )}
