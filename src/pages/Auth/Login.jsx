@@ -11,7 +11,7 @@ function Login() {
         e.preventDefault()
         try {
             setLoading(true)
-
+            
             await supabase.auth.signInWithOtp({email})
         } catch (error) {
             alert(error.error_description || error.message)
@@ -35,7 +35,7 @@ function Login() {
                     ) : (
                         <>
                             <h3 className={"text-2xl font-bold text-center"}>Login</h3>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div className={"mt-4"}>
                                     <div>
                                         <Input
@@ -46,7 +46,7 @@ function Login() {
                                         />
                                     </div>
                                     <div className={"flex flex-col place-items-center"}>
-                                        <Button path={"/dashboard"} text={"Login"}/>
+                                        <Button  text={"Login"}/>
                                         <a href="src/pages/Auth/Login#"
                                            className={"text-sm text-blue-600 hover:underline mt-5"}>Forgot
                                             password?</a>

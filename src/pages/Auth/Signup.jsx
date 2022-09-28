@@ -9,17 +9,20 @@ function Signup() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    const [employeeName, setEmployeeName] = useState('')
-    const [companyName, setCompanyName] = useState('')
+    const [employee_name, setEmployeeName] = useState('')
+    const [company, setCompanyName] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             setLoading(true)
             await supabase.auth.signUp({ email, password })
-            await supabase.from('users').insert([
-                { username, email, employeeName, companyName }
-            ])
+            const { data, error, status } = await supabase.from('users').insert([
+                { username , email, employee_name, company }
+            ],  { returning: 'minimal' }) 
+            if (error && status !== 406) {
+                throw error
+            }
         } catch (error) {
             alert(error.error_description || error.message)
         } finally {
@@ -63,7 +66,7 @@ function Signup() {
                                         <Input
                                             type={"text"}
                                             placeHolder={"Full name"}
-                                            value={employeeName}
+                                            value={employee_name}
                                             onChange={(e) => setEmployeeName(e.target.value)}
                                         />
                                     </div>
@@ -79,7 +82,7 @@ function Signup() {
                                         <Input
                                             type={"text"}
                                             placeHolder={"Company"}
-                                            value={companyName}
+                                            value={company}
                                             onChange={(e) => setCompanyName(e.target.value)}
                                         />
                                     </div>
