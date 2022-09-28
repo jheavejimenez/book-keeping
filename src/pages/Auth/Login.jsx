@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Logo from "../../../src/assets/MindWorxLogo.png"
+
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import {supabase} from "../../utils/supabaseClient";
@@ -25,6 +26,7 @@ function Login() {
         <>
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className={"px-8 py-6 mt-4 text-left bg-white shadow-lg w-96"}>
+                
                     {loading ? (
                         <div className={"flex flex-col place-items-center"}>
                             <h3 className={"text-2xl font-bold text-center"}>Sending magic link to email</h3>
@@ -59,7 +61,7 @@ function Login() {
                                         />
                                     </div>
                                     <div className={"flex flex-col place-items-center"}>
-                                        <Button  text={"Login"}/>
+                                        <Button  text={"Login"} path={"/Dashboard"}/>
                                         <a href="src/pages/Auth/Login#"
                                            className={"text-sm text-black-600 hover:underline mt-5 "}>Forgot
                                             password?</a>
@@ -75,6 +77,7 @@ function Login() {
                     )}
 
                 </div>
+                
             </div>
         </>
 
