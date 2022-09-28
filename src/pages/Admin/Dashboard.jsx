@@ -2,6 +2,8 @@
 import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ClientTable from "../../components/Table/ClientTable";
+import Dropdown from "../../components/Button/Dropdown";
+
 
 
 function Dashboard() {
@@ -168,6 +170,8 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
+                    <div className={"px-7 py-5 text-xs font-semibold text-black dark:border-gray-700 bg-gray-50 dark:text-black dark:bg-gray-100"}> Filter by Type <Dropdown /></div>
+                             
                     {/*client table*/}
                         <ClientTable />
                     {/*end client table*/}
