@@ -77,22 +77,14 @@ function Dashboard() {
                                     "rounded-full transition-all duration-300 transform group-hover:rotate-12"
                                 }
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 60 60" stroke="currentColor"
-                                    className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>                                
-                                    <g>
-                                        <path strokeWidth="3" d="M37,22H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25c0.552,0,1-0.448,1-1S37.552,22,37,22z"/>
-                                        <path strokeWidth="3" d="M12,16h10c0.552,0,1-0.448,1-1s-0.448-1-1-1H12c-0.552,0-1,0.448-1,1S11.448,16,12,16z"/>
-                                        <path strokeWidth="3" d="M38,31c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25C37.552,32,38,31.552,38,31z"/>
-                                        <path strokeWidth="3" d="M30,39c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h17C29.552,40,30,39.552,30,39z"/>
-                                        <path strokeWidth="3" d="M12,46c-0.552,0-1,0.448-1,1s0.448,1,1,1h14c0.552,0,1-0.448,1-1s-0.448-1-1-1H12z"/>
-                                        <path strokeWidth="3" d="M3,2h29v14h14v17h2V14.586L33.414,0H1v60h31v-2H3V2z M34,3.414L44.586,14H34V3.414z"/>
-                                        <path strokeWidth="3" d="M35,36v24h24V36H35z M57,58H37V38h9v12.586l-4.293-4.293l-1.414,1.414L47,54.414l6.707-6.707l-1.414-1.414L48,50.586V38h9   V58z"/>
-                                    </g>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+                                    class="w-10 h-10 transform transition-transform duration-500 ease-in-out">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                 </svg>
    
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>326</p>
+                                <p className={"text-3xl"}>326</p>
                                 <p>All incoming files</p>
                             </div>
                         </div>
@@ -118,7 +110,7 @@ function Dashboard() {
 
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>245</p>
+                                <p className={"text-3xl"}>245</p>
                                 <p>Total Requested Files</p>
                             </div>
                         </div>
@@ -129,21 +121,13 @@ function Dashboard() {
                             }>
                             <div
                                 className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 60 60" stroke="currentColor"
-                                    className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>
-                                    <g>
-                                        <path strokeWidth="3" d="M37,22H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25c0.552,0,1-0.448,1-1S37.552,22,37,22z"/>
-                                        <path strokeWidth="3" d="M12,16h10c0.552,0,1-0.448,1-1s-0.448-1-1-1H12c-0.552,0-1,0.448-1,1S11.448,16,12,16z"/>
-                                        <path strokeWidth="3" d="M38,31c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h25C37.552,32,38,31.552,38,31z"/>
-                                        <path strokeWidth="3" d="M30,39c0-0.552-0.448-1-1-1H12c-0.552,0-1,0.448-1,1s0.448,1,1,1h17C29.552,40,30,39.552,30,39z"/>
-                                        <path strokeWidth="3" d="M12,46c-0.552,0-1,0.448-1,1s0.448,1,1,1h14c0.552,0,1-0.448,1-1s-0.448-1-1-1H12z"/>
-                                        <path strokeWidth="3" d="M3,2h29v14h14v17h2V14.586L33.414,0H1v60h31v-2H3V2z M34,3.414L44.586,14H34V3.414z"/>
-                                        <path strokeWidth="3" d="M35,36v24h24V36H35z M57,58h-9V45.414l4.293,4.293l1.414-1.414L47,41.586l-6.707,6.707l1.414,1.414L46,45.414V58h-9V38h20   V58z"/>
-                                    </g>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+                                    class="w-10 h-10 transform transition-transform duration-500 ease-in-out">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                 </svg>
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>202</p>
+                                <p className={"text-3xl"}>202</p>
                                 <p>All Outgoing Files</p>
                             </div>
                         </div>
@@ -165,16 +149,17 @@ function Dashboard() {
                                 </svg>
                             </div>
                             <div className={"text-right"}>
-                                <p className={"text-2xl"}>123</p>
+                                <p className={"text-3xl"}>123</p>
                                 <p>Total Files Completed</p>
                             </div>
                         </div>
                     </div>
-                    <div className={"px-7 py-5 text-xs font-semibold text-black dark:border-gray-700 bg-gray-50 dark:text-black dark:bg-gray-100"}> Filter by Type <Dropdown /></div>
+                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> Filter by Type <Dropdown /></div>
                              
                     {/*client table*/}
                         <ClientTable />
                     {/*end client table*/}
+                    
                 </div>
             </div>
         </>

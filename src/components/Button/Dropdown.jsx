@@ -12,7 +12,9 @@ export default function Example() {
     <Menu as="div" className="relative inline-block text-left">
        
       <div>
-        <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+        <Menu.Button className={"inline-flex w-full justify-center w-16 rounded-md border border-gray-300 " + 
+        "bg-white px-2 py-2 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-50 focus:outline-none " + 
+        "focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"}>
           All
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
@@ -27,7 +29,8 @@ export default function Example() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className={"absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg " + 
+          "ring-1 ring-black ring-opacity-5 focus:outline-none"}>
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
@@ -38,7 +41,7 @@ export default function Example() {
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
                   >
-                  Account settings
+                  All
                 </button>
               )}
             </Menu.Item>
@@ -51,7 +54,7 @@ export default function Example() {
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
                   >
-                  Support
+                  .xlsx
                 </button>
               )}
             </Menu.Item>
@@ -64,11 +67,11 @@ export default function Example() {
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
                   >
-                  License
+                  .pdf
                 </button>
               )}
             </Menu.Item>
-            <form method="POST" action="#">
+            {/*<form method="POST" action="#">
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -82,7 +85,7 @@ export default function Example() {
                   </button>
                 )}
               </Menu.Item>
-            </form>
+            </form>*/}
           </div>
         </Menu.Items>
       </Transition>
