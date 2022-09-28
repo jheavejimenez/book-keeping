@@ -14,7 +14,11 @@ function Login() {
         try {
             setLoading(true)
             
-            await supabase.auth.signInWithOtp({email})
+            const { data, error } = await supabase.auth.signInWithOtp({email})
+            if (error) {
+                throw error
+            }
+            alert('Check your email for the login link!')
         } catch (error) {
             alert(error.error_description || error.message)
         } finally {
@@ -52,16 +56,9 @@ function Login() {
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                     </div>
-                                    <div>
-                                        <Input
-                                            placeHolder={"Password"}
-                                            type={"text"}
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
-                                    </div>
+                                    
                                     <div className={"flex flex-col place-items-center"}>
-                                        <Button  text={"Login"} path={"/Dashboard"}/>
+                                        <Button  text={"Login"}/>
                                         <a href="src/pages/Auth/Login#"
                                            className={"text-sm text-black-600 hover:underline mt-5 "}>Forgot
                                             password?</a>

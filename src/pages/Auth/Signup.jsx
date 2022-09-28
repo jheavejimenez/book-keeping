@@ -22,7 +22,8 @@ function Signup() {
             ],  { returning: 'minimal' }) 
             if (error && status !== 406) {
                 throw error
-            }
+            }   
+            alert('Check your email for the conformation link!')
         } catch (error) {
             alert(error.error_description || error.message)
         } finally {
