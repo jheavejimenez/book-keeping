@@ -10,9 +10,7 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 function Dashboard() {
     return (
         <>
-            <div
-                className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
                 {/*header*/}
                 <div className={"fixed w-full flex items-center justify-between h-14 text-white bg-blue-400 z-10"}>
                     <div
