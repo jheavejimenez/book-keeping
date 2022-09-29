@@ -12,7 +12,7 @@
       "sender": "Lawrence",
       "file": "file2.pdf",
       "timestamp": "2019-01-01 12:00:00",
-      "status": "Pending"
+      "status": "In Progress"
     },
     {
       "id": "3",
@@ -26,7 +26,7 @@
       "sender": "Jheave",
       "file": "file4.pdf",
       "timestamp": "2019-01-01 12:00:00",
-      "status": "Approved"
+      "status": "New"
     }
   ],
   "titleHeader": [
