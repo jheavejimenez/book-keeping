@@ -4,26 +4,25 @@ import Logo from "../../../src/assets/MindWorxLogo.png"
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import {supabase} from "../../utils/supabaseClient";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
+    const auth = useAuth();
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        try {
-            setLoading(true)
-            
-            const { data, error } = await supabase.auth.signInWithOtp({email})
-            if (error) {
-                throw error
-            }
-            alert('Check your email for the login link!')
-        } catch (error) {
-            alert(error.error_description || error.message)
-        } finally {
-            setLoading(false)
+       
+        const signin = await auth.login(email)
+        if (signin.error) {
+            alert(signin.error.message)
+        } else {
+            alert('Check your email for the conformation link!')
         }
+
+        setEmail("")
+
     }
 
     return (

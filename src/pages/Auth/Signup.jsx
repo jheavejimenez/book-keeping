@@ -17,13 +17,15 @@ function Signup() {
         try {
             setLoading(true)
             await supabase.auth.signUp({ email, password })
-            const { data, error, status } = await supabase.from('users').insert([
+            const { error, status } = await supabase.from('users').insert([
                 { username , email, employee_name, company }
             ],  { returning: 'minimal' }) 
             if (error && status !== 406) {
                 throw error
+            }  else {
+                alert('Check your email for the conformation link!')
             }   
-            alert('Check your email for the conformation link!')
+
         } catch (error) {
             alert(error.error_description || error.message)
         } finally {

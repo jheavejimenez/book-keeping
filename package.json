@@ -4,12 +4,12 @@
   "private": true,
   "dependencies": {
     "@prisma/client": "^4.3.1",
-    "@supabase/supabase-js": "^2.0.0-rc.10",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "eslint": "8.22.0",
+    "firebase": "^9.10.0",
     "formik": "^2.2.9",
     "json-server": "^0.17.0",
     "react": "^18.2.0",
