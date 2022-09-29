@@ -3,6 +3,7 @@ import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ClientTable from "../../components/Table/ClientTable";
 import Dropdown from "../../components/Button/Dropdown";
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 
 
 
@@ -39,15 +40,9 @@ function Dashboard() {
                         </div>
                         <ul className={"flex items-center"}>
                             <li>
-                                <a href="#" className={"flex items-center mr-4 text-white hover:text-blue-800"}>
+                                <a href="#" className={"flex items-center mr-4 text-white hover:text-gray-700"}>
                                     <span className={"inline-flex mr-1"}>
-                                        <svg className={"w-5 h-5"} fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg">
-
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                                            </path>
-                                        </svg>
+                                      <ArrowRightOnRectangleIcon className={"h-5 w-5"} aria-hidden="true" />
                                     </span>
                                     Logout
                                 </a>
