@@ -50,8 +50,8 @@ function Login() {
                                 <div className={"mt-4"}>
                                     <div>
                                         <Input
-                                            placeHolder={"Username"}
-                                            type={"text"}
+                                            placeHolder={"Email"}
+                                            type={"email"}
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
