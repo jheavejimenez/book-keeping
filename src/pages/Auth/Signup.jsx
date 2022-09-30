@@ -16,7 +16,6 @@ import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/au
 
     const [error, setError] = useState('')
     const navigate = useNavigate()
-    const {setTimeActive} = useAuthValue()
     const [loading, setLoading] = useState(false)
   
     const validatePassword = () => {
@@ -56,7 +55,6 @@ import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/au
             .then(() => {
               sendEmailVerification(auth.currentUser)   
               .then(() => {
-                setTimeActive(true)
                 navigate('/verify-email')
               }).catch((err) => alert(err.message))
             })
