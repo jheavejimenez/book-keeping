@@ -1,7 +1,7 @@
 import React from "react";
 
 function TableRow({DocID, SenderName, fileName, timeStamp, status}) {
-    let color = "red"
+
     return (
         <tr className={"bg-gray-50 hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{DocID}</td>

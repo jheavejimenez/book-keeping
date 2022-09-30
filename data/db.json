@@ -33,5 +33,48 @@
     {
       "title":["DocID","Sender","File","Timestamp","Status","Action"]
     }
+  ],
+  "requestData": [
+    {
+      "reqID": "1",
+      "requestFrom": "Charlon",
+      "requestBy": "Admin",
+      "file": "file1.pdf",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dataRequested": "2022-09-16"
+    },
+    {
+      "reqID": "2",
+      "requestFrom": "Jheave",
+      "requestBy": "Admin",
+      "file": "file2.pdf",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dataRequested": "2022-09-16"
+    },
+    {
+      "reqID": "3",
+      "requestFrom": "Lawrence",
+      "requestBy": "Admin",
+      "file": "file3.pdf",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dataRequested": "2022-09-16"
+    },
+    {
+      "reqID": "4",
+      "requestFrom": "Darell",
+      "requestBy": "Admin",
+      "file": "file4.pdf",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dataRequested": "2022-09-16"   
+    }    
+  ],
+  "requestHeader": [
+    {
+      "title":["ReqID","RequestFrom","RequestBy","File","Purpose","DueDate","DataRequested"]
+    }
   ]
 }
