@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React from "react";
-import TitleCard from "../../components/Card/TitleCard";
+import RequestCard from "../../components/Card/RequestCard"; 
 import Sidebar from "../../components/Sidebar/Sidebar";
-import ClientTable from "../../components/Table/ClientTable";
+import RequestTable from "../../components/Table/RequestTable";
+
 
 function RequestPage() {
     return (
@@ -58,12 +59,13 @@ function RequestPage() {
                 </div>
                 
                 <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                    <TitleCard 
+                    <RequestCard 
                         titleText={"Requested Documents"}
+                       
                     />
-
-                    {/*client table*/}
-                    <ClientTable />
+    
+                    {/*request table*/}
+                    <RequestTable />
                 </div>
 
                 

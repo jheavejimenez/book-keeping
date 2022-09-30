@@ -3,6 +3,7 @@ import Dashboard from "./pages/Admin/Dashboard";
 import Login from "./pages/Auth/Login";
 import VerifyEmail from './pages/Auth/VerifyEmail'
 import Signup from "./pages/Auth/Signup";
+import Outgoing from "./pages/Admin/Outgoing";
 import Incoming from "./pages/Admin/Incoming";
 import RequestPage from "./pages/Admin/RequestPage";
 import { ProtectedRoute } from "./pages/Auth/ProtectRoutes";
@@ -28,6 +29,11 @@ function App() {
             <Route path="/request" element={
                 <ProtectedRoute>
                     <RequestPage />
+                </ProtectedRoute>
+            } />
+            <Route path="/outgoing" element={
+                <ProtectedRoute>
+                    <Outgoing />
                 </ProtectedRoute>
             } />
         </Routes>

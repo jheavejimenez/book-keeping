@@ -3,11 +3,13 @@ import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ClientTable from "../../components/Table/ClientTable";
 import Dropdown from "../../components/Button/Dropdown";
+import {useAuth} from "../../hooks/useAuth";
 import { ArrowRightOnRectangleIcon, CheckCircleIcon, DocumentArrowDownIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 
 
 function Dashboard() {
+    const {logout} = useAuth()
     return (
         <>
             <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -38,12 +40,16 @@ function Dashboard() {
                         </div>
                         <ul className={"flex items-center"}>
                             <li>
-                                <a href="#" className={"flex items-center mr-4 text-white hover:text-gray-700"}>
+                                <button 
+                                    onClick={logout}
+                                    key="logout"
+                                    className={"flex items-center mr-4 text-white hover:text-gray-700"}
+                                >
                                     <span className={"inline-flex mr-1"}>
                                       <ArrowRightOnRectangleIcon className={"h-5 w-5"} aria-hidden="true" />
                                     </span>
-                                    Logout
-                                </a>
+                                    logout
+                                </button>
                             </li>
                         </ul>
                     </div>
