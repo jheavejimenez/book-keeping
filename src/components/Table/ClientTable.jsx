@@ -39,8 +39,9 @@ function ClientTable() {
                         <table className={"w-full"}>
                             <thead>
                             <tr className={"text-xs font-bold font-inter tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
-                                {titleTable.map((item) => (
+                                {titleTable.map((item, index) => (
                                     <TableHeading
+                                        key={index}
                                         text={item}
                                     />
 
@@ -50,6 +51,7 @@ function ClientTable() {
                             <tbody className={"bg-white font-inter divide-y"}>
                             {data.map((item) => (
                                 <TableRow
+                                    key={item.id}
                                     DocID={item.id}
                                     SenderName={item.sender}
                                     fileName={item.file}
