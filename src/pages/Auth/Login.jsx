@@ -1,29 +1,39 @@
 import React, {useState} from "react";
 import Logo from "../../../src/assets/MindWorxLogo.png"
-
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import {supabase} from "../../utils/supabaseClient";
-import { useAuth } from "../../context/AuthContext";
+import { Link } from 'react-router-dom'
+import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
+import {auth} from '../../utils/Firebase'
+import { useAuthValue } from "../../context/AuthContext";
+import {useNavigate} from 'react-router-dom'
 
 function Login() {
-    const auth = useAuth();
     const [email, setEmail] = useState('')
-    const [loading, setLoading] = useState(false)
+    const [password, setPassword] = useState('') 
+    const [error, setError] = useState('')
+    const {setTimeActive} = useAuthValue()
+    const {loading, setLoading} = useState(false)
+    const navigate = useNavigate()
 
-    const handleSubmit = async (e) => {
+
+    const handleSubmit = e => {
         e.preventDefault()
-       
-        const signin = await auth.login(email)
-        if (signin.error) {
-            alert(signin.error.message)
-        } else {
-            alert('Check your email for the conformation link!')
+        signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          if(!auth.currentUser.emailVerified) {
+            sendEmailVerification(auth.currentUser)
+            .then(() => {
+              setTimeActive(true)
+              navigate('/verify-email')
+            })
+          .catch(err => alert(err.message))
+        }else{
+          navigate('/')
         }
-
-        setEmail("")
-
-    }
+        })
+        .catch(err => setError(err.message))
+      }
 
     return (
         <>
@@ -49,13 +59,20 @@ function Login() {
                                 <div className={"mt-4"}>
                                     <div>
                                         <Input
-                                            placeHolder={"Email"}
-                                            type={"email"}
+                                            placeHolder={"Username"}
+                                            type={"text"}
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                     </div>
-                                    
+                                    <div>
+                                        <Input
+                                            placeHolder={"Password"}
+                                            type={"password"}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
                                     <div className={"flex flex-col place-items-center"}>
                                         <Button  text={"Login"}/>
                                         <a href="src/pages/Auth/Login#"

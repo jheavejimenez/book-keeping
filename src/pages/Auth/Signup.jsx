@@ -1,37 +1,73 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import {useAuthValue} from "../../context/AuthContext"
 import Input from "../../components/Input/Input";
-import { supabase } from "../../utils/supabaseClient";
 import Button from "../../components/Button/Button";
+import Alert from "../../components/Alert/Alert";
+import {auth} from '../../utils/Firebase'
+import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 
-
-function Signup() {
-    const [loading, setLoading] = useState(false)
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+ function Signup() {
     const [email, setEmail] = useState('')
-    const [employee_name, setEmployeeName] = useState('')
-    const [company, setCompanyName] = useState('')
+    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
+    const [company, setCompany] = useState('')
+    const [fullname , setFullname] = useState('')
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            setLoading(true)
-            await supabase.auth.signUp({ email, password })
-            const { error, status } = await supabase.from('users').insert([
-                { username , email, employee_name, company }
-            ],  { returning: 'minimal' }) 
-            if (error && status !== 406) {
-                throw error
-            }  else {
-                alert('Check your email for the conformation link!')
-            }   
-
-        } catch (error) {
-            alert(error.error_description || error.message)
-        } finally {
-            setLoading(false)
+    const [error, setError] = useState('')
+    const navigate = useNavigate()
+    const {setTimeActive} = useAuthValue()
+    const [loading, setLoading] = useState(false)
+  
+    const validatePassword = () => {
+        let isValid = true
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters')
         }
-    }
+        if (password.length === 0) {
+            setError('Password is required')
+            isValid = false
+        }
+        if (username.length === 0) {
+            setError('Username is required')
+            isValid = false
+        }
+        if (fullname.length === 0) {
+            setError('Fullname is required')
+            isValid = false   
+        }
+        if (company.length === 0) {
+            setError('Company is required')
+            isValid = false
+        }
+        if (email.length === 0) {
+            setError('Email is required')
+            isValid = false
+        }
+        return isValid
+      }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        setError('')
+        if(validatePassword()) {
+          // Create a new user with email and password using firebase
+            createUserWithEmailAndPassword(auth, username, password, fullname, company, email)
+            .then(() => {
+              sendEmailVerification(auth.currentUser)   
+              .then(() => {
+                setTimeActive(true)
+                navigate('/verify-email')
+              }).catch((err) => alert(err.message))
+            })
+            .catch(err => setError(err.message))
+        }
+        setEmail('')
+        setPassword('')
+        setUsername('')
+        setCompany('')
+        setFullname('')
+      }
     return (
         <>
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
@@ -47,6 +83,7 @@ function Signup() {
                     ) : (
                         <>
                             <h3 className={"text-2xl font-bold text-center"}>Signup</h3>
+                            {error && <Alert alert = {error} />}
                             <form onSubmit={handleSubmit}>
                                 <div className={"mt-4"}>
                                     <div>
@@ -54,7 +91,9 @@ function Signup() {
                                             type={"text"}
                                             placeHolder={"Username"}
                                             value={username}
-                                            onChange={(e) => setUsername(e.target.value)}
+                                            required
+                                            onChange={e => setUsername(e.target.value)}
+                                            
                                         />
                                     </div>
                                     <div className={"mt-4"}>
@@ -62,15 +101,17 @@ function Signup() {
                                             type={"password"}
                                             placeHolder={"Password"}
                                             value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            required
+                                            onChange={e => setPassword(e.target.value)}
                                         />
                                     </div>
                                     <div className={"mt-4"}>
                                         <Input
                                             type={"text"}
                                             placeHolder={"Full name"}
-                                            value={employee_name}
-                                            onChange={(e) => setEmployeeName(e.target.value)}
+                                            value={fullname}
+                                            required
+                                            onChange={e => setFullname(e.target.value)}
                                         />
                                     </div>
                                     <div className={"mt-4"}>
@@ -78,7 +119,8 @@ function Signup() {
                                             type={"email"}
                                             placeHolder={"Email"}
                                             value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                            onChange={e => setEmail(e.target.value)}
                                         />
                                     </div>
                                     <div className={"mt-4"}>
@@ -86,7 +128,8 @@ function Signup() {
                                             type={"text"}
                                             placeHolder={"Company"}
                                             value={company}
-                                            onChange={(e) => setCompanyName(e.target.value)}
+                                            required
+                                            onChange={e => setCompany(e.target.value)}
                                         />
                                     </div>
                                     <div className={"flex flex-col place-items-center mt-5"}>
