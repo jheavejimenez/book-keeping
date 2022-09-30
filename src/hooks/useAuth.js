@@ -1,5 +1,7 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from '../utils/Firebase'
 import { useLocalStorage } from "./useLocalStorage";
 const AuthContext = createContext();
 
@@ -15,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 
     // call this function to sign out logged in user
     const logout = () => {
+        signOut(auth) // Sign-out successful.
         setUser(null);
         navigate("/", { replace: true });
     };
