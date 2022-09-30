@@ -11,6 +11,7 @@ import {AuthProvider} from './context/AuthContext'
 import {onAuthStateChanged} from 'firebase/auth'
 import {Navigate} from 'react-router-dom'
 import {auth} from './utils/Firebase'
+import Outgoing from "./pages/Admin/Outgoing";
 
 
 function App() {
@@ -50,6 +51,11 @@ function App() {
             <Route path="/request" element={
                 <PrivateRoute>
                     <RequestPage/>
+                </PrivateRoute>
+            } />
+            <Route path="/outgoing" element={
+                <PrivateRoute>
+                    <Outgoing/>
                 </PrivateRoute>
             } />
 
