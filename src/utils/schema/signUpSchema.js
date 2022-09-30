@@ -16,6 +16,5 @@ export const SignupSchema = Yup.object().shape({
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
             'Password must contain at least one special character and one number and one uppercase letter'
         )
-        .password('Invalid password')
         .required('Required'),
 });
