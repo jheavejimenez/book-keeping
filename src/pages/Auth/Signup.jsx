@@ -1,91 +1,63 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import Input from "../../components/Input/Input";
-import { supabase } from "../../utils/supabaseClient";
 import Button from "../../components/Button/Button";
-
+import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { auth } from "../../utils/Firebase";
+import { Field, Form, Formik } from "formik";
+import { SignupSchema } from "../../utils/schema/signUpSchema";
 
 function Signup() {
-    const [loading, setLoading] = useState(false)
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
-    const [employee_name, setEmployeeName] = useState('')
-    const [company, setCompanyName] = useState('')
+    const navigate = useNavigate()
+    const handleSubmit = async (email, password) => {
+        await createUserWithEmailAndPassword(auth, email, password)
+        await sendEmailVerification(auth.currentUser)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            setLoading(true)
-            await supabase.auth.signUp({ email, password })
-            const { data, error, status } = await supabase.from('users').insert([
-                { username , email, employee_name, company }
-            ],  { returning: 'minimal' }) 
-            if (error && status !== 406) {
-                throw error
-            }   
-            alert('Check your email for the conformation link!')
-        } catch (error) {
-            alert(error.error_description || error.message)
-        } finally {
-            setLoading(false)
-        }
+        navigate('/verify-email')
     }
     return (
         <>
+
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className={"px-8 py-6 mt-4 text-left bg-white shadow-lg w-96"}>
-                    {loading ? (
-                        <div className={"flex flex-col place-items-center"}>
-                            <h3 className={"text-2xl font-bold text-center"}>Sending magic link to email</h3>
-                            <div className="flex items-center justify-center">
-                                <div
-                                    className="w-12 h-12 border-t-2 border-b-2 border-gray-900 rounded-full animate-spin" />
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                            <h3 className={"text-2xl font-bold text-center"}>Signup</h3>
-                            <form onSubmit={handleSubmit}>
+                    <h3 className={"text-2xl font-bold text-center"}>Signup</h3>
+                    <Formik
+                        initialValues={{ email: "", password: "" }}
+                        validationSchema={SignupSchema}
+                        onSubmit={values => {
+                            handleSubmit(values.email, values.password)
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
                                 <div className={"mt-4"}>
-                                    <div>
-                                        <Input
-                                            type={"text"}
-                                            placeHolder={"Username"}
-                                            value={username}
-                                            onChange={(e) => setUsername(e.target.value)}
+                                    <div className={"mt-4"}>
+                                        <Field
+                                            name="email"
+                                            type="email"
+                                            placeholder="Email"
+                                            className={"w-full px-4 py-2 mt-2 border rounded-md " +
+                                                "focus:outline-none focus:ring-1 focus:ring-blue-600"}
                                         />
+                                        {errors.email && touched.email ?
+                                            <span className={"text-sm text-red-700"}>
+                                                {errors.email}
+                                            </span> : null
+                                        }
                                     </div>
                                     <div className={"mt-4"}>
-                                        <Input
+                                        <Field
+                                            name={"password"}
                                             type={"password"}
-                                            placeHolder={"Password"}
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            placeholder={"Password"}
+                                            className={"w-full px-4 py-2 mt-2 border rounded-md" +
+                                                " focus:outline-none focus:ring-1 focus:ring-blue-600"}
                                         />
-                                    </div>
-                                    <div className={"mt-4"}>
-                                        <Input
-                                            type={"text"}
-                                            placeHolder={"Full name"}
-                                            value={employee_name}
-                                            onChange={(e) => setEmployeeName(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className={"mt-4"}>
-                                        <Input
-                                            type={"email"}
-                                            placeHolder={"Email"}
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className={"mt-4"}>
-                                        <Input
-                                            type={"text"}
-                                            placeHolder={"Company"}
-                                            value={company}
-                                            onChange={(e) => setCompanyName(e.target.value)}
-                                        />
+                                        {errors.password && touched.password ?
+                                            <span className={"text-sm text-red-700"}>
+                                                {errors.password}
+                                            </span> : null
+                                        }
                                     </div>
                                     <div className={"flex flex-col place-items-center mt-5"}>
                                         <Button text={"Sign up"} />
@@ -94,9 +66,9 @@ function Signup() {
                                             Account ? Login</a>
                                     </div>
                                 </div>
-                            </form>
-                        </>
-                    )}
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </>
@@ -104,3 +76,4 @@ function Signup() {
 }
 
 export default Signup
+
