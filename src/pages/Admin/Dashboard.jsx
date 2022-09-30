@@ -3,6 +3,7 @@ import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ClientTable from "../../components/Table/ClientTable";
 import Dropdown from "../../components/Button/Dropdown";
+import { DocumentArrowDownIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 
 
@@ -77,11 +78,13 @@ function Dashboard() {
                                     "rounded-full transition-all duration-300 transform group-hover:rotate-12"
                                 }
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+
+                            <DocumentArrowDownIcon className="h-10 w-10 text-gray-900 group-hover:text-gray-400"/>
+                                {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
                                     class="w-10 h-10 transform transition-transform duration-500 ease-in-out">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                                </svg>
-   
+                                </svg> */}
+                                
                             </div>
                             <div className={"text-right"}>
                                 <p className={"text-3xl"}>326</p>
@@ -99,15 +102,7 @@ function Dashboard() {
                                     "duration-300 transform group-hover:rotate-12"
                                 }
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" viewBox="0 0 490 490" stroke="currentColor"
-                                    className={"stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"}>       
-                                    <g id="bold_copy_37_">
-                                        <path strokeWidth="2" d="M245,0C109.684,0,0,109.684,0,245s109.684,245,245,245s245-109.684,245-245S380.316,0,245,0z M245,459.375   c-118.213,0-214.375-96.163-214.375-214.375S126.787,30.625,245,30.625S459.375,126.787,459.375,245S363.212,459.375,245,459.375z"/>
-                                        <polygon points="266.836,286.987 275.196,114.874 214.788,114.874 223.532,286.987  "/>
-                                        <path strokeWidth="2" d="M245.184,305.974c-20.136,0-34.178,14.424-34.178,34.576c0,19.738,13.674,34.576,34.178,34.576   c20.503,0,33.825-14.823,33.825-34.576C278.611,320.399,265.304,305.974,245.184,305.974z"/>
-                                    </g>
-                                </svg>
-
+                                <ExclamationCircleIcon className="h-10 w-10 text-gray-900 group-hover:text-gray-400"/>
                             </div>
                             <div className={"text-right"}>
                                 <p className={"text-3xl"}>245</p>

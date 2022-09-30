@@ -1,6 +1,7 @@
 import React from "react";
 
 function TableRow({DocID, SenderName, fileName, timeStamp, status}) {
+    let color = "red"
     return (
         <tr className={"bg-gray-50 hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{DocID}</td>
@@ -9,7 +10,7 @@ function TableRow({DocID, SenderName, fileName, timeStamp, status}) {
             <td className={"px-4 py-3 text-sm"}>{timeStamp}</td>
             <td className={"px-4 py-3 text-xs"}>
                 <span className={"px-2 py-1 font-semibold leading-tight " +
-                    "text-green-700 bg-green-100 rounded-full "
+                    " `text-${color}-700 bg-${color}-100 rounded-full` "
                 }>{status}</span>
             </td>
             <td  className={"flex justify-center items-center w-14 h-14 transition-all duration-300 transform group-hover:rotate-12"}>
