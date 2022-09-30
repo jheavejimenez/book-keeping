@@ -4,22 +4,15 @@ import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { auth } from "../../utils/Firebase";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { SignupSchema } from "../../utils/schema/signUpSchema";
 
 function Signup() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const navigate = useNavigate()
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
+    const handleSubmit = async (email, password) => {
         await createUserWithEmailAndPassword(auth, email, password)
         await sendEmailVerification(auth.currentUser)
 
-        setEmail('')
-        setPassword('')
         navigate('/verify-email')
     }
     return (
@@ -31,18 +24,20 @@ function Signup() {
                     <Formik
                         initialValues={{ email: "", password: "" }}
                         validationSchema={SignupSchema}
-                        onSubmit={handleSubmit}
+                        onSubmit={values => {
+                            handleSubmit(values.email, values.password)
+                        }}
                     >
                         {({ errors, touched }) => (
                             <Form>
                                 <div className={"mt-4"}>
                                     <div className={"mt-4"}>
-                                        <Input
-                                            type={"email"}
-                                            placeHolder={"Email"}
-                                            value={email}
-                                            required
-                                            onChange={e => setEmail(e.target.value)}
+                                        <Field
+                                            name="email"
+                                            type="email"
+                                            placeholder="Email"
+                                            className={"w-full px-4 py-2 mt-2 border rounded-md " +
+                                                "focus:outline-none focus:ring-1 focus:ring-blue-600"}
                                         />
                                         {errors.email && touched.email ?
                                             <span className={"text-sm text-red-700"}>
@@ -51,12 +46,12 @@ function Signup() {
                                         }
                                     </div>
                                     <div className={"mt-4"}>
-                                        <Input
+                                        <Field
+                                            name={"password"}
                                             type={"password"}
-                                            placeHolder={"Password"}
-                                            value={password}
-                                            required
-                                            onChange={e => setPassword(e.target.value)}
+                                            placeholder={"Password"}
+                                            className={"w-full px-4 py-2 mt-2 border rounded-md" +
+                                                " focus:outline-none focus:ring-1 focus:ring-blue-600"}
                                         />
                                         {errors.password && touched.password ?
                                             <span className={"text-sm text-red-700"}>

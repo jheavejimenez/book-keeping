@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 
 export const SignupSchema = Yup.object().shape({
     email: Yup.string()
+        .email('Invalid email')
         // check if is a valid email that contains @ and .
         .matches(
             /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
