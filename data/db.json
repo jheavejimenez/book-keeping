@@ -1,0 +1,37 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "sender": "John",
+      "file": "file1.pdf",
+      "timestamp": "2019-01-01 12:00:00",
+      "status": "Pending"
+    },
+    {
+      "id": "2",
+      "sender": "Lawrence",
+      "file": "file2.pdf",
+      "timestamp": "2019-01-01 12:00:00",
+      "status": "In Progress"
+    },
+    {
+      "id": "3",
+      "sender": "Darell",
+      "file": "file3.pdf",
+      "timestamp": "2019-01-01 12:00:00",
+      "status": "Approved"
+    },
+    {
+      "id": "4",
+      "sender": "Jheave",
+      "file": "file4.pdf",
+      "timestamp": "2019-01-01 12:00:00",
+      "status": "New"
+    }
+  ],
+  "titleHeader": [
+    {
+      "title":["DocID","Sender","File","Timestamp","Status","Action"]
+    }
+  ]
+}
