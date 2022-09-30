@@ -52,7 +52,7 @@ import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/au
         setError('')
         if(validatePassword()) {
           // Create a new user with email and password using firebase
-            createUserWithEmailAndPassword(auth, username, password, fullname, company, email)
+            createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
               sendEmailVerification(auth.currentUser)   
               .then(() => {
