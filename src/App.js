@@ -7,6 +7,7 @@ import Outgoing from "./pages/Admin/Outgoing";
 import Incoming from "./pages/Admin/Incoming";
 import RequestPage from "./pages/Admin/RequestPage";
 import { ProtectedRoute } from "./pages/Auth/ProtectRoutes";
+import Acoutsettings from "./pages/Admin/Accountsettings";
 
 
 function App() {
@@ -34,6 +35,11 @@ function App() {
             <Route path="/outgoing" element={
                 <ProtectedRoute>
                     <Outgoing />
+                </ProtectedRoute>
+            } />
+            <Route path="/accountsettings" element={
+                <ProtectedRoute>
+                    <Acoutsettings />
                 </ProtectedRoute>
             } />
         </Routes>
