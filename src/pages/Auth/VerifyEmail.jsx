@@ -12,7 +12,7 @@ function VerifyEmail() {
     }
 
     return (
-    <div className='flex min-h-screen items-center justify-center'>
+    <div className='flex min-h-screen items-center  justify-center'>
         <div className={"bg-slate-200 border-2 border-solid rounded-md border-sky-200 p-5 items-center"}>
             <div>
                 <h1 className={"text-2xl font-bold tracking-wide mb-6"}>Verify your Email Address</h1>

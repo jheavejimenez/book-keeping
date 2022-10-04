@@ -77,7 +77,7 @@ function Accountsettings() {
                         <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>Update information </span>
                         <span><Button text={"Edit"}/></span>
                     </div>
-                    <div className={"flex justify-center"}>
+                    <div className={"flex justify-center "}>
                         <span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon className={"w-24 h-24"}/></span>
                         <span className={"inline-grid"}>
                             <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
