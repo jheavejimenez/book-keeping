@@ -8,32 +8,29 @@ import  Alert  from "../../components/Alert/Alert";
 import { Field, Form, Formik } from "formik";
 import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
+import { collection, doc, setDoc, getDocs, query, where } from "firebase/firestore"; 
+import { db } from "../../utils/Firebase";
 
 function Login() {
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
-    const handleSubmit = (email,password) => {
+    const handleSubmit = async(email,password, role,uid ) => {
+        const q = query(collection(db, "users"), where("email", "==", email, "role", "==", role, uid, "==", uid));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+        });
+        await signInWithEmailAndPassword(auth, email, password)
+        .then((cred) => {
+            login(cred.user.uid)
+            navigate('/dashboard')
+        })
+        .catch((error) => {
+            setError(error.message)
+        })
         
-         signInWithEmailAndPassword(auth, email, password)
-            .then((res) => {
-                login({
-                    idToken: res._tokenResponse.idToken,
-                    expiresIn: res._tokenResponse.expiresIn,
-                    refreshToken: res._tokenResponse.refreshToken,
-
-                })
-                if (!auth.currentUser.emailVerified) {
-                    sendEmailVerification(auth.currentUser)
-                        .then(() => {
-                            navigate('/verify-email')
-                        })
-                        .catch(err => alert(err.message))
-                } else {
-                    navigate('/dashboard')
-                }
-            })
-            .catch(err => setError(err.message))
+        
     }
 
     return (

@@ -18,4 +18,12 @@ export const SignupSchema = Yup.object().shape({
             'Password must contain at least one special character and one number and one uppercase letter'
         )
         .required('Required'),
+
+    role: Yup.string()
+            .matches(
+                /^(admin|user)$/,
+                'Role must be admin or user'
+            )
+        .required('Required'),
+
 });
