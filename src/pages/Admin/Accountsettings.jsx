@@ -6,6 +6,9 @@ import Button from "../../components/Button/Button";
 // import Dropdown from "../../components/Button/Dropdown";
 // import ButtonSendFle from "../../components/Button/ButtonSendFle";
 
+
+
+
 function Accountsettings() {
     return (
         <div
@@ -77,9 +80,10 @@ function Accountsettings() {
                     <div className={"flex"}>
                         <span className={"mt-4 pt-2 z-10 border-4 border-sky-200 sm:ml-20 md:ml-32 lg:ml-64 xl:ml-64 2xl:ml-96"}><UserIcon className={"w-24 h-24"}/></span>
                         <span className={"inline-grid"}>
-                            <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
-                                       Change
-                            </button>
+                            <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
+                                <span className={""}>Change</span>
+                                <input type='file' className="hidden "/>
+                            </label>
                             <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
                                        Remove
                             </button>

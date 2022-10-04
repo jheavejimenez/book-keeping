@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import ClientTable from "../../components/Table/ClientTable";
-import Dropdown from "../../components/Button/Dropdown";
-import ButtonSendFle from "../../components/Button/ButtonSendFle";
+import OutgoingCard from "../../components/Card/OutgoingCard";
+import OutgoingTable from "../../components/Table/OutgoingTable";
 
 function Outgoing() {
     return (
@@ -53,28 +54,21 @@ function Outgoing() {
             <Sidebar />
 
             <div className={"flex justify-between items-center h-14 bg-white header-right"}>
-
+                
             </div>
 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <div className="mt-4 mx-4">
-                    <div className={"bg-blue-500 text-white shadow-lg rounded-md" +
-                        " flex items-center justify-between p-3 " +
-                        " text-white font-medium group h-20"}>
-                        <span className="ml-2 text-3xl font-medium tracking-wide truncate">Outgoing Documents</span>
-                        <span><ButtonSendFle/></span>
-                    </div>
-                </div>
-                <div className="mt-4 mx-4 pt-7">
-                    <span className="ml-2 text-sm font-medium tracking-wide truncate">Filter by Type <Dropdown /></span>
-                </div>
+                <OutgoingCard 
+                    titleText={"Outgoing Documents"}
+                
+                />
 
-                {/*client table*/}
-                <ClientTable />
+                {/*outgoing table*/}
+                <OutgoingTable />
             </div>
 
 
-        </div>
+            </div>
     )
 }
 

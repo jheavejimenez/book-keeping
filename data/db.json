@@ -76,5 +76,58 @@
     {
       "title":["ReqID","RequestFrom","RequestBy","File","Purpose","DueDate","DataRequested"]
     }
+  ],
+  "incomingData": [
+    {
+      "incID": "1",
+      "sender": "John Doe - XYZ Company",
+      "file": "Transaction.xlsx",
+      "dateReceived": "2022-09-16"
+      
+    },
+    {
+      "incID": "2",
+      "sender": "Jane Doe - ABC Company",
+      "file": "Finance.xlsx",
+      "dateReceived": "2022-05-13"
+      
+    },
+    {
+      "incID": "3",
+      "sender": "Amelia Watson - JKL Company",
+      "file": "Records.xlsx",
+      "dateReceived": "2021-08-23"
+      
+    }   
+  ],
+  "incomingHeader": [
+    {
+      "title":["DocID","Sender","File","DateReceived","Action"]
+    }
+  ],
+  "outgoingData": [
+    {
+      "outID": "1",
+      "recipient": "John Doe - XYZ Company",
+      "file": "Transaction.xlsx",
+      "dateSent": "2022-09-16"
+    },
+    {
+      "outID": "2",
+      "recipient": "Jane Doe - ABC Company",
+      "file": "BIR.xlsx",
+      "dateSent": "2022-03-10"
+    },
+    {
+      "outID": "3",
+      "recipient": "Amelia Watson - JKL Company",
+      "file": "Final.xlsx",
+      "dateSent": "2021-01-10"
+    }   
+  ],
+  "outgoingHeader": [
+    {
+      "title":["DocID","Recipient","File","DateSent"]
+    }
   ]
 }
