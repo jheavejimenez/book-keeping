@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RequestTableRow from "./RequestTableRow";
+import IncomingTableRow from "./IncomingTableRow";
 import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
@@ -9,12 +9,12 @@ function RequestTable() {
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/requestData");
+        const response = await axios.get("http://localhost:3000/incomingData");
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/requestHeader");
+        const response = await axios.get("http://localhost:3000/incomingHeader");
         setTitleTable(response.data[0].title);
 
     }
@@ -50,20 +50,17 @@ function RequestTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <RequestTableRow
-                                    ReqID={item.reqID}
-                                    RequestFrom={item.requestFrom}
-                                    RequestBy={item.requestBy}
+                                <IncomingTableRow
+                                    DocID={item.incID}
+                                    Sender={item.sender}
                                     File={item.file}
-                                    Purpose={item.purpose}
-                                    DueDate={item.dueDate}
-                                    DataRequested={item.dataRequested}
+                                    DateReceived={item.dateReceived}
                                 />)
                             )}
                             </tbody>
                         </table>
                     </div>
-                    <Pagination/>
+                    <Pagination/>       
                 </div>
             </div>
         </>

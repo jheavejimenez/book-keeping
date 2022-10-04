@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import RequestTableRow from "./RequestTableRow";
+import OutgoingTableRow from "./OutgoingTableRow";
 import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 
-function RequestTable() {
+function OutgoingTable() {
     const [data, setData] = useState([]);
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/requestData");
+        const response = await axios.get("http://localhost:3000/outgoingData");
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/requestHeader");
+        const response = await axios.get("http://localhost:3000/outgoingHeader");
         setTitleTable(response.data[0].title);
-
     }
 
     useEffect(() => {
@@ -50,14 +49,11 @@ function RequestTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <RequestTableRow
-                                    ReqID={item.reqID}
-                                    RequestFrom={item.requestFrom}
-                                    RequestBy={item.requestBy}
+                                <OutgoingTableRow
+                                    DocID={item.outID}
+                                    Recipient={item.recipient}
                                     File={item.file}
-                                    Purpose={item.purpose}
-                                    DueDate={item.dueDate}
-                                    DataRequested={item.dataRequested}
+                                    DateSent={item.dateSent}
                                 />)
                             )}
                             </tbody>
@@ -70,4 +66,4 @@ function RequestTable() {
     )
 }
 
-export default RequestTable;
+export default OutgoingTable;

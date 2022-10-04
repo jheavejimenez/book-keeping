@@ -3,7 +3,7 @@
 import React from "react";
 import TitleCard from "../../components/Card/TitleCard";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import ClientTable from "../../components/Table/ClientTable";
+import IncomingTable from "../../components/Table/IncomingTable";
 import Dropdown from "../../components/Button/Dropdown";
 
 function Incoming() {
@@ -68,7 +68,7 @@ function Incoming() {
                 </div>
 
                 {/*client table*/}
-                <ClientTable />
+                <IncomingTable />
             </div>
 
                 

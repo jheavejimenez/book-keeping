@@ -22,7 +22,7 @@ function TableRow({ DocID, SenderName, fileName, timeStamp, status }) {
     }
 
     return (
-        <tr className={"bg-gray-50 hover:bg-gray-300 text-black"}>
+        <tr className={"hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{DocID}</td>
             <td className={"px-4 py-3 text-sm"}>{SenderName}</td>
             <td className={"px-4 py-3 text-xs"}>{fileName}</td>
@@ -33,7 +33,9 @@ function TableRow({ DocID, SenderName, fileName, timeStamp, status }) {
                 </span>
             </td>
             <td className={"flex justify-center items-center w-14 h-14 transition-all duration-300 transform group-hover:rotate-12"}>
+               <button>
                <PencilSquareIcon className={"w-6 h-6 text-blue-500 group-hover:text-blue-700"}/>
+               </button>
             </td>
 
         </tr>
