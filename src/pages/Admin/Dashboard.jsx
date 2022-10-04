@@ -14,7 +14,6 @@ function Dashboard() {
             <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
                 {/*header*/}
                 <Header />
-                {/*end of header*/}
 
                 {/*sidebar*/}
                 <Sidebar />
