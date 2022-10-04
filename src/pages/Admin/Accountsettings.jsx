@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "../../components/Navigation/Sidebar";
 import {UserIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 import Button from "../../components/Button/Button";
 // import ClientTable from "../../components/Table/ClientTable";

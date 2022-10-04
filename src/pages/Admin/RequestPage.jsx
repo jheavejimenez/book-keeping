@@ -2,7 +2,7 @@
 
 import React from "react";
 import RequestCard from "../../components/Card/RequestCard"; 
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "../../components/Navigation/Sidebar";
 import RequestTable from "../../components/Table/RequestTable";
 
 

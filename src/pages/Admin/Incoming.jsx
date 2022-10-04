@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import TitleCard from "../../components/Card/TitleCard";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "../../components/Navigation/Sidebar";
 import IncomingTable from "../../components/Table/IncomingTable";
 import Dropdown from "../../components/Button/Dropdown";
 

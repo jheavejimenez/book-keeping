@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React from "react";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "../../components/Navigation/Sidebar";
 import OutgoingCard from "../../components/Card/OutgoingCard";
 import OutgoingTable from "../../components/Table/OutgoingTable";
 
