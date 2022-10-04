@@ -78,11 +78,11 @@ function Accountsettings() {
                         <span><Button text={"Edit"}/></span>
                     </div>
                     <div className={"flex justify-center "}>
-                        <span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon className={"w-24 h-24"}/></span>
+                        <span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon id="blah"className={"w-24 h-24"}/></span>
                         <span className={"inline-grid"}>
                             <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
                                 <span className={""}>Change</span>
-                                <input type='file' className="hidden "/>
+                                <input type='file'  onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" className="hidden "/>
                             </label>
                             <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
                                        Remove
