@@ -1,5 +1,4 @@
 import React from "react";
-import {UserIcon} from "@heroicons/react/24/outline";
 import Button from "../Button/Button";
 
 export default function Uploadimage() {
@@ -24,12 +23,10 @@ export default function Uploadimage() {
     const uploadImage = async (base64EncodedImage) => {
         console.log(base64EncodedImage)
 }
-
-
     return(
         <>
         <div className={"flex justify-center"}>
-        <span className={"mt-4 z-10 border-2 border-black"}>
+        <span className={"mt-4 border-2 border-black"}>
             {Source &&(
                     <img className={"w-40 h-40"} src={Source} alt={"profile image"}/>
             )}
@@ -39,8 +36,8 @@ export default function Uploadimage() {
                     <p className={"pt-3"}> Change</p>
                     <input className={"hidden"} type="file" accept={"image/*"} onChange={handleFile} value={fileInput}/>
                 </label>
-                <Button text={"Remove"}/>
-                    {/*<Button onSubmit={handleSubmit} text={"Submit"}/>*/}
+                <Button text={"Remove"} onChange={handleFile} value={""}/>
+
             </div>
         </div>
         </>
