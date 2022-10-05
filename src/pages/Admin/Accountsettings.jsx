@@ -6,6 +6,12 @@ import Header from "../../components/Navigation/Header";
 import { addDoc, collection, where} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import Uploadimage from "../../components/UploadImage/Uploadimage";
+import Input from "../../components/Input/Input";
+import {resendEmailVerification } from "../Auth/VerifyEmail";
+import { sendEmailVerification } from 'firebase/auth'
+import { auth } from '../../utils/Firebase'
+import { updateEmail   } from 'firebase/auth'
+
 // import ClientTable from "../../components/Table/ClientTable";
 // import Dropdown from "../../components/Button/Dropdown";
 // import ButtonSendFle from "../../components/Button/ButtonSendFle";
@@ -14,11 +20,20 @@ import Uploadimage from "../../components/UploadImage/Uploadimage";
 
 
 function Accountsettings() {
+    
     const handleSubmit = async (email, company, name,uid) => {
-        await addDoc(collection(db, "accset"), where("uid", "==", uid), { email: email, company: company, name: name, uid: uid })
-
+        await addDoc(collection(db, "accset"), { email: email, company: company, name: name, uid: uid })
     }
-    console.log(handleSubmit)
+    const resendEmailVerification = (e) => {
+        e.preventDefault();
+        sendEmailVerification(auth.currentUser)
+            .then(() => {
+            }).catch((err) => {
+            alert(err.message)
+        })
+    }
+    
+    
 
 
 
@@ -71,16 +86,17 @@ function Accountsettings() {
                     <form onSubmit={handleSubmit} >
                         <div className={"flex mt-16"}>
                             <span className={"inline-grid font-bold"}>
-                                <span className={"my-2"}>Name:</span>
+                                <span className={"my-1"}>Name:</span>
                                 <span className={"my-3"}>Company:</span>
                                 <span className={"my-2"}>Email:</span>
                             </span>
                             <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
-                                    <input name="name" className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} />
-                                    <input name="Company" className={"border rounded-md border-black text-black w-36 mt-2 sm:w-80"} />
+                                    <Input name="name" className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br/>
+
+                                    <Input name="company" className={"border rounded-md border-black text-black w-36 mt-2 sm:w-80"} /><br/>
                                     <span className={""}>
-                                        <input name="Email" className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} />
-                                        <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
+                                        <Input name="email" className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} /><br/>
+                                        <button onClick={resendEmailVerification} className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-5 border border-blue-500 rounded ml-56 mt-5\">
                                         Verify
                                         </button>
                                     </span>
