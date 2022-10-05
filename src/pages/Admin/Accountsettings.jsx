@@ -1,10 +1,11 @@
 import React from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
-import {UserIcon, UserCircleIcon} from "@heroicons/react/24/outline";
+import {UserCircleIcon} from "@heroicons/react/24/outline";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Navigation/Header";
-import { addDoc, collection, onSnapshot, where} from "firebase/firestore";
+import { addDoc, collection, where} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
+import Uploadimage from "../../components/UploadImage/Uploadimage";
 // import ClientTable from "../../components/Table/ClientTable";
 // import Dropdown from "../../components/Button/Dropdown";
 // import ButtonSendFle from "../../components/Button/ButtonSendFle";
@@ -53,16 +54,19 @@ function Accountsettings() {
                         <span><Button text={"Edit"}/></span>
                     </div>
                     <div className={"flex justify-center "}>
-                        <span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon className={"w-24 h-24"}/></span>
-                        <span className={"inline-grid"}>
-                            <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
-                                <span className={""}>Change</span>
-                                <input type='file' className="hidden "/>
-                            </label>
-                            <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
-                                       Remove
-                            </button>
-                        </span>
+
+                        <Uploadimage/>
+
+                        {/*<span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon className={"w-24 h-24"}/></span>*/}
+                        {/*<span className={"inline-grid"}>*/}
+                        {/*    <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">*/}
+                        {/*        <span> <Uploadimage/> </span>*/}
+                        {/*        <input type='file' className="hidden "/>*/}
+                        {/*    </label>*/}
+                        {/*    <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">*/}
+                        {/*               Remove*/}
+                        {/*    </button>*/}
+                        {/*</span>*/}
                     </div>
                     <form onSubmit={handleSubmit} >
                         <div className={"flex mt-16"}>
