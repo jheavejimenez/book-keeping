@@ -23,7 +23,7 @@ function Login() {
         });
         await signInWithEmailAndPassword(auth, email, password)
         .then((cred) => {
-            login(cred.user.uid)
+            login(cred.user.email)
             navigate('/dashboard')
         })
         .catch((error) => {
