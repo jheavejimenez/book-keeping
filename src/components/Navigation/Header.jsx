@@ -1,13 +1,9 @@
 import React from "react";
 import {useAuth} from "../../hooks/useAuth";
-<<<<<<< HEAD
 import { ArrowRightOnRectangleIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-=======
-import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { collection, query, where, onSnapshot, getDocs,doc } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useEffect } from "react";
->>>>>>> 184aa8de45bd2eb894f61a0f212cabe4089ca94d
 
 function Header() {
 	const {logout} = useAuth()
