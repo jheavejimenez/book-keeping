@@ -1,8 +1,11 @@
 import React from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
-import {UserIcon, UserCircleIcon} from "@heroicons/react/24/outline";
+import {UserCircleIcon} from "@heroicons/react/24/outline";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Navigation/Header";
+import { addDoc, collection, where} from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import Uploadimage from "../../components/UploadImage/Uploadimage";
 // import ClientTable from "../../components/Table/ClientTable";
 // import Dropdown from "../../components/Button/Dropdown";
 // import ButtonSendFle from "../../components/Button/ButtonSendFle";
@@ -11,6 +14,15 @@ import Header from "../../components/Navigation/Header";
 
 
 function Accountsettings() {
+    const handleSubmit = async (email, company, name,uid) => {
+        await addDoc(collection(db, "accset"), where("uid", "==", uid), { email: email, company: company, name: name, uid: uid })
+
+    }
+    console.log(handleSubmit)
+
+
+
+
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiasing bg-gray-100 text-black"}>
@@ -42,43 +54,49 @@ function Accountsettings() {
                         <span><Button text={"Edit"}/></span>
                     </div>
                     <div className={"flex justify-center "}>
-                        <span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon className={"w-24 h-24"}/></span>
-                        <span className={"inline-grid"}>
-                            <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
-                                <span className={""}>Change</span>
-                                <input type='file' className="hidden "/>
-                            </label>
-                            <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">
-                                       Remove
-                            </button>
-                        </span>
-                    </div>
-                    <div className={"flex mt-16"}>
-                         <span className={"inline-grid font-bold"}>
-                            <span className={"my-2"}>Name:</span>
-                            <span className={"my-3"}>Company:</span>
-                            <span className={"my-2"}>Email:</span>
-                        </span>
-                        <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
-                                <input name="name" className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} />
-                                <input name="Company" className={"border rounded-md border-black text-black w-36 mt-2 sm:w-80"} />
-                                <span className={""}>
-                                    <input name="Email" className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} />
-                                    <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
-                                       Verify
-                                    </button>
-                                </span>
 
-                        </span>
+                        <Uploadimage/>
+
+                        {/*<span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon className={"w-24 h-24"}/></span>*/}
+                        {/*<span className={"inline-grid"}>*/}
+                        {/*    <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">*/}
+                        {/*        <span> <Uploadimage/> </span>*/}
+                        {/*        <input type='file' className="hidden "/>*/}
+                        {/*    </label>*/}
+                        {/*    <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">*/}
+                        {/*               Remove*/}
+                        {/*    </button>*/}
+                        {/*</span>*/}
                     </div>
-                    <div className={"flex justify-center sm:justify-end mt-16"}>
-                        <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded">
-                            Save
-                        </button>
-                        <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
-                            Cancel
-                        </button>
-                    </div>
+                    <form onSubmit={handleSubmit} >
+                        <div className={"flex mt-16"}>
+                            <span className={"inline-grid font-bold"}>
+                                <span className={"my-2"}>Name:</span>
+                                <span className={"my-3"}>Company:</span>
+                                <span className={"my-2"}>Email:</span>
+                            </span>
+                            <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
+                                    <input name="name" className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} />
+                                    <input name="Company" className={"border rounded-md border-black text-black w-36 mt-2 sm:w-80"} />
+                                    <span className={""}>
+                                        <input name="Email" className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} />
+                                        <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
+                                        Verify
+                                        </button>
+                                    </span>
+
+                            </span>
+                        </div>
+                    
+                        <div className={"flex justify-center sm:justify-end mt-16"}>
+                            <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded">
+                                Save
+                            </button>
+                            <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
