@@ -87,7 +87,7 @@ function Accountsettings() {
 
                             </span>
                         </div>
-                    
+
                         <div className={"flex justify-center sm:justify-end mt-16"}>
                             <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded">
                                 Save

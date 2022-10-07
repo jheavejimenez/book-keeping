@@ -8,6 +8,7 @@ import Incoming from "./pages/Admin/Incoming";
 import RequestPage from "./pages/Admin/RequestPage";
 import { ProtectedRoute } from "./pages/Auth/ProtectRoutes";
 import Accountsettings from "./pages/Admin/Accountsettings";
+import Forgotpass from "./pages/Auth/Forgotpass";
 
 
 function App() {
@@ -40,6 +41,11 @@ function App() {
             <Route path="/accountsettings" element={
                 <ProtectedRoute>
                     <Accountsettings />
+                </ProtectedRoute>
+            } />
+            <Route path="/forgotpass" element={
+                <ProtectedRoute>
+                    <Forgotpass />
                 </ProtectedRoute>
             } />
         </Routes>
