@@ -16,14 +16,14 @@ function ChangeStatus() {
        {showModal ? (
         <>
             <div
-                className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                className=" flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             >
-                <div className="relative w-1/4 my-6 mx-auto max-w-3xl">
+                <div className="relative w-1/4 my-6 mx-auto max-w-md ">
                     {/*content*/}
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    <div className="flex justify-center border-0 rounded-lg shadow-lg absolute m-auto flex-col md:shrink w-auto bg-white outline-none focus:outline-none">
                         {/*header*/}
-                        <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                            <h3 className="text-3xl font-semi-bold text-black">
+                        <div className="flex items-center sm:items-start p-5 border-b border-solid border-slate-200 rounded-t">
+                            <h3 className="font-bold">
                                 Edit Status
                             </h3>
                             <button
@@ -34,10 +34,10 @@ function ChangeStatus() {
                             </button>
                         </div>
                         {/*body*/}
-                        <div className="relative p-6 flex justify-center">
-                            <form>
-                                    <label className={"text-lg mr-4"} > Progress Status </label>
-                                    <ChooseStatusDropdown/>
+                        <div className="flex items-center justify-center p-5 border-b border-solid border-slate-200 h-auto rounded-t">
+                            <form className={"relative space-y-3.5 w-auto shrink"} >
+                                    <label className={"font-bold mr-2"} > Progress Status </label>
+                                    <ChooseStatusDropdown className={"relative space-y-3.5 md:w-auto shrink"}/>
                             </form>
                         </div>
                         {/*footer*/}
