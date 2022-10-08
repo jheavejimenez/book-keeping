@@ -3,14 +3,14 @@ import Sidebar from "../../components/Navigation/Sidebar";
 import {UserCircleIcon} from "@heroicons/react/24/outline";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Navigation/Header";
-import { addDoc, collection, where} from "firebase/firestore";
+import { collection, setDoc, getDocs, query, where, doc } from "firebase/firestore"; 
 import { db } from "../../utils/Firebase";
 import Uploadimage from "../../components/UploadImage/Uploadimage";
 import Input from "../../components/Input/Input";
-import {resendEmailVerification } from "../Auth/VerifyEmail";
 import { sendEmailVerification } from 'firebase/auth'
 import { auth } from '../../utils/Firebase'
 import { updateEmail   } from 'firebase/auth'
+
 
 // import ClientTable from "../../components/Table/ClientTable";
 // import Dropdown from "../../components/Button/Dropdown";
@@ -21,16 +21,39 @@ import { updateEmail   } from 'firebase/auth'
 
 function Accountsettings() {
     
-    const handleSubmit = async (email, company, name,uid) => {
-        await addDoc(collection(db, "accset"), { email: email, company: company, name: name, uid: uid })
-    }
-    const resendEmailVerification = (e) => {
-        e.preventDefault();
-        sendEmailVerification(auth.currentUser)
-            .then(() => {
-            }).catch((err) => {
-            alert(err.message)
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const settings = document.getElementById("accset")
+        
+
+        await db.collection('accset').doc( 'accset' ).set({
+            email: settings['email'].value,
+            company: settings['company'].value,
+            name: settings['name'].value,
         })
+        .then(() => {
+            console.log('Document successfully written!');
+        })
+        .catch((error) => {
+            console.error('Error writing document: ', error);
+        }
+        );
+
+
+
+
+        
+    }
+
+        
+
+    const verify = (e) => {
+        const email = document.getElementById("email").value
+        e.preventDefault();
+         sendEmailVerification(email).then(() => {
+            alert("Email verification sent")
+        })
+            
     }
     
     
@@ -69,21 +92,9 @@ function Accountsettings() {
                         <span><Button text={"Edit"}/></span>
                     </div>
                     <div className={"flex justify-center "}>
-
                         <Uploadimage/>
-
-                        {/*<span className={"mt-4 pt-2 z-10 border-4 border-sky-200w "}><UserIcon className={"w-24 h-24"}/></span>*/}
-                        {/*<span className={"inline-grid"}>*/}
-                        {/*    <label className="cursor-pointer bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">*/}
-                        {/*        <span> <Uploadimage/> </span>*/}
-                        {/*        <input type='file' className="hidden "/>*/}
-                        {/*    </label>*/}
-                        {/*    <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3 mt-5">*/}
-                        {/*               Remove*/}
-                        {/*    </button>*/}
-                        {/*</span>*/}
                     </div>
-                    <form onSubmit={handleSubmit} >
+                    <form onSubmit={handleSubmit} id="accset" >
                         <div className={"flex mt-16"}>
                             <span className={"inline-grid font-bold"}>
                                 <span className={"my-1"}>Name:</span>
@@ -91,12 +102,21 @@ function Accountsettings() {
                                 <span className={"my-2"}>Email:</span>
                             </span>
                             <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
-                                    <Input name="name" className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br/>
+                                    <Input 
+                                    name="name"
+                                     id="name" 
+                                     className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br/>
 
-                                    <Input name="company" className={"border rounded-md border-black text-black w-36 mt-2 sm:w-80"} /><br/>
+                                    <Input 
+                                    name="company"
+                                     id="company"
+                                      className={"border rounded-md border-black text-black w-36 mt-2 sm:w-80"} /><br/>
                                     <span className={""}>
-                                        <Input name="email" className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} /><br/>
-                                        <button onClick={resendEmailVerification} className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-5 border border-blue-500 rounded ml-56 mt-5\">
+                                        <Input
+                                         name="email"
+                                          id="email" 
+                                          className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} /><br/>
+                                        <button onClick={verify} className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-5 border border-blue-500 rounded ml-56 mt-5">
                                         Verify
                                         </button>
                                     </span>
@@ -105,7 +125,7 @@ function Accountsettings() {
                         </div>
                     
                         <div className={"flex justify-center sm:justify-end mt-16"}>
-                            <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded">
+                            <button  className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded">
                                 Save
                             </button>
                             <button className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
