@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "../../../src/assets/MindWorxLogo.png"
 import Button from "../../components/Button/Button";
 import { useNavigate } from 'react-router-dom'
-import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth'
+import { sendEmailVerification, signInWithEmailAndPassword, getAuth, onAuthStateChanged  } from 'firebase/auth'
 import { auth } from '../../utils/Firebase'
 import  Alert  from "../../components/Alert/Alert";
 import { Field, Form, Formik } from "formik";
@@ -15,16 +15,29 @@ function Login() {
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
+    
     const handleSubmit = async(email,password, role,uid ) => {
         const q = query(collection(db, "users"), where("email", "==", email, "role", "==", role, uid, "==", uid));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
+          
         });
         await signInWithEmailAndPassword(auth, email, password)
         .then((cred) => {
-            login(cred.user.email)
-            navigate('/dashboard')
+            const isNewUser = cred.user.metadata.creationTime;
+            if(isNewUser===cred.user.metadata.lastSignInTime){
+                login(cred.user.email)
+                navigate('/accountsettings')
+            }
+                
+            else{
+                login(cred.user.email)
+                navigate('/dashboard')
+            
+                
+            }
+            // navigate('/dashboard')
         })
         .catch((error) => {
             setError(error.message)
