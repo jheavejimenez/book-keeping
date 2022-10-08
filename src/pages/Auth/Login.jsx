@@ -83,7 +83,7 @@ function Login() {
                                         </div>
                                         <div className={"flex flex-col place-items-center"}>
                                             <Button text={"Login"} />
-                                            <a href="src/pages/Auth/Login#"
+                                            <a href="/Forgotpass"
                                             className={"text-sm text-black-600 hover:underline mt-5 "}>Forgot
                                                 password?</a>
                                             <div className="border-t-2 w-80 mt-5 ">

@@ -3,7 +3,7 @@ import React from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
 import ClientTable from "../../components/Table/ClientTable";
 import Dropdown from "../../components/Button/Dropdown";
-import { CheckCircleIcon, DocumentArrowDownIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import Header from "../../components/Navigation/Header";
 
 
@@ -54,7 +54,7 @@ function Dashboard() {
                                     "duration-300 transform group-hover:rotate-12"
                                 }
                             >
-                                <ExclamationCircleIcon className={"w-12 h-12 transform transition-transform duration-500 ease-in-out"}/>
+                                <ExclamationCircleIcon className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"}/>
 
                             </div>
                             <div className={"text-right"}>
@@ -69,10 +69,8 @@ function Dashboard() {
                             }>
                             <div
                                 className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
-                                    class="w-10 h-10 transform transition-transform duration-500 ease-in-out">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                                </svg>
+                                <DocumentArrowUpIcon className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"}/>
+                                
                             </div>
                             <div className={"text-right"}>
                                 <p className={"text-3xl"}>202</p>
@@ -86,7 +84,7 @@ function Dashboard() {
                             }>
                             <div
                                 className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
-                                <CheckCircleIcon className="w-12 h-12 transform transition-transform duration-500 ease-in-out"/>
+                                <CheckCircleIcon className="w-10 h-10 transform transition-transform duration-500 ease-in-out"/>
                             </div>
                             <div className={"text-right"}>
                                 <p className={"text-3xl"}>123</p>
