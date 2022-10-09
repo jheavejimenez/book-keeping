@@ -4,7 +4,7 @@ import React from "react";
 function Forgotpass() {
     return (
         <>
-            <div className={"bg-gray-100 flex justify-center mx-auto min-h-screen items-center"}>
+            <div className={"bg-gray-300 flex justify-center mx-auto min-h-screen items-center"}>
                 <div className={"bg-white mx-auto p-9 rounded-lg"}>
                     <div className={""}>
                             <span className={"font-bold text-3xl mb-6 text-center"}> Forgot password</span>
