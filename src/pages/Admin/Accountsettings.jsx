@@ -28,7 +28,7 @@ function Accountsettings() {
     const accsetCollectionRef = collection(db, "accountsettings",);
 
     const add = async (e) => {
-        
+        e.preventDefault();
         await addDoc(accsetCollectionRef, { name: newName, email: newEmail, company: newCompany }, { merge: true });
     }
     
