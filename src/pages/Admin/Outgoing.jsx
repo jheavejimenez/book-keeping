@@ -32,7 +32,7 @@ function Outgoing() {
             </div>
 
 
-            </div>
+        </div>
     )
 }
 

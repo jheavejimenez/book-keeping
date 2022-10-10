@@ -37,44 +37,40 @@
   "requestData": [
     {
       "reqID": "1",
-      "requestFrom": "Charlon",
-      "requestBy": "Admin",
+      "requestedFrom": "Charlon",
       "file": "file1.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"
+      "dateRequested": "2022-09-16"
     },
     {
       "reqID": "2",
-      "requestFrom": "Jheave",
-      "requestBy": "Admin",
+      "requestedFrom": "Jheave",
       "file": "file2.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"
+      "dateRequested": "2022-09-16"
     },
     {
       "reqID": "3",
-      "requestFrom": "Lawrence",
-      "requestBy": "Admin",
+      "requestedFrom": "Lawrence",
       "file": "file3.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"
+      "dateRequested": "2022-09-16"
     },
     {
       "reqID": "4",
-      "requestFrom": "Darell",
-      "requestBy": "Admin",
+      "requestedFrom": "Darell",
       "file": "file4.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"   
+      "dateRequested": "2022-09-16"   
     }    
   ],
   "requestHeader": [
     {
-      "title":["ReqID","RequestFrom","RequestBy","File","Purpose","DueDate","DataRequested"]
+      "title":["ReqID","RequestedFrom","File","Purpose","DueDate","DateRequested"]
     }
   ],
   "incomingData": [

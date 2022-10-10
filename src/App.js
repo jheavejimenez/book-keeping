@@ -20,32 +20,32 @@ function App() {
             <Route path='/verify-email' element={<VerifyEmail />} />
             <Route path='/forgotpass' element={<Forgotpass />} />
 
-            <Route path="admin/dashboard" element={
+            <Route path="/admin/dashboard" element={
                 <ProtectedRoute>
                     <Dashboard />
                 </ProtectedRoute>
             } />
-            <Route path="admin/incoming" element={
+            <Route path="/admin/incoming" element={
                 <ProtectedRoute>
                     <Incoming />
                 </ProtectedRoute>
             } />
-            <Route path="admin/request" element={
+            <Route path="/admin/request" element={
                 <ProtectedRoute>
                     <RequestPage />
                 </ProtectedRoute>
             } />
-            <Route path="admin/outgoing" element={
+            <Route path="/admin/outgoing" element={
                 <ProtectedRoute>
                     <Outgoing />
                 </ProtectedRoute>
             } />
-            <Route path="admin/accountsettings" element={
+            <Route path="/admin/accountsettings" element={
                 <ProtectedRoute>
                     <Accountsettings />
                 </ProtectedRoute>
             } />
-            <Route path="/dashboard" element={
+            <Route path="/client/dashboard" element={
                 <ProtectedRoute>
                     <ClientDashboard />
                 </ProtectedRoute>
