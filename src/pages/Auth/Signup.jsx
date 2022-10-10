@@ -85,7 +85,7 @@ function Signup() {
                                     
                                     <div className={"flex flex-col place-items-center mt-5"}>
                                         <Button text={"Sign up"} />
-                                        <a href={"/"} className={"text-sm text-blue-600 hover:underline mt-5"}>Already
+                                        <a href={"/"} className={"text-sm text-black-600 hover:underline mt-5"}>Already
                                             Have an
                                             Account ? Login</a>
                                     </div>

@@ -17,6 +17,7 @@ function App() {
             <Route exact path='/' element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path='/verify-email' element={<VerifyEmail />} />
+            <Route path='/forgotpass' element={<Forgotpass />} />
 
             <Route path="/dashboard" element={
                 <ProtectedRoute>
@@ -43,11 +44,7 @@ function App() {
                     <Accountsettings />
                 </ProtectedRoute>
             } />
-            <Route path="/forgotpass" element={
-                <ProtectedRoute>
-                    <Forgotpass />
-                </ProtectedRoute>
-            } />
+            
         </Routes>
     )
 }
