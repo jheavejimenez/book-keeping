@@ -15,15 +15,15 @@ function Header() {
 
     
     return (
-        <div className={"fixed w-full flex items-center justify-between h-14 text-white bg-blue-500 z-10"}>
+        <div className={"fixed w-full flex items-center justify-between h-14 text-white bg-blue-400 z-10"}>
         	<div
-                className={"flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-500 text-white border-none"}>
+                className={"flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-400 text-white border-none"}>
                 <img className={"w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden"}
                     src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" alt="" />
                 <span className="hidden md:block">{user}</span>
             </div>
 
-            <div className={"flex justify-between items-center h-14 bg-blue-500 text-black header-right"}>
+            <div className={"flex justify-between items-center h-14 bg-blue-400 text-black header-right"}>
                 <div
                     className={"bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200"}>
                     <button className={"outline-none focus:outline-none"}>
