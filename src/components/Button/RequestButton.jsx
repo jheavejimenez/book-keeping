@@ -85,7 +85,7 @@ function RequestButton({text}) {
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
-                                        Send Files
+                                        Request
                                     </button>
                                 </div>
                             </div>
