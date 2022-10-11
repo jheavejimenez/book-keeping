@@ -21,7 +21,7 @@ function Sidebar () {
                         </li>
 
                         <li>
-                            <Link to={"/dashboard"}
+                            <Link to="/dashboard"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
@@ -33,7 +33,7 @@ function Sidebar () {
                         </li>
 
                         <li>
-                            <Link to={"/request"}
+                            <Link to="/request"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
@@ -48,7 +48,7 @@ function Sidebar () {
                         </li>
 
                         <li>
-                            <Link to={"/incoming"}
+                            <Link to="/incoming"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
@@ -64,7 +64,7 @@ function Sidebar () {
                         </li>
 
                         <li>
-                            <Link to={"/outgoing"}
+                            <Link to="/outgoing"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >

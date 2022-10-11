@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Admin/Dashboard";
 import Login from "./pages/Auth/Login";
-import VerifyEmail from './pages/Auth/VerifyEmail'
+import VerifyEmail from './pages/Auth/VerifyEmail';
 import Signup from "./pages/Auth/Signup";
 import Outgoing from "./pages/Admin/Outgoing";
 import Incoming from "./pages/Admin/Incoming";
@@ -20,27 +20,27 @@ function App() {
             <Route path='/verify-email' element={<VerifyEmail />} />
             <Route path='/forgotpass' element={<Forgotpass />} />
 
-            <Route path="admin/dashboard" element={
+            <Route path="/dashboard" element={
                 <ProtectedRoute>
                     <Dashboard />
                 </ProtectedRoute>
             } />
-            <Route path="admin/incoming" element={
+            <Route path="/incoming" element={
                 <ProtectedRoute>
                     <Incoming />
                 </ProtectedRoute>
             } />
-            <Route path="admin/request" element={
+            <Route path="/request" element={
                 <ProtectedRoute>
                     <RequestPage />
                 </ProtectedRoute>
             } />
-            <Route path="admin/outgoing" element={
+            <Route path="/outgoing" element={
                 <ProtectedRoute>
                     <Outgoing />
                 </ProtectedRoute>
             } />
-            <Route path="admin/accountsettings" element={
+            <Route path="/accountsettings" element={
                 <ProtectedRoute>
                     <Accountsettings />
                 </ProtectedRoute>
