@@ -52,12 +52,11 @@ function RequestTable() {
                             {data.map((item) => (
                                 <RequestTableRow
                                     ReqID={item.reqID}
-                                    RequestFrom={item.requestFrom}
-                                    RequestBy={item.requestBy}
+                                    RequestedFrom={item.requestedFrom}
                                     File={item.file}
                                     Purpose={item.purpose}
                                     DueDate={item.dueDate}
-                                    DataRequested={item.dataRequested}
+                                    DateRequested={item.dateRequested}
                                 />)
                             )}
                             </tbody>

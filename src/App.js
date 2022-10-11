@@ -45,7 +45,7 @@ function App() {
                     <Accountsettings />
                 </ProtectedRoute>
             } />
-            <Route path="/dashboard" element={
+            <Route path="/client/dashboard" element={
                 <ProtectedRoute>
                     <ClientDashboard />
                 </ProtectedRoute>

@@ -6,7 +6,6 @@ import Header from "../../components/Navigation/Header";
 import Sidebar from "../../components/Navigation/Sidebar";
 import RequestTable from "../../components/Table/RequestTable";
 
-
 function RequestPage() {
     return (
         <div
