@@ -20,7 +20,7 @@ function App() {
             <Route path='/verify-email' element={<VerifyEmail />} />
             <Route path='/forgotpass' element={<Forgotpass />} />
 
-            <Route path="/admin/dashboard" element={
+            <Route path="/dashboard" element={
                 <ProtectedRoute>
                     <Dashboard />
                 </ProtectedRoute>

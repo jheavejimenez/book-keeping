@@ -9,11 +9,6 @@ function Header() {
 	const {logout} = useAuth()
     const {user} = useAuth()
     
-
-    
-
-
-    
     return (
         <div className={"fixed w-full flex items-center justify-between h-14 text-white bg-blue-400 z-10"}>
         	<div

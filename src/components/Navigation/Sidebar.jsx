@@ -21,7 +21,7 @@ function Sidebar () {
                         </li>
 
                         <li>
-                            <Link to="/admin/dashboard"
+                            <Link to="/dashboard"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
