@@ -1,5 +1,6 @@
 import React from "react";
 import ChangeStatus from "../Button/ChangeStatus";
+import FillUp from "../Modal/FillUp";
 
 function TableRow({ DocID, SenderName, fileName, timeStamp, status }) {
     let colors;
@@ -34,7 +35,7 @@ function TableRow({ DocID, SenderName, fileName, timeStamp, status }) {
             </td>
             <td className={"flex justify-center items-center w-14 h-14"}>
                <button>
-               <ChangeStatus/>
+               <FillUp/>
                </button>
             </td>
 
