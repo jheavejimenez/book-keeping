@@ -25,7 +25,7 @@ function Sidebar () {
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
-                                <span className="inline-flex justify-center items-center ml-4">
+                                <span className="inline-flex justify-center items-center ml-2.5">
                                     <HomeIcon className="w-6 h-6"/>
                                 </span>
                                 <span className="ml-2 text-sm font-medium tracking-wide truncate">Dashboard</span>
@@ -37,7 +37,7 @@ function Sidebar () {
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
-                                <span className="inline-flex justify-center items-center ml-4">
+                                <span className="inline-flex justify-center items-center ml-2.5">
                                     <EnvelopeIcon className="w-6 h-6"/>
                                 </span>
                                 <span className="ml-2 text-sm font-medium tracking-wide truncate">Request</span>
@@ -52,7 +52,7 @@ function Sidebar () {
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
-                                <span className="inline-flex justify-center items-center ml-4">
+                                <span className="inline-flex justify-center items-center ml-2.5">
                                     <DocumentArrowDownIcon className="w-6 h-6"/>
                                 </span>
                                 <span className="ml-2 text-sm font-medium tracking-wide truncate">Incoming</span>
@@ -68,7 +68,7 @@ function Sidebar () {
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
-                                <span className="inline-flex justify-center items-center ml-4">
+                                <span className="inline-flex justify-center items-center ml-2.5">
                                     <DocumentArrowUpIcon className="w-6 h-6"/>
                                 </span>
                                 <span className="ml-2 text-sm font-medium tracking-wide truncate">Outgoing</span>
@@ -87,7 +87,7 @@ function Sidebar () {
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
-                                <span className="inline-flex justify-center items-center ml-4">
+                                <span className="inline-flex justify-center items-center ml-2.5">
                                     <Cog8ToothIcon className="w-6 h-6"/>
                                 </span>
                                 <span className="ml-2 text-sm font-medium tracking-wide truncate">Account Settings</span>
