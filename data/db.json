@@ -125,5 +125,36 @@
     {
       "title":["DocID","Recipient","File","DateSent"]
     }
+  ],
+  "clientRequested": [
+    {
+      "reqID": "1",
+      "requestedBy": "Admin Email",
+      "requestedFile": "Transaction.xlsx",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dateReceived": "2022-09-24"
+    },
+    {
+      "reqID": "2",
+      "requestedBy": "Admin Email",
+      "requestedFile": "Finals.pdf",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dateReceived": "2022-09-24"
+    },
+    {
+      "reqID": "3",
+      "requestedBy": "Admin Email",
+      "requestedFile": "Records.xlsx",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dateReceived": "2022-09-24"
+    }   
+  ],
+  "clientRequestedHeader": [
+    {
+      "title":["ReqID","RequestedBy","RequestedFile","Purpose","DueDate","DateReceived"]
+    }
   ]
 }
