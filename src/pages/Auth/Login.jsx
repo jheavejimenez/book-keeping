@@ -28,7 +28,7 @@ function Login() {
             const isNewUser = cred.user.metadata.creationTime;
             if(isNewUser===cred.user.metadata.lastSignInTime){
                 login(cred.user.email)
-                navigate('/accountsettings')
+                navigate('admin/accountsettings')
             }
                 
             else{

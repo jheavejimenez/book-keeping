@@ -19,11 +19,4 @@ export const SignupSchema = Yup.object().shape({
         )
         .required('Required'),
 
-    role: Yup.string()
-            .matches(
-                /^(admin|user)$/,
-                'Role must be admin or user'
-            )
-        .required('Required'),
-
 });

@@ -1,8 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { Field, Form, Formik } from "formik";
-import { LoginSchema } from "../../utils/schema/logInSchema";
-import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 

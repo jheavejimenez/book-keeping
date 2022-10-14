@@ -5,12 +5,14 @@ import Button from "../../components/Button/Button";
 import Header from "../../components/Navigation/Header";
 import { collection, setDoc, getDocs, query, where, doc, addDoc } from "firebase/firestore"; 
 import { db } from "../../utils/Firebase";
-import Uploadimage from "../../components/UploadImage/Uploadimage";
 import Input from "../../components/Input/Input";
 import { sendEmailVerification } from 'firebase/auth'
 import { auth } from '../../utils/Firebase'
 import { updateEmail   } from 'firebase/auth'
 import { useState, useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import { storage } from "../../utils/Firebase";
+import {  ref, uploadBytes, getDownloadURL  } from "firebase/storage";
 
 
 // import ClientTable from "../../components/Table/ClientTable";
@@ -21,70 +23,67 @@ import { useState, useEffect } from "react";
 
 
 function Accountsettings() {
+    const {user} = useAuth();
+    const [fileInput] = React.useState("");
+    const [Source,setSource] = React.useState("../../UserDefaultImage.png");
+    const [image, setImage] = useState(null);
+    
+
+    
+    const handleChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+            previewFile(e.target.files[0]);
+            
+        }
+    };
+    console.log(user)
+    console.log("image",image);
+        
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setSource(reader.result)
+        }
+    }
+    
+    const removeImage = () => {
+        if (image === null) {
+            console.log("No image selected");
+        } else {
+            setImage(null);
+            setSource("../../UserDefaultImage.png");
+        }
+    }
+
+
+
     const [newName, setNewName] = useState('')
     const [newEmail, setNewEmail] = useState('')
-    const [newCompany, setNewCompany] = useState('')
-    const [user, setUser] = useState([]);
+    
+
     const accsetCollectionRef = collection(db, "accountsettings",);
 
     const add = async (e) => {
         e.preventDefault();
-        await addDoc(accsetCollectionRef, { name: newName, email: newEmail, company: newCompany }, { merge: true });
+
+        await setDoc(doc(accsetCollectionRef, auth.currentUser.email), { email: newEmail, name: newName, image: Source}) ;
+        if (image === null) {
+            console.log("No image selected");
+        } else {
+             
+             const imageRef = ref(storage, 'images/' +  user );
+             uploadBytes(imageRef, image).then((snapshot) => {
+                 getDownloadURL(snapshot.ref).then((url) => {
+                     setSource(url);
+                     console.log(url);
+                 });
+             });
+          }
+        console.log("added");
     }
-    
 
-    useEffect(() => {
-        const getUsers = async () => {
-            const data = await getDocs(collection(db, "users"));
-            setUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        };
-        getUsers();
-    }, []);
-
-
-
-
-
-
-
-
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     const settings = document.getElementById("accset")
-        
-
-    //     await db.collection('accset').doc( 'accset' ).set({
-    //         email: settings['email'].value,
-    //         company: settings['company'].value,
-    //         name: settings['name'].value,
-    //     })
-    //     .then(() => {
-    //         console.log('Document successfully written!');
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error writing document: ', error);
-    //     }
-    //     );
-
-
-
-
-        
-    // }
-
-        
-
-    // const verify = (e) => {
-    //     const email = document.getElementById("email").value
-    //     e.preventDefault();
-    //      sendEmailVerification(email).then(() => {
-    //         alert("Email verification sent")
-    //     })
-            
-    // }
-    
-    
 
 
 
@@ -117,10 +116,30 @@ function Accountsettings() {
                 <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44 2xl:ml-80 2xl:mr-80"}>
                     <div className={"flex justify-between mb-5"}>
                         <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>Update information </span>
-                        <span><Button text={"Edit"}/></span>
+                        
                     </div>
                     <div className={"flex justify-center "}>
-                        <Uploadimage/>
+                    <div className={"flex justify-center"}>
+                        <span className={"mt-4 border-2 border-black"}>
+                            {Source &&(
+                                    <img className={"w-40 h-72"} src={Source} alt={"profile image"}/>
+                            )}
+                        </span>
+                            <div className={"inline-grid ml-9 pb-5"}>
+                                <label className="cursor-pointer px-6 py-1 mt-20 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
+                                    <p className={"pt-3 pb-3"}> Change</p>
+                                    <input className={"hidden"} type="file" accept={"image/*"} onChange={handleChange} value={fileInput}/>
+                                </label>
+                                <label className="cursor-pointer px-6 py-1 mt-1 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
+                                    <p className={"pt-3"}> Remove</p>
+                                    <button type="submit" onClick={removeImage}/>
+                                </label>
+                                
+                                
+                                
+
+                            </div>
+                        </div>
                     </div>
                     <form  id="accset" >
                         <div className={"flex mt-16"}>
@@ -171,7 +190,6 @@ function Accountsettings() {
                 <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44 2xl:ml-80 2xl:mr-80"}>
                     <div className={"flex justify-between mb-5"}>
                         <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>Change Password </span>
-                        <span><Button text={"Edit"}/></span>
                     </div>
                     <div className={"flex justify-center "}>
                         <p className={"italic"}> Use a strong password that you dont use on any other website</p>
