@@ -2,30 +2,43 @@
 import React from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import ClientRequestTable from "../../components/Table/ClientRequestTable";
-import Dropdown from "../../components/Button/Dropdown";
 import Header from "../../components/Navigation/Header";
 import TitleCard from "../../components/Card/TitleCard";
+import Tabs from "../../components/Navigation/Tabs";
 
 function ClientDashboard() {
     return (
-        <>
-            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-                <Header />
-                {/*sidebar*/}
-                <ClientSidebar />
-                {/*end of sidebar*/}
-                <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+        
+        <div 
+            className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                
+            {/*header*/}
+            <Header />
+                
+            {/*sidebar*/}
+            <ClientSidebar />
+            
+            <div className={"flex justify-between items-center h-14 bg-white header-right"}>
+                    
+            </div>
+            
+            <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <TitleCard 
                     titleText={"To-Do / Reminders"}
                 />
-                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> Filter by Type <Dropdown /></div>           
-                    {/*client table*/}
-                        <ClientRequestTable/>
-                    {/*end client table*/}
-                    
+
+                {/*Tabs*/}
+                <div className="mt-4 mx-4 pt-2">
+                    <Tabs />
                 </div>
+                
+                {/*client table*/}
+                <ClientRequestTable/>    
             </div>
-        </>
+
+
+        </div>
+        
     )
 }
 
