@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import IncomingTableRow from "./IncomingTableRow";
 import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import ClientIncomingTableRow from "./ClientIncomingTableRow";
 
-function IncomingTable() {
+function ClientIncomingTable() {
     const [data, setData] = useState([]);
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/incomingData");
+        const response = await axios.get("http://localhost:3000/clientIncomingData");
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/incomingHeader");
+        const response = await axios.get("http://localhost:3000/clientIncomingHeader");
         setTitleTable(response.data[0].title);
 
     }
@@ -50,7 +50,7 @@ function IncomingTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <IncomingTableRow
+                                <ClientIncomingTableRow
                                     DocID={item.incID}
                                     Sender={item.sender}
                                     File={item.file}
@@ -67,4 +67,4 @@ function IncomingTable() {
     )
 }
 
-export default IncomingTable;
+export default ClientIncomingTable;

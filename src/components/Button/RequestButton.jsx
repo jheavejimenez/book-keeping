@@ -39,31 +39,31 @@ function RequestButton({text}) {
                                     <form>
                                         <fieldset className="pt-3">
                                             <div>
-                                                <label for="reqFrom" className={"text-black"}>Request From</label>
+                                                <label htmlFor="reqFrom" className={"text-black"}>Request From</label>
                                                 <input id="reqFrom" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
                                                 "placeholder-gray-400 text-black text-base w-full"} 
                                                 placeholder="Client/User's Company Email" type="email"/>
                                             </div>
                                             <div>
-                                                <label for="fileName" className={"text-black"}>Filename</label>
+                                                <label htmlFor="fileName" className={"text-black"}>Filename</label>
                                                 <input id="fileName" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
                                                 "placeholder-gray-400 text-black text-base w-full"} 
                                                 placeholder="Transactions.xlsx / .pdf"/>
                                             </div>
                                             <div>
-                                                <label for="dueDate" className={"text-black"}>Set Due Date</label>
+                                                <label htmlFor="dueDate" className={"text-black"}>Set Due Date</label>
                                                 <input id="dueDate" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
                                                 "placeholder-gray-400 text-black text-base w-full"} type="date"/>
                                             </div>
                                             <div>
-                                                <label for="reqBy" className={"text-black"}>Requested By</label>
+                                                <label htmlFor="reqBy" className={"text-black"}>Requested By</label>
                                                 <input id="reqBy" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
                                                 "placeholder-gray-700 bg-[#C6DFFF] text-black text-base w-full"} 
                                                 placeholder="Admin" disabled/>
                                             </div>
                                             <div>
-                                                <label for="purpose" class="block mb-1 text-base font-medium text-black">Purpose</label>
-                                                <textarea id="purpose" rows={2} class={"block p-2.5 w-full text-base font-normal text-gray-900 rounded-lg border " + 
+                                                <label htmlFor="purpose" className="block mb-1 text-base font-medium text-black">Purpose</label>
+                                                <textarea id="purpose" rows={2} className={"block p-2.5 w-full text-base font-normal text-gray-900 rounded-lg border " + 
                                                 "border-gray-400 focus:ring-blue-500 focus:border-blue-500 "} placeholder="Your purpose..."></textarea>
                                             </div>
                                         </fieldset>

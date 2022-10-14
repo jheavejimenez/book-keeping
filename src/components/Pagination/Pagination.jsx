@@ -3,7 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 function Pagination() {
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
+    <div className=" pt-6 flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
         <a
           href="#"
@@ -18,9 +18,9 @@ function Pagination() {
           Next
         </a>
       </div>
-      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+      <div className="hidden flex items-end justify-end sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-gray-700">
+          <p className=" hidden text-sm text-gray-700">
             Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
             <span className="font-medium">97</span> results
           </p>
@@ -34,7 +34,6 @@ function Pagination() {
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
               <span className="not-sr-only">Previous</span>
             </a>
-            {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
             <a
               href="#"
               aria-current="page"

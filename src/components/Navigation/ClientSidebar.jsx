@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Cog8ToothIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, EnvelopeIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { Cog8ToothIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, HomeIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Sidebar () {
+
+function ClientSidebar () {
     return (
         <>
             {/* Dashboard */}
@@ -20,7 +21,7 @@ function Sidebar () {
                         </li>
 
                         <li>
-                            <Link to="/dashboard"
+                            <Link to="/client/dashboard"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
@@ -32,22 +33,7 @@ function Sidebar () {
                         </li>
 
                         <li>
-                            <Link to="/admin/request"
-                                className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
-                                "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
-                            >
-                                <span className="inline-flex justify-center items-center ml-2.5">
-                                    <EnvelopeIcon className="w-6 h-6"/>
-                                </span>
-                                <span className="ml-2 text-sm font-medium tracking-wide truncate">Request</span>
-                                <span className={"hidden md:block px-2 py-0.5 ml-auto text-xs font-medium " + 
-                                    "tracking-wide text-green-600 bg-green-50 rounded-full "}
-                                >New</span>
-                            </Link>
-                        </li>
-
-                        <li>
-                            <Link to="/admin/incoming"
+                            <Link to="/client/incoming"
                                 className={"relative flex flex-row items-center h-11 focus:outline-none hover:bg-white " + 
                                 "text-white-600 hover:text-blue-500 border-l-4 border-transparent hover:border-blue-500 pr-6"}
                             >
@@ -100,4 +86,4 @@ function Sidebar () {
     )
 }
 
-export default Sidebar;
+export default ClientSidebar;

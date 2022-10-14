@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import IncomingTableRow from "./IncomingTableRow";
+import ClientRequestTableRow from "./ClientRequestTableRow";
 import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 
-function IncomingTable() {
+function ClientRequestTable() {
     const [data, setData] = useState([]);
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/incomingData");
+        const response = await axios.get("http://localhost:3000/clientRequested");
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/incomingHeader");
+        const response = await axios.get("http://localhost:3000/clientRequestedHeader");
         setTitleTable(response.data[0].title);
-
     }
 
     useEffect(() => {
@@ -50,21 +49,23 @@ function IncomingTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <IncomingTableRow
-                                    DocID={item.incID}
-                                    Sender={item.sender}
-                                    File={item.file}
+                                <ClientRequestTableRow
+                                    ReqID={item.reqID}
+                                    RequestedBy={item.requestedBy}
+                                    RequestedFile={item.requestedFile}
+                                    Purpose={item.purpose}
+                                    DueDate={item.dueDate}
                                     DateReceived={item.dateReceived}
                                 />)
                             )}
                             </tbody>
                         </table>
                     </div>
-                    <Pagination/>       
+                    <Pagination/>
                 </div>
             </div>
         </>
     )
 }
 
-export default IncomingTable;
+export default ClientRequestTable;
