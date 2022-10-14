@@ -9,12 +9,12 @@ function ClientIncomingTable() {
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/incomingData");
+        const response = await axios.get("http://localhost:3000/clientIncomingData");
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/incomingHeader");
+        const response = await axios.get("http://localhost:3000/clientIncomingHeader");
         setTitleTable(response.data[0].title);
 
     }
