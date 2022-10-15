@@ -2,8 +2,7 @@ import React from "react";
 import { CheckCircleIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 
-
-function Dashboard() {
+function StatisticCards() {
     return (
         <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4"}>
             <div
@@ -79,4 +78,4 @@ function Dashboard() {
 }
 
 
-export default Dashboard;
+export default StatisticCards;

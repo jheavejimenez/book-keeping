@@ -18,15 +18,17 @@ function Dashboard() {
                 {/*sidebar*/}
                 <Sidebar />
                 {/*end of sidebar*/}
-                <div className={"flex justify-between items-center h-14 bg-white header-right"}>
-                    
-                </div>
+
+                <div className={"flex justify-between items-center h-14 bg-white header-right"}></div>
+                
                 <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+                    
                     {/*statistics cards*/}
                     <StatisticCards />
                     {/*statistics cards*/}
-                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> Filter by Type <Dropdown /></div>
-                             
+                    
+                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> Filter by Type <Dropdown /></div>   
+                    
                     {/*client table*/}
                         <ClientTable />
                     {/*end client table*/}

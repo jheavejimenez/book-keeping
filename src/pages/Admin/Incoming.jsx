@@ -35,7 +35,6 @@ function Incoming() {
                 <IncomingTable />
             </div>
 
-                
         </div>
     )
 }
