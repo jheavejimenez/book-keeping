@@ -1,6 +1,7 @@
 import React from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import ChooseStatusDropdown from "./ChooseStatusDropdown";
+import { XMarkIcon } from '@heroicons/react/20/solid';
 
 function ChangeStatus() {
     const [showModal, setShowModal] = React.useState(false);
@@ -23,14 +24,14 @@ function ChangeStatus() {
                     <div className="flex justify-center border-0 rounded-lg shadow-lg absolute m-auto flex-col md:shrink w-auto bg-white outline-none focus:outline-none">
                         {/*header*/}
                         <div className="flex items-center sm:items-start p-5 border-b border-solid border-slate-200 rounded-t">
-                            <h3 className="font-bold">
+                            <h3 className="text-2xl font-bold text-black">
                                 Edit Status
                             </h3>
                             <button
-                                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semi-bold outline-none focus:outline-none"
+                                className="p-1 ml-auto text-gray-400 hover:text-black opacity-50 float-right text-3xl leading-none font-semi-bold outline-none focus:outline-none"
                                 onClick={() => setShowModal(false)}
                             >
-                               <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"></span>
+                               <XMarkIcon className="w-7 h-7"/>
                             </button>
                         </div>
                         {/*body*/}

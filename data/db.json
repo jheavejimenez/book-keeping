@@ -109,19 +109,19 @@
     {
       "outID": "1",
       "recipient": "John Doe - XYZ Company",
-      "file": "Transaction.xlsx",
+      "file": "Receipt.pdf",
       "dateSent": "2022-09-16"
     },
     {
       "outID": "2",
       "recipient": "Jane Doe - ABC Company",
-      "file": "BIR.xlsx",
+      "file": "BIR.pdf",
       "dateSent": "2022-03-10"
     },
     {
       "outID": "3",
       "recipient": "Amelia Watson - JKL Company",
-      "file": "Final.xlsx",
+      "file": "Receipt2.pdf",
       "dateSent": "2021-01-10"
     }
   ],
@@ -191,6 +191,31 @@
   "clientIncomingHeader": [
     {
       "title": ["DocID", "Sender", "File", "DateReceived", "Action"]
+    }
+  ],
+  "clientOutgoingData": [
+    {
+      "outID": "1",
+      "recipient": "admin2@mailinator.com",
+      "file": "Transaction.xlsx",
+      "dateSent": "2022-09-16"
+    },
+    {
+      "outID": "2",
+      "recipient": "admin1@mailinator.com",
+      "file": "BIR.xlsx",
+      "dateSent": "2022-03-10"
+    },
+    {
+      "outID": "3",
+      "recipient": "admin1@mailinator.com",
+      "file": "Final.xlsx",
+      "dateSent": "2021-01-10"
+    }
+  ],
+  "clientOutgoingHeader": [
+    {
+      "title": ["DocID", "Recipient", "File", "DateSent"]
     }
   ]
 }

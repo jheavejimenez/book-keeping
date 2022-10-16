@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../../src/assets/MindWorxLogo.png"
+import Background from "../../../src/assets/bookkeeping-bg.jpg"
 import Button from "../../components/Button/Button";
 import { useNavigate } from 'react-router-dom'
 import { sendEmailVerification, signInWithEmailAndPassword, getAuth, onAuthStateChanged  } from 'firebase/auth'
@@ -53,7 +54,7 @@ function Login() {
                     <>
                         <div>
                             <img src={Logo} alt="logo" className={"w-3/4 mx-auto pb-8"} />
-                            <h3 className={"text-2xl font-bold text-center"}>LOGIN</h3>
+                            <h3 className={"text-2xl font-bold text-center"}>Welcome back!</h3>
                         </div>
                         {error && <Alert>{error}</Alert>}
                         <Formik
@@ -110,7 +111,11 @@ function Login() {
                             )}
                         </Formik>
                     </>
+                    
                 </div>
+                {/*<div className="hidden lg:block lg:w-1/2 bg-cover rounded-r-md">
+                    <img className="w-1/2 h-full bg-center bg-no-repeat bg-cover rounded-r-md" src={Background} alt="background"/>
+                </div> */}
             </div>
         </>
 

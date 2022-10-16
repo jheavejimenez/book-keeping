@@ -11,6 +11,7 @@ import Accountsettings from "./pages/Admin/Accountsettings";
 import Forgotpass from "./pages/Auth/Forgotpass";
 import ClientDashboard from "./pages/Client/ClientDashboard";
 import ClientIncoming from "./pages/Client/ClientIncoming";
+import ClientOutgoing from "./pages/Client/ClientOutgoing";
 
 function App() {
   return (
@@ -73,6 +74,14 @@ function App() {
         element={
           <ProtectedRoute>
             <ClientIncoming />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/client/outgoing"
+        element={
+          <ProtectedRoute>
+            <ClientOutgoing />
           </ProtectedRoute>
         }
       />
