@@ -1,8 +1,8 @@
 import React from "react";
-import TitleCard from "../../components/Card/TitleCard";
+import TitleCard from "../../components/Cards/TitleCard";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import ClientIncomingTable from "../../components/Table/ClientIncomingTable";
-import Dropdown from "../../components/Button/Dropdown";
+import Dropdown from "../../components/Button/FilterDropdown";
 import Header from "../../components/Navigation/Header";
 
 function ClientIncoming() {

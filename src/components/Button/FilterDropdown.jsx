@@ -2,10 +2,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import FilterDropdownOptions from '../Options/FilterDropdownOptions'
 
 export default function Example() {
   return (                     
@@ -32,45 +29,16 @@ export default function Example() {
         <Menu.Items className={"absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg " + 
           "ring-1 ring-black ring-opacity-5 focus:outline-none"}>
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                    type="submit"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
-                    )}
-                  >
-                  All
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                    type="submit"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
-                    )}
-                  >
-                  .xlsx
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                    type="submit"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
-                    )}
-                  >
-                  .pdf
-                </button>
-              )}
-            </Menu.Item>
+
+           {/* Option 1 */}
+          <FilterDropdownOptions Option={"All"}/>
+
+          {/* Option 2 */} 
+          <FilterDropdownOptions Option={".xlsx"}/>
+          
+           {/* Option 3 */}
+          <FilterDropdownOptions Option={".pdf"}/>
+          
           </div>
         </Menu.Items>
       </Transition>

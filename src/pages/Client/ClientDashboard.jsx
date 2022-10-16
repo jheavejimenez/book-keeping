@@ -3,7 +3,7 @@ import React from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import ClientRequestTable from "../../components/Table/ClientRequestTable";
 import Header from "../../components/Navigation/Header";
-import TitleCard from "../../components/Card/TitleCard";
+import TitleCard from "../../components/Cards/TitleCard";
 import Tabs from "../../components/Navigation/Tabs";
 
 function ClientDashboard() {

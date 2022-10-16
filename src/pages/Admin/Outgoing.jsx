@@ -2,9 +2,10 @@
 
 import React from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
-import OutgoingCard from "../../components/Card/OutgoingCard";
 import OutgoingTable from "../../components/Table/OutgoingTable";
 import Header from "../../components/Navigation/Header";
+import Card from "../../components/Cards/Card";
+import OutgoingButton from "../../components/Button/OutgoingButton";
 
 function Outgoing() {
     return (
@@ -22,11 +23,12 @@ function Outgoing() {
             </div>
 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <OutgoingCard 
-                    titleText={"Outgoing Documents"}
-                
-                />
 
+                <Card 
+                    titleText={"Outgoing Documents"}
+                    button={<OutgoingButton text={"Send Files"}/>}
+                />
+            
                 {/*outgoing table*/}
                 <OutgoingTable />
             </div>
