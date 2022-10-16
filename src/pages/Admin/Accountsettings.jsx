@@ -138,7 +138,7 @@ function Accountsettings() {
                         </div>
                     </div>
                     <form  id="accset" >
-                        <div className={"flex mt-16"}>
+                        <div className={"flex mt-16 justify-center"}>
                             <span className={"inline-grid font-bold"}>
                                 <span className={"mt-5"}>Name:</span>
                                 <span className={"mb-5"}>Email:</span>
