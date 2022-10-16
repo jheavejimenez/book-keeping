@@ -13,22 +13,22 @@ import { useState } from "react";
 function Header() {
 	const {logout} = useAuth()
     const {user} = useAuth()
-    const [imgUrl, setImgUrl] = useState('')
+    const [imgUrl , setImgUrl] = useState('')
     const userprofile = (doc(db, "accountsettings", auth.currentUser.email ));
     
     useEffect((e) => {
         
-        const userprofilesnapshot = onSnapshot(userprofile, (doc) => {
+        const userprofilesnapshot = onSnapshot(userprofile, (doc, e ) => {
             setImgUrl(doc.data().image)
             console.log(doc.data().image)
-
+            
         }) 
         return userprofilesnapshot
          
         
         
         
-    }, [])
+    }, [imgUrl])
 
     
     return (

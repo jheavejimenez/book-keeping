@@ -10,41 +10,77 @@ import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
 import { collection, doc, setDoc, getDocs, query, where } from "firebase/firestore"; 
 import { db } from "../../utils/Firebase";
+import { useEffect } from "react";
 
 function Login() {
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
-    
-    const handleSubmit = async(email,password, role,uid ) => {
-        const q = query(collection(db, "users"), where("email", "==", email, "role", "==", role, uid, "==", uid));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-          
+    const [email, setEmail] = useState('')
+    const [uid , setUid] = useState('')
+    const [role, setRole] = useState('')
+
+
+
+    useEffect (( ) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                
+                setEmail(user.email)
+                setUid(user.uid)
+                const q = query(collection(db, "users"), where("uid", "==", user.uid));
+                getDocs(q).then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        setRole(doc.data().role)
+                        
+                    });
+                });
+            }
         });
+        return unsubscribe
+    }, [ email, uid, role])
+
+    const handleSubmit = async(email,password ) => {
+    
         await signInWithEmailAndPassword(auth, email, password)
-        .then((cred) => {
-            const isNewUser = cred.user.metadata.creationTime;
-            if(isNewUser===cred.user.metadata.lastSignInTime){
-                login(cred.user.email)
-                navigate('admin/accountsettings')
-            }
+            .then((cred) => {
+                const isNewUser = cred.user.metadata.creationTime;
+                const character = role
+                console.log(character)
                 
-            else{
-                login(cred.user.email)
-                navigate('/dashboard')
-            
+                if (character === "client" && isNewUser === cred.user.metadata.creationTime) {
+                    login(cred.user.email)
+                    navigate('client/incoming')
+                }
+                else if (character=== "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                    login(cred.user.email)
+                    navigate('client/dashboard')
                 
-            }
-            // navigate('/dashboard')
-        })
-        .catch((error) => {
-            setError(error.message)
-        })
-        
-        
+                    
+                }
+                
+                else if (character=== "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
+                    login(cred.user.email)
+                    navigate('admin/accountsettings')
+                }
+                else if (character=== "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                    login(cred.user.email)
+                    navigate('/dashboard')
+                }
+                
+            })
+            .catch((error) => {
+                setError(error.message)
+            })
+    
+    
     }
+
+
+
+    
+  
+    
 
     return (
         <>

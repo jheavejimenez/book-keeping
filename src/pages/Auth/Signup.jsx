@@ -12,7 +12,7 @@ function Signup() {
     const navigate = useNavigate()
     // const register = document.getElementById("register")
     const handleSubmit = async (email, password) => {
-        const role = "user"
+        const role = "admin"
         await createUserWithEmailAndPassword(auth, email, password). then((cred) => {
             return addDoc(collection(db, "users"), { email, uid: cred.user.uid, role })
             
