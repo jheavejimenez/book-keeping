@@ -119,25 +119,21 @@ function Accountsettings() {
                         
                     </div>
                     <div className={"flex justify-center "}>
-                    <div className={"flex justify-center"}>
-                        <span className={"mt-4 border-2 border-black"}>
-                            {Source &&(
-                                    <img className={"w-40 h-72"} src={Source} alt={"profile image"}/>
-                            )}
-                        </span>
-                            <div className={"inline-grid ml-9 pb-5"}>
-                                <label className="cursor-pointer px-6 py-1 mt-20 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
-                                    <p className={"pt-3 pb-3"}> Change</p>
-                                    <input className={"hidden"} type="file" accept={"image/*"} onChange={handleChange} value={fileInput}/>
-                                </label>
-                                <label className="cursor-pointer px-6 py-1 mt-1 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
-                                    <p className={"pt-3"}> Remove</p>
-                                    <button type="submit" onClick={removeImage}/>
-                                </label>
-                                
-                                
-                                
-
+                        <div className={"flex justify-center"}>
+                            <span className={"mt-4 border-2 border-black"}>
+                                {Source &&(
+                                        <img className={"w-40 h-40"} src={Source} alt={"profile image"}/>
+                                )}
+                            </span>
+                                <div className={"inline-grid ml-9 pb-5"}>
+                                    <label className="cursor-pointer px-6 py-1 mt-20 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
+                                        <p className={"pt-3 pb-3"}> Change</p>
+                                        <input className={"hidden"} type="file" accept={"image/*"} onChange={handleChange} value={fileInput}/>
+                                    </label>
+                                    <label className="cursor-pointer px-6 h-14 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
+                                        <p className={"pt-4"}> Remove</p>
+                                        <button type="submit" onClick={removeImage}/>
+                                    </label>
                             </div>
                         </div>
                     </div>
