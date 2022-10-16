@@ -2,8 +2,8 @@
 import React from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
 import ClientTable from "../../components/Table/ClientTable";
-import Dropdown from "../../components/Button/Dropdown";
-import StatisticCards from "../../components/Card/StatisticCards";
+import Dropdown from "../../components/Button/FilterDropdown";
+import StatisticCards from "../../components/Cards/StatisticCards";
 import Header from "../../components/Navigation/Header";
 
 

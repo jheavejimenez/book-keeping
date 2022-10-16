@@ -1,9 +1,10 @@
 import React from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import Header from "../../components/Navigation/Header";
-import Dropdown from "../../components/Button/Dropdown";
-import OutgoingCard from "../../components/Card/OutgoingCard";
+import Dropdown from "../../components/Button/FilterDropdown";
 import ClientOutgoingTable from "../../components/Table/ClientOutgoingTable";
+import Card from "../../components/Cards/Card";
+import OutgoingButton from "../../components/Button/OutgoingButton";
 
 function ClientOutgoing () {
     return (
@@ -21,8 +22,9 @@ function ClientOutgoing () {
             </div>
                 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <OutgoingCard 
+                <Card
                     titleText={"Outgoing Documents"}
+                    button={<OutgoingButton text={"Send Files"}/>}
                 />
 
                 <div className="mt-4 mx-4 pt-7">

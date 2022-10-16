@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React from "react";
-import RequestCard from "../../components/Card/RequestCard"; 
+import RequestButton from "../../components/Button/RequestButton";
+import Card from "../../components/Cards/Card";
 import Header from "../../components/Navigation/Header";
 import Sidebar from "../../components/Navigation/Sidebar";
 import RequestTable from "../../components/Table/RequestTable";
@@ -22,9 +22,10 @@ function RequestPage() {
             </div>
                 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <RequestCard 
+                <Card
                     titleText={"Requested Documents"}
-                       
+                    button={<RequestButton text={"Request"}/>}
+
                 />
     
                 {/*request table*/}

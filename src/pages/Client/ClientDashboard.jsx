@@ -3,8 +3,8 @@ import React from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import ClientRequestTable from "../../components/Table/ClientRequestTable";
 import Header from "../../components/Navigation/Header";
-import TitleCard from "../../components/Card/TitleCard";
 import Tabs from "../../components/Navigation/Tabs";
+import Card from "../../components/Cards/Card";
 
 function ClientDashboard() {
     return (
@@ -23,7 +23,7 @@ function ClientDashboard() {
             </div>
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <TitleCard 
+                <Card
                     titleText={"To-Do / Reminders"}
                 />
 

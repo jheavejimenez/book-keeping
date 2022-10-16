@@ -1,11 +1,11 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import TitleCard from "../../components/Card/TitleCard";
 import Sidebar from "../../components/Navigation/Sidebar";
 import IncomingTable from "../../components/Table/IncomingTable";
-import Dropdown from "../../components/Button/Dropdown";
+import Dropdown from "../../components/Button/FilterDropdown";
 import Header from "../../components/Navigation/Header";
+import Card from "../../components/Cards/Card";
 
 function Incoming() {
     return (
@@ -23,7 +23,7 @@ function Incoming() {
             </div>
                 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <TitleCard 
+                <Card
                     titleText={"Incoming Documents"}
                 />
 
