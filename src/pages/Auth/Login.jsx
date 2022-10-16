@@ -25,7 +25,6 @@ function Login() {
     useEffect (( ) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                
                 setEmail(user.email)
                 setUid(user.uid)
                 const q = query(collection(db, "users"), where("uid", "==", user.uid));
@@ -46,7 +45,7 @@ function Login() {
             .then((cred) => {
                 const isNewUser = cred.user.metadata.creationTime;
                 const character = role
-                console.log(character)
+                
                 
                 if (character === "client" && isNewUser === cred.user.metadata.creationTime) {
                     login(cred.user.email)

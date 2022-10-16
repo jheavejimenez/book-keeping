@@ -70,7 +70,7 @@ function Accountsettings() {
 
         await setDoc(doc(accsetCollectionRef, auth.currentUser.email), { email: newEmail, name: newName, image: Source}) ;
         if (image === null) {
-            console.log("No image selected");
+            alert("No image selected");
         } else {
              
              const imageRef = ref(storage, 'images/' +  user );
@@ -81,7 +81,7 @@ function Accountsettings() {
                  });
              });
           }
-        console.log("added");
+        alert("Account settings updated");
     }
 
 

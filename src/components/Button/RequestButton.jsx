@@ -1,8 +1,34 @@
 import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import React from "react";
+import Input from "../Input/Input";
+import { useState } from "react";
+import { db } from "../../utils/Firebase";
+import { auth } from "../../utils/Firebase";
+import { collection, setDoc, getDocs, query, where, doc, addDoc } from "firebase/firestore"; 
 
 function RequestButton({text}) {
-    const [showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [reqfrom , setReqfrom] = useState('')
+    const [file , setFile] = useState('')
+    const [dueDate , setDueDate] = useState('')
+    const [reqby , setReqby] = useState('')
+    const [purpose , setPurpose] = useState('')
+    const accsetCollectionRef = collection(db, "request");
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        await addDoc(doc(accsetCollectionRef, auth.currentUser.email),{ reqfrom, file, dueDate, reqby, purpose }) 
+        .then(() => {
+            console.log("Document successfully written!");    
+        })
+        .catch((error) => {
+            console.error("Error writing document: ", error);
+        });
+    }
+
+        
 
     return (
         <>
@@ -42,29 +68,29 @@ function RequestButton({text}) {
                                                 <label htmlFor="reqFrom" className={"text-black"}>Request From</label>
                                                 <input id="reqFrom" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
                                                 "placeholder-gray-400 text-black text-base w-full"} 
-                                                placeholder="Client/User's Company Email" type="email"/>
+                                                placeHolder="Client/User's Company Email" type="email" onChange={(e) => setReqfrom(e.target.value)}/>
                                             </div>
                                             <div>
                                                 <label htmlFor="fileName" className={"text-black"}>Filename</label>
                                                 <input id="fileName" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
                                                 "placeholder-gray-400 text-black text-base w-full"} 
-                                                placeholder="Transactions.xlsx / .pdf"/>
+                                                placeHolder="Transactions.xlsx / .pdf" onChange={(e) => setFile(e.target.value)}/>
                                             </div>
                                             <div>
                                                 <label htmlFor="dueDate" className={"text-black"}>Set Due Date</label>
-                                                <input id="dueDate" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
-                                                "placeholder-gray-400 text-black text-base w-full"} type="date"/>
+                                                <input id="dueDate" className={"w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                            + "placeholder-gray-400 text-black text-base w-full"} type="date" onChange={(e) => setDueDate(e.target.value)}/>
                                             </div>
                                             <div>
                                                 <label htmlFor="reqBy" className={"text-black"}>Requested By</label>
                                                 <input id="reqBy" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
-                                                "placeholder-gray-700 bg-[#C6DFFF] text-black text-base w-full"} 
-                                                placeholder="Admin" disabled/>
+                                                "placeholder-gray-700 text-black text-base w-full"} 
+                                                placeholder="Admin Email"  type="email" onChange={(e) => setReqby(e.target.value)}/>
                                             </div>
                                             <div>
                                                 <label htmlFor="purpose" className="block mb-1 text-base font-medium text-black">Purpose</label>
                                                 <textarea id="purpose" rows={2} className={"block p-2.5 w-full text-base font-normal text-gray-900 rounded-lg border " + 
-                                                "border-gray-400 focus:ring-blue-500 focus:border-blue-500 "} placeholder="Your purpose..."></textarea>
+                                                "border-gray-400 focus:ring-blue-500 focus:border-blue-500 "} placeholder="Your purpose..." onChange={(e) => setPurpose(e.target.value)}></textarea>
                                             </div>
                                         </fieldset>
                                     </form>
@@ -83,7 +109,7 @@ function RequestButton({text}) {
                                         className={"bg-blue-500 hover:bg-blue-400 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 " + 
                                         "rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"}
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={handleSubmit}
                                     >
                                         Request
                                     </button>
