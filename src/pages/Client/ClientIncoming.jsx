@@ -1,9 +1,9 @@
 import React from "react";
-import TitleCard from "../../components/Cards/TitleCard";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import ClientIncomingTable from "../../components/Table/ClientIncomingTable";
 import Dropdown from "../../components/Button/FilterDropdown";
 import Header from "../../components/Navigation/Header";
+import Card from "../../components/Cards/Card";
 
 function ClientIncoming() {
     return (
@@ -21,7 +21,7 @@ function ClientIncoming() {
             </div>
                 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <TitleCard 
+                <Card
                     titleText={"Incoming Documents"}
                 />
 
