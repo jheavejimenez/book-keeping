@@ -1,36 +1,28 @@
 import React, { useEffect, useState } from "react";
 import RequestTableRow from "./RequestTableRow";
-import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import { collection, getDocs } from "firebase/firestore";
 
 function RequestTable() {
     const [data, setData] = useState([]);
     const [titleTable, setTitleTable] = useState([]);
 
-    const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/requestData");
-        setData(response.data);
-    }
-
-    const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/requestHeader");
-        setTitleTable(response.data[0].title);
-
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "request"));
+        setData(snapshot.docs.map((doc) => doc.data()));
     }
 
     useEffect(() => {
-        fakeData();
-        fakeTitleTable();
+        getAllRequestDocumments();
         const interval = setInterval(() => {
-            fakeData();
-            fakeTitleTable();
+            getAllRequestDocumments();
         }, 10000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-
+    console.log(data);
 
     return (
         <>
@@ -62,7 +54,7 @@ function RequestTable() {
                             </tbody>
                         </table>
                     </div>
-                    <Pagination/>
+                    <Pagination />
                 </div>
             </div>
         </>
