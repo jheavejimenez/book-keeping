@@ -1,20 +1,36 @@
 import React, { useState } from "react"
-import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { auth } from "../../utils/Firebase";
 import { Field, Form, Formik } from "formik";
 import { SignupSchema } from "../../utils/schema/signUpSchema";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
 
 function Signup() {
     const navigate = useNavigate()
+    // const register = document.getElementById("register")
     const handleSubmit = async (email, password) => {
-        await createUserWithEmailAndPassword(auth, email, password)
-        await sendEmailVerification(auth.currentUser)
+        const role = "admin"
+        await createUserWithEmailAndPassword(auth, email, password). then((cred) => {
+            return addDoc(collection(db, "users"), { email, uid: cred.user.uid, role })
+            
 
-        navigate('/verify-email')
+        })
+        .then(() => {
+            sendEmailVerification(auth.currentUser).then(() => {
+                navigate('/verify-email')
+            })
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorCode, errorMessage)
+        });
+       
     }
+    
     return (
         <>
 
@@ -26,10 +42,11 @@ function Signup() {
                         validationSchema={SignupSchema}
                         onSubmit={values => {
                             handleSubmit(values.email, values.password)
+                            
                         }}
                     >
                         {({ errors, touched }) => (
-                            <Form>
+                            <Form id="register">
                                 <div className={"mt-4"}>
                                     <div className={"mt-4"}>
                                         <Field
@@ -59,11 +76,29 @@ function Signup() {
                                             </span> : null
                                         }
                                     </div>
+                                    {/* <div className={"mt-4"}>
+                                        <Field
+                                            name={"role"}
+                                            id="role"
+                                            type={"role"}
+                                            placeholder={"User"}
+                                            className={"w-full px-4 py-2 mt-2 border rounded-md" +
+                                                " focus:outline-none focus:ring-1 focus:ring-blue-600"}
+                                        />
+                                        {errors.role && touched.role ?
+                                            <span className={"text-sm text-red-700"}>
+                                                {errors.role}
+                                            </span> : null
+                                        }
+                                    </div> */}
+                                    
                                     <div className={"flex flex-col place-items-center mt-5"}>
                                         <Button text={"Sign up"} />
-                                        <a href={"/"} className={"text-sm text-blue-600 hover:underline mt-5"}>Already
-                                            Have an
-                                            Account ? Login</a>
+                                        <Link to={"/"}
+                                              className={"text-sm text-black-600 hover:underline mt-5"}
+                                        >
+                                            Already Have an Account ? Login
+                                        </Link>
                                     </div>
                                 </div>
                             </Form>

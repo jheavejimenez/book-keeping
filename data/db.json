@@ -31,50 +31,191 @@
   ],
   "titleHeader": [
     {
-      "title":["DocID","Sender","File","Timestamp","Status","Action"]
+      "title": ["DocID", "Sender", "File", "Timestamp", "Status", "Action"]
     }
   ],
   "requestData": [
     {
       "reqID": "1",
-      "requestFrom": "Charlon",
-      "requestBy": "Admin",
+      "requestedFrom": "Charlon",
       "file": "file1.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"
+      "dateRequested": "2022-09-16"
     },
     {
       "reqID": "2",
-      "requestFrom": "Jheave",
-      "requestBy": "Admin",
+      "requestedFrom": "Jheave",
       "file": "file2.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"
+      "dateRequested": "2022-09-16"
     },
     {
       "reqID": "3",
-      "requestFrom": "Lawrence",
-      "requestBy": "Admin",
+      "requestedFrom": "Lawrence",
       "file": "file3.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"
+      "dateRequested": "2022-09-16"
     },
     {
       "reqID": "4",
-      "requestFrom": "Darell",
-      "requestBy": "Admin",
+      "requestedFrom": "Darell",
       "file": "file4.pdf",
       "purpose": "Purpose here...",
       "dueDate": "2022-09-16",
-      "dataRequested": "2022-09-16"   
-    }    
+      "dateRequested": "2022-09-16"
+    }
   ],
   "requestHeader": [
     {
-      "title":["ReqID","RequestFrom","RequestBy","File","Purpose","DueDate","DataRequested"]
+      "title": [
+        "ReqID",
+        "RequestedFrom",
+        "File",
+        "Purpose",
+        "DueDate",
+        "DateRequested"
+      ]
+    }
+  ],
+  "incomingData": [
+    {
+      "incID": "1",
+      "sender": "John Doe - XYZ Company",
+      "file": "Transaction.xlsx",
+      "dateReceived": "2022-09-16"
+    },
+    {
+      "incID": "2",
+      "sender": "Jane Doe - ABC Company",
+      "file": "Finance.xlsx",
+      "dateReceived": "2022-05-13"
+    },
+    {
+      "incID": "3",
+      "sender": "Amelia Watson - JKL Company",
+      "file": "Records.xlsx",
+      "dateReceived": "2021-08-23"
+    }
+  ],
+  "incomingHeader": [
+    {
+      "title": ["DocID", "Sender", "File", "DateReceived", "Action"]
+    }
+  ],
+  "outgoingData": [
+    {
+      "outID": "1",
+      "recipient": "John Doe - XYZ Company",
+      "file": "Receipt.pdf",
+      "dateSent": "2022-09-16"
+    },
+    {
+      "outID": "2",
+      "recipient": "Jane Doe - ABC Company",
+      "file": "BIR.pdf",
+      "dateSent": "2022-03-10"
+    },
+    {
+      "outID": "3",
+      "recipient": "Amelia Watson - JKL Company",
+      "file": "Receipt2.pdf",
+      "dateSent": "2021-01-10"
+    }
+  ],
+  "outgoingHeader": [
+    {
+      "title": ["DocID", "Recipient", "File", "DateSent"]
+    }
+  ],
+  "clientRequested": [
+    {
+      "reqID": "1",
+      "requestedBy": "admin2@mailinator.com",
+      "requestedFile": "Transaction.xlsx",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dateReceived": "2022-09-24"
+    },
+    {
+      "reqID": "2",
+      "requestedBy": "admin2@mailinator.com",
+      "requestedFile": "Finals.pdf",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dateReceived": "2022-09-24"
+    },
+    {
+      "reqID": "3",
+      "requestedBy": "admin1@mailinator.com",
+      "requestedFile": "Records.xlsx",
+      "purpose": "Purpose here...",
+      "dueDate": "2022-09-16",
+      "dateReceived": "2022-09-24"
+    }
+  ],
+  "clientRequestedHeader": [
+    {
+      "title": [
+        "ReqID",
+        "RequestedBy",
+        "RequestedFile",
+        "Purpose",
+        "DueDate",
+        "DateReceived"
+      ]
+    }
+  ],
+  "clientIncomingData": [
+    {
+      "incID": "1",
+      "sender": "admin1@mailinator.com",
+      "file": "Receipt.pdf",
+      "dateReceived": "2022-09-12"
+    },
+    {
+      "incID": "2",
+      "sender": "admin2@mailinator.com",
+      "file": "BIR.pdf",
+      "dateReceived": "2022-05-13"
+    },
+    {
+      "incID": "3",
+      "sender": "admin1@mailinator.com",
+      "file": "Receipt2.pdf",
+      "dateReceived": "2021-08-23"
+    }
+  ],
+  "clientIncomingHeader": [
+    {
+      "title": ["DocID", "Sender", "File", "DateReceived", "Action"]
+    }
+  ],
+  "clientOutgoingData": [
+    {
+      "outID": "1",
+      "recipient": "admin2@mailinator.com",
+      "file": "Transaction.xlsx",
+      "dateSent": "2022-09-16"
+    },
+    {
+      "outID": "2",
+      "recipient": "admin1@mailinator.com",
+      "file": "BIR.xlsx",
+      "dateSent": "2022-03-10"
+    },
+    {
+      "outID": "3",
+      "recipient": "admin1@mailinator.com",
+      "file": "Final.xlsx",
+      "dateSent": "2021-01-10"
+    }
+  ],
+  "clientOutgoingHeader": [
+    {
+      "title": ["DocID", "Recipient", "File", "DateSent"]
     }
   ]
 }

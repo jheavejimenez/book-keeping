@@ -18,4 +18,5 @@ export const SignupSchema = Yup.object().shape({
             'Password must contain at least one special character and one number and one uppercase letter'
         )
         .required('Required'),
+
 });

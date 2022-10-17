@@ -1,13 +1,11 @@
-/* eslint-disable react/style-prop-object */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import Sidebar from "../../components/Navigation/Sidebar";
-import IncomingTable from "../../components/Table/IncomingTable";
+import ClientSidebar from "../../components/Navigation/ClientSidebar";
+import ClientIncomingTable from "../../components/Table/ClientIncomingTable";
 import Dropdown from "../../components/Button/FilterDropdown";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
 
-function Incoming() {
+function ClientIncoming() {
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -16,7 +14,7 @@ function Incoming() {
             <Header />
 
             {/*sidebar*/}
-            <Sidebar />
+            <ClientSidebar />
 
             <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                     
@@ -32,11 +30,12 @@ function Incoming() {
                 </div>
 
                 {/*client table*/}
-                <IncomingTable />
+                <ClientIncomingTable />
             </div>
 
+                
         </div>
     )
 }
 
-export default Incoming;
+export default ClientIncoming;

@@ -1,13 +1,12 @@
-/* eslint-disable react/style-prop-object */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import Sidebar from "../../components/Navigation/Sidebar";
-import IncomingTable from "../../components/Table/IncomingTable";
-import Dropdown from "../../components/Button/FilterDropdown";
+import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import Header from "../../components/Navigation/Header";
+import Dropdown from "../../components/Button/FilterDropdown";
+import ClientOutgoingTable from "../../components/Table/ClientOutgoingTable";
 import Card from "../../components/Cards/Card";
+import OutgoingButton from "../../components/Button/OutgoingButton";
 
-function Incoming() {
+function ClientOutgoing () {
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -16,7 +15,7 @@ function Incoming() {
             <Header />
 
             {/*sidebar*/}
-            <Sidebar />
+            <ClientSidebar />
 
             <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                     
@@ -24,7 +23,8 @@ function Incoming() {
                 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
-                    titleText={"Incoming Documents"}
+                    titleText={"Outgoing Documents"}
+                    button={<OutgoingButton text={"Send Files"}/>}
                 />
 
                 <div className="mt-4 mx-4 pt-7">
@@ -32,11 +32,11 @@ function Incoming() {
                 </div>
 
                 {/*client table*/}
-                <IncomingTable />
+                <ClientOutgoingTable />
             </div>
 
         </div>
     )
 }
 
-export default Incoming;
+export default ClientOutgoing;

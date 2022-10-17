@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import TableRow from "./TableRow";
+import IncomingTableRow from "./IncomingTableRow";
 import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 
-function ClientTable() {
+function IncomingTable() {
     const [data, setData] = useState([]);
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/data");
+        const response = await axios.get("http://localhost:3000/incomingData");
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/titleHeader");
+        const response = await axios.get("http://localhost:3000/incomingHeader");
         setTitleTable(response.data[0].title);
+
     }
 
     useEffect(() => {
@@ -39,9 +40,8 @@ function ClientTable() {
                         <table className={"w-full"}>
                             <thead>
                             <tr className={"text-xs font-bold font-inter tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
-                                {titleTable.map((item, index) => (
+                                {titleTable.map((item) => (
                                     <TableHeading
-                                        key={index}
                                         text={item}
                                     />
 
@@ -50,23 +50,21 @@ function ClientTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <TableRow
-                                    key={item.id}
-                                    DocID={item.id}
-                                    SenderName={item.sender}
-                                    fileName={item.file}
-                                    timeStamp={item.timestamp}
-                                    status={item.status}
+                                <IncomingTableRow
+                                    DocID={item.incID}
+                                    Sender={item.sender}
+                                    File={item.file}
+                                    DateReceived={item.dateReceived}
                                 />)
                             )}
                             </tbody>
                         </table>
                     </div>
-                   <Pagination/>
+                    <Pagination/>       
                 </div>
             </div>
         </>
     )
 }
 
-export default ClientTable;
+export default IncomingTable;
