@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../src/assets/MindWorxLogo.png"
-import Background from "../../../src/assets/bookkeeping-bg.jpg"
 import Button from "../../components/Button/Button";
 import { useNavigate } from 'react-router-dom'
-import { sendEmailVerification, signInWithEmailAndPassword, getAuth, onAuthStateChanged  } from 'firebase/auth'
-import { auth } from '../../utils/Firebase'
-import  Alert  from "../../components/Alert/Alert";
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../../utils/Firebase'
+import Alert from "../../components/Alert/Alert";
 import { Field, Form, Formik } from "formik";
 import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
-import { collection, doc, setDoc, getDocs, query, where } from "firebase/firestore"; 
-import { db } from "../../utils/Firebase";
-import { useEffect } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 function Login() {
     const [error, setError] = useState('')
@@ -24,7 +21,7 @@ function Login() {
 
 
     useEffect (( ) => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        return onAuthStateChanged(auth, (user) => {
             if (user) {
                 setEmail(user.email)
                 setUid(user.uid)
@@ -32,12 +29,11 @@ function Login() {
                 getDocs(q).then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                         setRole(doc.data().role)
-                        
+
                     });
                 });
             }
-        });
-        return unsubscribe
+        })
     }, [ email, uid, role])
 
     const handleSubmit = async(email,password ) => {
