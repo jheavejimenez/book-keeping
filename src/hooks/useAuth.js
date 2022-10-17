@@ -18,11 +18,7 @@ export const AuthProvider = ({ children }) => {
     // call this function to sign out logged in user
     const logout = () => {
         signOut(auth) // Sign-out successful.
-        setUser(
-            {
-                
-            }
-        );
+        setUser({});
         navigate("/", { replace: true });
     };
 
