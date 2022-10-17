@@ -54,7 +54,6 @@ function Login() {
                     })
                     navigate('client/dashboard')
 
-
                 } else if (character === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,

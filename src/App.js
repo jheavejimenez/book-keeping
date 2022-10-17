@@ -19,7 +19,7 @@ function App() {
       <Route exact path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
-      <Route path="/forgotpass" element={<Forgotpass />} />
+      <Route path="/forgot-pass" element={<Forgotpass />} />
 
       <Route
         path="/dashboard"
@@ -54,7 +54,7 @@ function App() {
         }
       />
       <Route
-        path="/admin/accountsettings"
+        path="/admin/account-settings"
         element={
           <ProtectedRoute>
             <Accountsettings />
