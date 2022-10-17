@@ -13,7 +13,7 @@ function FillUp() {
                 <PencilSquareIcon className="w-7 h-7 text-blue-500" />
             </button>
 
-            {showModal ? (
+            {showModal && (
                 <>
                     <div className={"justify-center items-center flex overflow-x-hidden overflow-y-auto " +
                         "fixed inset-0 z-50 outline-none focus:outline-none shadow-lg"}>
@@ -78,8 +78,10 @@ function FillUp() {
                                             {/*footer*/}
                                             <div className="pt-3 flex items-center justify-center">
                                                 <button
-                                                    className={"bg-blue-500 hover:bg-blue-400 text-white active:bg-emerald-600 font-bold uppercase text-sm rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
-                                                        "placeholder-gray-400 text-white text-base shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 w-full"}
+                                                    className={"bg-blue-500 hover:bg-blue-400 text-white active:bg-emerald-600 font-bold" + 
+                                                    "uppercase text-sm rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal" +
+                                                    "placeholder-gray-400 text-white text-base shadow hover:shadow-lg outline-none" + 
+                                                    "focus:outline-none ease-linear transition-all duration-150 w-full"}
                                                     type="button"
                                                     onClick={() => setShowModal(false)}
                                                 >
@@ -94,7 +96,7 @@ function FillUp() {
                     </div>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
-            ) : null}
+            )}
         </>
 
     )
