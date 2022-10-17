@@ -15,7 +15,7 @@ function Header() {
 	const {logout} = useAuth()
     const {user} = useAuth()
     const [imgUrl , setImgUrl] = useState('')
-    const userprofile = (doc(db, "accountsettings", auth.currentUser.email ));
+    const userprofile = (doc(db, "accountsettings", user ));
     
     useEffect((e) => {
         
@@ -30,6 +30,8 @@ function Header() {
         
         
     }, [imgUrl])
+
+    
 
     
     return (

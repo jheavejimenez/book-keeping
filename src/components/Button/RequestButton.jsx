@@ -3,10 +3,11 @@ import React from "react";
 import Input from "../Input/Input";
 import { useState } from "react";
 import { db } from "../../utils/Firebase";
-import { auth } from "../../utils/Firebase";
-import { collection, setDoc, getDocs, query, where, doc, addDoc } from "firebase/firestore"; 
+import {useAuth} from "../../hooks/useAuth";
+import { collection, setDoc, getDocs, query, where, doc, addDoc, serverTimestamp } from "firebase/firestore"; 
 
 function RequestButton({text}) {
+    const {user} = useAuth()
     const [showModal, setShowModal] = useState(false);
     const [reqfrom , setReqfrom] = useState('')
     const [file , setFile] = useState('')
@@ -18,14 +19,18 @@ function RequestButton({text}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setReqby(user)
+        await addDoc(accsetCollectionRef, { reqfrom, file, dueDate, reqby, purpose, dateReq: serverTimestamp() })            
+            .then(() => {
+                alert("Request Submitted")
+                setShowModal(false)
+            }
+            )
+            .catch((error) => {
+                alert(error.message)
+            }
+            )
 
-        await addDoc(doc(accsetCollectionRef, auth.currentUser.email),{ reqfrom, file, dueDate, reqby, purpose }) 
-        .then(() => {
-            console.log("Document successfully written!");    
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
     }
 
         
@@ -85,7 +90,7 @@ function RequestButton({text}) {
                                                 <label htmlFor="reqBy" className={"text-black"}>Requested By</label>
                                                 <input id="reqBy" className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " + 
                                                 "placeholder-gray-700 text-black text-base w-full"} 
-                                                placeholder="Admin Email"  type="email" onChange={(e) => setReqby(e.target.value)}/>
+                                                placeholder={user} disabled />
                                             </div>
                                             <div>
                                                 <label htmlFor="purpose" className="block mb-1 text-base font-medium text-black">Purpose</label>
