@@ -5,7 +5,7 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 
 
-function Forgotpass() {
+function ForgotPassword() {
     const [email, setEmail] = useState("");
     const [errors, setError] = useState("");
 
@@ -24,9 +24,6 @@ function Forgotpass() {
             alert(errorCode, errorMessage);
         });
     };
-
-
-
 
     return (
         <>
@@ -86,4 +83,4 @@ function Forgotpass() {
     )
 }
 
-export default Forgotpass;
+export default ForgotPassword;
