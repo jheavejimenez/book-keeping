@@ -3,10 +3,18 @@ import RequestTableRow from "./RequestTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
 
 function RequestTable() {
     const [data, setData] = useState([]);
-    const [titleTable, setTitleTable] = useState([]);
+    const titleTable = [
+        "ReqID",
+        "RequestedFrom",
+        "File",
+        "Purpose",
+        "DueDate",
+        "DateRequested"
+    ]
 
     const getAllRequestDocumments = async () => {
         const snapshot = await getDocs(collection(db, "request"));
@@ -43,12 +51,12 @@ function RequestTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <RequestTableRow
-                                    ReqID={item.reqID}
-                                    RequestedFrom={item.requestedFrom}
+                                    ReqID={item.documentId}
+                                    RequestedFrom={item.reqfrom}
                                     File={item.file}
                                     Purpose={item.purpose}
                                     DueDate={item.dueDate}
-                                    DateRequested={item.dateRequested}
+                                    DateRequested={item.dateReq.nanoseconds}
                                 />)
                             )}
                             </tbody>
