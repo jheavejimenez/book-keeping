@@ -4,6 +4,7 @@ import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
+import dayjs from "dayjs";
 
 function RequestTable() {
     const [data, setData] = useState([]);
@@ -25,7 +26,7 @@ function RequestTable() {
         getAllRequestDocumments();
         const interval = setInterval(() => {
             getAllRequestDocumments();
-        }, 10000)
+        }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
@@ -56,8 +57,9 @@ function RequestTable() {
                                     File={item.file}
                                     Purpose={item.purpose}
                                     DueDate={item.dueDate}
-                                    DateRequested={item.dateReq.nanoseconds}
+                                    DateRequested={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
+
                             )}
                             </tbody>
                         </table>
