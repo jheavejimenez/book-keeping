@@ -63,7 +63,8 @@ function RequestButton({ text }) {
                                         Request a File
                                     </h3>
                                     <button
-                                        className="p-1 ml-auto text-gray-400 hover:text-black opacity-50 float-right text-3xl leading-none font-semi-bold outline-none focus:outline-none"
+                                        className={"p-1 ml-auto text-gray-400 hover:text-black opacity-50 float-right" + 
+                                        "text-3xl leading-none font-semi-bold outline-none focus:outline-none"}
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
