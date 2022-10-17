@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Logo from "../../../src/assets/MindWorxLogo.png"
 import Button from "../../components/Button/Button";
 import { useNavigate } from 'react-router-dom'
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from '../../utils/Firebase'
 import Alert from "../../components/Alert/Alert";
 import { Field, Form, Formik } from "formik";
@@ -14,56 +14,41 @@ function Login() {
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
-    const [email, setEmail] = useState('')
-    const [uid, setUid] = useState('')
-    const [role, setRole] = useState('')
 
-    useEffect(() => {
-        return onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setEmail(user.email)
-                setUid(user.uid)
-                const q = query(collection(db, "users"), where("uid", "==", user.uid));
-                getDocs(q).then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        setRole(doc.data().role)
-
-                    });
-                });
-            }
-        })
-    }, [email, uid, role])
+    const getUserRole = async (email) => {
+        const q = query(collection(db, "users"), where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.docs[0].data().role
+    }
 
     const handleSubmit = async (email, password) => {
-
+        const role = await getUserRole(email)
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
                 const isNewUser = cred.user.metadata.creationTime;
-                const character = role
-
-                if (character === "client" && isNewUser === cred.user.metadata.creationTime) {
+                if (role === "client" && isNewUser === cred.user.metadata.creationTime) {
                     login({
                         "email": cred.user.email,
-                        "role": character
+                        "role": role
                     })
-                    navigate('client/incoming')
-                } else if (character === "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                    navigate('client/incoming') // it should be navigated to client dashboard
+                } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
-                        "role": character
+                        "role": role
                     })
                     navigate('client/dashboard')
 
-                } else if (character === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
+                } else if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
-                        "role": character
+                        "role": role
                     })
-                    navigate('admin/accountsettings')
-                } else if (character === "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                    navigate('admin/account-settings')
+                } else if (role === "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
-                        "role": character
+                        "role": role
                     })
                     navigate('/dashboard')
                 }
@@ -72,7 +57,6 @@ function Login() {
                 setError(error.message)
             })
     }
-
     return (
         <>
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
