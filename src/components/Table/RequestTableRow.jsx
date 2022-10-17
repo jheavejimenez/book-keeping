@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../utils/Firebase";
+import React from "react";
 
-function RequestTableRow() {
+function RequestTableRow({ ReqID, RequestedFrom, File, Purpose, DueDate, DateRequested }) {
     return (
         <tr className={"hover:bg-gray-300 text-black"}>
-            {data.map((item) => (
-                <>
-                    <td className={"px-4 py-3 text-sm"}>
-                        {item.documentId}
-                    </td>
-                    <td className={"px-4 py-3 text-sm"}>
-                        {item.reqfrom}
-                    </td>
-                </>
-            ))}
+            <td className={"px-4 py-3 text-sm"}>{ReqID}</td>
+            <td className={"px-4 py-3 text-sm"}>{RequestedFrom}</td>
+            <td className={"px-4 py-3 text-sm"}>{File}</td>
+            <td className={"px-4 py-3 text-xs"}>{Purpose}</td>
+            <td className={"px-4 py-3 text-xs"}>{DueDate}</td>
+            <td className={"px-4 py-3 text-xs"}>{DateRequested}</td>
         </tr>
     )
 }
