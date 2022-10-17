@@ -2,23 +2,30 @@ import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import React, { useState } from "react";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
-import { addDoc, collection, serverTimestamp, setDoc, doc } from "firebase/firestore";
+import { collection, doc, getDocs, serverTimestamp, setDoc } from "firebase/firestore";
+import { nanoid } from "nanoid";
 
 function RequestButton({ text }) {
-    const {user} = useAuth()
+    const { user } = useAuth()
     const [showModal, setShowModal] = useState(false);
     const [reqfrom, setReqfrom] = useState('')
     const [file, setFile] = useState('')
     const [dueDate, setDueDate] = useState('')
-    const [reqby, setReqby] = useState('')
     const [purpose, setPurpose] = useState('')
     const requestCollectionRef = collection(db, "request");
-
+    const reqby = user.email;
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setReqby(user)
-        await setDoc(doc(requestCollectionRef, "NANO"), { reqfrom, file, dueDate, reqby, purpose, dateReq: serverTimestamp()} )
+        const documentId = nanoid(5)
+        await setDoc(doc(requestCollectionRef, documentId), {
+            reqfrom,
+            file,
+            dueDate,
+            reqby,
+            purpose,
+            dateReq: serverTimestamp()
+        })
             .then(() => {
                     alert("Request Submitted")
                     setShowModal(false)
@@ -28,8 +35,7 @@ function RequestButton({ text }) {
                     alert(error.message)
                 }
             )
-        }
-    
+    }
 
     return (
         <>
@@ -95,7 +101,7 @@ function RequestButton({ text }) {
                                                 <input id="reqBy"
                                                        className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
                                                            "placeholder-gray-700 text-black text-base w-full"}
-                                                       placeholder={user.email} disabled />
+                                                       placeholder={reqby} disabled />
                                             </div>
                                             <div>
                                                 <label
@@ -138,7 +144,7 @@ function RequestButton({ text }) {
                             </div>
                         </div>
                     </div>
-                    <div className="opacity-25 fixed inset-0 z-40 bg-black"/>
+                    <div className="opacity-25 fixed inset-0 z-40 bg-black" />
                 </>
             ) : null}
         </>
