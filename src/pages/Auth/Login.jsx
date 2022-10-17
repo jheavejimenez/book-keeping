@@ -15,12 +15,10 @@ function Login() {
     const navigate = useNavigate()
     const { login } = useAuth()
     const [email, setEmail] = useState('')
-    const [uid , setUid] = useState('')
+    const [uid, setUid] = useState('')
     const [role, setRole] = useState('')
 
-
-
-    useEffect (( ) => {
+    useEffect(() => {
         return onAuthStateChanged(auth, (user) => {
             if (user) {
                 setEmail(user.email)
@@ -34,49 +32,47 @@ function Login() {
                 });
             }
         })
-    }, [ email, uid, role])
+    }, [email, uid, role])
 
-    const handleSubmit = async(email,password ) => {
-    
+    const handleSubmit = async (email, password) => {
+
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
                 const isNewUser = cred.user.metadata.creationTime;
                 const character = role
-                
-                
+
                 if (character === "client" && isNewUser === cred.user.metadata.creationTime) {
-                    login(cred.user.email)
+                    login({
+                        "email": cred.user.email,
+                        "role": character
+                    })
                     navigate('client/incoming')
-                }
-                else if (character=== "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
-                    login(cred.user.email)
+                } else if (character === "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                    login({
+                        "email": cred.user.email,
+                        "role": character
+                    })
                     navigate('client/dashboard')
-                
-                    
-                }
-                
-                else if (character=== "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
-                    login(cred.user.email)
+
+
+                } else if (character === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
+                    login({
+                        "email": cred.user.email,
+                        "role": character
+                    })
                     navigate('admin/accountsettings')
-                }
-                else if (character=== "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
-                    login(cred.user.email)
+                } else if (character === "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                    login({
+                        "email": cred.user.email,
+                        "role": character
+                    })
                     navigate('/dashboard')
                 }
-                
             })
             .catch((error) => {
                 setError(error.message)
             })
-    
-    
     }
-
-
-
-    
-  
-    
 
     return (
         <>
@@ -93,7 +89,7 @@ function Login() {
                             validationSchema={LoginSchema}
                             onSubmit={values => {
                                 handleSubmit(values.email, values.password)
-                        }}
+                            }}
                         >
                             {({ errors, touched }) => (
                                 <Form>
@@ -107,10 +103,10 @@ function Login() {
                                                     "focus:outline-none focus:ring-1 focus:ring-blue-600"}
                                             />
                                             {errors.email && touched.email ?
-                                            <span className={"text-sm text-red-700"}>
+                                                <span className={"text-sm text-red-700"}>
                                                 {errors.email}
                                             </span> : null
-                                        }
+                                            }
                                         </div>
                                         <div>
                                             <Field
@@ -121,7 +117,7 @@ function Login() {
                                                     " focus:outline-none focus:ring-1 focus:ring-blue-600"}
                                             />
                                             {errors.password && touched.password ?
-                                            <span className={"text-sm text-red-700"}>
+                                                <span className={"text-sm text-red-700"}>
                                                 {errors.password}
                                             </span> : null
                                             }
@@ -129,11 +125,11 @@ function Login() {
                                         <div className={"flex flex-col place-items-center"}>
                                             <Button text={"Login"} />
                                             <a href="/Forgotpass"
-                                            className={"text-sm text-black-600 hover:underline mt-5 "}>Forgot
+                                               className={"text-sm text-black-600 hover:underline mt-5 "}>Forgot
                                                 password?</a>
                                             <div className="border-t-2 w-80 mt-5 ">
                                                 <a href={"/Signup"}
-                                                className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-5 "}>Create
+                                                   className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-5 "}>Create
                                                     an account today !</a>
                                             </div>
                                         </div>
@@ -142,7 +138,7 @@ function Login() {
                             )}
                         </Formik>
                     </>
-                    
+
                 </div>
                 {/*<div className="hidden lg:block lg:w-1/2 bg-cover rounded-r-md">
                     <img className="w-1/2 h-full bg-center bg-no-repeat bg-cover rounded-r-md" src={Background} alt="background"/>
