@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import ChooseStatusDropdown from "./ChooseStatusDropdown";
 import { XMarkIcon } from '@heroicons/react/20/solid';
 
 function ChangeStatus() {
-    const [showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <>
