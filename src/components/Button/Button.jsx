@@ -13,8 +13,6 @@ function Button({text, path}) {
     </button>
 
   )
-
-    
 }
 
 export default Button;
