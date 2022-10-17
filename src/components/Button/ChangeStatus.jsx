@@ -31,7 +31,8 @@ function ChangeStatus() {
                                         Edit Status
                                     </h3>
                                     <button
-                                        className="p-1 ml-auto text-gray-400 hover:text-black opacity-50 float-right text-3xl leading-none font-semi-bold outline-none focus:outline-none"
+                                        className={"p-1 ml-auto text-gray-400 hover:text-black opacity-50 float-right text-3xl" + 
+                                        "leading-none font-semi-bold outline-none focus:outline-none"}
                                         onClick={() => setShowModal(false)}
                                     >
                                         <XMarkIcon className="w-7 h-7" />
@@ -48,7 +49,8 @@ function ChangeStatus() {
                                 {/*footer*/}
                                 <div className="flex items-center justify-center p-2">
                                     <button
-                                        className="text-blue-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        className={"text-blue-500 background-transparent font-bold uppercase px-6 py-2 text-sm" + 
+                                        "outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"}
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
