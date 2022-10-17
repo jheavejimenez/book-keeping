@@ -1,5 +1,6 @@
 import { auth } from '../../utils/Firebase'
 import { sendEmailVerification } from 'firebase/auth'
+import {useNavigate} from "react-router-dom";
 
 function VerifyEmail() {
 
@@ -10,6 +11,7 @@ function VerifyEmail() {
             alert(err.message)
         })
     }
+    const navigate = useNavigate();
 
     return (
     <div className='flex min-h-screen items-center  justify-center'>
@@ -21,7 +23,10 @@ function VerifyEmail() {
                         <strong >A Verification email has been sent to:</strong><br />
                     </p>
                     <span>Follow the instruction in the email to verify your account</span>
-                <div className={"flex justify-end mr-6"}>
+                <div className={"flex justify-between"}>
+                    <button onClick={() => navigate("/")} className={"bg-blue-300 rounded p-2 mt-9 hover:bg-blue-400 active:bg-blue-400 font-semibold"}>
+                       Log in
+                    </button>
                     <button onClick={resendEmailVerification} className={"bg-blue-300 rounded p-2 mt-9 hover:bg-blue-400 active:bg-blue-400 font-semibold"}>
                         Resend Email
                     </button>
