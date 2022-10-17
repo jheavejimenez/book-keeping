@@ -13,7 +13,7 @@ function OutgoingButton({ text }) {
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                <PaperAirplaneIcon className=" w-7 h-7 mr-1 text-blue-500 -rotate-45 " />{text}
+                <PaperAirplaneIcon className="w-7 h-7 mr-1 text-blue-500 -rotate-45"/>{text}
             </button>
             {showModal ? (
                 <>
@@ -30,7 +30,8 @@ function OutgoingButton({ text }) {
                                         Send a New File
                                     </h3>
                                     <button
-                                        className="p-1 ml-auto text-gray-400 hover:text-black opacity-50 float-right text-3xl leading-none font-semi-bold outline-none focus:outline-none"
+                                        className={"p-1 ml-auto text-gray-400 hover:text-black opacity-50 float-right" + 
+                                        "text-3xl leading-none font-semi-bold outline-none focus:outline-none"}
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
