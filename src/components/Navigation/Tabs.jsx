@@ -15,7 +15,7 @@ function Tabs () {
                             Requested
                         </Link>
                     </li>
-                    <li class="mr-2">
+                    <li className="mr-2">
                         <Link to="" 
                             className={"text-black inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-blue-500 dark:hover:text-blue-500"}>
                             Done
