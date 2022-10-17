@@ -1,5 +1,10 @@
 import React from "react";
-import { CheckCircleIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import {
+    CheckCircleIcon,
+    DocumentArrowDownIcon,
+    DocumentArrowUpIcon,
+    ExclamationCircleIcon
+} from "@heroicons/react/24/outline";
 
 
 function StatisticCards() {
@@ -8,15 +13,14 @@ function StatisticCards() {
             <div
                 className={"bg-blue-300 text-black shadow-lg rounded-md" +
                     " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                    " text-white font-medium group h-28"
-                }
+                    " text-white font-medium group h-28"}
             >
                 <div
                     className={"flex justify-center items-center w-14 h-14 bg-white " +
-                        "rounded-full transition-all duration-300 transform group-hover:rotate-12"
-                    }
+                        "rounded-full transition-all duration-300 transform group-hover:rotate-12"}
                 >
-                    <DocumentArrowDownIcon className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"} />
+                    <DocumentArrowDownIcon
+                        className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"} />
 
                 </div>
                 <div className={"text-right"}>
@@ -27,15 +31,15 @@ function StatisticCards() {
             <div
                 className={"bg-lime-200 text-black shadow-lg rounded-md" +
                     " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                    " text-white font-medium group"
-                }>
+                    " text-white font-medium group"}
+            >
                 <div
                     className={"flex justify-center items-center" +
                         " w-14 h-14 bg-white rounded-full transition-all " +
-                        "duration-300 transform group-hover:rotate-12"
-                    }
+                        "duration-300 transform group-hover:rotate-12"}
                 >
-                    <ExclamationCircleIcon className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"} />
+                    <ExclamationCircleIcon
+                        className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"} />
 
                 </div>
                 <div className={"text-right"}>
@@ -46,11 +50,12 @@ function StatisticCards() {
             <div
                 className={"bg-red-300 text-black shadow-lg rounded-md" +
                     " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                    " text-white font-medium group h-28"
-                }>
+                    " text-white font-medium group h-28"}
+            >
                 <div
                     className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
-                    <DocumentArrowUpIcon className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"} />
+                    <DocumentArrowUpIcon
+                        className={"w-10 h-10 transform transition-transform duration-500 ease-in-out"} />
 
                 </div>
                 <div className={"text-right"}>
@@ -61,10 +66,12 @@ function StatisticCards() {
             <div
                 className={"bg-green-300 text-black shadow-lg rounded-md" +
                     " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                    " text-white font-medium group"
-                }>
+                    " text-white font-medium group"}
+            >
                 <div
-                    className={"flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12"}>
+                    className={"flex justify-center items-center w-14 h-14 bg-white rounded-full " +
+                        "transition-all duration-300 transform group-hover:rotate-12"}
+                >
                     <CheckCircleIcon className="w-10 h-10 transform transition-transform duration-500 ease-in-out" />
                 </div>
                 <div className={"text-right"}>
@@ -73,7 +80,6 @@ function StatisticCards() {
                 </div>
             </div>
         </div>
-
     )
 }
 
