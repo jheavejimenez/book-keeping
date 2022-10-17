@@ -19,6 +19,7 @@ function RequestButton({ text }) {
         e.preventDefault()
         const documentId = nanoid(5)
         await setDoc(doc(requestCollectionRef, documentId), {
+            documentId,
             reqfrom,
             file,
             dueDate,
