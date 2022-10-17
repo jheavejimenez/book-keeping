@@ -41,10 +41,10 @@ function ClientSidebar () {
                                     <DocumentArrowDownIcon className="w-6 h-6"/>
                                 </span>
                                 <span className="ml-2 text-sm font-medium tracking-wide truncate">Incoming</span>
-                                <span
+                                {/* <span
                                     className={"hidden md:block px-2 py-0.5 ml-auto text-xs font-medium " +
                                     "tracking-wide text-red-500 bg-red-50 rounded-full"}
-                                >1.2k</span>
+                                >1.2k</span> */}
                             </Link>
                         </li>
 
