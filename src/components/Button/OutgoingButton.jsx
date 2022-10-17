@@ -1,8 +1,8 @@
 import React from 'react'
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import {XMarkIcon} from "@heroicons/react/20/solid";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
-function OutgoingButton({text}) {
+function OutgoingButton({ text }) {
     const [showModal, setShowModal] = React.useState(false);
 
     return (
@@ -13,7 +13,7 @@ function OutgoingButton({text}) {
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                <PaperAirplaneIcon className= " w-7 h-7 mr-1 text-blue-500 -rotate-45 "/>{text}
+                <PaperAirplaneIcon className=" w-7 h-7 mr-1 text-blue-500 -rotate-45 " />{text}
             </button>
             {showModal ? (
                 <>
@@ -21,7 +21,8 @@ function OutgoingButton({text}) {
                         "fixed inset-0 z-50 outline-none focus:outline-none shadow-lg"}>
                         <div className="container mx-auto w-11/12 md:w-2/3 max-w-md">
                             {/*content*/}
-                            <div className="relative py-6 px-6 md:px-6 bg-white shadow-md rounded border border-gray-400">
+                            <div
+                                className="relative py-6 px-6 md:px-6 bg-white shadow-md rounded border border-gray-400">
                                 {/*header*/}
                                 <div
                                     className="flex items-start justify-between pb-3 border-b border-solid border-slate-200 rounded-t-md">
@@ -33,7 +34,7 @@ function OutgoingButton({text}) {
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
-                                        <XMarkIcon className="w-7 h-7"/>
+                                        <XMarkIcon className="w-7 h-7" />
                                     </button>
                                 </div>
                                 {/*body*/}
@@ -71,8 +72,9 @@ function OutgoingButton({text}) {
                                         Close
                                     </button>
                                     <button
-                                        className={"bg-blue-500 hover:bg-blue-400 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 " +
-                                            "rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"}
+                                        className={"bg-blue-500 hover:bg-blue-400 text-white active:bg-emerald-600" +
+                                            "font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg " +
+                                            "outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"}
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
@@ -88,8 +90,6 @@ function OutgoingButton({text}) {
 
         </>
     )
-
-
 }
 
 export default OutgoingButton;

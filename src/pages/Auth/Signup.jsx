@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Button from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { auth } from "../../utils/Firebase";
 import { Field, Form, Formik } from "formik";
@@ -94,9 +94,11 @@ function Signup() {
                                     
                                     <div className={"flex flex-col place-items-center mt-5"}>
                                         <Button text={"Sign up"} />
-                                        <a href={"/"} className={"text-sm text-black-600 hover:underline mt-5"}>Already
-                                            Have an
-                                            Account ? Login</a>
+                                        <Link to={"/"}
+                                              className={"text-sm text-black-600 hover:underline mt-5"}
+                                        >
+                                            Already Have an Account ? Login
+                                        </Link>
                                     </div>
                                 </div>
                             </Form>

@@ -16,8 +16,8 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 function AccountSettings() {
     const { user } = useAuth();
-    const [fileInput] = React.useState("");
-    const [Source, setSource] = React.useState("../../UserDefaultImage.png");
+    const [fileInput] = useState("");
+    const [Source, setSource] = useState("../../UserDefaultImage.png");
     const [image, setImage] = useState(null);
 
 
