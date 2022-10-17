@@ -47,33 +47,41 @@ function FillUp() {
                                                     <label className="text-red-500">*</label>
                                                 </div>
                                                 <input id="firstName"
-                                                       className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
-                                                           "placeholder-gray-400 text-black text-base w-full"}
-                                                       placeholder="e.g. John" />
+                                                    className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
+                                                        "placeholder-gray-400 text-black text-base w-full"}
+                                                    placeholder="e.g. John" 
 
+                                                />
                                             </div>
                                             <div>
                                                 <div className="flex flex-start">
-                                                    <label for="fileName" className={"justify-start flex text-black"}>File
-                                                        Name</label>
+                                                    <label for="fileName" 
+                                                        className={"justify-start flex text-black"}
+                                                    >
+                                                        File Name
+                                                    </label>
                                                     <label className="text-red-500">*</label>
                                                 </div>
                                                 <input id="fileName"
-                                                       className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
-                                                           "placeholder-gray-400 text-black text-base w-full"}
-                                                       placeholder="e.g. John.pdf" />
+                                                    className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
+                                                        "placeholder-gray-400 text-black text-base w-full"}
+                                                    placeholder="e.g. John.pdf" 
+                                                />
                                             </div>
                                             <div>
                                                 <div className="flex flex-start">
                                                     <label for="companyName"
-                                                           className={"justify-start flex text-black"}>Company
-                                                        Name</label>
+                                                           className={"justify-start flex text-black"}
+                                                        >
+                                                            Company Name
+                                                        </label>
                                                     <label className="text-red-500">*</label>
                                                 </div>
                                                 <input id="companyName"
-                                                       className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
-                                                           "placeholder-gray-400 text-black text-base w-full"}
-                                                       placeholder="e.g. XYZ Company" />
+                                                    className={"border rounded-md mb-3 mt-1 h-10 pl-3 border-gray-400 font-normal " +
+                                                        "placeholder-gray-400 text-black text-base w-full"}
+                                                    placeholder="e.g. XYZ Company"     
+                                                />
                                             </div>
                                             {/*footer*/}
                                             <div className="pt-3 flex items-center justify-center">
