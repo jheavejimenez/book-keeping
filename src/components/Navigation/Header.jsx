@@ -1,39 +1,22 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
-import {useAuth} from "../../hooks/useAuth";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { ArrowRightOnRectangleIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { collection, query, where, onSnapshot, getDoc ,doc } from "firebase/firestore";
-import {  ref } from "firebase/storage";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
-import { useEffect } from "react";
-import { auth } from '../../utils/Firebase'
-import { getAuth, updateProfile } from "firebase/auth";
-import { get } from "jquery";
-import { useState } from "react";
 
 function Header() {
 	const {logout} = useAuth()
     const {user} = useAuth()
     const [imgUrl , setImgUrl] = useState('')
-    const userprofile = (doc(db, "accountsettings", user ));
-    
-    useEffect((e) => {
-        
-        const userprofilesnapshot = onSnapshot(userprofile, (doc, e ) => {
+    const userprofile = (doc(db, "accountsettings", user.email ));
+    useEffect(() => {
+        onSnapshot(userprofile, (doc) => {
             setImgUrl(doc.data().image)
-            console.log(doc.data().image)
-            
-        }) 
-        return userprofilesnapshot
-         
-        
-        
-        
-    }, [imgUrl])
+        })
+    }, [imgUrl, userprofile])
 
-    
 
-    
     return (
         <div className={"fixed w-full flex items-center justify-between h-14 text-white bg-blue-400 z-10"}>
         	<div
@@ -44,7 +27,7 @@ function Header() {
                         currentTarget.src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg";
                       }} />
 
-                <span className="truncate hidden md:block">{user}</span>
+                <span className="truncate hidden md:block">{user.email}</span>
             </div>
 
             <div className={"flex justify-between items-center h-14 bg-blue-400 text-black header-right"}>
