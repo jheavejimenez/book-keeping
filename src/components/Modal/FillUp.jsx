@@ -38,7 +38,13 @@ function FillUp() {
                                 <div className="space-y-6 px-6 lg:px-6 pb-4 sm:pb-6 xl:pb-6">
                                     <form>
                                         <fieldset className="pt-3 ">
-                                            <div>
+                                            <FillUp
+                                                titleFor="firstName"
+                                                title="First Name"
+                                                titleID="firstName"
+                                                placeholder="e.g. John"
+                                            />
+                                            {/* <div>
                                                 <div className="flex flex-start">
                                                     <label
                                                         htmlFor="firstName"
@@ -55,8 +61,14 @@ function FillUp() {
                                                     placeholder="e.g. John" 
 
                                                 />
-                                            </div>
-                                            <div>
+                                            </div> */}
+                                            <FillUp
+                                                titleFor="fileName"
+                                                title="File Name"
+                                                titleID="fileName"
+                                                placeholder="e.g. John.pdf"
+                                            />
+                                            {/* <div>
                                                 <div className="flex flex-start">
                                                     <label for="fileName" 
                                                         className={"justify-start flex text-black"}
@@ -71,8 +83,14 @@ function FillUp() {
                                                     "text-black text-base w-full"}
                                                     placeholder="e.g. John.pdf" 
                                                 />
-                                            </div>
-                                            <div>
+                                            </div> */}
+                                            <FillUp
+                                                titleFor="companyName"
+                                                title="Company Name"
+                                                titleID="companyName"
+                                                placeholder="e.g. XYZ Company"
+                                            />
+                                            {/* <div>
                                                 <div className="flex flex-start">
                                                     <label for="companyName"
                                                            className={"justify-start flex text-black"}
@@ -87,7 +105,7 @@ function FillUp() {
                                                     "text-black text-base w-full"}
                                                     placeholder="e.g. XYZ Company"     
                                                 />
-                                            </div>
+                                            </div> */}
                                             {/*footer*/}
                                             <div className="pt-3 flex items-center justify-center">
                                                 <button
