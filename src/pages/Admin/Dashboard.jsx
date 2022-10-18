@@ -2,7 +2,7 @@
 import React from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
 import ClientTable from "../../components/Table/ClientTable";
-import Dropdown from "../../components/Button/FilterDropdown";
+import FilterDropdown from "../../components/Button/FilterDropdown";
 import StatisticCards from "../../components/Cards/StatisticCards";
 import Header from "../../components/Navigation/Header";
 
@@ -28,7 +28,7 @@ function Dashboard() {
                     {/* end statistics cards*/}
                     
                     <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                        Filter by Type <Dropdown />
+                        Filter by Type <FilterDropdown />
                     </div>   
                     
                     {/*client table*/}
