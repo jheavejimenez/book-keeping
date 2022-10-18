@@ -22,7 +22,7 @@ function ChangeStatus() {
                         <div className="relative w-1/4 my-6 md:w-2/3 mx-auto max-w-md ">
                             {/*content*/}
                             <div className={"flex justify-center border-0 rounded-lg " +
-                                "shadow-lg absolute m-auto flex-col md:shrink w-auto" +
+                                " shadow-lg absolute m-auto flex-col md:shrink w-auto " +
                                 " bg-white outline-none focus:outline-none"}
                             >
                                 {/*header*/}
