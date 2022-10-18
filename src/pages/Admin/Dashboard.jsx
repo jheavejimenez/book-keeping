@@ -25,9 +25,11 @@ function Dashboard() {
                     
                     {/*statistics cards*/}
                     <StatisticCards />
-                    {/*statistics cards*/}
+                    {/* end statistics cards*/}
                     
-                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> Filter by Type <Dropdown /></div>   
+                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                        Filter by Type <Dropdown />
+                    </div>   
                     
                     {/*client table*/}
                         <ClientTable />

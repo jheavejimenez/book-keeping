@@ -28,7 +28,9 @@ function Incoming() {
                 />
 
                 <div className="mt-4 mx-4 pt-7">
-                    <span className="ml-2 text-sm font-medium tracking-wide truncate">Filter by Type <Dropdown /></span>
+                    <span className="ml-2 text-sm font-medium tracking-wide truncate">
+                        Filter by Type <Dropdown />
+                    </span>
                 </div>
 
                 {/*client table*/}
