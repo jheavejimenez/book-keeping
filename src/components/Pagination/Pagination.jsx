@@ -54,15 +54,15 @@ function Pagination() {
             </a>
             <a
               href="#"
-              className={"relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium" + 
-              "text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20 md:inline-flex"}
+              className={"relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm" + 
+              "font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20 md:inline-flex"}
             >
               3
             </a>
             <a
               href="#"
-              className={"relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2" +
-              "text-sm font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20"}
+              className={"relative inline-flex items-center rounded-r-md border border-gray-300 bg-white" + 
+              "px-2 py-2 text-sm font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20"}
             >
               <span className="not-sr-only">Next</span>
               <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
