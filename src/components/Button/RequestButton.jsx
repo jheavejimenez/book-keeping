@@ -4,6 +4,7 @@ import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import { collection, doc, getDocs, serverTimestamp, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
+import RequestForm from "../Modal/RequestForm";
 
 function RequestButton({ text }) {
     const { user } = useAuth()
@@ -48,7 +49,7 @@ function RequestButton({ text }) {
                 <PlusCircleIcon className="w-7 h-7 mr-1 text-blue-500" />{text}
             </button>
 
-            {showModal ? (
+            {showModal && (
                 <>
                     <div className={"justify-center items-center flex overflow-x-hidden overflow-y-auto " +
                         "fixed inset-0 z-50 outline-none focus:outline-none shadow-lg"}>
@@ -78,7 +79,17 @@ function RequestButton({ text }) {
                                 <div className="space-y-6 px-6 lg:px-6 pb-4 sm:pb-6 xl:pb-6">
                                     <form>
                                         <fieldset className="pt-3">
-                                            <div>
+
+                                            <RequestForm 
+                                                titleFor={"reqFrom"} 
+                                                title={"Request From"}
+                                                titleID={"reqFrom"}
+                                                placeholderTitle={"Client/User's Company Email"}
+                                                typeName={"email"}
+                                                targetValue={(e) => setReqfrom(e.target.value)}
+                                            />
+
+                                            {/* <div>
                                                 <label htmlFor="reqFrom" className={"text-black"}>Request From</label>
                                                 <input id="reqFrom"
                                                        className={"border rounded-md mb-3 mt-1 h-10 pl-3" + 
@@ -86,8 +97,17 @@ function RequestButton({ text }) {
                                                        "text-black text-base w-full"}
                                                        placeholder="Client/User's Company Email" type="email"
                                                        onChange={(e) => setReqfrom(e.target.value)} />
-                                            </div>
-                                            <div>
+                                            </div> */}
+
+                                            <RequestForm 
+                                                titleFor={"fileName"} 
+                                                title={"Filename"}
+                                                titleID={"filename"}
+                                                placeholderTitle={"Transactions.xlsx / .pdf"}
+                                                targetValue={(e) => setFile(e.target.value)}
+                                            />
+
+                                            {/* <div>
                                                 <label htmlFor="fileName" className={"text-black"}>Filename</label>
                                                 <input id="fileName"
                                                        className={"border rounded-md mb-3 mt-1 h-10" + 
@@ -95,23 +115,41 @@ function RequestButton({ text }) {
                                                        "text-black text-base w-full"}
                                                        placeholder="Transactions.xlsx / .pdf"
                                                        onChange={(e) => setFile(e.target.value)} />
-                                            </div>
-                                            <div>
+                                            </div> */}
+
+                                            <RequestForm 
+                                                titleFor={"dueDate"} 
+                                                title={"Set Due Date"}
+                                                titleID={"dueDate"}
+                                                typeName={"date"}
+                                                targetValue={(e) => setDueDate(e.target.value)}
+                                            />
+
+                                            {/* <div>
                                                 <label htmlFor="dueDate" className={"text-black"}>Set Due Date</label>
                                                 <input id="dueDate"
                                                        className={"w-full px-4 py-2 mt-2 border rounded-md" + 
                                                        "focus:outline-none focus:ring-1 focus:ring-blue-600" +
                                                         "placeholder-gray-400 text-black text-base w-full"}
                                                        type="date" onChange={(e) => setDueDate(e.target.value)} />
-                                            </div>
-                                            <div>
+                                            </div> */}
+                                            
+                                            <RequestForm 
+                                                titleFor={"reqBy"} 
+                                                title={"Request By"}
+                                                titleID={"reqBy"}
+                                                placeholderTitle={reqby}
+                                            />
+
+                                            {/* <div>
                                                 <label htmlFor="reqBy" className={"text-black"}>Requested By</label>
                                                 <input id="reqBy"
                                                        className={"border rounded-md mb-3 mt-1 h-10 pl-3" + 
                                                        "border-gray-400 font-normal" +
                                                        "placeholder-gray-700 text-black text-base w-full"}
                                                        placeholder={reqby} disabled />
-                                            </div>
+                                            </div> */}
+                                            
                                             <div>
                                                 <label
                                                     htmlFor="purpose"
@@ -160,7 +198,7 @@ function RequestButton({ text }) {
                     </div>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black" />
                 </>
-            ) : null}
+            )}
         </>
     )
 }
