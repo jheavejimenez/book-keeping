@@ -40,7 +40,8 @@ function RequestTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={"text-xs font-bold font-inter tracking-wide text-left text-gray-500 border-b border-gray-700 bg-gray-50"}>
+                            <tr className={"text-xs font-bold font-inter tracking-wide text-left" + 
+                            "text-gray-500 border-b border-gray-700 bg-gray-50"}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}

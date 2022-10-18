@@ -38,7 +38,8 @@ function ClientTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={"text-xs font-bold font-inter tracking-wide text-left text-gray-500 border-b dark:border-gray-700"+
+                            <tr className={"text-xs font-bold font-inter tracking-wide text-left" + 
+                            "text-gray-500 border-b dark:border-gray-700"+
                             "bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
                                 {titleTable.map((item, index) => (
                                     <TableHeading

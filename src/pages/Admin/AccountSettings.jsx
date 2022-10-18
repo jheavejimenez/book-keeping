@@ -96,7 +96,8 @@ function AccountSettings() {
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <div className="mt-4 mx-4">
                     <div
-                        className={"bg-blue-500 text-white shadow-lg rounded-md flex items-center justify-between p-3 text-white font-medium group h-20"}>
+                        className={"bg-blue-500 text-white shadow-lg rounded-md flex" + 
+                        "items-center justify-between p-3 text-white font-medium group h-20"}>
                         <span className="ml-2 text-3xl font-medium tracking-wide truncate">Account Settings</span>
                     </div>
                 </div>
@@ -104,10 +105,14 @@ function AccountSettings() {
                     <span className={"ml-6 pt-2"}><UserCircleIcon className={"w-12 h-12"} /></span>
                     <span className={"ml-4 py-5"}> Edit Profile</span>
                 </div>
+
                 {/*Update information*/}
-                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44 2xl:ml-80 2xl:mr-80"}>
+                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44" + 
+                    "2xl:ml-80 2xl:mr-80"}>
                     <div className={"flex justify-between mb-5"}>
-                        <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>Update information </span>
+                        <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>
+                            Update information 
+                        </span>
 
                     </div>
                     <div className={"flex justify-center "}>
@@ -119,13 +124,15 @@ function AccountSettings() {
                             </span>
                             <div className={"inline-grid ml-9 pb-5"}>
                                 <label
-                                    className="cursor-pointer px-6 py-1 mt-20 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
+                                    className={"cursor-pointer px-6 py-1 mt-20 text-white bg-[#00A2E8]" + 
+                                    "rounded-lg hover:bg-[#00A2E8] w-full mt-7"}>
                                     <p className={"pt-3 pb-3"}> Change</p>
-                                    <input className={"hidden"} type="file" accept={"image/*"} onChange={handleChange}
-                                           value={fileInput} />
+                                    <input className={"hidden"} type="file" accept={"image/*"} 
+                                    onChange={handleChange} value={fileInput} />
                                 </label>
                                 <label
-                                    className="cursor-pointer px-6 h-14 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full mt-7">
+                                    className={"cursor-pointer px-6 h-14 text-white bg-[#00A2E8]" + 
+                                    "rounded-lg hover:bg-[#00A2E8] w-full mt-7"}>
                                     <p className={"pt-4"}> Remove</p>
                                     <button type="submit" onClick={removeImage} />
                                 </label>
@@ -150,9 +157,11 @@ function AccountSettings() {
                                             name="email"
                                             id="email"
                                             onChange={(e) => setNewEmail(e.target.value)}
-                                            className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} /><br />
+                                            className={"border rounded-md border-black text-black w-10 mt-4" + 
+                                            "sm:w-48"} /><br />
                                         <button
-                                            className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-5 border border-blue-500 rounded ml-56">
+                                            className={"bg-[#00A2E8] hover:bg-blue-500 text-white font-normal" + 
+                                            "py-1 px-5 border border-blue-500 rounded ml-56"}>
                                         Verify
                                         </button>
                                     </span>
@@ -161,11 +170,13 @@ function AccountSettings() {
                         </div>
                         <div className={"flex justify-center sm:justify-end mt-16"}>
                             <button onClick={add}
-                                    className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded">
+                                    className={"bg-[#00A2E8] hover:bg-blue-500 text-white font-normal" + 
+                                    "py-1 px-4 border border-blue-500 rounded"}>
                                 Save
                             </button>
                             <button
-                                className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
+                                className={"bg-[#00A2E8] hover:bg-blue-500 text-white font-normal" + 
+                                "py-1 px-4 border border-blue-500 rounded ml-3"}>
                                 Cancel
                             </button>
                         </div>
@@ -181,7 +192,8 @@ function AccountSettings() {
                     <span className={"ml-4 py-5"}> Security</span>
                 </div>
                 {/*Change password*/}
-                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44 2xl:ml-80 2xl:mr-80"}>
+                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44" + 
+                    "xl:mr-44 2xl:ml-80 2xl:mr-80"}>
                     <div className={"flex justify-between mb-5"}>
                         <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>Change Password </span>
                     </div>
@@ -196,32 +208,41 @@ function AccountSettings() {
                                 <span className={"mt-5"}>Confirm Password:</span>
                             </span>
                             <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
-                                    <Input
-                                        name="currentpassword"
-                                        id="cpass"
-                                        className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br />
-                                 <Input
-                                     name="newpassword"
-                                     id="npass"
-                                     onChange={(e) => setNewName(e.target.value)}
-                                     className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br />
-                                    <span className={""}>
-                                        <Input
-                                            name="email"
-                                            id="email"
-                                            onChange={(e) => setNewEmail(e.target.value)}
-                                            className={"border rounded-md border-black text-black w-10 mt-4 sm:w-48"} /><br />
-                                    </span>
+                                <Input
+                                    name="currentpassword"
+                                    id="cpass"
+                                    className={"border rounded-md border-black text-black" + 
+                                    "w-36 my-2 sm:w-80"} /> 
+                                <br />
+                                
+                                <Input
+                                    name="newpassword"
+                                    id="npass"
+                                    onChange={(e) => setNewName(e.target.value)}
+                                    className={"border rounded-md border-black text-black w-36" + 
+                                    "my-2 sm:w-80"} /> <br />
+                                <span className={""}>
+                                
+                                <Input
+                                    name="email"
+                                    id="email"
+                                    onChange={(e) => setNewEmail(e.target.value)}
+                                    className={"border rounded-md border-black text-black w-10" + 
+                                    "mt-4 sm:w-48"} /><br />
+                                </span>
 
                             </span>
                         </div>
                         <div className={"flex justify-center sm:justify-end mt-16"}>
                             <button onClick={add}
-                                    className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded">
+                                className={"bg-[#00A2E8] hover:bg-blue-500 text-white" +
+                                "font-normal py-1 px-4 border border-blue-500 rounded"}>
                                 Save
                             </button>
+                            
                             <button
-                                className="bg-[#00A2E8] hover:bg-blue-500 text-white font-normal py-1 px-4 border border-blue-500 rounded ml-3">
+                                className={"bg-[#00A2E8] hover:bg-blue-500 text-white font-normal" + 
+                                "py-1 px-4 border border-blue-500 rounded ml-3"}>
                                 Cancel
                             </button>
                         </div>
