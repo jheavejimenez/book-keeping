@@ -50,7 +50,8 @@ function ForgotPassword() {
                             </div>
                             <div className="text-center">
                                 <button onClick={handleSubmit}
-                                        className="px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] mb-5">
+                                        className={"px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg" + 
+                                        "hover:bg-[#00A2E8] mb-5"}>
                                     Reset Password
                                 </button>
                             </div>
