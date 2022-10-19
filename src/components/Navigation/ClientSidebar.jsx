@@ -24,7 +24,7 @@ function ClientSidebar () {
                             </div>
                         </li> */}
                         <LinkToSidebar
-                            link={"/client/dashboard"}
+                            link={"/dashboard"}
                             icon={<HomeIcon className="w-6 h-6"/>}
                             title={"Dashboard"}
                         />
@@ -44,7 +44,7 @@ function ClientSidebar () {
                         </li> */}
 
                         <LinkToSidebar
-                            link={"/client/incoming"}
+                            link={"/incoming"}
                             icon={<DocumentArrowDownIcon className="w-6 h-6"/>}
                             title={"Incoming"}
                         />
@@ -69,7 +69,7 @@ function ClientSidebar () {
                         </li> */}
 
                         <LinkToSidebar
-                            link={"/client/outgoing"}
+                            link={"/outgoing"}
                             icon={<DocumentArrowUpIcon className="w-6 h-6"/>}
                             title={"Outgoing"}
                         />
