@@ -22,7 +22,7 @@ function App() {
       <Route path="/forgot-pass" element={<ForgotPassword />} />
 
       <Route
-        path="/dashboard"
+        path="/admin/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
@@ -62,7 +62,7 @@ function App() {
         }
       />
       <Route
-        path="/client/dashboard"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <ClientDashboard />
@@ -70,7 +70,7 @@ function App() {
         }
       />
       <Route
-        path="/client/incoming"
+        path="/incoming"
         element={
           <ProtectedRoute>
             <ClientIncoming />
@@ -78,7 +78,7 @@ function App() {
         }
       />
       <Route
-        path="/client/outgoing"
+        path="/outgoing"
         element={
           <ProtectedRoute>
             <ClientOutgoing />

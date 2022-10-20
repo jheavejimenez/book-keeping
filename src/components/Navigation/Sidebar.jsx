@@ -17,7 +17,7 @@ function Sidebar() {
                         <SidebarTitle title={"Main"} />
 
                         {/* Dashboard */}
-                        <LinkToSidebar link={"/dashboard"} icon={<HomeIcon className="w-6 h-6" />} 
+                        <LinkToSidebar link={"/admin/dashboard"} icon={<HomeIcon className="w-6 h-6" />} 
                         title={"Dashboard"} />
                         {/* End of Dashboard */}
 

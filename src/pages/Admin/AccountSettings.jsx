@@ -67,7 +67,7 @@ function AccountSettings() {
             alert("No image selected");
         } else {
 
-            const imageRef = ref(storage, 'images/' + user);
+            const imageRef = ref(storage, 'images/' + user.email);
             uploadBytes(imageRef, image).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setSource(url);

@@ -20,19 +20,19 @@ function ClientSidebar () {
                         <SidebarTitle title={"Main"} />
                         
                         <LinkToSidebar
-                            link={"/client/dashboard"}
+                            link={"/dashboard"}
                             icon={<HomeIcon className="w-6 h-6"/>}
                             title={"Dashboard"}
                         />
                        
                         <LinkToSidebar
-                            link={"/client/incoming"}
+                            link={"/incoming"}
                             icon={<DocumentArrowDownIcon className="w-6 h-6"/>}
                             title={"Incoming"}
                         />
 
                         <LinkToSidebar
-                            link={"/client/outgoing"}
+                            link={"/outgoing"}
                             icon={<DocumentArrowUpIcon className="w-6 h-6"/>}
                             title={"Outgoing"}
                         />
