@@ -7,6 +7,8 @@ import { auth, db, storage } from "../../utils/Firebase";
 import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import Button from "../../components/Button/Button";
+
 
 
 // import ClientTable from "../../components/Table/ClientTable";
@@ -67,7 +69,7 @@ function AccountSettings() {
             alert("No image selected");
         } else {
 
-            const imageRef = ref(storage, 'images/' + user.email);
+            const imageRef = ref(storage, 'images/' + user);
             uploadBytes(imageRef, image).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setSource(url);
@@ -94,46 +96,46 @@ function AccountSettings() {
             </div>
 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <div className="mt-4 mx-4">
-                    <div
-                        className={" bg-blue-500 text-white shadow-lg rounded-md flex " + 
-                        " items-center justify-between p-3 text-white font-medium group h-20 "}>
-                        <span className="ml-2 text-3xl font-medium tracking-wide truncate">Account Settings</span>
-                    </div>
-                </div>
-                <div className={" flex mt-5 text-2xl font-bold tracking-wide border-y-4 border-blue-500 w-full "}>
+                {/*<div className="mt-4 mx-4">*/}
+                {/*    <div*/}
+                {/*        className={"bg-blue-500 text-white shadow-lg rounded-md flex" + */}
+                {/*        "items-center justify-between p-3 text-white font-medium group h-20"}>*/}
+                {/*        <span className="ml-2 text-3xl font-medium tracking-wide truncate">Account Settings</span>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+                <div className={"flex mt-5 text-2xl font-bold tracking-wide border-y-4 border-blue-300 mx-5 truncate"}>
                     <span className={"ml-6 pt-2"}><UserCircleIcon className={"w-12 h-12"} /></span>
                     <span className={"ml-4 py-5"}> Edit Profile</span>
                 </div>
 
                 {/*Update information*/}
-                <div className={" sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44 " + 
+                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44" + 
                     "2xl:ml-80 2xl:mr-80"}>
                     <div className={"flex justify-between mb-5"}>
-                        <span className={" text-2xl font-bold tracking-wide pt-4 truncate "}>
+                        <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>
                             Update information 
                         </span>
 
                     </div>
-                    <div className={" flex justify-center "}>
-                        <div className={" flex justify-center "}>
-                            <span className={" mt-4 border-2 border-black "}>
+                    <div className={"flex justify-center "}>
+                        <div className={"flex justify-center"}>
+                            <span className={"mt-4 border-2 border-black bg-blue-300 rounded-lg "}>
                                 {Source && (
-                                    <img className={"w-40 h-40"} src={Source} alt={"profile image"} />
+                                    <img className={"w-36 h-36"} src={Source} alt={"profile image"} />
                                 )}
                             </span>
                             <div className={"inline-grid ml-9 pb-5"}>
                                 <label
-                                    className={" cursor-pointer px-6 py-1 mt-20 text-white bg-[#00A2E8] " + 
-                                    " rounded-lg hover:bg-[#00A2E8] w-full mt-7 "}>
-                                    <p className={"pt-3 pb-3"}> Change</p>
+                                    className={"cursor-pointer bg-[#00A2E8] mt-20 text-white bg-[#00A2E8] " +
+                                    "rounded-lg hover:bg-[#00A2E8] w-full mt-11"}>
+                                    <p className={"mx-6 mt-1"}> Change</p>
                                     <input className={"hidden"} type="file" accept={"image/*"} 
                                     onChange={handleChange} value={fileInput} />
                                 </label>
                                 <label
-                                    className={" cursor-pointer px-6 h-14 text-white bg-[#00A2E8] " + 
-                                    " rounded-lg hover:bg-[#00A2E8] w-full mt-7 "}>
-                                    <p className={"pt-4"}> Remove</p>
+                                    className={"cursor-pointer bg-[#00A2E8] text-white " +
+                                    "rounded-lg hover:bg-[#00A2E8] h-8 w-full mt-7"}>
+                                    <p className={"mx-6 mt-1"}> Remove</p>
                                     <button type="submit" onClick={removeImage} />
                                 </label>
                             </div>
@@ -142,10 +144,16 @@ function AccountSettings() {
                     <form id="accset">
                         <div className={"flex mt-16 justify-center"}>
                             <span className={"inline-grid font-bold"}>
-                                <span className={"mt-5"}>Name:</span>
-                                <span className={"mb-5"}>Email:</span>
+                                <span className={"mt-5"}>First Name:</span>
+                                <span className={"mt-5"}>Last Name:</span>
+                                <span className={"mt-5"}>Company Name:</span>
                             </span>
                             <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
+                                    <Input
+                                        name="name"
+                                        id="name"
+                                        onChange={(e) => setNewName(e.target.value)}
+                                        className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br />
                                     <Input
                                         name="name"
                                         id="name"
@@ -157,26 +165,22 @@ function AccountSettings() {
                                             name="email"
                                             id="email"
                                             onChange={(e) => setNewEmail(e.target.value)}
-                                            className={" border rounded-md border-black text-black w-10 mt-4 " + 
+                                            className={"border rounded-md border-black text-black w-10 mt-4" + 
                                             "sm:w-48"} /><br />
-                                        <button
-                                            className={" bg-[#00A2E8] hover:bg-blue-500 text-white font-normal " + 
-                                            " py-1 px-5 border border-blue-500 rounded ml-56 "}>
-                                        Verify
-                                        </button>
                                     </span>
 
                             </span>
                         </div>
                         <div className={"flex justify-center sm:justify-end mt-16"}>
                             <button onClick={add}
-                                    className={" bg-[#00A2E8] hover:bg-blue-500 text-white font-normal " + 
-                                    " py-1 px-4 border border-blue-500 rounded "}>
+                                    className={"bg-[#00A2E8] hover:bg-blue-500 text-white " +
+                                        "font-normal py-1 px-4 border border-blue-500 rounded "}>
                                 Save
                             </button>
+
                             <button
-                                className={" bg-[#00A2E8] hover:bg-blue-500 text-white font-normal " + 
-                                " py-1 px-4 border border-blue-500 rounded ml-3 "}>
+                                className={"bg-[#00A2E8] hover:bg-blue-500 font-normal text-white " +
+                                    "py-1 px-4 border border-blue-500 rounded ml-3"}>
                                 Cancel
                             </button>
                         </div>
@@ -187,67 +191,58 @@ function AccountSettings() {
             {/*Start of Security*/}
 
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <div className={"flex mt-5 text-2xl font-bold tracking-wide border-y-4 border-blue-500 w-full"}>
+                <div className={"flex mt-5 text-2xl font-bold tracking-wide border-y-4 border-blue-300 mx-5"}>
                     <span className={"ml-6 pt-2"}><KeyIcon className={"w-12 h-12"} /></span>
                     <span className={"ml-4 py-5"}> Security</span>
                 </div>
                 {/*Change password*/}
-                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44" + 
+                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44" +
                     "xl:mr-44 2xl:ml-80 2xl:mr-80"}>
-                    <div className={"flex justify-between mb-5"}>
-                        <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>Change Password </span>
-                    </div>
-                    <div className={"flex justify-center "}>
-                        <p className={"italic"}> Use a strong password that you dont use on any other website</p>
-                    </div>
-                    <form id="accset1">
-                        <div className={"flex mt-16"}>
-                            <span className={"inline-grid font-bold"}>
-                                <span className={"mt-5"}>Current Password:</span>
-                                <span className={"mt-4"}>New Password:</span>
-                                <span className={"mt-5"}>Confirm Password:</span>
-                            </span>
-                            <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
-                                <Input
-                                    name="currentpassword"
-                                    id="cpass"
-                                    className={"border rounded-md border-black text-black" + 
-                                    "w-36 my-2 sm:w-80"} /> 
-                                <br />
-                                
-                                <Input
-                                    name="newpassword"
-                                    id="npass"
-                                    onChange={(e) => setNewName(e.target.value)}
-                                    className={"border rounded-md border-black text-black w-36" + 
-                                    "my-2 sm:w-80"} /> <br />
-                                <span className={""}>
-                                
-                                <Input
-                                    name="email"
-                                    id="email"
-                                    onChange={(e) => setNewEmail(e.target.value)}
-                                    className={"border rounded-md border-black text-black w-10" + 
-                                    "mt-4 sm:w-48"} /><br />
-                                </span>
+                        <div className={"flex justify-center mt-12"}>
+                            <div className={"w-full"}>
+                                <div className={""}>
+                                    <div className={"flex justify-between"}>
+                                        <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Email Address </h1>
+                                        <span className={"sm:ml-24"}>
+                                            <Button text={"Change Email Address"}/>
+                                        </span>
+                                    </div>
+                                    <div className={"italic mt-5"}>
+                                        <p>If you want to change your email address, <span className={"font-bold"}> click the button above. </span></p>
+                                        <p>The system will send you an email with a link </p>
+                                    </div>
 
-                            </span>
+                                </div>
+                                <div className={"mt-12 w-full"}>
+                                    <div className={"flex justify justify-between"}>
+                                        <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Password </h1>
+                                        <span className={"sm:ml-24"}>
+                                            <Button text={"Change Password"}/>
+                                        </span>
+                                    </div>
+                                    <div className={"mt-8 italic "}>
+                                        <p>If you want to change password, <span className={"font-bold"}> click the button above</span></p>
+                                        <p>The system will send you an email with a link. Remember to use a </p>
+                                        <p>strong password that you don't use on any other website </p>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className={"flex justify-center sm:justify-end mt-16"}>
-                            <button onClick={add}
-                                className={" bg-[#00A2E8] hover:bg-blue-500 text-white " +
-                                " font-normal py-1 px-4 border border-blue-500 rounded "}>
-                                Save
-                            </button>
-                            
-                            <button
-                                className={" bg-[#00A2E8] hover:bg-blue-500 text-white font-normal " + 
-                                " py-1 px-4 border border-blue-500 rounded ml-3 "}>
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                            <div className={"flex justify-center sm:justify-end mt-16"}>
+                                <button onClick={add}
+                                    className={"bg-[#00A2E8] hover:bg-blue-500 text-white " +
+                                    "font-normal py-1 px-4 border border-blue-500 rounded "}>
+                                    Save
+                                </button>
+
+                                <button
+                                    className={"bg-[#00A2E8] hover:bg-blue-500 font-normal text-white " +
+                                    "py-1 px-4 border border-blue-500 rounded ml-3"}>
+                                    Cancel
+                                </button>
+                            </div>
+                    </div>
             </div>
         </div>
     )
