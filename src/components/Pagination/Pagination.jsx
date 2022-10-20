@@ -7,15 +7,15 @@ function Pagination() {
       <div className="flex flex-1 justify-between sm:hidden">
         <a
           href="#"
-          className={"relative inline-flex items-center rounded-md border border-gray-300"+
-          "bg-white px-4 py-2 text-sm font-medium text-blue-500 hover:bg-gray-50"}
+          className={" relative inline-flex items-center rounded-md border border-gray-300 "+
+          " bg-white px-4 py-2 text-sm font-medium text-blue-500 hover:bg-gray-50 "}
         >
           Previous
         </a>
         <a
           href="#"
-          className={"relative ml-3 inline-flex items-center rounded-md border border-gray-300" + 
-          "bg-white px-4 py-2 text-sm font-medium text-blue-500 hover:bg-gray-50"}
+          className={" relative ml-3 inline-flex items-center rounded-md border border-gray-300 " + 
+          " bg-white px-4 py-2 text-sm font-medium text-blue-500 hover:bg-gray-50 "}
         >
           Next
         </a>
@@ -39,23 +39,23 @@ function Pagination() {
             </a>
             <a
               href="#"
-              aria-current="page"
-              className={"relative z-10 inline-flex items-center border border-gray-300 bg-white px-4 py-2" + 
-              "text-sm font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20"}
+              aria-current="page" 
+              className={" relative z-10 inline-flex items-center border border-gray-300 bg-white px-4 py-2 " + 
+              " text-sm font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20 "}
             >
               1
             </a>
             <a
               href="#"
-              className={"relative inline-flex items-center border border-gray-300 bg-white px-4 py-2" + 
-              "text-sm font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20"}
+              className={" relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 " + 
+              " text-sm font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20 "}
             >
               2
             </a>
             <a
               href="#"
-              className={"relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm" + 
-              "font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20 md:inline-flex"}
+              className={" relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm " + 
+              " font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20 md:inline-flex "}
             >
               3
             </a>
