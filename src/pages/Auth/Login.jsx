@@ -31,13 +31,13 @@ function Login() {
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('client/incoming') // it should be navigated to client dashboard
+                    navigate('/incoming') // it should be navigated to client dashboard
                 } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('client/dashboard')
+                    navigate('/dashboard')
 
                 } else if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
@@ -82,8 +82,8 @@ function Login() {
                                                 name="email"
                                                 type="email"
                                                 placeholder="Email"
-                                                className={"w-full px-4 py-2 mt-2 border rounded-md " +
-                                                    "focus:outline-none focus:ring-1 focus:ring-blue-600"}
+                                                className={" w-full px-4 py-2 mt-2 border rounded-md " +
+                                                    " focus:outline-none focus:ring-1 focus:ring-blue-600 "}
                                             />
                                             {errors.email && touched.email ?
                                                 <span className={"text-sm text-red-700"}>
@@ -96,8 +96,8 @@ function Login() {
                                                 name={"password"}
                                                 type={"password"}
                                                 placeholder={"Password"}
-                                                className={"w-full px-4 py-2 mt-2 border rounded-md" +
-                                                    " focus:outline-none focus:ring-1 focus:ring-blue-600"}
+                                                className={" w-full px-4 py-2 mt-2 border rounded-md " +
+                                                    " focus:outline-none focus:ring-1 focus:ring-blue-600 "}
                                             />
                                             {errors.password && touched.password ?
                                                 <span className={"text-sm text-red-700"}>

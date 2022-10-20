@@ -24,12 +24,12 @@ function VerifyEmail() {
                     </p>
                     <span>Follow the instruction in the email to verify your account</span>
                 <div className={"flex justify-between"}>
-                    <button onClick={() => navigate("/")} className={"bg-blue-300 rounded p-2 mt-9" + 
-                    "hover:bg-blue-400 active:bg-blue-400 font-semibold"}>
+                    <button onClick={() => navigate("/")} className={" bg-blue-300 rounded p-2 mt-9 " + 
+                    " hover:bg-blue-400 active:bg-blue-400 font-semibold "}>
                        Log in
                     </button>
-                    <button onClick={resendEmailVerification} className={"bg-blue-300 rounded p-2 mt-9" + 
-                    "hover:bg-blue-400 active:bg-blue-400 font-semibold"}>
+                    <button onClick={resendEmailVerification} className={" bg-blue-300 rounded p-2 mt-9 " + 
+                    " hover:bg-blue-400 active:bg-blue-400 font-semibold "}>
                         Resend Email
                     </button>
                 </div>

@@ -1,36 +1,44 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import { useAuth } from "../../hooks/useAuth";
 import ClientIncomingTableRow from "./ClientIncomingTableRow";
 
 function ClientIncomingTable() {
+    const { user } = useAuth();
     const [data, setData] = useState([]);
-    const [titleTable, setTitleTable] = useState([]);
+    const titleTable = [
+        "DocID",
+        "Sender",
+        "File",
+        "Date Received",
+        "Action",
+        
+    ]
 
-    const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/clientIncomingData");
-        setData(response.data);
-    }
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "request"));
+        if (user) {
+            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.reqfrom === user.email));
+        }
+        
 
-    const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/clientIncomingHeader");
-        setTitleTable(response.data[0].title);
-
+        console.log(data);
     }
 
     useEffect(() => {
-        fakeData();
-        fakeTitleTable();
+        
         const interval = setInterval(() => {
-            fakeData();
-            fakeTitleTable();
-        }, 10000)
+            getAllRequestDocumments();
+        }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-
+    console.log(data);
 
     return (
         <>
@@ -39,9 +47,9 @@ function ClientIncomingTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={"text-xs font-bold font-inter tracking-wide" + 
-                            "text-left text-gray-500 border-b dark:border-gray-700" + 
-                            "bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
+                            <tr className={" text-xs font-bold font-inter tracking-wide " + 
+                            " text-left text-gray-500 border-b dark:border-gray-700 " + 
+                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}
@@ -53,10 +61,10 @@ function ClientIncomingTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <ClientIncomingTableRow
-                                    DocID={item.incID}
-                                    Sender={item.sender}
+                                    DocID={item.documentId}
+                                    Sender={item.reqby}
                                     File={item.file}
-                                    DateReceived={item.dateReceived}
+                                    DateReceived={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>

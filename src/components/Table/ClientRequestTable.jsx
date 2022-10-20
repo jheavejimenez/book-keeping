@@ -1,35 +1,44 @@
 import React, { useEffect, useState } from "react";
 import ClientRequestTableRow from "./ClientRequestTableRow";
-import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import { db } from "../../utils/Firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { useAuth } from "../../hooks/useAuth";
+import dayjs from "dayjs";
 
 function ClientRequestTable() {
+    const { user } = useAuth();
     const [data, setData] = useState([]);
-    const [titleTable, setTitleTable] = useState([]);
+    const titleTable = [
+        "ReqID",
+        "RequestedFrom",
+        "File",
+        "Purpose",
+        "DueDate",
+        "DateRequested"
+        
+    ]
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "request"));
+        if (user) {
+            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.reqfrom === user.email));
+        }
+        
 
-    const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/clientRequested");
-        setData(response.data);
-    }
-
-    const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/clientRequestedHeader");
-        setTitleTable(response.data[0].title);
+        console.log(data);
     }
 
     useEffect(() => {
-        fakeData();
-        fakeTitleTable();
+        
         const interval = setInterval(() => {
-            fakeData();
-            fakeTitleTable();
-        }, 10000)
+            getAllRequestDocumments();
+        }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-
+    console.log(data);
 
     return (
         <>
@@ -38,9 +47,9 @@ function ClientRequestTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={"text-xs font-bold font-inter tracking-wide text-left" + 
-                            "text-gray-500 border-b dark:border-gray-700" + 
-                            "bg-gray-50 dark:text-gray-400 dark:bg-gray-100"}>
+                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                            " text-gray-500 border-b dark:border-gray-700 " + 
+                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}
@@ -52,12 +61,12 @@ function ClientRequestTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <ClientRequestTableRow
-                                    ReqID={item.reqID}
-                                    RequestedBy={item.requestedBy}
-                                    RequestedFile={item.requestedFile}
+                                    ReqID={item.documentId}
+                                    RequestedBy={item.reqby}
+                                    RequestedFile={item.file}
                                     Purpose={item.purpose}
                                     DueDate={item.dueDate}
-                                    DateReceived={item.dateReceived}
+                                    DateReceived={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>

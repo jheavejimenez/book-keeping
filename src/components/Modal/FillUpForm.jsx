@@ -13,9 +13,9 @@ function FillUpFrom({titleFor, title, titleID, placeholderTitle}) {
                 <label className="text-red-500">*</label>
             </div>
             <input id={titleID}
-                className={"border rounded-md mb-3 mt-1 h-10 pl-3" +
-                    "border-gray-400 font-normal placeholder-gray-400" +
-                    "text-black text-base w-full"}
+                className={" border rounded-md mb-3 mt-1 h-10 pl-3 " +
+                    " border-gray-400 font-normal placeholder-gray-400 " +
+                    " text-black text-base w-full "}
                 placeholder={placeholderTitle}
 
             />
