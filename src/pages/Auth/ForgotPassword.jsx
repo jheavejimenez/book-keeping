@@ -26,14 +26,14 @@ function ForgotPassword() {
     return (
         <>
             <div className={"bg-gray-300 flex justify-center mx-auto min-h-screen items-center"}>
-                <div className={"bg-white mx-auto p-9 rounded-lg"}>
+                <div className={"bg-white mx-auto p-9 w-96 rounded-lg"}>
                     <div className={""}>
-                        <span className={"font-bold text-3xl mb-6 text-center"}> Forgot password</span>
+                        <h3 className={"font-bold text-3xl mb-6 text-center"}>Forgot password</h3>
                         <div className={"my-5"}>
-                            <p>
-                                We get it, stuff happens. Just enter</p>
-                            <p>your email address below and we'll send </p>
-                            you a link to reset your password!
+                            <p className="text-center">
+                                We get it, stuff happens. Just enter your</p>
+                            <p className="text-center">email address below and we'll send you</p>
+                            <p className="text-center">a link to reset your password!</p>
 
                             <div className="mb-4">
                                 <label className="block mb-4 mt-10 text-sm font-bold text-gray-700" htmlFor="email">
@@ -59,7 +59,7 @@ function ForgotPassword() {
                             <div className="text-center">
                                 <a
                                     className="inline-block text-sm text-black-500 align-baseline hover:underline"
-                                    href="/Signup"
+                                    href="/signup"
                                 >
                                     Create an Account!
                                 </a>
