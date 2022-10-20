@@ -35,7 +35,6 @@ function Header() {
 
             <div className={" flex justify-between items-center h-14 bg-blue-400 text-black header-right "}>
                 <div
-<<<<<<< HEAD
                     className={"bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm" + 
                     "border border-gray-200"}>
                     
@@ -45,15 +44,6 @@ function Header() {
 
                     <input type="search" name="" id="" placeholder="Search" className={"w-full pl-3" + 
                     "text-sm text-black outline-none focus:outline-none bg-transparent"} />
-=======
-                    className={" bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm " + 
-                    " border border-gray-200 "}>
-                    <button className={" outline-none focus:outline-none "}>
-                        <MagnifyingGlassIcon className={"w-5 h-5 text-gray-500"} />
-                    </button>
-                    <input type="search" name="" id="" placeholder="Search" className={" w-full pl-3 " + 
-                    " text-sm text-black outline-none focus:outline-none bg-transparent "} />
->>>>>>> fcd291c475fcc4e805c4831067d1e2b27843946d
                 </div>
                 <ul className={"flex items-center"}>
                     <li>
