@@ -40,10 +40,6 @@ function ClientIncomingTable() {
     }, []);
     console.log(data);
 
-
-   
-
-
     return (
         <>
             <div className={"mt-4 mx-4"}>
