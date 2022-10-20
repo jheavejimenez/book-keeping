@@ -9,7 +9,7 @@ function OutgoingButton({ text }) {
         <>
 
             <button
-                className={"bg-white text-blue-500 font-bold px-6 py-2 rounded inline-flex items-center"}
+                className={" bg-white text-blue-500 font-bold px-6 py-2 rounded inline-flex items-center "}
                 type="button"
                 onClick={() => setShowModal(true)}
             >
@@ -48,7 +48,7 @@ function OutgoingButton({ text }) {
                                     <form>
                                         <fieldset className="pt-3">
                                             <div>
-                                                <label htmlFor="reqFrom" className={"text-black"}>
+                                                <label htmlFor="reqFrom" className={" text-black "}>
                                                     Recipient
                                                 </label>
                                                 <input id="reqFrom"
@@ -58,7 +58,7 @@ function OutgoingButton({ text }) {
                                                 />
                                             </div>
                                             <div>
-                                                <label htmlFor="fileName" className={"text-black"}>
+                                                <label htmlFor="fileName" className={" text-black "}>
                                                     Attach files
                                                 </label>
                                                 <input id="fileName"

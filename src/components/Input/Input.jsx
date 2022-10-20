@@ -8,8 +8,8 @@ function Input({placeHolder, type, value, onChange}) {
                 type={type}
                 value={value}
                 onChange={onChange}
-                className={"w-full px-4 py-2 mt-2 border rounded-md focus:outline-none" + 
-                "focus:ring-1 focus:ring-blue-600"}
+                className={" w-full px-4 py-2 mt-2 border rounded-md focus:outline-none " + 
+                " focus:ring-1 focus:ring-blue-600 "}
             />
         </div>
     )
