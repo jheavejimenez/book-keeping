@@ -53,12 +53,12 @@ function RequestTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <RequestTableRow
-                                    ReqID={item.documentId}
-                                    RequestedFrom={item.reqfrom}
-                                    File={item.file}
-                                    Purpose={item.purpose}
-                                    DueDate={item.dueDate}
-                                    DateRequested={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
+                                    Column1={item.documentId}
+                                    Column2={item.reqfrom}
+                                    Column3={item.file}
+                                    Column4={item.purpose}
+                                    Column5={item.dueDate}
+                                    Column6={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
 
                             )}

@@ -52,10 +52,10 @@ function OutgoingTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <OutgoingTableRow
-                                    DocID={item.outID}
-                                    Recipient={item.recipient}
-                                    File={item.file}
-                                    DateSent={item.dateSent}
+                                    Column1={item.outID}
+                                    Column2={item.recipient}
+                                    Column3={item.file}
+                                    Column4={item.dateSent}
                                 />)
                             )}
                             </tbody>

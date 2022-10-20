@@ -5,7 +5,7 @@ import Pagination from "../Pagination/Pagination";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
-import ClientIncomingTableRow from "./ClientIncomingTableRow";
+import IncomingTableRow from "./IncomingTableRow";
 
 function ClientIncomingTable() {
     const { user } = useAuth();
@@ -60,11 +60,11 @@ function ClientIncomingTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <ClientIncomingTableRow
-                                    DocID={item.documentId}
-                                    Sender={item.reqby}
-                                    File={item.file}
-                                    DateReceived={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
+                                <IncomingTableRow
+                                    Column1={item.documentId}
+                                    Column2={item.reqby}
+                                    Column3={item.file}
+                                    Column4={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>

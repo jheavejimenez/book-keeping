@@ -53,10 +53,10 @@ function IncomingTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <IncomingTableRow
-                                    DocID={item.incID}
-                                    Sender={item.sender}
-                                    File={item.file}
-                                    DateReceived={item.dateReceived}
+                                    Column1={item.incID}
+                                    Column2={item.sender}
+                                    Column3={item.file}
+                                    Column4={item.dateReceived}
                                 />)
                             )}
                             </tbody>

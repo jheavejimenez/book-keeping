@@ -39,7 +39,7 @@ function Sidebar() {
                         <SidebarTitle title={"Settings"} />
 
                         {/* Account Settings */}
-                        <LinkToSidebar link={"/admin/accountsettings"} icon={<Cog8ToothIcon className="w-6 h-6" />} 
+                        <LinkToSidebar link={"/admin/account-settings"} icon={<Cog8ToothIcon className="w-6 h-6" />} 
                         title={"Account Settings"} />
                         {/* End of Account Settings */}
 

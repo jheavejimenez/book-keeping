@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ClientOutgoingTableRow from "./ClientOutgoingTableRow";
+import OutgoingTableRow from "./OutgoingTableRow";
 import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
@@ -51,11 +51,11 @@ function ClientOutgoingTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <ClientOutgoingTableRow
-                                    DocID={item.outID}
-                                    Recipient={item.recipient}
-                                    File={item.file}
-                                    DateSent={item.dateSent}
+                                <OutgoingTableRow
+                                    Column1={item.outID}
+                                    Column2={item.recipient}
+                                    Column3={item.file}
+                                    Column4={item.dateSent}
                                 />)
                             )}
                             </tbody>
