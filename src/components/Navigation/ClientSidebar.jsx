@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Cog8ToothIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, HomeIcon } from "@heroicons/react/24/outline";
 import React from "react";
-import { Link } from "react-router-dom";
 import LinkToSidebar from "../Links/LinkToSidebar";
 import SidebarTitle from "../Title/SidebarTitle";
 

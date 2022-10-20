@@ -22,7 +22,7 @@ function App() {
       <Route path="/forgot-pass" element={<ForgotPassword />} />
 
       <Route
-        path="/admin/dashboard"
+        path="admin/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
@@ -30,7 +30,7 @@ function App() {
         }
       />
       <Route
-        path="/admin/incoming"
+        path="admin/incoming"
         element={
           <ProtectedRoute>
             <Incoming />
@@ -38,7 +38,7 @@ function App() {
         }
       />
       <Route
-        path="/admin/request"
+        path="admin/request"
         element={
           <ProtectedRoute>
             <RequestPage />
@@ -46,7 +46,7 @@ function App() {
         }
       />
       <Route
-        path="/admin/outgoing"
+        path="admin/outgoing"
         element={
           <ProtectedRoute>
             <Outgoing />
@@ -54,7 +54,7 @@ function App() {
         }
       />
       <Route
-        path="/admin/account-settings"
+        path="admin/account-settings"
         element={
           <ProtectedRoute>
             <AccountSettings />

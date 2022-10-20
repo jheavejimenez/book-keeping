@@ -31,13 +31,13 @@ function Login() {
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('client/incoming') // it should be navigated to client dashboard
+                    navigate('/incoming') // it should be navigated to client dashboard
                 } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('client/dashboard')
+                    navigate('/dashboard')
 
                 } else if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({

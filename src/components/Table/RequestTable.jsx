@@ -41,7 +41,7 @@ function RequestTable() {
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b border-gray-700 bg-gray-50 "}>
+                            " text-gray-500 border-b border-gray-700 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}
