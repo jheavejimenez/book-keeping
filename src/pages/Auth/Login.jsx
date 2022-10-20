@@ -82,8 +82,8 @@ function Login() {
                                                 name="email"
                                                 type="email"
                                                 placeholder="Email"
-                                                className={"w-full px-4 py-2 mt-2 border rounded-md " +
-                                                    "focus:outline-none focus:ring-1 focus:ring-blue-600"}
+                                                className={" w-full px-4 py-2 mt-2 border rounded-md " +
+                                                    " focus:outline-none focus:ring-1 focus:ring-blue-600 "}
                                             />
                                             {errors.email && touched.email ?
                                                 <span className={"text-sm text-red-700"}>
@@ -96,8 +96,8 @@ function Login() {
                                                 name={"password"}
                                                 type={"password"}
                                                 placeholder={"Password"}
-                                                className={"w-full px-4 py-2 mt-2 border rounded-md" +
-                                                    " focus:outline-none focus:ring-1 focus:ring-blue-600"}
+                                                className={" w-full px-4 py-2 mt-2 border rounded-md " +
+                                                    " focus:outline-none focus:ring-1 focus:ring-blue-600 "}
                                             />
                                             {errors.password && touched.password ?
                                                 <span className={"text-sm text-red-700"}>
