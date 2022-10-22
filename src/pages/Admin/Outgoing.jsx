@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
 import OutgoingTable from "../../components/Table/OutgoingTable";
@@ -35,7 +34,6 @@ function Outgoing() {
                     getFakeTitleTable={"http://localhost:3000/outgoingHeader"}
                 />
             </div>
-
 
         </div>
     )
