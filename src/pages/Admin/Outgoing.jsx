@@ -30,7 +30,10 @@ function Outgoing() {
                 />
             
                 {/*outgoing table*/}
-                <OutgoingTable />
+                <OutgoingTable 
+                    getFakeData={"http://localhost:3000/outgoingData"}
+                    getFakeTitleTable={"http://localhost:3000/outgoingHeader"}
+                />
             </div>
 
 

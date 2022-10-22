@@ -4,17 +4,19 @@ import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 
-function OutgoingTable() {
+function OutgoingTable(getFakeData, getFakeTitleTable) {
     const [data, setData] = useState([]);
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/outgoingData");
+        const response = await axios.get({getFakeData});
+        // "http://localhost:3000/outgoingData"
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/outgoingHeader");
+        const response = await axios.get({getFakeTitleTable});
+        // "http://localhost:3000/outgoingHeader"
         setTitleTable(response.data[0].title);
     }
 
