@@ -62,7 +62,6 @@ function ClientTable() {
                                     SenderName={item.reqby}
                                     fileName={item.file}
                                     timeStamp={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
-                                    status={item.status}
                                 />)
                             )}
                             </tbody>

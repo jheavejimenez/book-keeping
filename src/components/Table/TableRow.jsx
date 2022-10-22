@@ -27,11 +27,6 @@ function TableRow({ DocID, SenderName, fileName, timeStamp, status }) {
             <td className={"px-4 py-3 text-sm"}>{SenderName}</td>
             <td className={"px-4 py-3 text-xs"}>{fileName}</td>
             <td className={"px-4 py-3 text-sm"}>{timeStamp}</td>
-            <td className={"px-4 py-3 text-xs"}>
-                <span className={`px-2 py-1 font-semibold leading-tight ${colors} rounded-full`}>
-                    {status}
-                </span>
-            </td>
             <td className={"flex justify-center items-center w-14 h-14"}>
                <button>
                <ChangeStatus/>
