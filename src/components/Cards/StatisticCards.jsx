@@ -6,13 +6,9 @@ import {
     DocumentArrowUpIcon,
     ExclamationCircleIcon
 } from "@heroicons/react/24/outline";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
-
-
-
-
 
 function StatisticCards() {
     const [data, setData] = useState([]);
@@ -31,6 +27,7 @@ function StatisticCards() {
         };
     }, []);
     console.log(data);
+
     return (
         <div className={" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4 "}>
             <div
@@ -54,7 +51,7 @@ function StatisticCards() {
             <div
                 className={" bg-lime-200 text-black shadow-lg rounded-md " +
                     " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                    " text-white font-medium group"}
+                    " text-white font-medium group "}
             >
                 <div
                     className={" flex justify-center items-center w-14 h-14 bg-white " + 
