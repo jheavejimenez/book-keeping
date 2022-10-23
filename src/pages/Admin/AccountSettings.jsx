@@ -8,7 +8,7 @@ import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Button from "../../components/Button/Button";
-
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 
 // import ClientTable from "../../components/Table/ClientTable";
@@ -21,6 +21,7 @@ function AccountSettings() {
     const [fileInput] = useState("");
     const [Source, setSource] = useState("../../UserDefaultImage.png");
     const [image, setImage] = useState(null);
+    const email = user.email;
 
 
     const handleChange = (e) => {
@@ -49,6 +50,22 @@ function AccountSettings() {
             setSource("../../UserDefaultImage.png");
         }
     }
+
+    const change = async () => {
+        const auth = getAuth();
+        await sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Password reset email sent!
+                // ..
+                alert("Password reset email sent!")
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+                alert(errorCode, errorMessage);
+            });
+    };
 
 
     const [newName, setNewName] = useState('')
@@ -204,7 +221,10 @@ function AccountSettings() {
                                     <div className={"flex justify-between"}>
                                         <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Email Address </h1>
                                         <span className={"sm:ml-24"}>
-                                            <Button text={"Change Email Address"}/>
+                                            <button 
+                                             onClick=""
+                                             className={" px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full "}
+                                             >Change Email</button>
                                         </span>
                                     </div>
                                     <div className={"italic mt-5"}>
@@ -217,7 +237,10 @@ function AccountSettings() {
                                     <div className={"flex justify justify-between"}>
                                         <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Password </h1>
                                         <span className={"sm:ml-24"}>
-                                            <Button text={"Change Password"}/>
+                                        <button 
+                                             onClick={change}
+                                             className={" px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full "}
+                                             >Change Email</button>
                                         </span>
                                     </div>
                                     <div className={"mt-8 italic "}>
@@ -229,19 +252,6 @@ function AccountSettings() {
                                 </div>
                             </div>
                         </div>
-                            <div className={"flex justify-center sm:justify-end mt-16"}>
-                                <button onClick={add}
-                                    className={"bg-[#00A2E8] hover:bg-blue-500 text-white " +
-                                    "font-normal py-1 px-4 border border-blue-500 rounded "}>
-                                    Save
-                                </button>
-
-                                <button
-                                    className={"bg-[#00A2E8] hover:bg-blue-500 font-normal text-white " +
-                                    "py-1 px-4 border border-blue-500 rounded ml-3"}>
-                                    Cancel
-                                </button>
-                            </div>
                     </div>
             </div>
         </div>
