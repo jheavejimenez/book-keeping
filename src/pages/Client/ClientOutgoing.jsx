@@ -2,7 +2,7 @@ import React from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import Header from "../../components/Navigation/Header";
 import Dropdown from "../../components/Button/FilterDropdown";
-import ClientOutgoingTable from "../../components/Table/ClientOutgoingTable";
+import OutgoingTable from "../../components/Table/OutgoingTable";
 import Card from "../../components/Cards/Card";
 import OutgoingButton from "../../components/Button/OutgoingButton";
 
@@ -34,7 +34,10 @@ function ClientOutgoing () {
                 </div>
 
                 {/*client table*/}
-                <ClientOutgoingTable />
+               <OutgoingTable
+                    getFakeData={"http://localhost:3000/clientOutgoingData"}
+                    getFakeTitleTable={"http://localhost:3000/clientOutgoingHeader"}
+               />
             </div>
 
         </div>

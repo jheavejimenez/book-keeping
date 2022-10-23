@@ -1,14 +1,14 @@
 import React from "react";
 
-function RequestTableRow({ ReqID, RequestedFrom, File, Purpose, DueDate, DateRequested }) {
+function RequestTableRow({ Column1, Column2, Column3, Column4, Column5, Column6 }) {
     return (
         <tr className={"hover:bg-gray-300 text-black"}>
-            <td className={"px-4 py-3 text-sm"}>{ReqID}</td>
-            <td className={"px-4 py-3 text-sm"}>{RequestedFrom}</td>
-            <td className={"px-4 py-3 text-sm"}>{File}</td>
-            <td className={"px-4 py-3 text-xs"}>{Purpose}</td>
-            <td className={"px-4 py-3 text-xs"}>{DueDate}</td>
-            <td className={"px-4 py-3 text-xs"}>{DateRequested}</td>
+            <td className={"px-4 py-3 text-sm"}>{Column1}</td>
+            <td className={"px-4 py-3 text-sm"}>{Column2}</td>
+            <td className={"px-4 py-3 text-sm"}>{Column3}</td>
+            <td className={"px-4 py-3 text-xs"}>{Column4}</td>
+            <td className={"px-4 py-3 text-xs"}>{Column5}</td>
+            <td className={"px-4 py-3 text-xs"}>{Column6}</td>
         </tr>
     )
 }

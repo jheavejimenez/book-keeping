@@ -4,17 +4,19 @@ import axios from "axios";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 
-function OutgoingTable() {
+function OutgoingTable(getFakeData, getFakeTitleTable) {
     const [data, setData] = useState([]);
     const [titleTable, setTitleTable] = useState([]);
 
     const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/outgoingData");
+        const response = await axios.get({getFakeData});
+        // "http://localhost:3000/outgoingData"
         setData(response.data);
     }
 
     const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/outgoingHeader");
+        const response = await axios.get({getFakeTitleTable});
+        // "http://localhost:3000/outgoingHeader"
         setTitleTable(response.data[0].title);
     }
 
@@ -52,10 +54,10 @@ function OutgoingTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <OutgoingTableRow
-                                    DocID={item.outID}
-                                    Recipient={item.recipient}
-                                    File={item.file}
-                                    DateSent={item.dateSent}
+                                    Column1={item.outID}
+                                    Column2={item.recipient}
+                                    Column3={item.file}
+                                    Column4={item.dateSent}
                                 />)
                             )}
                             </tbody>

@@ -1,13 +1,33 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import {
     CheckCircleIcon,
     DocumentArrowDownIcon,
     DocumentArrowUpIcon,
     ExclamationCircleIcon
 } from "@heroicons/react/24/outline";
-
+// import { useAuth } from "../../hooks/useAuth";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
 
 function StatisticCards() {
+    const [data, setData] = useState([]);
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "request"));
+        setData(snapshot.docs.map((doc) => doc.data()));
+    }
+
+    useEffect(() => {
+        getAllRequestDocumments();
+        const interval = setInterval(() => {
+            getAllRequestDocumments();
+        }, 5000)
+        return () => {
+            clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
+        };
+    }, []);
+    console.log(data);
+
     return (
         <div className={" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4 "}>
             <div
@@ -31,7 +51,7 @@ function StatisticCards() {
             <div
                 className={" bg-lime-200 text-black shadow-lg rounded-md " +
                     " flex items-center justify-between p-3 border-b-4 border-neutral-900 " +
-                    " text-white font-medium group"}
+                    " text-white font-medium group "}
             >
                 <div
                     className={" flex justify-center items-center w-14 h-14 bg-white " + 
@@ -42,7 +62,7 @@ function StatisticCards() {
 
                 </div>
                 <div className={"text-right"}>
-                    <p className={"text-3xl"}>245</p>
+                    <p className={"text-3xl"}>{data.length}</p>
                     <p>Total Requested Files</p>
                 </div>
             </div>

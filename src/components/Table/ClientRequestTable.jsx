@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ClientRequestTableRow from "./ClientRequestTableRow";
+import RequestTableRow from "./RequestTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { db } from "../../utils/Firebase";
@@ -60,13 +60,13 @@ function ClientRequestTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
-                                <ClientRequestTableRow
-                                    ReqID={item.documentId}
-                                    RequestedBy={item.reqby}
-                                    RequestedFile={item.file}
-                                    Purpose={item.purpose}
-                                    DueDate={item.dueDate}
-                                    DateReceived={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
+                                <RequestTableRow
+                                    Column1={item.documentId}
+                                    Column2={item.reqby}
+                                    Column3={item.file}
+                                    Column4={item.purpose}
+                                    Column5={item.dueDate}
+                                    Column6={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>

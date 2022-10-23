@@ -31,7 +31,6 @@ function IncomingTable() {
         };
     }, []);
 
-
     return (
         <>
             <div className={"mt-4 mx-4"}>
@@ -39,24 +38,24 @@ function IncomingTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b dark:border-gray-700 " + 
-                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
-                                {titleTable.map((item) => (
-                                    <TableHeading
-                                        text={item}
-                                    />
+                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                " text-gray-500 border-b dark:border-gray-700 " + 
+                                " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
+                                    {titleTable.map((item) => (
+                                        <TableHeading
+                                            text={item}
+                                        />
 
-                                ))}
-                            </tr>
+                                    ))}
+                                </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <IncomingTableRow
-                                    DocID={item.incID}
-                                    Sender={item.sender}
-                                    File={item.file}
-                                    DateReceived={item.dateReceived}
+                                    Column1={item.incID}
+                                    Column2={item.sender}
+                                    Column3={item.file}
+                                    Column4={item.dateReceived}
                                 />)
                             )}
                             </tbody>

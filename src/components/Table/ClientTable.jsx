@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from "react";
 import TableRow from "./TableRow";
-import axios from "axios";
+import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import { useAuth } from "../../hooks/useAuth";
 
 function ClientTable() {
+    const { user } = useAuth();
     const [data, setData] = useState([]);
-    const [titleTable, setTitleTable] = useState([]);
+    const titleTable = [
+        "DocID",
+        "Sender",
+        "File",
+        "Date Received",
+        "Action",
+        
+    ]
 
-    const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/data");
-        setData(response.data);
+    
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "request"));
+        setData(snapshot.docs.map((doc) => doc.data()));
     }
-
-    const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/titleHeader");
-        setTitleTable(response.data[0].title);
-    }
-
     useEffect(() => {
-        fakeData();
-        fakeTitleTable();
+        
         const interval = setInterval(() => {
-            fakeData();
-            fakeTitleTable();
-        }, 10000)
+            getAllRequestDocumments();
+        }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
+    console.log(data);
 
 
     return (
@@ -53,12 +58,10 @@ function ClientTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <TableRow
-                                    key={item.id}
-                                    DocID={item.id}
-                                    SenderName={item.sender}
+                                    DocID={item.documentId}
+                                    SenderName={item.reqby}
                                     fileName={item.file}
-                                    timeStamp={item.timestamp}
-                                    status={item.status}
+                                    timeStamp={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>

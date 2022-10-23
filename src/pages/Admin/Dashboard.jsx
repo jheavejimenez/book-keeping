@@ -6,8 +6,6 @@ import FilterDropdown from "../../components/Button/FilterDropdown";
 import StatisticCards from "../../components/Cards/StatisticCards";
 import Header from "../../components/Navigation/Header";
 
-
-
 function Dashboard() {
     return (
         <>

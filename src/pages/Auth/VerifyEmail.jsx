@@ -19,18 +19,19 @@ function VerifyEmail() {
             <div>
                 <h1 className={"text-2xl font-bold tracking-wide mb-6"}>Verify your Email Address</h1>
                 <div className={"mb-6"}>
-                    <p className={"mb-2"}>
-                        <strong >A Verification email has been sent to:</strong><br />
+                    <p className={"mb-3"}>
+                        <strong >A Verification email has been sent to you!</strong><br />
+                        Follow the instruction in the email to verify your account.
                     </p>
-                    <span>Follow the instruction in the email to verify your account</span>
+                    <span>If you haven't received an email, click <strong>Re-send Email.</strong> </span>
                 <div className={"flex justify-between"}>
-                    <button onClick={() => navigate("/")} className={" bg-blue-300 rounded p-2 mt-9 " + 
+                    <button onClick={() => navigate("/")} className={" bg-blue-300 rounded w-20 p-2 mt-9 " + 
                     " hover:bg-blue-400 active:bg-blue-400 font-semibold "}>
                        Log in
                     </button>
-                    <button onClick={resendEmailVerification} className={" bg-blue-300 rounded p-2 mt-9 " + 
+                    <button onClick={resendEmailVerification} className={" bg-blue-300 rounded w-32 p-2 mt-9 " + 
                     " hover:bg-blue-400 active:bg-blue-400 font-semibold "}>
-                        Resend Email
+                        Re-send Email
                     </button>
                 </div>
                 </div>
