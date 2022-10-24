@@ -8,7 +8,7 @@ import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Button from "../../components/Button/Button";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
 
 
 // import ClientTable from "../../components/Table/ClientTable";
@@ -17,11 +17,13 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 
 function AccountSettings() {
+    const {logout} = useAuth()
     const { user } = useAuth();
     const [fileInput] = useState("");
     const [Source, setSource] = useState("../../UserDefaultImage.png");
     const [image, setImage] = useState(null);
     const email = user.email;
+    
 
 
     const handleChange = (e) => {
@@ -68,9 +70,33 @@ function AccountSettings() {
     };
 
 
-    const [newName, setNewName] = useState('')
+    const [fname, setFname] = useState(user.fname);
+    const [lname, setLname] = useState(user.lname);
+    const [company , setCompany] = useState(user.company);
+
     const [newEmail, setNewEmail] = useState('')
 
+
+
+    const update = async () => {
+        await updateEmail(auth.currentUser, newEmail).then(() => {
+             setDoc(doc(db, "users", auth.currentUser.uid), {
+                email: newEmail,
+                role : user.role,
+                uid : auth.currentUser.uid,
+
+            });
+            alert("Email updated");
+            logout();
+        
+                
+
+        }).catch((error) => {
+            alert(error.message)
+        })
+    }
+    console.log(user.email)
+    
 
     const accsetCollectionRef = collection(db, "accountsettings",);
 
@@ -78,19 +104,21 @@ function AccountSettings() {
         e.preventDefault();
 
         await setDoc(doc(accsetCollectionRef, auth.currentUser.email), {
-            email: newEmail,
-            name: newName,
+            fname: fname,
+            lname: lname,
+            company: company,
             image: Source
         });
         if (image === null) {
             alert("No image selected");
         } else {
 
-            const imageRef = ref(storage, 'images/' + user);
+            const imageRef = ref(storage, 'images/' + auth.currentUser.email);
             uploadBytes(imageRef, image).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setSource(url);
-                    console.log(url);
+                    
+         
                 });
             });
         }
@@ -169,19 +197,19 @@ function AccountSettings() {
                                     <Input
                                         name="name"
                                         id="name"
-                                        onChange={(e) => setNewName(e.target.value)}
+                                        onChange={(e) => setFname(e.target.value)}
                                         className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br />
                                     <Input
                                         name="name"
                                         id="name"
-                                        onChange={(e) => setNewName(e.target.value)}
+                                        onChange={(e) => setLname(e.target.value)}
 
                                         className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br />
                                     <span className={""}>
                                         <Input
                                             name="email"
                                             id="email"
-                                            onChange={(e) => setNewEmail(e.target.value)}
+                                            onChange={(e) => setCompany(e.target.value)}
                                             className={"border rounded-md border-black text-black w-10 mt-4" + 
                                             "sm:w-48"} /><br />
                                     </span>
@@ -221,8 +249,16 @@ function AccountSettings() {
                                     <div className={"flex justify-between"}>
                                         <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Email Address </h1>
                                         <span className={"sm:ml-24"}>
+                                            
+                                            <Input
+                                            name="name"
+                                            id="name"
+                                            type="email"
+                                            onChange={(e) => setNewEmail(e.target.value)}
+                                            className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} />
+
                                             <button 
-                                             onClick=""
+                                             onClick={update}
                                              className={" px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full "}
                                              >Change Email</button>
                                         </span>
@@ -240,7 +276,7 @@ function AccountSettings() {
                                         <button 
                                              onClick={change}
                                              className={" px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full "}
-                                             >Change Email</button>
+                                             >Change Passord</button>
                                         </span>
                                     </div>
                                     <div className={"mt-8 italic "}>

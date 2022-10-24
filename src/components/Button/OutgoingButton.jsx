@@ -1,9 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { auth, db, storage } from "../../utils/Firebase";
+import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { nanoid } from "nanoid";
 
 function OutgoingButton({ text }) {
-    const [showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [newEmail, setNewEmail] = useState('')
+    const [newFile, setNewFile] = useState(null)
+    const useremail  = auth.currentUser.email
+    const OutgoingsetCollectionRef = collection(db, "outgoing",);
+    const documentId = nanoid(5)
+
+    const add = async (e) => {
+        e.preventDefault();
+
+        if (newFile === null) {
+            alert("no file selected");
+        } else {
+            
+            const imageRef = ref(storage, 'files/' + documentId);
+            uploadBytes(imageRef, newFile).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setNewFile(url)
+                    alert("File Sent")
+                    
+            
+
+                    setDoc(doc(OutgoingsetCollectionRef, documentId), {
+                        docid : documentId,
+                        sentby: auth.currentUser.email,
+                        email: newEmail,
+                        file: url,
+                        date: serverTimestamp(),
+                       
+                    });
+                    
+                    
+                    
+                });
+            });
+        }
+        
+        
+        
+    }
+
 
     return (
         <>
@@ -49,12 +93,29 @@ function OutgoingButton({ text }) {
                                         <fieldset className="pt-3">
                                             <div>
                                                 <label htmlFor="reqFrom" className={" text-black "}>
+                                                    Sent by:
+                                                </label>
+                                                <input id="reqFrom"
+                                                    className={" border rounded-md mb-3 mt-1 h-10 " + 
+                                                    " pl-3 border-gray-400 font-normal " +
+                                                    " placeholder-gray-400 text-black text-base w-full "}
+                                                    type="email"
+                                                    placeholder="Enter recipient email"
+                                                    value={useremail}
+                                                    disabled
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="reqFrom" className={" text-black "}>
                                                     Recipient
                                                 </label>
                                                 <input id="reqFrom"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
                                                     " pl-3 border-gray-400 font-normal " +
                                                     " placeholder-gray-400 text-black text-base w-full "}
+                                                    type="email"
+                                                    placeholder="Enter recipient email"
+                                                    onChange={(e) => setNewEmail(e.target.value)}
                                                 />
                                             </div>
                                             <div>
@@ -66,6 +127,8 @@ function OutgoingButton({ text }) {
                                                     " pl-3 pt-1 border-gray-400 font-normal " +
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type={"file"}
+                                                    accept={".pdf, .xls, .xlsx"}
+                                                    onChange={(e) => setNewFile(e.target.value)}
                                                 />
                                             </div>
 
@@ -92,7 +155,7 @@ function OutgoingButton({ text }) {
                                         " py-3 rounded shadow hover:shadow-lg outline-none "+
                                         " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={add}
                                     >
                                         Send
                                     </button>
