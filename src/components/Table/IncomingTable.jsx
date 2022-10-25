@@ -1,35 +1,45 @@
 import React, { useEffect, useState } from "react";
 import IncomingTableRow from "./IncomingTableRow";
-import axios from "axios";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import { useAuth } from "../../hooks/useAuth";
+import dayjs from "dayjs";
 
 function IncomingTable() {
+    const { user } = useAuth();
     const [data, setData] = useState([]);
-    const [titleTable, setTitleTable] = useState([]);
+    const titleTable = [
+        "DocID",
+        "Sender",
+        "File",
+        "Date received",
+        "Action",
+        
+        
+    ]
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "outgoing"));
+        if (user) {
+            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.sentby === user.email));
+        }
+        
 
-    const fakeData = async () => {
-        const response = await axios.get("http://localhost:3000/incomingData");
-        setData(response.data);
-    }
-
-    const fakeTitleTable = async () => {
-        const response = await axios.get("http://localhost:3000/incomingHeader");
-        setTitleTable(response.data[0].title);
-
+        console.log(data);
     }
 
     useEffect(() => {
-        fakeData();
-        fakeTitleTable();
+        
         const interval = setInterval(() => {
-            fakeData();
-            fakeTitleTable();
-        }, 10000)
+            getAllRequestDocumments();
+        }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
+    console.log(data);
 
     return (
         <>
@@ -52,10 +62,19 @@ function IncomingTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <IncomingTableRow
-                                    Column1={item.incID}
-                                    Column2={item.sender}
+                                    Column1={item.docid}
+                                    Column2={item.email}
                                     Column3={item.file}
-                                    Column4={item.dateReceived}
+                                    Column4={dayjs.unix(item.datesend.seconds).format("YYYY-MM-DD")}
+                                    Column5={
+                                        <div className={"flex items-center space-x-4"}>
+                                            <button className={"flex items-center justify-center w-8 h-8 text-blue-500 transition-colors duration-150 bg-white rounded-full hover:bg-blue-100"}>
+                                                <a href={item.file} target = "_blank" download>
+                                                    <ArrowDownTrayIcon className={"w-5 h-5"} />
+                                                </a>
+                                            </button>
+                                        </div>
+                                    }
                                 />)
                             )}
                             </tbody>
