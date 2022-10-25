@@ -25,8 +25,8 @@ function ForgotPassword() {
 
     return (
         <>
-            <div className={"bg-gray-300 flex justify-center mx-auto min-h-screen items-center"}>
-                <div className={"bg-white mx-auto p-9 w-96 rounded-lg"}>
+            <div className={"bg-gray-100 flex justify-center mx-auto min-h-screen items-center"}>
+                <div className={"bg-white mx-auto p-9 w-96 shadow-lg rounded-lg"}>
                     <div className={""}>
                         <h3 className={"font-bold text-3xl mb-6 text-center"}>Forgot password</h3>
                         <div className={"my-5"}>
