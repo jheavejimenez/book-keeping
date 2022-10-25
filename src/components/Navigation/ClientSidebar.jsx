@@ -39,7 +39,7 @@ function ClientSidebar () {
                         <SidebarTitle title={"Settings"} />
                         
                         <LinkToSidebar
-                            link={"/admin/account-settings"}
+                            link={"/account-settings"}
                             icon={<Cog8ToothIcon className="w-6 h-6"/>}
                             title={"Account Settings"}
                         />

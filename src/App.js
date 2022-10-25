@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ClientDashboard from "./pages/Client/ClientDashboard";
 import ClientIncoming from "./pages/Client/ClientIncoming";
 import ClientOutgoing from "./pages/Client/ClientOutgoing";
+import ClientSettings from "./pages/Client/ClientSettings";
 
 function App() {
   return (
@@ -82,6 +83,14 @@ function App() {
         element={
           <ProtectedRoute>
             <ClientOutgoing />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/account-settings"
+        element={
+          <ProtectedRoute>
+            <ClientSettings />
           </ProtectedRoute>
         }
       />
