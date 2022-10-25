@@ -7,7 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 
-function OutgoingTable(getFakeData, getFakeTitleTable) {
+function OutgoingTable() {
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const titleTable = [
