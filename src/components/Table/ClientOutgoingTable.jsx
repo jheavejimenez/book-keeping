@@ -7,7 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 
-function OutgoingTable() {
+function ClientOutgoingTable() {
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const titleTable = [
@@ -77,4 +77,4 @@ function OutgoingTable() {
     )
 }
 
-export default OutgoingTable;
+export default ClientOutgoingTable;
