@@ -135,11 +135,11 @@ function ClientSettings() {
             {/*sidebar*/}
             <Sidebar />
 
-            <div className={"flex justify-between items-center h-10 bg-white header-right"}>
+            <div className={"flex justify-between items-center h-5 bg-white header-right"}>
 
             </div>
 
-            <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+            <div className={"h-full ml-14 mt-14 mb-5 md:ml-64"}>
                 {/*<div className="mt-4 mx-4">*/}
                 {/*    <div*/}
                 {/*        className={"bg-blue-500 text-white shadow-lg rounded-md flex" + */}
@@ -147,18 +147,17 @@ function ClientSettings() {
                 {/*        <span className="ml-2 text-3xl font-medium tracking-wide truncate">Account Settings</span>*/}
                 {/*    </div>*/}
                 {/*</div>*/}
-                <div className={"flex mt-5 text-2xl font-bold tracking-wide border-y-4 border-blue-300 mx-5 truncate"}>
+                <div className={"flex mt-5 text-3xl font-bold tracking-wide border-y-4 border-blue-300 mx-5 truncate"}>
                     <span className={"ml-6 pt-2"}><UserCircleIcon className={"w-12 h-12"} /></span>
-                    <span className={"ml-4 py-5"}> Profile Information </span>
+                    <span className={"ml-4 pt-3 pb-4"}> Profile Information </span>
                 </div>
 
                 {/*Update information*/}
-                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44 xl:mr-44" + 
-                    "2xl:ml-80 2xl:mr-80"}>
+                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
                     <div className={"flex justify-between mb-5"}>
-                        <span className={"text-2xl font-bold tracking-wide pt-4 truncate"}>
+                        <h1 className={"text-2xl font-bold tracking-wide pt-4 truncate"}>
                             Add / Update information 
-                        </span>
+                        </h1>
 
                     </div>
                     <div className={"flex justify-center "}>
@@ -186,13 +185,13 @@ function ClientSettings() {
                         </div>
                     </div>
                     <form id="accset">
-                        <div className={"flex mt-16 justify-center"}>
+                        <div className={"flex mt-10 justify-center"}>
                             <span className={"inline-grid font-bold"}>
                                 <span className={"mt-5"}>First Name:</span>
                                 <span className={"mt-5"}>Last Name:</span>
                                 <span className={"mt-5"}>Company Name:</span>
                             </span>
-                            <span className={"inline-grid font-bold ml-5 sm:ml-24"}>
+                            <span className={"inline-grid font-bold ml-7 w-96 sm:ml-24"}>
                                     <Input
                                         name="name"
                                         id="name"
@@ -215,7 +214,7 @@ function ClientSettings() {
 
                             </span>
                         </div>
-                        <div className={"flex justify-center sm:justify-end mt-16"}>
+                        <div className={"flex justify-center sm:justify-end mt-10"}>
                             <button onClick={add}
                                     className={"bg-blue-500 hover:bg-blue-400 text-white " +
                                         "font-normal py-1 px-4 border border-blue-500 rounded "}>
@@ -234,60 +233,65 @@ function ClientSettings() {
 
             {/*Start of Security*/}
 
-            <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <div className={"flex mt-5 text-2xl font-bold tracking-wide border-y-4 border-blue-300 mx-5"}>
+            <div className={"h-full ml-14 mb-10 md:ml-64"}>
+                <div className={"flex mt-5 text-3xl font-bold tracking-wide border-y-4 border-blue-300 mx-5"}>
                     <span className={"ml-6 pt-2"}><KeyIcon className={"w-12 h-12"} /></span>
-                    <span className={"ml-4 py-5"}> Security</span>
+                    <span className={"ml-4 pt-3 pb-4"}> Security</span>
                 </div>
-                {/*Change password*/}
-                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:ml-44" +
-                    "xl:mr-44 2xl:ml-80 2xl:mr-80"}>
-                        <div className={"flex justify-center mt-12"}>
-                            <div className={"w-full"}>
-                                <div className={""}>
-                                    <div className={"flex justify-between"}>
-                                        <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Email Address </h1>
-                                        <span className={"sm:ml-24"}>
+                {/*Change email and password*/}
+                <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
+                    <div className={"flex justify-center mt-8"}>
+                        <div className={"w-full"}>
+                            <div className={""}>
+                                <div className={"flex justify-between"}>
+                                    <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Email Address </h1>
+                                    <span className={"sm:ml-24"}>
                                             
-                                            <Input
+                                        <Input
                                             name="name"
                                             id="name"
                                             type="email"
+                                            placeHolder={"Enter new email..."}
                                             onChange={(e) => setNewEmail(e.target.value)}
-                                            className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} />
+                                            className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} 
+                                        />
 
-                                            <button 
-                                             onClick={update}
-                                             className={" px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-400 w-full "}
-                                             >Change Email</button>
-                                        </span>
-                                    </div>
-                                    <div className={"italic mt-5"}>
-                                        <p>If you want to change your email address, <span className={"font-bold"}> click the button above. </span></p>
-                                        <p>The system will send you an <strong>email with a link.</strong> </p>
-                                    </div>
-
-                                </div>
-                                <div className={"mt-12 w-full"}>
-                                    <div className={"flex justify justify-between"}>
-                                        <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Password </h1>
-                                        <span className={"sm:ml-24"}>
                                         <button 
-                                             onClick={change}
-                                             className={" px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-400 w-full "}
-                                             >Change Password</button>
-                                        </span>
-                                    </div>
-                                    <div className={"mt-8 italic "}>
-                                        <p>If you want to change password, <span className={"font-bold"}> click the button above</span></p>
-                                        <p>The system will send you an <strong>email with a link.</strong> Remember to use a </p>
-                                        <p>strong password that you don't use on any other website. </p>
+                                            onClick={update}
+                                            className={"py-2 mt-2 text-white bg-blue-500 rounded-lg hover:bg-blue-400 w-full "} >
+                                            Change Email
+                                        </button>
+                                    </span>
+                                </div>
+                                <div className={"italic mt-5 text-justify w-3/4"}>
+                                    <p> If you want to change your email address, <strong>click the Change Email button </strong>
+                                        after you enter your new email address. The system will redirect you to login 
+                                        page and you will need to login again with your new email address. 
+                                    </p>
+                                </div>
 
-                                    </div>
+                            </div>
+                            <div className={"mt-12 w-full"}>
+                                <div className={"flex justify justify-between"}>
+                                    <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Password </h1>
+                                    <span className={"sm:ml-24"}>
+                                        <button 
+                                            onClick={change}
+                                            className={" px-12 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-400 w-full "} >
+                                            Reset Password
+                                        </button>
+                                    </span>
+                                </div>
+                                <div className={"mt-8 italic text-justify w-3/4"}>
+                                    <p>If you want to change your password, <span className={"font-bold"}> click Reset Password button. </span>
+                                        The system will send you an <strong>email with a link.</strong> Remember to use a
+                                        strong password that you don't use on any other website.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     )
