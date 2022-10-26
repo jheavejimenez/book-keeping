@@ -17,9 +17,10 @@ function ChangeStatus() {
             {showModal && (
                 <>
                     <div
-                        className={" justify-center items-center flex overflow-x-hidden overflow-y-auto " + 
+                        className={" flex justify-center items-center flex overflow-x-hidden overflow-y-auto " + 
                         " fixed inset-0 z-50 outline-none focus:outline-none "}>
-                        <div className="relative w-1/4 my-6 md:w-2/3 mx-auto max-w-md ">
+                        {/* <div className=" w-1/4 my-6 md:w-2/3 mx-auto max-w-md "> */}
+                        
                             {/*content*/}
                             <div className={" flex justify-center border-0 rounded-lg " +
                                 " shadow-lg absolute m-auto flex-col md:shrink w-auto " +
@@ -73,7 +74,7 @@ function ChangeStatus() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
             )}
