@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/Navigation/Sidebar";
+import Sidebar from "../../components/Navigation/ClientSidebar";
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 import Header from "../../components/Navigation/Header";
 import { collection, doc, setDoc } from "firebase/firestore";
@@ -15,7 +15,7 @@ import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
 // import ButtonSendFle from "../../components/Button/ButtonSendFle";
 
 
-function AccountSettings() {
+function ClientSettings() {
     const {logout} = useAuth()
     const { user } = useAuth();
     const [fileInput] = useState("");
@@ -297,4 +297,4 @@ function AccountSettings() {
     )
 }
 
-export default AccountSettings;
+export default ClientSettings;

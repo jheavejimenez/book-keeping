@@ -2,9 +2,9 @@ import React from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import Header from "../../components/Navigation/Header";
 import Dropdown from "../../components/Button/FilterDropdown";
-import OutgoingTable from "../../components/Table/OutgoingTable";
 import Card from "../../components/Cards/Card";
-import OutgoingButton from "../../components/Button/OutgoingButton";
+import ClientOutgoingButton from "../../components/Button/ClientOutgoingButton";
+import ClientOutgoingTable from "../../components/Table/ClientOutgoingTable";
 
 function ClientOutgoing () {
     return (
@@ -24,7 +24,7 @@ function ClientOutgoing () {
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
                     titleText={"Outgoing Documents"}
-                    button={<OutgoingButton text={"Send Files"}/>}
+                    button={<ClientOutgoingButton text={"Send Files"}/>}
                 />
 
                 <div className="mt-4 mx-4 pt-7">
@@ -34,10 +34,7 @@ function ClientOutgoing () {
                 </div>
 
                 {/*client table*/}
-               <OutgoingTable
-                    getFakeData={"http://localhost:3000/clientOutgoingData"}
-                    getFakeTitleTable={"http://localhost:3000/clientOutgoingHeader"}
-               />
+               <ClientOutgoingTable />
             </div>
 
         </div>

@@ -1,36 +1,43 @@
 import React, { useEffect, useState } from "react";
 import OutgoingTableRow from "./OutgoingTableRow";
-import axios from "axios";
+import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import { useAuth } from "../../hooks/useAuth";
 
-function OutgoingTable(getFakeData, getFakeTitleTable) {
+function OutgoingTable() {
+    const { user } = useAuth();
     const [data, setData] = useState([]);
-    const [titleTable, setTitleTable] = useState([]);
+    const titleTable = [
+        "DocID",
+        "Recipient",
+        "File",
+        "Date Sent",
+        
+        
+    ]
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "outgoing"));
+        if (user) {
+            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.sentby === user.email));
+        }
+        
 
-    const fakeData = async () => {
-        const response = await axios.get({getFakeData});
-        // "http://localhost:3000/outgoingData"
-        setData(response.data);
-    }
-
-    const fakeTitleTable = async () => {
-        const response = await axios.get({getFakeTitleTable});
-        // "http://localhost:3000/outgoingHeader"
-        setTitleTable(response.data[0].title);
+        console.log(data);
     }
 
     useEffect(() => {
-        fakeData();
-        fakeTitleTable();
+        
         const interval = setInterval(() => {
-            fakeData();
-            fakeTitleTable();
-        }, 10000)
+            getAllRequestDocumments();
+        }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
+    console.log(data);
 
 
     return (
@@ -54,10 +61,10 @@ function OutgoingTable(getFakeData, getFakeTitleTable) {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <OutgoingTableRow
-                                    Column1={item.outID}
-                                    Column2={item.recipient}
+                                    Column1={item.docid}
+                                    Column2={item.email}
                                     Column3={item.file}
-                                    Column4={item.dateSent}
+                                    Column4={dayjs.unix(item.date.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>
