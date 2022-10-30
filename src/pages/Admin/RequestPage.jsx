@@ -5,8 +5,12 @@ import Card from "../../components/Cards/Card";
 import Header from "../../components/Navigation/Header";
 import Sidebar from "../../components/Navigation/Sidebar";
 import RequestTable from "../../components/Table/RequestTable";
+import { useAuth } from "../../hooks/useAuth";
 
 function RequestPage() {
+    const { user } = useAuth();
+
+    if (user.role === "admin") {
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -35,6 +39,14 @@ function RequestPage() {
                 
         </div>
     )
+    }
+    else {
+        return (
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                <h1>Not Authorized</h1>
+            </div>
+        )
+    }
 }
 
 export default RequestPage;
