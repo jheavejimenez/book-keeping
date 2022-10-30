@@ -4,8 +4,13 @@ import ClientIncomingTable from "../../components/Table/ClientIncomingTable";
 import Dropdown from "../../components/Button/FilterDropdown";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
+import { useAuth } from "../../hooks/useAuth";
 
 function ClientIncoming() {
+    const { user } = useAuth();
+
+    if (user.role === "client") {
+
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -38,6 +43,14 @@ function ClientIncoming() {
                 
         </div>
     )
+    }
+    else {
+        return (
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                <h1>Not Authorized</h1>
+            </div>
+        )
+    }
 }
 
 export default ClientIncoming;

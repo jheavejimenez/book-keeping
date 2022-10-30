@@ -5,8 +5,16 @@ import ClientRequestTable from "../../components/Table/ClientRequestTable";
 import Header from "../../components/Navigation/Header";
 import Tabs from "../../components/Navigation/Tabs";
 import Card from "../../components/Cards/Card";
+import { useAuth } from "../../hooks/useAuth";
 
 function ClientDashboard() {
+
+
+    const { user } = useAuth();
+
+    if (user.role === "client") {
+
+
     return (
         
         <div 
@@ -40,6 +48,14 @@ function ClientDashboard() {
         </div>
         
     )
+    }
+    else {
+        return (
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                <h1>Not Authorized</h1>
+            </div>
+        )
+    }
 }
 
 

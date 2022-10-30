@@ -5,8 +5,12 @@ import OutgoingTable from "../../components/Table/OutgoingTable";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
 import OutgoingButton from "../../components/Button/OutgoingButton";
+import { useAuth } from "../../hooks/useAuth";
 
 function Outgoing() {
+    const { user } = useAuth();
+
+    if (user.role === "admin") {
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -34,6 +38,14 @@ function Outgoing() {
 
         </div>
     )
+    }
+    else {
+        return (
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                <h1>Not Authorized</h1>
+            </div>
+        )
+    }
 }
 
 export default Outgoing;

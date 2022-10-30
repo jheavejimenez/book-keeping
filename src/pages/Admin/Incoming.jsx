@@ -6,8 +6,12 @@ import IncomingTable from "../../components/Table/IncomingTable";
 import Dropdown from "../../components/Button/FilterDropdown";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
+import { useAuth } from "../../hooks/useAuth";
 
 function Incoming() {
+    const { user } = useAuth();
+
+    if (user.role === "admin") {
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -39,6 +43,14 @@ function Incoming() {
 
         </div>
     )
+    }
+    else {
+        return (
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                <h1>Not Authorized</h1>
+            </div>
+        )
+    }
 }
 
 export default Incoming;

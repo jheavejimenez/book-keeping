@@ -5,8 +5,13 @@ import Dropdown from "../../components/Button/FilterDropdown";
 import Card from "../../components/Cards/Card";
 import ClientOutgoingButton from "../../components/Button/ClientOutgoingButton";
 import ClientOutgoingTable from "../../components/Table/ClientOutgoingTable";
+import { useAuth } from "../../hooks/useAuth";
 
 function ClientOutgoing () {
+    const { user } = useAuth();
+
+    if (user.role === "client") {
+
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
@@ -39,6 +44,14 @@ function ClientOutgoing () {
 
         </div>
     )
+    }
+    else {
+        return (
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                <h1>Not Authorized</h1>
+            </div>
+        )
+    }
 }
 
 export default ClientOutgoing;

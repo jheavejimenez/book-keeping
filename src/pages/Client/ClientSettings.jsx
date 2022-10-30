@@ -125,6 +125,8 @@ function ClientSettings() {
     }
 
 
+    if (user.role === "client") {
+
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiasing bg-gray-100 text-black"}>
@@ -295,6 +297,14 @@ function ClientSettings() {
             </div>
         </div>
     )
+    }
+    else {
+        return (
+            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                <h1>Not Authorized</h1>
+            </div>
+        )
+    }
 }
 
 export default ClientSettings;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -10,8 +10,9 @@ function OutgoingButton({ text }) {
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
     const [newFile, setNewFile] = useState(null)
+    const inputRef = useRef()
     const useremail  = auth.currentUser.email
-    const OutgoingsetCollectionRef = collection(db, "outgoing",);
+    const OutgoingsetCollectionRef = collection(db, "incoming",);
     const documentId = nanoid(5)
 
     const add = async (e) => {
@@ -21,7 +22,7 @@ function OutgoingButton({ text }) {
             alert("no file selected");
         } else {
             
-            const imageRef = ref(storage, 'files/' + documentId);
+            const imageRef = ref(storage, 'reciepts/' + documentId);
             uploadBytes(imageRef, newFile).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setNewFile(url)
@@ -128,7 +129,8 @@ function OutgoingButton({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type={"file"}
                                                     accept={".pdf, .xls, .xlsx"}
-                                                    onChange={(e) => setNewFile(e.target.value)}
+                                                    onChange={(e) => setNewFile(inputRef.current.files[0])}
+                                                    ref={inputRef}
                                                 />
                                             </div>
 

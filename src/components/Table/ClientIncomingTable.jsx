@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { collection, getDocs } from "firebase/firestore";
@@ -20,9 +21,9 @@ function ClientIncomingTable() {
     ]
 
     const getAllRequestDocumments = async () => {
-        const snapshot = await getDocs(collection(db, "request"));
+        const snapshot = await getDocs(collection(db, "incoming"));
         if (user) {
-            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.reqfrom === user.email));
+            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
         }
         
 
@@ -61,10 +62,19 @@ function ClientIncomingTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map((item) => (
                                 <IncomingTableRow
-                                    Column1={item.documentId}
-                                    Column2={item.reqby}
+                                    Column1={item.docid}
+                                    Column2={item.email}
                                     Column3={item.file}
-                                    Column4={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.date).format("YYYY-MM-DD")}
+                                    Column5={
+                                    <div className={"flex items-center space-x-4"}>
+                                            <button className={"flex items-center justify-center w-8 h-8 text-blue-500 transition-colors duration-150 bg-white rounded-full hover:bg-blue-100"}>
+                                                <a href={item.file} target = "_blank" download>
+                                                    <ArrowDownTrayIcon className={"w-5 h-5"} />
+                                                </a>
+                                            </button>
+                                    </div>
+                                        }
                                 />)
                             )}
                             </tbody>
