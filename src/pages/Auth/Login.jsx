@@ -51,7 +51,7 @@ function Login() {
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('/dashboard')
+                    navigate('admin/dashboard')
                 }
             })
             .catch((error) => {
