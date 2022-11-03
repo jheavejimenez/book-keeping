@@ -32,7 +32,7 @@ function Login() {
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('/incoming') // it should be navigated to client dashboard
+                    navigate('/account-settings') // it should be navigated to client dashboard
                 } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
