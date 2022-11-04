@@ -13,6 +13,8 @@ import ClientDashboard from "./pages/Client/ClientDashboard";
 import ClientIncoming from "./pages/Client/ClientIncoming";
 import ClientOutgoing from "./pages/Client/ClientOutgoing";
 import ClientSettings from "./pages/Client/ClientSettings";
+import PageNotFound from "./pages/Error/PageNotFound";
+import ForbiddenPage from "./pages/Error/ForbiddenPage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/forgot-pass" element={<ForgotPassword />} />
+      <Route path="error-404" element={<PageNotFound />} />
+      <Route path="error-403" element={<ForbiddenPage />} />
 
       <Route
         path="admin/dashboard"
