@@ -17,6 +17,7 @@ import PageNotFound from "./pages/Error/PageNotFound";
 import ForbiddenPage from "./pages/Error/ForbiddenPage";
 
 function App() {
+  
   return (
     <Routes>
       <Route exact path="/" element={<Login />} />
@@ -98,6 +99,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }

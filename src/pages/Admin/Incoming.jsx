@@ -7,6 +7,7 @@ import Dropdown from "../../components/Button/FilterDropdown";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
 import { useAuth } from "../../hooks/useAuth";
+import ForbiddenPage from "../Error/ForbiddenPage";
 
 function Incoming() {
     const { user } = useAuth();
@@ -46,9 +47,7 @@ function Incoming() {
     }
     else {
         return (
-            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-                <h1>Not Authorized</h1>
-            </div>
+            <ForbiddenPage/>
         )
     }
 }

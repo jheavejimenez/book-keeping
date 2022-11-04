@@ -6,6 +6,7 @@ import FilterDropdown from "../../components/Button/FilterDropdown";
 import StatisticCards from "../../components/Cards/StatisticCards";
 import Header from "../../components/Navigation/Header";
 import { useAuth } from "../../hooks/useAuth";
+import ForbiddenPage from "../Error/ForbiddenPage";
 
 function Dashboard() {
     const { user } = useAuth();
@@ -46,9 +47,7 @@ function Dashboard() {
     }
     else {
         return (
-            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-                <h1>Not Authorized</h1>
-            </div>
+            <ForbiddenPage/>
         )
     }
 
