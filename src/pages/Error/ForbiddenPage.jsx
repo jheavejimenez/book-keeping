@@ -24,7 +24,7 @@ function ForbiddenPage () {
                 </div>
 
                 <button
-                    className={"bg-blue-500 text-white ml-6 rounded w-32 p-2 mt-9 " + 
+                    className={"bg-blue-500 text-white rounded w-32 p-2 mt-9 " + 
                     " hover:bg-blue-400 font-medium flex flex-row"}
                     type="button"
                     onClick={() => navigate("/")}
