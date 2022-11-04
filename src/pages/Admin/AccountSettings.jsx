@@ -8,6 +8,7 @@ import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
+import ForbiddenPage from "../Error/ForbiddenPage";
 
 
 // import ClientTable from "../../components/Table/ClientTable";
@@ -298,9 +299,7 @@ function AccountSettings() {
     }
     else {
         return (
-            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-                <h1>Not Authorized</h1>
-            </div>
+            <ForbiddenPage/>
         )
     }
 }

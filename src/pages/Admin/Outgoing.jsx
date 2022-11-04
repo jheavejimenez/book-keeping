@@ -6,7 +6,7 @@ import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
 import OutgoingButton from "../../components/Button/OutgoingButton";
 import { useAuth } from "../../hooks/useAuth";
-
+import ForbiddenPage from "../Error/ForbiddenPage";
 function Outgoing() {
     const { user } = useAuth();
 
@@ -41,9 +41,7 @@ function Outgoing() {
     }
     else {
         return (
-            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-                <h1>Not Authorized</h1>
-            </div>
+            <ForbiddenPage/>
         )
     }
 }
