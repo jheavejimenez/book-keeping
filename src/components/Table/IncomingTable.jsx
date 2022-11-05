@@ -22,9 +22,8 @@ function IncomingTable() {
     ]
     const getAllRequestDocumments = async () => {
         const snapshot = await getDocs(collection(db, "outgoing"));
-        if (user) {
-            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
-        }
+        setData(snapshot.docs.map((doc) => doc.data()));
+        
         
         
 
@@ -64,7 +63,7 @@ function IncomingTable() {
                             {data.map((item) => (
                                 <IncomingTableRow
                                     Column1={item.docid}
-                                    Column2={item.email}
+                                    Column2={item.sentby}
                                     Column3={item.file}
                                     Column4={dayjs.unix(item.datesend).format("YYYY-MM-DD")}
                                     Column5={

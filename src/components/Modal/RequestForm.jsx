@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function RequestForm({titleFor, title, titleID, placeholderTitle, typeName, targetValue}) {
+function RequestForm({titleFor, title, titleID, placeholderTitle, typeName, targetValue, disabled}) {
     
     return (
         <div>
@@ -11,7 +11,10 @@ function RequestForm({titleFor, title, titleID, placeholderTitle, typeName, targ
                     " border-gray-400 font-normal placeholder-gray-400 " +
                     " text-black text-base w-full "}
                 placeholder={placeholderTitle} type={typeName}
-                onChange={targetValue} />
+                onChange={targetValue}
+                disabled={disabled}
+                />
+                
         </div>
     );
 }

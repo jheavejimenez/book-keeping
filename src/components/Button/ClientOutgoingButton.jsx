@@ -129,8 +129,9 @@ function ClientOutgoingButton({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type={"file"}
                                                     accept={".pdf, .xls, .xlsx, .doc, .docx"}
-                                                    onChange={(e) => setNewFile(inputRef.current.files[0])}
                                                     ref={inputRef}
+                                                    onChange={(e) => setNewFile(inputRef.current.files[0])}
+                                                    
                                                 />
                                             </div>
 
