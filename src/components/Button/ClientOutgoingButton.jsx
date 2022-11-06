@@ -11,7 +11,6 @@ function ClientOutgoingButton({ text }) {
     const [newEmail, setNewEmail] = useState('')
     const [newFile, setNewFile] = useState(null)
     const inputRef = useRef()
-    const useremail  = auth.currentUser.email
     const OutgoingsetCollectionRef = collection(db, "outgoing",);
     const documentId = nanoid(5)
 
@@ -22,7 +21,7 @@ function ClientOutgoingButton({ text }) {
             alert("no file selected");
         } else {
             
-            const imageRef = ref(storage, 'files/' + documentId); 
+            const imageRef = ref(storage, 'files/' + newFile.name); 
             uploadBytes(imageRef, newFile).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setNewFile(url)
@@ -102,7 +101,7 @@ function ClientOutgoingButton({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
-                                                    value={useremail}
+                                                    value={auth.currentUser.email}
                                                     disabled
                                                 />
                                             </div>
