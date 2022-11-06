@@ -110,6 +110,7 @@ function RequestButton({ text }) {
                                                 title={"Request By"}
                                                 titleID={"reqBy"}
                                                 placeholderTitle={reqby}
+                                                disabled={true}
                                             />
                                             
                                             <div>
