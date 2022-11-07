@@ -10,11 +10,11 @@ function RequestTable() {
     const [data, setData] = useState([]);
     const titleTable = [
         "ReqID",
-        "RequestedFrom",
+        "Requested From",
         "File",
         "Purpose",
-        "DueDate",
-        "DateRequested"
+        "Due Date",
+        "Date Requested"
     ]
 
     const getAllRequestDocumments = async () => {
