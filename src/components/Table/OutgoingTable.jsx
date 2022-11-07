@@ -64,7 +64,7 @@ function OutgoingTable() {
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.file}
-                                    Column4={dayjs.unix(item.date).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.date.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>
