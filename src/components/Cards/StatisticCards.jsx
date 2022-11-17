@@ -58,8 +58,8 @@ function StatisticCards() {
 
                 </div>
                 <div className={"text-right"}>
-                    <p className={"text-3xl"}>{data3.length}</p>
-                    <p>All incoming files</p>
+                    <p className={"text-3xl"}>{data2.length}</p>
+                    <p>All Incoming files</p>
                 </div>
             </div>
             <div
@@ -94,7 +94,7 @@ function StatisticCards() {
 
                 </div>
                 <div className={"text-right"}>
-                    <p className={"text-3xl"}>{data.length}</p>
+                    <p className={"text-3xl"}>{data3.length}</p>
                     <p>All Outgoing Files</p>
                 </div>
             </div>
