@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/Navigation/Sidebar";
+import Sidebar from "../../components/Navigation/ClientSidebar";
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 import Header from "../../components/Navigation/Header";
 import { collection, doc, setDoc,getDocs, onSnapshot } from "firebase/firestore";

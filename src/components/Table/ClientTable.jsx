@@ -15,8 +15,8 @@ function ClientTable() {
         "Sender",
         "File",
         "Date Received",
+        "Status",
         "Action",
-        "Status"
         
     ]
 
