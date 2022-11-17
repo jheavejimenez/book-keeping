@@ -15,7 +15,7 @@ function IncomingTable() {
         "DocID",
         "Sender",
         "File",
-        "Date received",
+        "Date Received",
         "Action",
         
         
