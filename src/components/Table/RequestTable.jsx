@@ -51,7 +51,7 @@ function RequestTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map((item) => (
+                            {data.map?.((item) => (
                                 <RequestTableRow
                                     Column1={item.documentId}
                                     Column2={item.reqfrom}

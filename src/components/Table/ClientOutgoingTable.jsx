@@ -59,7 +59,7 @@ function ClientOutgoingTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map((item) => (
+                            {data.map?.((item) => (
                                 <OutgoingTableRow
                                     Column1={item.docid}
                                     Column2={item.email}

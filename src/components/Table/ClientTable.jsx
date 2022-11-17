@@ -59,7 +59,7 @@ function ClientTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map((item) => (
+                            {data.map?.((item) => (
                                 <TableRow
                                     DocID={item.documentId}
                                     SenderName={item.reqby}

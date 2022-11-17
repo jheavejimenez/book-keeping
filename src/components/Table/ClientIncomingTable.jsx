@@ -60,7 +60,7 @@ function ClientIncomingTable() {
                                 </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map((item) => (
+                            {data.map?.((item) => (
                                 <IncomingTableRow
                                     Column1={item.docid}
                                     Column2={item.sentby}
