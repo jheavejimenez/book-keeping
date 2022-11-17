@@ -41,7 +41,7 @@ function ChooseStatusDropdown() {
                         <ChooseStatusOptions Option={"In Progress"} />
 
                         {/* Option 3 */}
-                        <ChooseStatusOptions Option={"Approved"} />
+                        <ChooseStatusOptions Option={"Completed"} />
 
                         {/* Option 4 */}
                         <ChooseStatusOptions Option={"New"} />
