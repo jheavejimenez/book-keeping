@@ -33,7 +33,7 @@ function Login() {
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
                 const isNewUser = cred.user.metadata.creationTime;
-                if (role === "client" && isNewUser === cred.user.metadata.creationTime) {
+                if (role === "client" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
