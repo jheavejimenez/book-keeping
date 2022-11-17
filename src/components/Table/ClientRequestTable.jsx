@@ -31,8 +31,8 @@ function ClientRequestTable() {
 
     useEffect(() => {
         
-        const interval = setInterval(() => {
-            getAllRequestDocumments();
+        const interval = setInterval(async () => {
+            await getAllRequestDocumments();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 import Header from "../../components/Navigation/Header";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc,getDocs, onSnapshot } from "firebase/firestore";
 import { auth, db, storage } from "../../utils/Firebase";
 import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
+
 import ForbiddenPage from "../Error/ForbiddenPage";
 
 
@@ -18,13 +19,22 @@ import ForbiddenPage from "../Error/ForbiddenPage";
 
 function AccountSettings() {
     const {logout} = useAuth()
+    const [data, setData] = useState([]);
     const { user } = useAuth();
     const [fileInput] = useState("");
-    const [Source, setSource] = useState("../../UserDefaultImage.png");
+
+    const [imgUrl , setImgUrl] = useState('')
+    const userprofile = (doc(db, "accountsettings", user.email ));
+    useEffect(() => {
+        onSnapshot(userprofile, (doc) => {
+            setImgUrl(doc.data().image)
+        })
+    }, [imgUrl, userprofile])
+    
+    const [Source, setSource] = useState(imgUrl?imgUrl:"../../UserDefaultImage.png");
     const [image, setImage] = useState(null);
     const email = user.email;
     
-
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
@@ -40,7 +50,7 @@ function AccountSettings() {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setSource(reader.result)
+            setSource(reader.result);
         }
     }
 
@@ -49,7 +59,7 @@ function AccountSettings() {
             console.log("No image selected");
         } else {
             setImage(null);
-            setSource("../../UserDefaultImage.png");
+            setSource(imgUrl?imgUrl:"../../UserDefaultImage.png");
         }
     }
 
@@ -103,15 +113,11 @@ function AccountSettings() {
     const add = async (e) => {
         e.preventDefault();
 
-        await setDoc(doc(accsetCollectionRef, auth.currentUser.email), {
-            fname: fname,
-            lname: lname,
-            company: company,
-            image: Source
-        });
+
         if (image === null) {
             alert("No image selected");
-        } else {
+        }
+         else if(image !== null) {
 
             const imageRef = ref(storage, 'images/' + auth.currentUser.email);
             uploadBytes(imageRef, image).then((snapshot) => {
@@ -121,9 +127,38 @@ function AccountSettings() {
          
                 });
             });
+
+            await setDoc(doc(accsetCollectionRef, auth.currentUser.email), {
+                fname: fname,
+                lname: lname,
+                email: user.email,
+                company: company,
+                image: Source
+            });
+            alert("Account settings updated");
         }
-        alert("Account settings updated");
+
+        
+        
+        
     }
+
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "accountsettings"));
+        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
+        console.log(data);
+    }
+    useEffect(() => {
+        
+        const interval = setInterval(async () => {
+            await getAllRequestDocumments();
+        }, 5000)
+        return () => {
+            clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
+        };
+    }, []);
+
+    
 
     if(user.role === "admin"){
         return (
@@ -165,7 +200,7 @@ function AccountSettings() {
                             <div className={"flex justify-center"}>
                                 <span className={"mt-4 border-2 border-black bg-blue-300 rounded-lg "}>
                                     {Source && (
-                                        <img className={"w-36 h-36"} src={Source} alt={"profile"} />
+                                        <img className={"w-36 h-36"} src= {Source} alt="chosen" />    
                                     )}
                                 </span>
                                 <div className={"inline-grid ml-9 pb-5"}>
@@ -196,18 +231,21 @@ function AccountSettings() {
                                         <Input
                                             name="name"
                                             id="name"
+                                            placeHolder={data[0]?.fname}
                                             onChange={(e) => setFname(e.target.value)}
                                             className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br />
                                         <Input
                                             name="name"
+                                            placeHolder={data[0]?.lname}
                                             id="name"
                                             onChange={(e) => setLname(e.target.value)}
 
                                             className={"border rounded-md border-black text-black w-36 my-2 sm:w-80"} /> <br />
                                         <span className={""}>
                                             <Input
-                                                name="email"
-                                                id="email"
+                                                name="name"
+                                                id="name"
+                                                placeHolder={data[0]?.company}
                                                 onChange={(e) => setCompany(e.target.value)}
                                                 className={"border rounded-md border-black text-black w-10 mt-4" + 
                                                 "sm:w-48"} /><br />

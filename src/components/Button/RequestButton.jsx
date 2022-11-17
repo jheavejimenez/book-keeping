@@ -26,6 +26,7 @@ function RequestButton({ text }) {
             dueDate,
             reqby,
             purpose,
+            Status: "Pending",
             dateReq: serverTimestamp()
         })
             .then(() => {

@@ -3,7 +3,7 @@ import TableRow from "./TableRow";
 import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -16,6 +16,7 @@ function ClientTable() {
         "File",
         "Date Received",
         "Action",
+        "Status"
         
     ]
 
@@ -24,10 +25,12 @@ function ClientTable() {
         const snapshot = await getDocs(collection(db, "request"));
         setData(snapshot.docs.map((doc) => doc.data()));
     }
+
+
     useEffect(() => {
         
-        const interval = setInterval(() => {
-            getAllRequestDocumments();
+        const interval = setInterval(async () => {
+            await getAllRequestDocumments();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -61,6 +64,7 @@ function ClientTable() {
                                     DocID={item.documentId}
                                     SenderName={item.reqby}
                                     fileName={item.file}
+                                    status={item.Status}
                                     timeStamp={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}

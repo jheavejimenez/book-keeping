@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RequestTableRow from "./RequestTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import dayjs from "dayjs";
 
@@ -23,9 +23,9 @@ function RequestTable() {
     }
 
     useEffect(() => {
-        getAllRequestDocumments();
-        const interval = setInterval(() => {
-            getAllRequestDocumments();
+        
+        const interval = setInterval(async () => {
+            await getAllRequestDocumments();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
