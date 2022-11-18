@@ -15,7 +15,7 @@ function IncomingTable() {
         "DocID",
         "Sender",
         "File",
-        "Date received",
+        "Date Received",
         "Action",
         
         
@@ -32,8 +32,8 @@ function IncomingTable() {
 
     useEffect(() => {
         
-        const interval = setInterval(() => {
-            getAllRequestDocumments();
+        const interval = setInterval(async () => {
+            await getAllRequestDocumments();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -60,7 +60,7 @@ function IncomingTable() {
                                 </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map((item) => (
+                            {data.map?.((item) => (
                                 <IncomingTableRow
                                     Column1={item.docid}
                                     Column2={item.sentby}

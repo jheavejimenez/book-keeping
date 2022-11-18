@@ -19,15 +19,21 @@ function Login() {
     const getUserRole = async (email) => {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
         return querySnapshot.docs[0].data().role
     }
+    
+
+
 
     const handleSubmit = async (email, password) => {
         const role = await getUserRole(email)
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
                 const isNewUser = cred.user.metadata.creationTime;
-                if (role === "client" && isNewUser === cred.user.metadata.creationTime) {
+                if (role === "client" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
@@ -57,6 +63,7 @@ function Login() {
             .catch((error) => {
                 setError(error.message)
             })
+        console.log(error.message)
     }
     return (
         <>
@@ -68,7 +75,7 @@ function Login() {
                                 <img src={Logo} alt="logo" className={"w-3/4 mx-auto pb-8"} />
                                 <h3 className={"text-2xl font-bold text-center"}>Welcome back!</h3>
                             </div>
-                            {error && <Alert>{error}</Alert>}
+                            {error && <Alert setAlert={"Invalid Email or Password"}>{error}</Alert>}
                             <Formik
                                 initialValues={{ email: "", password: "" }}
                                 validationSchema={LoginSchema}

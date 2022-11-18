@@ -30,8 +30,8 @@ function OutgoingTable() {
 
     useEffect(() => {
         
-        const interval = setInterval(() => {
-            getAllRequestDocumments();
+        const interval = setInterval(async () => {
+            await getAllRequestDocumments();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -59,7 +59,7 @@ function OutgoingTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map((item) => (
+                            {data.map?.((item) => (
                                 <OutgoingTableRow
                                     Column1={item.docid}
                                     Column2={item.email}

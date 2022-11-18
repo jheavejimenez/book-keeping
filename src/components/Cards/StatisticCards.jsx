@@ -12,13 +12,27 @@ import { db } from "../../utils/Firebase";
 
 function StatisticCards() {
     const [data, setData] = useState([]);
+    const [data2, setData2] = useState([]);
+    const [data3, setData3] = useState([]);
     const getAllRequestDocumments = async () => {
         const snapshot = await getDocs(collection(db, "request"));
         setData(snapshot.docs.map((doc) => doc.data()));
     }
+    const getAllOutgoingDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "outgoing"));
+        setData2(snapshot.docs.map((doc) => doc.data()));
+    }
+    const getAllIncomingDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "incoming"));
+        setData3(snapshot.docs.map((doc) => doc.data()));
+    }
+
+
 
     useEffect(() => {
         getAllRequestDocumments();
+        getAllOutgoingDocumments();
+        getAllIncomingDocumments();
         const interval = setInterval(() => {
             getAllRequestDocumments();
         }, 5000)
@@ -44,8 +58,8 @@ function StatisticCards() {
 
                 </div>
                 <div className={"text-right"}>
-                    <p className={"text-3xl"}>326</p>
-                    <p>All incoming files</p>
+                    <p className={"text-3xl"}>{data2.length}</p>
+                    <p>All Incoming files</p>
                 </div>
             </div>
             <div
@@ -80,7 +94,7 @@ function StatisticCards() {
 
                 </div>
                 <div className={"text-right"}>
-                    <p className={"text-3xl"}>202</p>
+                    <p className={"text-3xl"}>{data3.length}</p>
                     <p>All Outgoing Files</p>
                 </div>
             </div>

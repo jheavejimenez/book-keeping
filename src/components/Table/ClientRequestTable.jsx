@@ -12,11 +12,11 @@ function ClientRequestTable() {
     const [data, setData] = useState([]);
     const titleTable = [
         "ReqID",
-        "RequestedFrom",
+        "Requested By",
         "File",
         "Purpose",
-        "DueDate",
-        "DateRequested"
+        "Due Date",
+        "Date Requested"
         
     ]
     const getAllRequestDocumments = async () => {
@@ -31,8 +31,8 @@ function ClientRequestTable() {
 
     useEffect(() => {
         
-        const interval = setInterval(() => {
-            getAllRequestDocumments();
+        const interval = setInterval(async () => {
+            await getAllRequestDocumments();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -59,7 +59,7 @@ function ClientRequestTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map((item) => (
+                            {data.map?.((item) => (
                                 <RequestTableRow
                                     Column1={item.documentId}
                                     Column2={item.reqby}
