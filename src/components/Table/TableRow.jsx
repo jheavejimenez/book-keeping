@@ -25,9 +25,9 @@ function TableRow({ DocID, SenderName, fileName, timeStamp, status }) {
         <tr className={"hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{DocID}</td>
             <td className={"px-4 py-3 text-sm"}>{SenderName}</td>
-            <td className={"px-4 py-3 text-xs"}>{fileName}</td>
+            <td className={"px-4 py-3 text-sm"}>{fileName}</td>
             <td className={"px-4 py-3 text-sm"}>{timeStamp}</td>
-            <td className={"px-4 py-3 text-xs"}>
+            <td className={"px-4 py-3 text-sm"}>
                 <span className={`px-2 py-2 font-semibold leading-tight ${colors} rounded-full`}>
                     {status}
                 </span>
