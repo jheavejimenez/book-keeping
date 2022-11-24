@@ -28,7 +28,7 @@ function ClientTable() {
 
 
     useEffect(() => {
-        
+         getAllRequestDocumments();
         const interval = setInterval(async () => {
             await getAllRequestDocumments();
         }, 5000)
@@ -36,7 +36,6 @@ function ClientTable() {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-    console.log(data);
 
 
     return (
