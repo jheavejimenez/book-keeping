@@ -14,6 +14,7 @@ function OutgoingTable() {
         "DocID",
         "Recipient",
         "File",
+        "Action",
         "Date Sent",
         
         
@@ -63,8 +64,9 @@ function OutgoingTable() {
                                 <OutgoingTableRow
                                     Column1={item.docid}
                                     Column2={item.email}
-                                    Column3={item.file}
-                                    Column4={dayjs.unix(item.date.seconds).format("YYYY-MM-DD")}
+                                    Column3={item.filename}
+                                    Column4={item.action}
+                                    Column5={dayjs.unix(item.date.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>

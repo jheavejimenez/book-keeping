@@ -6,3 +6,6 @@ const getAllRequestDocumments = async (path) => {
     const snapshot = await getDocs(collection(db, `${path}`));
     return snapshot.docs.map((doc) => doc.data());
 }
+
+
+export { getAllRequestDocumments };

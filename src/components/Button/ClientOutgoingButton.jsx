@@ -33,6 +33,7 @@ function ClientOutgoingButton({ text }) {
                         docid : documentId,
                         sentby: auth.currentUser.email,
                         email: newEmail,
+                        filename: newFile.name,
                         file: url,
                         datesend: serverTimestamp(),
                        
