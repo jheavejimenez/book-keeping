@@ -1,20 +1,33 @@
 import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import subDays from "date-fns/subDays";
+import addDays from "date-fns/addDays";
+import 'react-datepicker/dist/react-datepicker.css'
 import React, { useState } from "react";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import { collection, doc, getDocs, serverTimestamp, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import RequestForm from "../Modal/RequestForm";
+import ReactDatePicker from "react-datepicker";
+
 
 function RequestButton({ text }) {
     const { user } = useAuth()
     const [showModal, setShowModal] = useState(false);
     const [reqfrom, setReqfrom] = useState('')
     const [file, setFile] = useState('')
-    const [dueDate, setDueDate] = useState('')
+    
     const [purpose, setPurpose] = useState('')
     const requestCollectionRef = collection(db, "request");
     const reqby = user.email;
+
+    const [dueDate, setStartDate] = useState(null);
+    
+    
+    
+    
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -97,14 +110,26 @@ function RequestButton({ text }) {
                                                 placeholderTitle={"Transactions.xlsx / .pdf"}
                                                 targetValue={(e) => setFile(e.target.value)}
                                             />
-
-                                            <RequestForm 
-                                                titleFor={"dueDate"} 
-                                                title={"Set Due Date"}
-                                                titleID={"dueDate"}
-                                                typeName={"date"}
-                                                targetValue={(e) => setDueDate(e.target.value)}
+                                            <header>
+                                                <label  className={"text-black"}>Due Date</label>
+                                            </header>
+                                            <ReactDatePicker
+                                                
+                                                className={" border rounded-md mb-3 mt-1 h-10 pl-3 " +
+                                                    " border-gray-400 font-normal placeholder-gray-400 " +  
+                                                    " text-black text-base w-full "}
+                                                selected={dueDate}
+                                                
+                                                includeDateIntervals={[
+                                                    { start: subDays(new Date(), 0), end: addDays(new Date(), 31) },
+                                                ]}
+                                                onChange={(date) => setStartDate(date)}
+                                                targetValue={(e) => setStartDate(e.target.value)}
+                                                placeholderText="Due Date"
+                                                dateFormat="dd/MM/yyyy"
                                             />
+                                           
+
   
                                             <RequestForm 
                                                 titleFor={"reqBy"} 

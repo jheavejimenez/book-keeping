@@ -8,6 +8,7 @@ import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import IncomingTableRow from "./IncomingTableRow";
 
+
 function ClientIncomingTable() {
     const { user } = useAuth();
     const [data, setData] = useState([]);
@@ -31,7 +32,7 @@ function ClientIncomingTable() {
     }
 
     useEffect(() => {
-        
+       
         const interval = setInterval(async () => {
             await getAllRequestDocumments();
         }, 5000)
