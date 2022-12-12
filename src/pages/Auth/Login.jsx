@@ -51,13 +51,13 @@ function Login() {
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('admin/account-settings')
+                    navigate('bookkeeper/account-settings')
                 } else if (role === "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('admin/dashboard')
+                    navigate('bookkeeper/dashboard')
                 }
             })
             .catch((error) => {

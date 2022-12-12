@@ -10,6 +10,7 @@ function ClientOutgoingButton({ text }) {
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
     const [newFile, setNewFile] = useState(null)
+    const [setPurpose] = useState('')
     const inputRef = useRef()
     const OutgoingsetCollectionRef = collection(db, "outgoing",);
     const documentId = nanoid(5)
@@ -132,6 +133,22 @@ function ClientOutgoingButton({ text }) {
                                                     ref={inputRef}
                                                     onChange={(e) => setNewFile(inputRef.current.files[0])}
                                                     
+                                                />
+                                            </div>
+                                            <div>
+                                                <label
+                                                    htmlFor="purpose"
+                                                    className="block mb-1 text-base font-medium text-black"
+                                                >
+                                                    Purpose
+                                                </label>
+                                                <textarea
+                                                    id="purpose" rows={1}
+                                                    className={" block p-2.5 w-full text-base font-normal "+
+                                                    " text-gray-900 rounded-lg border border-gray-400 " + 
+                                                    " focus:ring-blue-500 focus:border-blue-500 "}
+                                                    placeholder="Your purpose..."
+                                                    onChange={(e) => setPurpose(e.target.value)}
                                                 />
                                             </div>
 
