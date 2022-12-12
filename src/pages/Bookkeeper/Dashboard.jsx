@@ -22,7 +22,6 @@ function Dashboard() {
 
                     {/*sidebar*/}
                     <Sidebar />
-                    {/*end of sidebar*/}
 
                     <div className={"flex justify-between items-center h-14 bg-white header-right"}></div>
                     
@@ -30,7 +29,6 @@ function Dashboard() {
                         
                         {/*statistics cards*/}
                         <StatisticCards />
-                        {/* end statistics cards*/}
                         
                         <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
                             Filter by Type <FilterDropdown />
@@ -38,7 +36,6 @@ function Dashboard() {
                         
                         {/*client table*/}
                             <ClientTable />
-                        {/*end client table*/}
                         
                     </div>
                 </div>

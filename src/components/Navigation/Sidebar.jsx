@@ -18,28 +18,28 @@ function Sidebar() {
 
                         {/* Dashboard */}
                         <LinkToSidebar 
-                            link={"/admin/dashboard"} 
+                            link={"/bookkeeper/dashboard"} 
                             icon={<HomeIcon className="w-6 h-6" />} 
                             title={"Dashboard"} />
                         {/* End of Dashboard */}
 
                         {/* Request */}
                         <LinkToSidebar 
-                            link={"/admin/request"} 
+                            link={"/bookkeeper/request"} 
                             icon={<EnvelopeIcon className="w-6 h-6" />} 
                             title={"Request"} />
                         {/* End of Request */}
 
                         {/* Incoming */}
                         <LinkToSidebar 
-                            link={"/admin/incoming"} 
+                            link={"/bookkeeper/incoming"} 
                             icon={<DocumentArrowDownIcon className="w-6 h-6" />} 
                             title={"Incoming"} />
                         {/* End of Incoming */}
 
                         {/* Outgoing */}
                         <LinkToSidebar 
-                            link={"/admin/outgoing"} 
+                            link={"/bookkeeper/outgoing"} 
                             icon={<DocumentArrowUpIcon className="w-6 h-6" />} 
                             title={"Outgoing"} />
                         {/* End of Outgoing */}
@@ -48,7 +48,7 @@ function Sidebar() {
 
                         {/* Account Settings */}
                         <LinkToSidebar 
-                            link={"/admin/account-settings"} 
+                            link={"/bookkeeper/account-settings"} 
                             icon={<Cog8ToothIcon className="w-6 h-6" />} 
                             title={"Account Settings"} />
                         {/* End of Account Settings */}
