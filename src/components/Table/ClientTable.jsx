@@ -12,7 +12,7 @@ function ClientTable() {
     const [data, setData] = useState([]);
     const titleTable = [
         "DocID",
-        "Recipient",
+        "Requestee",
         "File",
         "Date Received",
         "Status",
