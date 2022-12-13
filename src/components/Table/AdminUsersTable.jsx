@@ -13,7 +13,6 @@ function AdminUsersTable() {
     const [data, setData] = useState([]);
     const titleTable = [
         "Name",
-        "Email",
         "Role",
         "Company",
         "Last Active",
