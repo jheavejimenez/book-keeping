@@ -48,13 +48,14 @@ function AdminUsersTable() {
         <>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
-                    <div className={"w-full overflow-x-auto"}>
+                    <div className={"w-full overflow-hidden"}>
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
                             " text-gray-500 border-b border-gray-700 "}>
-                                {titleTable.map((item) => (
+                                {titleTable.map((item, index) => (
                                     <TableHeading
+                                        key={index}
                                         text={item}
                                     />
 

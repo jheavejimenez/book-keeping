@@ -27,9 +27,10 @@ function Users() {
                 />
                 
             <DeleteButton text={"Delete"}/>
+            
+            <AdminUsersTable/>
             </div>
 
-            <AdminUsersTable/>
             
             
         </div>
