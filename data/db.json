@@ -281,30 +281,30 @@
   ],
     "archiveHeader": [
       {
-        "title": ["DocID", "File", "Company", "Date Created", "Date Archived"]
+        "title": ["DocID", "File", "Company", "DateCreated", "DateArchived"]
       }
     ],
     "archive": [
       {
-        "DocID": "1",
-        "File": "Transaction.xlsx",
-        "Company": "XYZ Company",
-        "Date Created": "2022-09-12",
-        "Date Archived": "2022-12-12"
+        "docID": "1",
+        "file": "Transaction.xlsx",
+        "company": "XYZ Company",
+        "dateCreated": "2022-09-12",
+        "dateArchived": "2022-12-12"
       },
       {
-        "DocID": "2",
-        "File": "Finance.xlsx",
-        "Company": "ABC Company",
-        "Date Created": "2022-09-22",
-        "Date Archived": "2022-12-22"
+        "docID": "2",
+        "file": "Finance.xlsx",
+        "company": "ABC Company",
+        "dateCreated": "2022-09-22",
+        "dateArchived": "2022-12-22"
       },
       {
-        "DocID": "3",
-        "File": "Receipt.pdf",
-        "Company": "JKL Company",
-        "Date Created": "2022-09-14",
-        "Date Archived": "2022-12-14"
+        "docID": "3",
+        "file": "Receipt.pdf",
+        "company": "JKL Company",
+        "dateCreated": "2022-09-14",
+        "dateArchived": "2022-12-14"
       }
   ]
 }

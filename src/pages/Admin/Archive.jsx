@@ -2,6 +2,7 @@ import React from "react";
 import AdminSidebar from "../../components/Navigation/AdminSidebar";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
+import AdminArchiveTable from "../../components/Table/AdminArchiveTable";
 
 function Archive() {
     return (
@@ -23,7 +24,8 @@ function Archive() {
                 <Card
                     titleText={"Archived Documents"}
                 />
-
+                
+                <AdminArchiveTable/>
             </div>
         </div>
     )
