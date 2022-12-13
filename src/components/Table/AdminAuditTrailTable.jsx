@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import AuditTableRow from "./AuditTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
@@ -25,7 +25,7 @@ function AdminAuditTable() {
         const response = await axios.get("http://localhost:3000/auditTrail")
         setData(response.data)
         console.log(response.data)
-        return response.data    
+        return response.data
     }
 
     useEffect(() => {
@@ -48,8 +48,8 @@ function AdminAuditTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b border-gray-700 "}>
+                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " +
+                                " text-gray-500 border-b border-gray-700 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}
@@ -65,12 +65,11 @@ function AdminAuditTable() {
                                     User={item.user}
                                     Activity={item.activity}
                                 />)
-
                             )}
                             </tbody>
                         </table>
                     </div>
-                    <Pagination />
+                    <Pagination/>
                 </div>
             </div>
         </>
