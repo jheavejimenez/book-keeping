@@ -3,6 +3,7 @@ import AdminSidebar from "../../components/Navigation/AdminSidebar";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
 import DeleteButton from "../../components/Button/DeleteButton";
+import AdminUsersTable from "../../components/Table/AdminUsersTable";
 
 function Users() {
     return (
@@ -27,6 +28,8 @@ function Users() {
                 
             <DeleteButton text={"Delete"}/>
             </div>
+
+            <AdminUsersTable/>
             
             
         </div>

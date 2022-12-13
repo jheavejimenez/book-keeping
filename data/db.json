@@ -242,41 +242,41 @@
   ],
   "usersHeader": [
     {
-      "title": ["Name", "Email", "Role", "Company", "Last Active", "Status"]
+      "title": ["Name", "Email", "Role", "Company", "LastActive", "Status"]
     }
   ],
   "users": [
     {
-      "Name": "John Doe",
-      "Email": "johndoe@yahoo.com",
-      "Role": "Admin",
-      "Company": "XYZ Company",
-      "Last Active": "35 mins ago",
-      "Status": "Enabled"
+      "name": "John Doe",
+      "email": "johndoe@yahoo.com",
+      "role": "Admin",
+      "company": "XYZ Company",
+      "lastActive": "35 mins ago",
+      "status": "Enabled"
     },
     {
-      "Name": "Jane Doe",
-      "Email": "janedp@example.com",
-      "Role": "Bookeeper",
-      "Company": "XYZ Company",
-      "Last Active": "4 days ago",
-      "Status": "Enabled"
+      "name": "Jane Doe",
+      "email": "janedp@example.com",
+      "role": "Bookeeper",
+      "company": "XYZ Company",
+      "lastActive": "4 days ago",
+      "status": "Enabled"
     },
     {
-      "Name": "Amelia Watson",
-      "Email": "amwatson@mailinator.com",
-      "Role": "Client",
-      "Company": "ABC Company",
-      "Last Active": "5 months ago",
-      "Status": "Enabled"
+      "name": "Amelia Watson",
+      "email": "amwatson@mailinator.com",
+      "role": "Client",
+      "company": "ABC Company",
+      "lastActive": "5 months ago",
+      "status": "Enabled"
     },
     {
-      "Name": "Pedro Cruz",
-      "Email": "cruzpedro@mailinator.com",
-      "Role": "Client",
-      "Company": "JKL Company",
-      "Last Active": "2 years ago",
-      "Status": "Enabled"
+      "name": "Pedro Cruz",
+      "email": "cruzpedro@mailinator.com",
+      "role": "Client",
+      "company": "JKL Company",
+      "lastActive": "2 years ago",
+      "status": "Enabled"
     }
   ],
     "archiveHeader": [

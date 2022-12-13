@@ -3,9 +3,9 @@ import AuditTableRow from "./AuditTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import axios from "axios";
-import { collection, getDocs, orderBy } from "firebase/firestore";
-import { db } from "../../utils/Firebase";
-import { useAuth } from "../../hooks/useAuth";
+// import { collection, getDocs, orderBy } from "firebase/firestore";
+// import { db } from "../../utils/Firebase";
+// import { useAuth } from "../../hooks/useAuth";
 
 
 function AdminAuditTable() {
@@ -21,7 +21,7 @@ function AdminAuditTable() {
     //     setData(snapshot.docs.map((doc) => doc.data()));
     // }
 
-    async function getData() {
+    async function getAuditTrailData() {
         const response = await axios.get("http://localhost:3000/auditTrail")
         setData(response.data)
         console.log(response.data)
@@ -30,10 +30,10 @@ function AdminAuditTable() {
 
     useEffect(() => {
         // getAllRequestDocumments();
-        getData();
+        getAuditTrailData();
         const interval = setInterval(async () => {
             // await getAllRequestDocumments();
-            await getData();
+            await getAuditTrailData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
