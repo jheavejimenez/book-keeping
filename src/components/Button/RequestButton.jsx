@@ -23,12 +23,6 @@ function RequestButton({ text }) {
 
     const [dueDate, setStartDate] = useState(null);
     
-    
-    
-    
-
-
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         const documentId = nanoid(5)

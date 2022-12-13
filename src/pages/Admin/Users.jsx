@@ -2,6 +2,7 @@ import React from "react";
 import AdminSidebar from "../../components/Navigation/AdminSidebar";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
+import DeleteButton from "../../components/Button/DeleteButton";
 
 function Users() {
     return (
@@ -23,8 +24,11 @@ function Users() {
                 <Card
                     titleText={"Users"}
                 />
-
+                
+            <DeleteButton text={"Delete"}/>
             </div>
+            
+            
         </div>
     )
 }
