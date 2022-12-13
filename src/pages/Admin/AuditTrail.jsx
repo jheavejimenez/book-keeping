@@ -3,6 +3,7 @@ import AdminSidebar from "../../components/Navigation/AdminSidebar";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
 import FilterDropdown from "../../components/Button/FilterDropdown";
+import AdminAuditTable from "../../components/Table/AdminAuditTrailTable";
 
 function AuditTrail() {
     return (
@@ -29,6 +30,8 @@ function AuditTrail() {
                     Filter by User <FilterDropdown />
                     Filter by Action <FilterDropdown />
                 </div>
+
+                <AdminAuditTable/>
 
 
             </div>

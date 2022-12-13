@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import AuditTableRow from "./AuditTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import { collection, getDocs, orderBy } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import { useAuth } from "../../hooks/useAuth";
 
 
 function AdminAuditTable() {
