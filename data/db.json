@@ -225,19 +225,19 @@
   ],
   "auditTrail": [
     {
-      "Time": "2022-09-12 2:30:04 PM",
-      "User": "johndoe@yahoo.com",
-      "Activity": "Archived file: Transaction.xlsx"
+      "time": "2022-09-12 2:30:04 PM",
+      "user": "johndoe@yahoo.com",
+      "activity": "Archived file: Transaction.xlsx"
     },
     {
-      "Time": "2022-09-12 2:29:15 PM",
-      "User": "amwatson@mailinator.com",
-      "Activity": "Sent a file: Records.xlsx"
+      "time": "2022-09-12 2:29:15 PM",
+      "user": "amwatson@mailinator.com",
+      "activity": "Sent a file: Records.xlsx"
     },
     {
-      "Time": "2022-09-12 2:30:04 PM",
-      "User": "janedp@example.com",
-      "Activity": "Requested a file: Records.xlsx"
+      "time": "2022-09-12 2:30:04 PM",
+      "user": "janedp@example.com",
+      "activity": "Requested a file: Records.xlsx"
     }
   ],
   "usersHeader": [
