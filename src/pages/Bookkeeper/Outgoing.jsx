@@ -7,6 +7,7 @@ import Card from "../../components/Cards/Card";
 import OutgoingButton from "../../components/Button/OutgoingButton";
 import { useAuth } from "../../hooks/useAuth";
 import ForbiddenPage from "../Error/ForbiddenPage";
+import FilterDropdown from "../../components/Button/FilterDropdown";
 function Outgoing() {
     const { user } = useAuth();
 
@@ -31,7 +32,9 @@ function Outgoing() {
                     titleText={"Outgoing Documents"}
                     button={<OutgoingButton text={"Send Files"}/>}
                 />
-            
+                <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                        Filter by Type <FilterDropdown />
+                    </div> 
                 {/*outgoing table*/}
                 <OutgoingTable />
             </div>

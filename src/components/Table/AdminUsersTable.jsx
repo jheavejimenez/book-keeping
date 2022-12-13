@@ -1,38 +1,42 @@
 import React, { useEffect, useState } from "react";
-import OutgoingTableRow from "./OutgoingTableRow";
-import dayjs from "dayjs";
+import UsersTableRow from "./UsersTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../utils/Firebase";
-import { useAuth } from "../../hooks/useAuth";
+import axios from "axios";
+// import { collection, getDocs, orderBy } from "firebase/firestore";
+// import { db } from "../../utils/Firebase";
+// import { useAuth } from "../../hooks/useAuth";
 
-function OutgoingTable() {
-    const { user } = useAuth();
+
+
+function AdminUsersTable() {
     const [data, setData] = useState([]);
     const titleTable = [
-        "DocID",
-        "Recipient",
-        "File",
-        "Date Sent",
-        "Action",
-        
-        
+        "Name",
+        "Role",
+        "Company",
+        "Last Active",
+        "Status"
     ]
-    const getAllRequestDocumments = async () => {
-        const snapshot = await getDocs(collection(db, "incoming"));
-        if (user) {
-            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.sentby === user.email));
-        }
-        
 
-        console.log(data);
+    // const getAllRequestDocumments = async () => {
+    //     const snapshot = await getDocs(collection(db, "request"));
+    //     setData(snapshot.docs.map((doc) => doc.data()));
+    // }
+
+    async function getUsersData() {
+        const response = await axios.get("http://localhost:3000/users")
+        setData(response.data)
+        console.log(response.data)
+        return response.data    
     }
 
     useEffect(() => {
-        
+        // getAllRequestDocumments();
+        getUsersData();
         const interval = setInterval(async () => {
-            await getAllRequestDocumments();
+            // await getAllRequestDocumments();
+            await getUsersData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -40,17 +44,15 @@ function OutgoingTable() {
     }, []);
     console.log(data);
 
-
     return (
         <>
-            <div className={"mt-4 mx-4"}>
+            <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b dark:border-gray-700 " +
-                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
+                            " text-gray-500 border-b border-gray-700 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}
@@ -61,22 +63,24 @@ function OutgoingTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map?.((item) => (
-                                <OutgoingTableRow
-                                    Column1={item.docid}
-                                    Column2={item.email}
-                                    Column3={item.filename}
-                                    Column4={dayjs.unix(item.date.seconds).format("YYYY-MM-DD")}
-                                    Column5={item.action}
+                                <UsersTableRow
+                                    Name={item.name}
+                                    Email={item.email}
+                                    Role={item.role}
+                                    Company={item.company}
+                                    LastActive={item.lastActive}
+                                    Status={item.status}
                                 />)
+
                             )}
                             </tbody>
                         </table>
                     </div>
-                    <Pagination/>
+                    <Pagination />
                 </div>
             </div>
         </>
     )
 }
 
-export default OutgoingTable;
+export default AdminUsersTable;

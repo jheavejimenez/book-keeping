@@ -23,6 +23,8 @@ function AccountSettings() {
     const { user } = useAuth();
     const [fileInput] = useState("");
 
+    
+
     const [imgUrl , setImgUrl] = useState('')
     const userprofile = (doc(db, "accountsettings", user.email ));
     useEffect(() => {

@@ -1,66 +1,20 @@
-import React, { useState, useRef } from 'react'
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/20/solid";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { auth, db, storage } from "../../utils/Firebase";
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { nanoid } from "nanoid";
+import React, { useState } from 'react';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/20/solid';
+import { auth } from "../../utils/Firebase";
 
-function OutgoingButton({ text }) {
+function EditFile({ text }) {
     const [showModal, setShowModal] = useState(false);
-    const [newEmail, setNewEmail] = useState('')
-    const [newFile, setNewFile] = useState(null)
     const [setPurpose] = useState('')
-    const inputRef = useRef()
-
-    const OutgoingsetCollectionRef = collection(db, "incoming",);
-    const documentId = nanoid(5)
-
-    const add = async (e) => {
-        e.preventDefault();
-
-        if (newFile === null) {
-            alert("no file selected");
-        } else {
-            
-            const imageRef = ref(storage, 'reciepts/' + newFile.name);
-            uploadBytes(imageRef, newFile).then((snapshot) => {
-                getDownloadURL(snapshot.ref).then((url) => {
-                    setNewFile(url)
-                    alert("File Sent")
-                    
-            
-
-                    setDoc(doc(OutgoingsetCollectionRef, documentId), {
-                        docid : documentId,
-                        sentby: auth.currentUser.email,
-                        email: newEmail,
-                        filename: newFile.name,
-                        file: url,
-                        date: serverTimestamp(),
-                       
-                    });
-                    
-                    
-                    
-                });
-            });
-        }
-        
-        
-        
-    }
-
 
     return (
         <>
 
             <button
-                className={" bg-white text-blue-500 font-bold px-6 py-2 rounded inline-flex items-center "}
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                <PaperAirplaneIcon className="w-7 h-7 mr-1 text-blue-500 -rotate-45"/>{text}
+                <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>{text}
             </button>
             {showModal && (
                 <>
@@ -78,7 +32,7 @@ function OutgoingButton({ text }) {
                                     className={" flex items-start justify-between pb-3 border-b " + 
                                     " border-solid border-slate-200 rounded-t-md "}>
                                     <h3 className="text-2xl font-semi-bold text-black">
-                                        Send a New File
+                                        Edit Sent File
                                     </h3>
                                     <button
                                         className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " +
@@ -95,10 +49,10 @@ function OutgoingButton({ text }) {
                                     <form>
                                         <fieldset className="pt-3">
                                             <div>
-                                                <label htmlFor="reqFrom" className={" text-black "}>
+                                                <label htmlFor="sentBy" className={" text-black "}>
                                                     Sent by:
                                                 </label>
-                                                <input id="reqFrom"
+                                                <input id="sentBy"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
                                                     " pl-3 border-gray-400 font-normal " +
                                                     " placeholder-gray-400 text-black text-base w-full "}
@@ -109,16 +63,16 @@ function OutgoingButton({ text }) {
                                                 />
                                             </div>
                                             <div>
-                                                <label htmlFor="reqFrom" className={" text-black "}>
+                                                <label htmlFor="recipient" className={" text-black "}>
                                                     Recipient
                                                 </label>
-                                                <input id="reqFrom"
+                                                <input id="recipient"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
                                                     " pl-3 border-gray-400 font-normal " +
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
-                                                    onChange={(e) => setNewEmail(e.target.value)}
+                                                    value={"ayaka@mailinator.com"}
                                                 />
                                             </div>
                                             <div>
@@ -131,8 +85,7 @@ function OutgoingButton({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type={"file"}
                                                     accept={".pdf, .xls, .xlsx, .doc, .docx"}
-                                                    ref={inputRef}
-                                                    onChange={(e) => setNewFile(inputRef.current.files[0])}
+                                                    placeholder="WIREFRAME.docx"
                                                     
                                                 />
                                             </div>
@@ -149,6 +102,7 @@ function OutgoingButton({ text }) {
                                                     " text-gray-900 rounded-lg border border-gray-400 " + 
                                                     " focus:ring-blue-500 focus:border-blue-500 "}
                                                     placeholder="Your purpose..."
+                                                    value={"My short purpose."}
                                                     onChange={(e) => setPurpose(e.target.value)}
                                                 />
                                             </div>
@@ -176,9 +130,9 @@ function OutgoingButton({ text }) {
                                         " py-3 rounded shadow hover:shadow-lg outline-none "+
                                         " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
                                         type="button"
-                                        onClick={add}
+                                        onClick={() => setShowModal(false)}
                                     >
-                                        Send
+                                        Update
                                     </button>
                                 </div>
                             </div>
@@ -192,4 +146,4 @@ function OutgoingButton({ text }) {
     )
 }
 
-export default OutgoingButton;
+export default EditFile;

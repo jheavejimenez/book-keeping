@@ -50,11 +50,11 @@ function StatisticCards() {
                     " text-white font-medium group h-28 "}
             >
                 <div
-                    className={" flex justify-center items-center w-14 h-14 bg-white " +
+                    className={" flex justify-center items-center w-16 h-16 bg-white " +
                         " rounded-full transition-all duration-300 transform group-hover:rotate-12 "}
                 >
                     <DocumentArrowDownIcon
-                        className={" w-10 h-10 transform transition-transform duration-500 ease-in-out "} />
+                        className={" w-12 h-12 transform transition-transform duration-500 ease-in-out "} />
 
                 </div>
                 <div className={"text-right"}>
@@ -68,11 +68,11 @@ function StatisticCards() {
                     " text-white font-medium group "}
             >
                 <div
-                    className={" flex justify-center items-center w-14 h-14 bg-white " + 
+                    className={" flex justify-center items-center w-16 h-16 bg-white " + 
                     " rounded-full transition-all duration-300 transform group-hover:rotate-12 "}
                 >
                     <ExclamationCircleIcon
-                        className={" w-10 h-10 transform transition-transform duration-500 ease-in-out "} />
+                        className={" w-14 h-14 transform transition-transform duration-500 ease-in-out "} />
 
                 </div>
                 <div className={"text-right"}>
@@ -86,10 +86,10 @@ function StatisticCards() {
                     " text-white font-medium group h-28 "}
             >
                 <div
-                    className={" flex justify-center items-center w-14 h-14 bg-white " + 
+                    className={" flex justify-center items-center w-16 h-16 bg-white " + 
                     " rounded-full transition-all duration-300 transform group-hover:rotate-12 "}>
 
-                    <DocumentArrowUpIcon className={" w-10 h-10 transform transition-transform " + 
+                    <DocumentArrowUpIcon className={" w-12 h-12 transform transition-transform " + 
                     " duration-500 ease-in-out "} />
 
                 </div>
@@ -104,9 +104,10 @@ function StatisticCards() {
                     " text-white font-medium group"}
             >
                 <div
-                    className={" flex justify-center items-center w-14 h-14 bg-white rounded-full " +
+                    className={" flex justify-center items-center w-16 h-16 bg-white rounded-full " +
                     " transition-all duration-300 transform group-hover:rotate-12 "}>
-                    <CheckCircleIcon className={"w-10 h-10 transform transition-transform " + 
+
+                    <CheckCircleIcon className={"w-14 h-14 transform transition-transform " + 
                     " duration-500 ease-in-out "} />
                 </div>
                 <div className={"text-right"}>
