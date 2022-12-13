@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AuditTableRow from "./AuditTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
+import axios from "axios";
 import { collection, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
@@ -15,15 +16,23 @@ function AdminAuditTable() {
         "Activity"
     ]
 
-    const getAllRequestDocumments = async () => {
-        const snapshot = await getDocs(collection(db, "request"));
-        setData(snapshot.docs.map((doc) => doc.data()));
+    // const getAllRequestDocumments = async () => {
+    //     const snapshot = await getDocs(collection(db, "request"));
+    //     setData(snapshot.docs.map((doc) => doc.data()));
+    // }
+
+    async function getData() {
+        const response = await axios.get("http://localhost:3000/auditTrail")
+        console.log(response.data)
+        return response.data    
     }
 
     useEffect(() => {
-        getAllRequestDocumments();
+        // getAllRequestDocumments();
+        getData();
         const interval = setInterval(async () => {
-            await getAllRequestDocumments();
+            // await getAllRequestDocumments();
+            await getData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks

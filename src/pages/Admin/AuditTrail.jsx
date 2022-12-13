@@ -26,9 +26,14 @@ function AuditTrail() {
                     titleText={"Audit Trail"}
                 />
                 
-                <div className={"px-7 pt-4 mt-4 text-sm font-medium tracking-wide"}> 
+                <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
+                    <div>
                     Filter by User <FilterDropdown />
+                    </div>
+                    
+                    <div>
                     Filter by Action <FilterDropdown />
+                    </div>
                 </div>
 
                 <AdminAuditTable/>
