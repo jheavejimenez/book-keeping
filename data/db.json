@@ -217,5 +217,94 @@
     {
       "title": ["DocID", "Recipient", "File", "DateSent"]
     }
+  ],
+  "auditTrailHeader": [
+    {
+      "title": ["Time", "User", "Activity"]
+    }
+  ],
+  "auditTrail": [
+    {
+      "Time": "2022-09-12 2:30:04 PM",
+      "User": "johndoe@yahoo.com",
+      "Activity": "Archived file: Transaction.xlsx"
+    },
+    {
+      "Time": "2022-09-12 2:29:15 PM",
+      "User": "amwatson@mailinator.com",
+      "Activity": "Sent a file: Records.xlsx"
+    },
+    {
+      "Time": "2022-09-12 2:30:04 PM",
+      "User": "janedp@example.com",
+      "Activity": "Requested a file: Records.xlsx"
+    }
+  ],
+  "usersHeader": [
+    {
+      "title": ["Name", "Email", "Role", "Company", "Last Active", "Status"]
+    }
+  ],
+  "users": [
+    {
+      "Name": "John Doe",
+      "Email": "johndoe@yahoo.com",
+      "Role": "Admin",
+      "Company": "XYZ Company",
+      "Last Active": "35 mins ago",
+      "Status": "Enabled"
+    },
+    {
+      "Name": "Jane Doe",
+      "Email": "janedp@example.com",
+      "Role": "Bookeeper",
+      "Company": "XYZ Company",
+      "Last Active": "4 days ago",
+      "Status": "Enabled"
+    },
+    {
+      "Name": "Amelia Watson",
+      "Email": "amwatson@mailinator.com",
+      "Role": "Client",
+      "Company": "ABC Company",
+      "Last Active": "5 months ago",
+      "Status": "Enabled"
+    },
+    {
+      "Name": "Pedro Cruz",
+      "Email": "cruzpedro@mailinator.com",
+      "Role": "Client",
+      "Company": "JKL Company",
+      "Last Active": "2 years ago",
+      "Status": "Enabled"
+    }
+  ],
+    "archiveHeader": [
+      {
+        "title": ["DocID", "File", "Company", "Date Created", "Date Archived"]
+      }
+    ],
+    "archive": [
+      {
+        "DocID": "1",
+        "File": "Transaction.xlsx",
+        "Company": "XYZ Company",
+        "Date Created": "2022-09-12",
+        "Date Archived": "2022-12-12"
+      },
+      {
+        "DocID": "2",
+        "File": "Finance.xlsx",
+        "Company": "ABC Company",
+        "Date Created": "2022-09-22",
+        "Date Archived": "2022-12-22"
+      },
+      {
+        "DocID": "3",
+        "File": "Receipt.pdf",
+        "Company": "JKL Company",
+        "Date Created": "2022-09-14",
+        "Date Archived": "2022-12-14"
+      }
   ]
 }

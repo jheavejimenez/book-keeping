@@ -25,10 +25,12 @@ function AuditTrail() {
                     titleText={"Audit Trail"}
                 />
                 
-                <div className={"px-4 pt-4 mt-4 text-sm font-medium tracking-wide"}> 
+                <div className={"px-7 pt-4 mt-4 text-sm font-medium tracking-wide"}> 
                     Filter by User <FilterDropdown />
                     Filter by Action <FilterDropdown />
                 </div>
+
+
             </div>
 
         </div>
