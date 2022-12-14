@@ -65,7 +65,7 @@ function ClientRequestTable() {
                                     Column2={item.reqby}
                                     Column3={item.file}
                                     Column4={item.purpose}
-                                    Column5={item.dueDate}
+                                    Column5={dayjs.unix(item.dueDate.seconds).format("YYYY-MM-DD")}
                                     Column6={dayjs.unix(item.dateReq.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}

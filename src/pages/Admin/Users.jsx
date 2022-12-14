@@ -26,10 +26,12 @@ function Users() {
                     titleText={"Users"}
                 />
                 
-            <DeleteButton text={"Delete"}/>
+                <DeleteButton text={"Delete"}/>
+            
+    
+            <AdminUsersTable/>
             </div>
 
-            <AdminUsersTable/>
             
             
         </div>

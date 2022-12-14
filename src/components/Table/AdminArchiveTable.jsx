@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import UsersTableRow from "./UsersTableRow";
+import React, {useEffect, useState} from "react";
+import ArchiveTableRow from "./ArchiveTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import axios from "axios";
@@ -8,15 +8,14 @@ import axios from "axios";
 // import { useAuth } from "../../hooks/useAuth";
 
 
-
-function AdminUsersTable() {
+function AdminArchiveTable() {
     const [data, setData] = useState([]);
     const titleTable = [
-        "Name",
-        "Role",
+        "DocID",
+        "File",
         "Company",
-        "Last Active",
-        "Status"
+        "DateCreated",
+        "DateArchived"
     ]
 
     // const getAllRequestDocumments = async () => {
@@ -24,19 +23,19 @@ function AdminUsersTable() {
     //     setData(snapshot.docs.map((doc) => doc.data()));
     // }
 
-    async function getUsersData() {
-        const response = await axios.get("http://localhost:3000/users")
+    async function getArchiveData() {
+        const response = await axios.get("http://localhost:3000/archive")
         setData(response.data)
         console.log(response.data)
-        return response.data    
+        return response.data
     }
 
     useEffect(() => {
         // getAllRequestDocumments();
-        getUsersData();
+        getArchiveData();
         const interval = setInterval(async () => {
             // await getAllRequestDocumments();
-            await getUsersData();
+            await getArchiveData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -48,14 +47,13 @@ function AdminUsersTable() {
         <>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
-                    <div className={"w-full overflow-hidden"}>
+                    <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b border-gray-700 "}>
-                                {titleTable.map((item, index) => (
+                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " +
+                                " text-gray-500 border-b border-gray-700 "}>
+                                {titleTable.map((item) => (
                                     <TableHeading
-                                        key={index}
                                         text={item}
                                     />
 
@@ -64,24 +62,22 @@ function AdminUsersTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map?.((item) => (
-                                <UsersTableRow
-                                    Name={item.name}
-                                    Email={item.email}
-                                    Role={item.role}
+                                <ArchiveTableRow
+                                    DocID={item.docID}
+                                    File={item.file}
                                     Company={item.company}
-                                    LastActive={item.lastActive}
-                                    Status={item.status}
+                                    DateCreated={item.dateCreated}
+                                    DateArchived={item.dateArchived}
                                 />)
-
                             )}
                             </tbody>
                         </table>
                     </div>
-                    <Pagination />
+                    <Pagination/>
                 </div>
             </div>
         </>
     )
 }
 
-export default AdminUsersTable;
+export default AdminArchiveTable;
