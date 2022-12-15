@@ -99,11 +99,13 @@ function Signup() {
                                         
                                         <div className={"flex flex-col place-items-center mt-5"}>
                                             <Button text={"Sign up"} />
-                                            <Link to={"/"}
-                                                className={"text-sm text-black-600 hover:underline mt-5"}
-                                            >
-                                                Already Have an Account ? Login
-                                            </Link>
+                                            <div className="border-t-2 w-80 mt-5 ">
+                                               <Link to={"/"}
+                                                className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-5"}
+                                                >
+                                                    Already have an account ? Login
+                                                </Link> 
+                                            </div>
                                         </div>
                                     </div>
                                 </Form>
