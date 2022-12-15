@@ -65,7 +65,7 @@ function ClientIncomingTable() {
                                 <IncomingTableRow
                                     Column1={item.docid}
                                     Column2={item.sentby}
-                                    Column3={item.file}
+                                    Column3={item.filename}
                                     Column4={dayjs.unix(item.date?.seconds).format("YYYY-MM-DD")}
                                     Column5={
                                     <div className={"flex items-center space-x-4"}>
