@@ -99,11 +99,11 @@ function Signup() {
                                         
                                         <div className={"flex flex-col place-items-center mt-5"}>
                                             <Button text={"Sign up"} />
-                                            <div className="border-t-2 w-80 mt-5 ">
+                                            <div className="border-t-2 w-80 mt-10">
                                                <Link to={"/"}
-                                                className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-5"}
+                                                className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-8"}
                                                 >
-                                                    Already have an account ? Login
+                                                    Already have an account? Login
                                                 </Link> 
                                             </div>
                                         </div>
