@@ -29,7 +29,7 @@ function ClientOutgoingTable() {
     }
 
     useEffect(() => {
-        
+        getAllRequestDocumments();
         const interval = setInterval(async () => {
             await getAllRequestDocumments();
         }, 5000)

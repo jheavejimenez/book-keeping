@@ -32,7 +32,7 @@ function ClientIncomingTable() {
     }
 
     useEffect(() => {
-       
+       getAllRequestDocumments();
         const interval = setInterval(async () => {
             await getAllRequestDocumments();
         }, 5000)
@@ -66,7 +66,7 @@ function ClientIncomingTable() {
                                     Column1={item.docid}
                                     Column2={item.sentby}
                                     Column3={item.file}
-                                    Column4={dayjs.unix(item.date.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.date?.seconds).format("YYYY-MM-DD")}
                                     Column5={
                                     <div className={"flex items-center space-x-4"}>
                                             <button className={"flex items-center justify-center w-8 h-8 text-blue-500 transition-colors duration-150 bg-white rounded-full hover:bg-blue-100"}>
