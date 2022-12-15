@@ -10,7 +10,7 @@ function OutgoingButton({ text }) {
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
     const [newFile, setNewFile] = useState(null)
-    const [setPurpose] = useState('')
+    const [purpose, setPurpose] = useState('')
     const inputRef = useRef()
 
     const OutgoingsetCollectionRef = collection(db, "incoming",);
@@ -37,6 +37,7 @@ function OutgoingButton({ text }) {
                         email: newEmail,
                         filename: newFile.name,
                         file: url,
+                        purpose,
                         date: serverTimestamp(),
                        
                     });

@@ -10,7 +10,7 @@ function ClientOutgoingButton({ text }) {
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
     const [newFile, setNewFile] = useState(null)
-    const [setPurpose] = useState('')
+    const [purpose, setPurpose] = useState('')
     const inputRef = useRef()
     const OutgoingsetCollectionRef = collection(db, "outgoing",);
     const documentId = nanoid(5)
@@ -36,6 +36,7 @@ function ClientOutgoingButton({ text }) {
                         email: newEmail,
                         filename: newFile.name,
                         file: url,
+                        purpose,
                         datesend: serverTimestamp(),
                        
                     });
