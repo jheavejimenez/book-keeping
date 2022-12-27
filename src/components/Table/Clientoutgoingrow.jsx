@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 
 
-function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
+function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
     const {user} = useAuth()
     const [error, setError] = useState('');
     const [data, setData] = useState([]);
@@ -24,6 +24,8 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
         
     }
 
+    const auditTrailCollectionRef = collection(db, "audittrail");
+
     const handleDelete = async (email) => {
         const company = await getCompany(email)
         await setDoc(doc(db, "archive", Column1), {
@@ -35,9 +37,14 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
             datearchive: serverTimestamp(),
             });
 
+            setDoc(doc(auditTrailCollectionRef, Column1), {
+                time : serverTimestamp(),
+                user : user.email,
+                activity : "Archived file:  " + Column3,
+            });
 
         alert("File Archived")
-        await deleteDoc(doc(db, "incoming", Column1));
+        await deleteDoc(doc(db, "outgoing", Column1));
 
         
     }
@@ -60,4 +67,4 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
     )
 }
 
-export default OutgoingTableRow;
+export default ClientOutgoingrow;

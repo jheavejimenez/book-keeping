@@ -9,12 +9,14 @@ function Header() {
 	const {logout} = useAuth()
     const {user} = useAuth()
     const [imgUrl , setImgUrl] = useState('')
-    const userprofile = (doc(db, "accountsettings", user.email ));
+    const userprofile = (doc(db, "users", user.email ));
     useEffect(() => {
         onSnapshot(userprofile, (doc) => {
             setImgUrl(doc.data().image)
         })
     }, [imgUrl, userprofile])
+
+    
 
 
     return (

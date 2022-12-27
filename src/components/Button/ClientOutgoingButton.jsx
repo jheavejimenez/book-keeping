@@ -5,14 +5,17 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, db, storage } from "../../utils/Firebase";
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { nanoid } from "nanoid";
+import { useAuth } from "../../hooks/useAuth";
 
 function ClientOutgoingButton({ text }) {
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
+    const {user} = useAuth()
     const [newFile, setNewFile] = useState(null)
     const [purpose, setPurpose] = useState('')
     const inputRef = useRef()
     const OutgoingsetCollectionRef = collection(db, "outgoing",);
+    const auditTrailCollectionRef = collection(db, "audittrail",);
     const documentId = nanoid(5)
 
     const add = async (e) => {
@@ -40,6 +43,13 @@ function ClientOutgoingButton({ text }) {
                         datesend: serverTimestamp(),
                        
                     });
+
+                    setDoc(doc(auditTrailCollectionRef, documentId), {
+                        time : serverTimestamp(),
+                        user : user.email,
+                        activity : "Sent a file:  " + newFile.name,
+                    });
+
                     
                     
                     

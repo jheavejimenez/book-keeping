@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
+import dayjs from "dayjs";
 import AuditTableRow from "./AuditTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import axios from "axios";
-// import { collection, getDocs, orderBy } from "firebase/firestore";
-// import { db } from "../../utils/Firebase";
-// import { useAuth } from "../../hooks/useAuth";
+import { collection, getDocs, orderBy } from/* A firebase function that is used to get data from
+firebase. */
+ "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import { useAuth } from "../../hooks/useAuth";
 
 
 function AdminAuditTable() {
@@ -16,24 +19,19 @@ function AdminAuditTable() {
         "Activity"
     ]
 
-    // const getAllRequestDocumments = async () => {
-    //     const snapshot = await getDocs(collection(db, "request"));
-    //     setData(snapshot.docs.map((doc) => doc.data()));
-    // }
-
-    async function getAuditTrailData() {
-        const response = await axios.get("http://localhost:3000/auditTrail")
-        setData(response.data)
-        console.log(response.data)
-        return response.data
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "audittrail"));
+        setData(snapshot.docs.map((doc) => doc.data()));
     }
 
+    
+
     useEffect(() => {
-        // getAllRequestDocumments();
-        getAuditTrailData();
+        getAllRequestDocumments();
+        // getAuditTrailData();
         const interval = setInterval(async () => {
-            // await getAllRequestDocumments();
-            await getAuditTrailData();
+            await getAllRequestDocumments();
+            // await getAuditTrailData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -61,9 +59,9 @@ function AdminAuditTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map?.((item) => (
                                 <AuditTableRow
-                                    Time={item.time}
-                                    User={item.user}
-                                    Activity={item.activity}
+                                    Column1={dayjs.unix(item.time?.seconds).format("hh:mm A, MMMM D, YYYY")}
+                                    Column2={item.user}
+                                    Column3={item.activity}
                                 />)
                             )}
                             </tbody>

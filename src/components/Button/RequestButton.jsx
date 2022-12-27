@@ -16,7 +16,7 @@ function RequestButton({ text }) {
     const [showModal, setShowModal] = useState(false);
     const [reqfrom, setReqfrom] = useState('')
     const [file, setFile] = useState('')
-    
+    const auditTrailCollectionRef = collection(db, "audittrail",);
     const [purpose, setPurpose] = useState('')
     const requestCollectionRef = collection(db, "request");
     const reqby = user.email;
@@ -36,6 +36,8 @@ function RequestButton({ text }) {
             Status: "Pending",
             dateReq: serverTimestamp()
         })
+
+        
             .then(() => {
                     alert("Request Submitted")
                     setShowModal(false)
@@ -45,6 +47,12 @@ function RequestButton({ text }) {
                     alert(error.message)
                 }
             )
+
+        setDoc(doc(auditTrailCollectionRef, documentId), {
+            time : serverTimestamp(),
+            user : user.email,
+            activity : "Request a file:  " + file,
+        });
     }
 
     return (

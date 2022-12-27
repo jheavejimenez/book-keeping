@@ -8,7 +8,7 @@ import Alert from "../../components/Alert/Alert";
 import { Field, Form, Formik } from "formik";
 import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, updateDoc} from "firebase/firestore";
 import Background from "../../../src/assets/bookkeeping-bg-cropped.jpg";
 
 function Login() {
@@ -22,8 +22,11 @@ function Login() {
         if (querySnapshot.empty) {
             setError("No matching documents.");
         }
+        console.log(querySnapshot.docs[0].data().role)
         return querySnapshot.docs[0].data().role
+        
     }
+    
     
 
 
@@ -32,6 +35,11 @@ function Login() {
         const role = await getUserRole(email)
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
+
+                updateDoc(doc(db, "users", auth.currentUser.uid), {
+                    Llogin : cred.user.metadata.lastSignInTime
+                });
+
                 const isNewUser = cred.user.metadata.creationTime;
                 if (role === "client" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({

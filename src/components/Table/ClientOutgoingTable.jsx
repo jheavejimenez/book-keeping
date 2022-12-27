@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import OutgoingTableRow from "./OutgoingTableRow";
+import Clientoutgoingrow from "./Clientoutgoingrow";
 import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
@@ -15,6 +15,7 @@ function ClientOutgoingTable() {
         "Recipient",
         "File",
         "Date Sent",
+        "Action",
         
         
     ]
@@ -60,7 +61,7 @@ function ClientOutgoingTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {data.map?.((item) => (
-                                <OutgoingTableRow
+                                <Clientoutgoingrow
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}

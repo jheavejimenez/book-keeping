@@ -16,6 +16,7 @@ function OutgoingTable() {
         "File",
         "Date Sent",
         "Action",
+
         
         
     ]
@@ -30,7 +31,7 @@ function OutgoingTable() {
     }
 
     useEffect(() => {
-        
+        getAllRequestDocumments();
         const interval = setInterval(async () => {
             await getAllRequestDocumments();
         }, 5000)
@@ -66,7 +67,7 @@ function OutgoingTable() {
                                     Column2={item.email}
                                     Column3={item.filename}
                                     Column4={dayjs.unix(item.date?.seconds).format("YYYY-MM-DD")}
-                                    Column5={item.action}
+                                    
                                 />)
                             )}
                             </tbody>

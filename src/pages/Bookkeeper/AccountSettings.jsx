@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 import Header from "../../components/Navigation/Header";
-import { collection, doc, setDoc,getDocs, onSnapshot } from "firebase/firestore";
+import { collection, doc, setDoc,getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { auth, db, storage } from "../../utils/Firebase";
 import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
@@ -23,10 +23,8 @@ function AccountSettings() {
     const { user } = useAuth();
     const [fileInput] = useState("");
 
-    
-
     const [imgUrl , setImgUrl] = useState('')
-    const userprofile = (doc(db, "accountsettings", user.email ));
+    const userprofile = (doc(db, "users", user.email ));
     useEffect(() => {
         onSnapshot(userprofile, (doc) => {
             setImgUrl(doc.data().image)
@@ -52,7 +50,7 @@ function AccountSettings() {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setSource(reader.result);
+            setSource(reader.result)
         }
     }
 
@@ -92,14 +90,15 @@ function AccountSettings() {
 
     const update = async () => {
         await updateEmail(auth.currentUser, newEmail).then(() => {
-             setDoc(doc(db, "users", auth.currentUser.uid), {
-                email: newEmail,
-                role : user.role,
-                uid : auth.currentUser.uid,
+                 console.log(auth.currentUser.uid)
+                 updateDoc(doc(db, "users", auth.currentUser.uid), {
+                 email: newEmail,
 
             });
+            
+            
             alert("Email updated");
-            logout();
+            
         
                 
 
@@ -130,10 +129,9 @@ function AccountSettings() {
                 });
             });
 
-            await setDoc(doc(accsetCollectionRef, auth.currentUser.email), {
+            await updateDoc(doc(db, "users", user.email), {
                 fname: fname,
                 lname: lname,
-                email: user.email,
                 company: company,
                 image: Source
             });
@@ -146,8 +144,8 @@ function AccountSettings() {
     }
 
     const getAllRequestDocumments = async () => {
-        const snapshot = await getDocs(collection(db, "accountsettings"));
-        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
+        const snapshot = await getDocs(collection(db, "users"));
+        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.uid === auth.currentUser.uid));
         console.log(data);
     }
     useEffect(() => {
@@ -159,7 +157,6 @@ function AccountSettings() {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-
     
 
     if(user.role === "admin"){

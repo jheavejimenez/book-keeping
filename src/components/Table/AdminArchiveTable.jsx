@@ -3,9 +3,10 @@ import ArchiveTableRow from "./ArchiveTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import axios from "axios";
-// import { collection, getDocs, orderBy } from "firebase/firestore";
-// import { db } from "../../utils/Firebase";
-// import { useAuth } from "../../hooks/useAuth";
+import { collection, getDocs, orderBy, serverTimestamp } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import dayjs from "dayjs";
+import { useAuth } from "../../hooks/useAuth";
 
 
 function AdminArchiveTable() {
@@ -18,24 +19,19 @@ function AdminArchiveTable() {
         "DateArchived"
     ]
 
-    // const getAllRequestDocumments = async () => {
-    //     const snapshot = await getDocs(collection(db, "request"));
-    //     setData(snapshot.docs.map((doc) => doc.data()));
-    // }
-
-    async function getArchiveData() {
-        const response = await axios.get("http://localhost:3000/archive")
-        setData(response.data)
-        console.log(response.data)
-        return response.data
+    const getAllRequestDocumments = async () => {
+        const snapshot = await getDocs(collection(db, "archive"));
+        setData(snapshot.docs.map((doc) => doc.data()));
     }
 
+    
+
     useEffect(() => {
-        // getAllRequestDocumments();
-        getArchiveData();
+        getAllRequestDocumments();
+        // getArchiveData();
         const interval = setInterval(async () => {
-            // await getAllRequestDocumments();
-            await getArchiveData();
+            await getAllRequestDocumments();
+            // await getArchiveData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -63,11 +59,11 @@ function AdminArchiveTable() {
                             <tbody className={"font-inter divide-y"}>
                             {data.map?.((item) => (
                                 <ArchiveTableRow
-                                    DocID={item.docID}
+                                    DocID={item.docid}
                                     File={item.file}
                                     Company={item.company}
-                                    DateCreated={item.dateCreated}
-                                    DateArchived={item.dateArchived}
+                                    DateCreated={item.datesent}
+                                    DateArchived={dayjs.unix(item.datearchive?.seconds).format("hh:mm A, MMMM D, YYYY")}
                                 />)
                             )}
                             </tbody>
