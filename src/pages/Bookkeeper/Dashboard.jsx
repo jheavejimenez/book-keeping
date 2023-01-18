@@ -30,9 +30,7 @@ function Dashboard() {
                         {/*statistics cards*/}
                         <StatisticCards />
                         
-                        <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                            Filter by Type <FilterDropdown />
-                        </div>   
+                        
                         
                         {/*client table*/}
                             <ClientTable />

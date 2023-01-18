@@ -3,10 +3,11 @@ import dayjs from "dayjs";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import IncomingTableRow from "./IncomingTableRow";
+import FilterDropdown from "../Button/FilterDropdown";
 
 
 function ClientIncomingTable() {
@@ -22,20 +23,135 @@ function ClientIncomingTable() {
         
     ]
 
-    const getAllRequestDocumments = async () => {
-        const snapshot = await getDocs(collection(db, "incoming"));
-        if (user) {
-            setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
-        }
+    // const getAllRequestDocumments = async () => {
+    //     const snapshot = await getDocs(collection(db, "incoming"));
+    //     if (user) {
+    //         setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
+    //     }
         
 
-        console.log(data);
+    //     console.log(data);
+    // }
+
+    const [page, setPage] = useState(1);
+    const [list, setList] = useState([]);
+
+   
+    const fetchData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.email === user.email));
+    };
+
+    const showNextPage = ({item}) => {
+        if (list.length === 0) {
+            alert("Thats all we have for now !")
+            window.location.reload();
+        }
+        else {
+            const fetchNextData = async () => {
+                const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(5), startAfter(item.date));
+                const querySnapshot = await getDocs(q)
+                const items = []
+                querySnapshot.forEach((doc) => {
+                    items.push(doc.data())
+
+                   
+                });
+                setList(items.filter((item) => item.email === user.email));
+                setPage(page + 1);
+                console.log(items[0]);
+               
+            };
+            fetchNextData();
+        }
     }
 
+    const showPrevPage = ({item}) => {
+        if (list.length === 0) {
+            alert("Thats all we have for now !")
+            window.location.reload();
+        }
+        else {
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "incoming"),orderBy("date", "desc"),endBefore(item.date), limitToLast(5) );
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items.filter((item) => item.email === user.email));
+                setPage(page - 1);
+                console.log(items[0]);
+        };
+        fetchPrevData();
+    }
+}
+const filterExcel = () => {
+    if (list.length === 0) {
+        alert("Thats all we have for now !")
+        window.location.reload();
+    }
+    else {
+
+    const fetchPrevData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"),limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+            
+        });
+        setList(items.filter((item) => item.file.includes(".xlsx") && item.email === user.email));
+        
+        console.log(list.filter((item) => item.file.includes(".xlsx")));
+            
+    };
+    fetchPrevData();
+
+
+    }
+}
+const filterPdf = () => {
+    if (list.length === 0) {
+        alert("Thats all we have for now !")
+        window.location.reload();
+    }
+    else {
+
+    const fetchPrevData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"),limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+            
+        });
+        setList(items.filter((item) => item.file.includes(".pdf") && item.email === user.email));
+       
+        console.log(list.filter((item) => item.file.includes(".pdf")));
+            
+    };
+    fetchPrevData();
+
+
+    }
+}
+
+
+
     useEffect(() => {
-       getAllRequestDocumments();
+    //    getAllRequestDocumments();
+        fetchData();
         const interval = setInterval(async () => {
-            await getAllRequestDocumments();
+            // await getAllRequestDocumments();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -45,6 +161,14 @@ function ClientIncomingTable() {
 
     return (
         <>
+            <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                Filter by Type <FilterDropdown 
+                    excel={filterExcel}
+                    pdf={filterPdf}
+                    all={fetchData}
+            />
+            
+            </div> 
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
@@ -62,7 +186,7 @@ function ClientIncomingTable() {
                                 </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map?.((item) => (
+                            {list.map?.((item) => (
                                 <IncomingTableRow
                                     Column1={item.docid}
                                     Column2={item.sentby}
@@ -83,7 +207,13 @@ function ClientIncomingTable() {
                             </tbody>
                         </table>
                     </div>
-                    <Pagination/>       
+                    <Pagination 
+                        path={showPrevPage}
+                        item={showNextPage}
+                        list={list}
+                        page={page}
+                        
+                    />           
                 </div>
             </div>
         </>

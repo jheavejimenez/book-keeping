@@ -27,6 +27,7 @@ function RequestButton({ text }) {
         e.preventDefault()
         const documentId = nanoid(5)
         await setDoc(doc(requestCollectionRef, documentId), {
+            
             documentId,
             reqfrom,
             file,
@@ -34,7 +35,7 @@ function RequestButton({ text }) {
             reqby,
             purpose,
             Status: "Pending",
-            dateReq: serverTimestamp()
+            datereq: serverTimestamp()
         })
 
         

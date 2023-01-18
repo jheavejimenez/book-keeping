@@ -18,12 +18,18 @@ import ForbiddenPage from "./pages/Error/ForbiddenPage";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AuditTrail from "./pages/Admin/AuditTrail";
 import Users from "./pages/Admin/Users";
+import { QueryClient } from "react-query";
+import { QueryClientProvider } from "react-query";
 import Archive from "./pages/Admin/Archive";
 
 function App() {
   
+  
+
+
   return (
     <Routes>
+      
       <Route exact path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
@@ -137,6 +143,7 @@ function App() {
       />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+
   );
 }
 

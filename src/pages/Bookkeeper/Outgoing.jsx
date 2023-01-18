@@ -32,9 +32,7 @@ function Outgoing() {
                     titleText={"Outgoing Documents"}
                     button={<OutgoingButton text={"Send Files"}/>}
                 />
-                <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                        Filter by Type <FilterDropdown />
-                    </div> 
+                
                 {/*outgoing table*/}
                 <OutgoingTable />
             </div>

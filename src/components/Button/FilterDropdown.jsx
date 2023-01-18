@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import FilterDropdownOptions from '../Options/FilterDropdownOptions'
 
-function FilterDropdown() {
+function FilterDropdown({excel, pdf, all}) {
     return (
         <Menu as="div" className="relative inline-block text-left">
 
@@ -32,15 +32,24 @@ function FilterDropdown() {
                     className={" absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg " +
                         " ring-1 ring-black ring-opacity-5 focus:outline-none "}>
                     <div className="py-1">
+                        
+                        <button onClick={() => all()} className={" flex items-center justify-between w-full px-4 py-2 text-sm " +
 
-                        {/* Option 1 */}
-                        <FilterDropdownOptions Option={"All"} />
+                            " text-gray-700 hover:bg-gray-100 hover:text-gray-900 " +
+                            " focus:outline-none focus:bg-gray-100 focus:text-gray-900 "}>
+                                All</button>
+                        
+                        <button onClick={() => excel()} className={" flex items-center justify-between w-full px-4 py-2 text-sm " +
 
-                        {/* Option 2 */}
-                        <FilterDropdownOptions Option={".xlsx"} />
+                            " text-gray-700 hover:bg-gray-100 hover:text-gray-900 " +
+                            " focus:outline-none focus:bg-gray-100 focus:text-gray-900 "}>
+                                .xlsx</button>
+                        <button onClick={() => pdf()} className={" flex items-center justify-between w-full px-4 py-2 text-sm " +
 
-                        {/* Option 3 */}
-                        <FilterDropdownOptions Option={".pdf"} />
+                        " text-gray-700 hover:bg-gray-100 hover:text-gray-900 " +
+                        " focus:outline-none focus:bg-gray-100 focus:text-gray-900 "}>
+                            .pdf</button>
+                            
 
                     </div>
                 </Menu.Items>

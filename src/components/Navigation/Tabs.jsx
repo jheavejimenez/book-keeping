@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Tabs () {
+function Tabs ({path, attr}) {
     return (
         <>
            
@@ -12,6 +12,7 @@ function Tabs () {
                 <ul className={"flex flex-wrap -mb-px"}>
                     <li className="mr-2">
                         <Link to="" 
+                            onClick={path}
                             className={" text-black inline-block p-4 rounded-t-lg border-b-2 border-transparent " + 
                             " hover:text-gray-600 hover:border-blue-500 dark:hover:text-blue-500 "}>
                             Requested
@@ -19,6 +20,7 @@ function Tabs () {
                     </li>
                     <li className="mr-2">
                         <Link to="" 
+                            onClick={attr}
                             className={" text-black inline-block p-4 rounded-t-lg border-b-2 border-transparent " + 
                             " hover:text-gray-600 hover:border-blue-500 dark:hover:text-blue-500 "}>
                             Done

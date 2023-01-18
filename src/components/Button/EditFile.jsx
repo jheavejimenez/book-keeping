@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { auth } from "../../utils/Firebase";
+import { useRef } from 'react';
 
-function EditFile({ text }) {
+function EditFile({ text, recipient, file, editFile }) {
     const [showModal, setShowModal] = useState(false);
     const [setPurpose] = useState('')
+    const inputRef = useRef()
+
+    console.log(recipient)
+    console.log(file)
+
 
     return (
         <>
@@ -14,7 +20,7 @@ function EditFile({ text }) {
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>{text}
+                <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
             </button>
             {showModal && (
                 <>
@@ -67,12 +73,14 @@ function EditFile({ text }) {
                                                     Recipient
                                                 </label>
                                                 <input id="recipient"
-                                                    className={" border rounded-md mb-3 mt-1 h-10 " + 
+
+                                                    className={" border rounded-md mb-3 mt-1 h-10 " +
                                                     " pl-3 border-gray-400 font-normal " +
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
-                                                    value={"ayaka@mailinator.com"}
+                                                    value={recipient}
+                                                    // onChange={(e) => recipient(e.target.value)}
                                                 />
                                             </div>
                                             <div>
@@ -85,25 +93,10 @@ function EditFile({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type={"file"}
                                                     accept={".pdf, .xls, .xlsx, .doc, .docx"}
-                                                    placeholder="WIREFRAME.docx"
+                                                    ref={inputRef}
+                                                    // onChange={(e) => file(inputRef.current.files[0])}
                                                     
-                                                />
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="purpose"
-                                                    className="block mb-1 text-base font-medium text-black"
-                                                >
-                                                    Purpose
-                                                </label>
-                                                <textarea
-                                                    id="purpose" rows={1}
-                                                    className={" block p-2.5 w-full text-base font-normal "+
-                                                    " text-gray-900 rounded-lg border border-gray-400 " + 
-                                                    " focus:ring-blue-500 focus:border-blue-500 "}
-                                                    placeholder="Your purpose..."
-                                                    value={"My short purpose."}
-                                                    onChange={(e) => setPurpose(e.target.value)}
+                                                    
                                                 />
                                             </div>
 
@@ -130,7 +123,7 @@ function EditFile({ text }) {
                                         " py-3 rounded shadow hover:shadow-lg outline-none "+
                                         " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={() => editFile()}
                                     >
                                         Update
                                     </button>
