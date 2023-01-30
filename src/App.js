@@ -18,8 +18,7 @@ import ForbiddenPage from "./pages/Error/ForbiddenPage";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AuditTrail from "./pages/Admin/AuditTrail";
 import Users from "./pages/Admin/Users";
-import { QueryClient } from "react-query";
-import { QueryClientProvider } from "react-query";
+import Searchpage from "./pages/Error/Searchpage";
 import Archive from "./pages/Admin/Archive";
 
 function App() {
@@ -36,6 +35,7 @@ function App() {
       <Route path="/forgot-pass" element={<ForgotPassword />} />
       <Route path="error-404" element={<PageNotFound />} />
       <Route path="error-403" element={<ForbiddenPage />} />
+      <Route path="/search" element={<Searchpage />} />
 
       <Route
         path="admin/dashboard"

@@ -26,6 +26,29 @@ function Login() {
         return querySnapshot.docs[0].data().role
         
     }
+
+    const getContractExpired = async (email) => {
+        const q = query(collection(db, "users"), where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        return querySnapshot.docs[0].data().contractexpired
+
+    }
+
+    const getLastlogin = async (email) => {
+        const q = query(collection(db, "users"), where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        return querySnapshot.docs[0].data().Llogin
+
+    }
+    
+    
+    
     
     
 
@@ -33,11 +56,20 @@ function Login() {
 
     const handleSubmit = async (email, password) => {
         const role = await getUserRole(email)
+        const contractexpired = await getContractExpired(email)
+        const Llogin = await getLastlogin(email)
+        console.log(contractexpired)
+        console.log(Llogin)
+        
+
+
+
+
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
 
-                updateDoc(doc(db, "users", auth.currentUser.uid), {
-                    Llogin : cred.user.metadata.lastSignInTime
+                updateDoc(doc(db, "users", auth.currentUser.email), {
+                    Llogin : new Date().toLocaleString()
                 });
 
                 const isNewUser = cred.user.metadata.creationTime;
@@ -47,14 +79,19 @@ function Login() {
                         "role": role
                     })
                     navigate('/account-settings') // it should be navigated to client dashboard
-                } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime && Llogin >= contractexpired) {
+                    alert("contract expired please contact admin")
+                    
+
+                } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime && Llogin <= contractexpired) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
                     navigate('/dashboard')
-
-                } else if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
+                }
+                
+                else if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
@@ -71,7 +108,6 @@ function Login() {
             .catch((error) => {
                 setError(error.message)
             })
-        console.log(error.message)
     }
     return (
         <>

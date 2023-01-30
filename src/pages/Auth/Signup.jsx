@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/
 import { auth } from "../../utils/Firebase";
 import { Field, Form, Formik } from "formik";
 import { SignupSchema } from "../../utils/schema/signUpSchema";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 
 function Signup() {
@@ -16,7 +16,7 @@ function Signup() {
         const role = "client"
         await createUserWithEmailAndPassword(auth, email, password). then((cred) => {
             return setDoc(doc(accsetCollectionRef, cred.user.email),
-             { email, uid: cred.user.uid, role, company: "", fname: "", lname: "", image: "", Llogin: serverTimestamp() })
+             { email, uid: cred.user.uid, role, company: "", fname: "", lname: "", image: "", Llogin: serverTimestamp(), contractexpired: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 5).toLocaleString() })
             
 
         })
