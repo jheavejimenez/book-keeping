@@ -18,7 +18,8 @@ import ForbiddenPage from "./pages/Error/ForbiddenPage";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AuditTrail from "./pages/Admin/AuditTrail";
 import Users from "./pages/Admin/Users";
-import Searchpage from "./pages/Error/Searchpage";
+import Searchpage from "./pages/Error/SearchpageClient";
+import SearchpageBookkeeping from "./pages/Error/SearchpageBookkeeper";
 import Archive from "./pages/Admin/Archive";
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
       <Route path="/forgot-pass" element={<ForgotPassword />} />
       <Route path="error-404" element={<PageNotFound />} />
       <Route path="error-403" element={<ForbiddenPage />} />
-      <Route path="/search" element={<Searchpage />} />
+      
 
       <Route
         path="admin/dashboard"
@@ -77,6 +78,16 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="bookkeeper/search"
+        element={
+          <ProtectedRoute>
+            <SearchpageBookkeeping />
+          </ProtectedRoute>
+        }
+      />
+      
+
       <Route
         path="bookkeeper/incoming"
         element={
@@ -138,6 +149,14 @@ function App() {
         element={
           <ProtectedRoute>
             <ClientSettings />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/search"
+        element={
+          <ProtectedRoute>
+            <Searchpage />
           </ProtectedRoute>
         }
       />

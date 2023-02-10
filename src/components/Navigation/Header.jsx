@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { ArrowRightOnRectangleIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, updateDoc, setDoc, runTransaction, writeBatch, onSnapshot} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useNavigate } from "react-router-dom";
+
 
 function Header() {
 	const {logout} = useAuth()
@@ -14,13 +15,38 @@ function Header() {
     const [search , setSearch] = useState('')
     const navigate  = useNavigate()
 
-    const handleSearch = (e) => {
-        e.preventDefault()
-
-        if (search) {
-            navigate(`/search/`, {state: search, replace: true})
+    const getUserRole = async () => {
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            console.log('No matching documents.');
         }
+        console.log(querySnapshot.docs[0].data().role)
+        return querySnapshot.docs[0].data().role
+        
     }
+
+
+
+    const handleSearch = async (email) => {
+        const role = await getUserRole(email)
+        console.log(email)
+        
+
+        if (role === "client") {
+            
+                navigate(`/search/`, {state: search, replace: true})
+            
+        } 
+        else if (role === "admin") {
+            
+            navigate(`/bookkeeper/search/`, {state: search, replace: true})
+            
+        }
+        
+    }
+
+    
 
 
     useEffect(() => {

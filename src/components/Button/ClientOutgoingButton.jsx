@@ -6,6 +6,7 @@ import { auth, db, storage } from "../../utils/Firebase";
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { useAuth } from "../../hooks/useAuth";
+import axios from "axios";
 
 function ClientOutgoingButton({ text }) {
     const [showModal, setShowModal] = useState(false);
@@ -17,6 +18,9 @@ function ClientOutgoingButton({ text }) {
     const OutgoingsetCollectionRef = collection(db, "outgoing",);
     const auditTrailCollectionRef = collection(db, "audittrail",);
     const documentId = nanoid(5)
+    const now = new Date();
+    const fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
+    const timestamp = fiveYearsFromNow
 
     const add = async (e) => {
         e.preventDefault();
@@ -41,6 +45,7 @@ function ClientOutgoingButton({ text }) {
                         file: url,
                         purpose,
                         datesend: serverTimestamp(),
+                        fileexpiry: timestamp,
                        
                     });
 
@@ -60,6 +65,31 @@ function ClientOutgoingButton({ text }) {
         
         
     }
+
+    const [scanResult, setScanResult] = useState(null);
+    const [scanStatus, setScanStatus] = useState(null);
+    
+    const handleScan = async (e) => {
+        e.preventDefault();
+        setScanStatus('Scanning...');
+        const formData = new FormData();
+        formData.append('file', inputRef.current.files[0]);
+    
+        try {
+        const response = await axios.post('https://www.virustotal.com/api/v3/files', formData, {
+            headers: {
+            
+            'Content-Type': 'multipart/form-data',
+            'x-apikey': '89c7585856b36502eaf86b50d505a12c94a45c421c48075608c1cd223f21d82d'
+            }
+        });
+        setScanResult(response.data);
+        setScanStatus('Scan Completed');
+        } catch (error) {
+        setScanStatus('Scan Failed');
+        }
+    };
+    console.log(scanResult);
 
 
     return (
@@ -145,6 +175,15 @@ function ClientOutgoingButton({ text }) {
                                                     onChange={(e) => setNewFile(inputRef.current.files[0])}
                                                     
                                                 />
+                                                 <div className="flex space-x-2">
+                                                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
+                                                        onClick={handleScan}
+                                                    >
+                                                        Scan
+                                                    </button>
+                                                    <p className='text-gray-500 py-2 px-4 rounded'>{scanStatus}</p>
+
+                                                </div>
                                             </div>
                                             <div>
                                                 <label
@@ -180,6 +219,20 @@ function ClientOutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
+                                    {scanResult === null ? (
+                                        <button
+                                            className={" bg-gray-500 hover:bg-gray-400 text-white " +
+                                            " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +
+                                            " py-3 rounded shadow hover:shadow-lg outline-none " +
+                                            " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
+                                            
+                                            type="button"
+                                            
+                                            disabled
+                                        >
+                                            Send
+                                        </button>
+                                    ):(
                                     <button
                                         className={" bg-blue-500 hover:bg-blue-400 text-white " + 
                                         " active:bg-emerald-600 font-bold uppercase text-sm px-6 " + 
@@ -190,6 +243,7 @@ function ClientOutgoingButton({ text }) {
                                     >
                                         Send
                                     </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

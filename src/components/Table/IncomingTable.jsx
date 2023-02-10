@@ -3,7 +3,7 @@ import IncomingTableRow from "./IncomingTableRow";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
-import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt} from "firebase/firestore";
+import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt, writeBatch, where, doc} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import dayjs from "dayjs";
@@ -136,11 +136,52 @@ const filterPdf = () => {
 
     }
 }
+const getLastlogin = async (email) => {
+    const q = query(collection(db, "users"), where("email", "==", user.email));
+    const querySnapshot = await getDocs(q)
+    const items = []
+    querySnapshot.forEach((doc) => {
+        items.push(doc.data())
+        
+    }
+    );
+    // console.log(items[0].Llogin);
+    return items[0].Llogin;
+
+};
+
+const checkFileExpire = async () => {
+    const lastlogin = await getLastlogin(user.email);
+    const batch = writeBatch(db);
+    const q = query(collection(db, "outgoing"), where("sentby", "==", user.email));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+        console.log("No matching documents.");
+    }
+    else {
+        const docRef = doc(db, "archive", querySnapshot.docs[0].id);
+        for (let i = 0; i < querySnapshot.docs.length; i++) {
+            const doc = querySnapshot.docs[i];
+            const data = doc.data(); 
+            if (lastlogin > data.fileexpiry) {
+                batch.set(docRef, data);
+                batch.delete(doc.ref);
+                await batch.commit();
+            }
+        }
+    }
+
+
+   
+    
+}
+
 
     useEffect(() => {
         fetchData();
         const interval = setInterval(async () => {
-            // await fetchData();
+            await fetchData();
+            await checkFileExpire();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -175,6 +216,12 @@ const filterPdf = () => {
                                 </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
+                            {list.length === 0 ? ( 
+                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                    <td colSpan={5} className={"py-20 pl-56 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                </tr>
+                            ) : null
+                            }
                             {list.map?.((item) => (
                                 <IncomingTableRow
                                     Column1={item.docid}

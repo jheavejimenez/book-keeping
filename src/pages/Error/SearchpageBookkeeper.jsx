@@ -1,24 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { createContext } from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
 import ClientRequestTable from "../../components/Table/ClientRequestTable";
 import Header from "../../components/Navigation/Header";
 import Tabs from "../../components/Navigation/Tabs";
 import Card from "../../components/Cards/Card";
 import { useAuth } from "../../hooks/useAuth";
-import ForbiddenPage from "../Error/ForbiddenPage";
+import ForbiddenPage from "./ForbiddenPage";
 import { useLocation } from "react-router-dom";
 import TableHeading from "../../components/Table/TableHeading";
 import OutgoingTableRow from "../../components/Table/OutgoingTableRow";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { getDocs, db } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, limit, where, startAt, endAt } from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import { useEffect } from "react";
+import Sidebar from "../../components/Navigation/Sidebar";
 
 
 
 
 
-function Searchpage() {
+function SearchpageBookkeeping() {
 
     const titleTable = [
         "DocID",
@@ -36,12 +39,49 @@ function Searchpage() {
     const { state } = useLocation();
     const { user } = useAuth();
 
-    // const Database = getDocs(db.collection("requests").where("sender", "==", user.email).where("recipient", "==", state));
+
+    const fetchData = async () => {
+        if (state === "") {
+            alert("Please enter a search term")
+        }
+        else{
+        const q1 = query(collection(db, "incoming"), orderBy("date", "desc"));
+        const q = query(collection(db, "outgoing"), orderBy("datesend", "desc"));
+        
+
+         if (q && q1 !== 0 ) {
+                const querySnapshot = await getDocs(q)
+                const querySnapshot1 = await getDocs(q1)
+                const items1 = []
+
+                querySnapshot1.forEach((doc) => {
+                        items1.push(doc.data())
+                });
+
+                const items = []
+                querySnapshot.forEach((doc) => {
+                        items.push(doc.data())
+                        
+
+                });
+                setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase())), ...items1.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))]);
+            }
+        } 
+        console.log(list)
+        console.log(state)
+    };
+
+    useEffect(() => {
+        fetchData();
+        
+
+
+    }, [state]);
 
     
 
     
-    // if (user.role === "client") {
+    if (user.role === "admin") {
 
     return (
         
@@ -52,7 +92,7 @@ function Searchpage() {
             <Header />
                 
             {/*sidebar*/}
-            <ClientSidebar />
+            <Sidebar />
             
             <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                     
@@ -60,11 +100,11 @@ function Searchpage() {
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
-                    titleText={"Search Results for: " + state}
+                    titleText={"Search Filename Results for: " + state}
                 />
             </div>
-
-            <div className={"w-full overflow-x-auto"}>
+            
+            <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
@@ -79,12 +119,20 @@ function Searchpage() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
+
+                            {list.length === 0 ? ( 
+                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                    <td colSpan={5} className={"py-4"}>No results found</td>
+                                </tr>
+                            ) : null
+                            }
+
                             {list.map?.((item) => (
                                 <OutgoingTableRow
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.date?.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.datesend?.seconds).format("YYYY-MM-DD")}
                                     
                                 />)
                             )}
@@ -100,13 +148,13 @@ function Searchpage() {
         </div>
         
     )
-    // }
-    // else {
-    //     return (
-    //         <ForbiddenPage/>
-    //     )
-    // }
+    }
+    else {
+        return (
+            <ForbiddenPage/>
+        )
+    }
 }
 
 
-export default Searchpage;
+export default SearchpageBookkeeping;

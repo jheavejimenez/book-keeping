@@ -8,21 +8,24 @@ import Alert from "../../components/Alert/Alert";
 import { Field, Form, Formik } from "formik";
 import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
-import { collection, getDocs, query, where, doc, updateDoc} from "firebase/firestore";
+import { collection, getDocs, query, where, doc, updateDoc, setDoc, runTransaction, writeBatch} from "firebase/firestore";
 import Background from "../../../src/assets/bookkeeping-bg-cropped.jpg";
 
 function Login() {
+    
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
+    const [data , setData] = useState([])
+    const [data1 , setData1] = useState([])
 
     const getUserRole = async (email) => {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            setError("No matching documents.");
+            setError("Invalid Email or Password");
         }
-        console.log(querySnapshot.docs[0].data().role)
+        console.log(querySnapshot.docs[0].data())
         return querySnapshot.docs[0].data().role
         
     }
@@ -31,7 +34,7 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            setError("No matching documents.");
+            console.log("No matching documents.");
         }
         return querySnapshot.docs[0].data().contractexpired
 
@@ -41,14 +44,69 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            setError("No matching documents.");
+            console.log("No matching documents.");
         }
         return querySnapshot.docs[0].data().Llogin
 
     }
+
     
     
+    const gettingTwoDatabase = async (email) => {
+        
+        const batch = writeBatch(db);
+        const arr = []
+        const arr1 = []
+        const q = query(collection(db, "incoming"), where("email", "==", email));
+        const q1 = query(collection(db, "outgoing"), where("sentby", "==", email));
+        
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            console.log("No matching documents.");
+        }
+        querySnapshot.forEach((doc) => {
+            arr.push(doc.data())
+            
+            
+            
+        });
+        const querySnapshot1 = await getDocs(q1);
+        if (querySnapshot1.empty) {
+            console.log("No matching documents.");
+        }
+        querySnapshot1.forEach((doc) => {
+            arr1.push(doc.data())
+        });
+
+
+        setData(arr)
+        setData1(arr1)
+        console.log(data)
+        console.log(data1)
+        
+        for (let i = 0; i < arr.length; i++) {
+            const docRef = doc(db, "archive", arr[i].docid);
+            batch.set(docRef, data.filter((item) => item.docid === arr[i].docid)[0]);
+            batch.delete(doc(db, "incoming", arr[i].docid));
+        }
+
+        for (let i = 0; i < arr1.length; i++) {
+            const docRef = doc(db, "archive", arr1[i].docid);
+            batch.set(docRef, data1.filter((item) => item.docid === arr1[i].docid)[0]);
+            batch.delete(doc(db, "outgoing", arr1[i].docid));
+        }
+
+        
+        
+        
+        
+        batch.commit().then(() => {
+            console.log("Transaction successfully committed!");
+        });
+    }
     
+
+
     
     
 
@@ -58,18 +116,13 @@ function Login() {
         const role = await getUserRole(email)
         const contractexpired = await getContractExpired(email)
         const Llogin = await getLastlogin(email)
-        console.log(contractexpired)
-        console.log(Llogin)
         
-
-
-
 
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
 
                 updateDoc(doc(db, "users", auth.currentUser.email), {
-                    Llogin : new Date().toLocaleString()
+                    Llogin : new Date(new Date().getTime())
                 });
 
                 const isNewUser = cred.user.metadata.creationTime;
@@ -79,16 +132,22 @@ function Login() {
                         "role": role
                     })
                     navigate('/account-settings') // it should be navigated to client dashboard
-                } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime && Llogin >= contractexpired) {
-                    alert("contract expired please contact admin")
+                } 
+                 else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime ) {
+                    // if Llogin is greater than contract expired  then print contract expired
+                    if(Llogin > contractexpired){
+                         gettingTwoDatabase(email)
+                         setError("Your contract has expired")
+                        
+                    }
+                    else{
+                        login({
+                            "email": cred.user.email,
+                            "role": role
+                        })
+                        navigate('/dashboard')
+                    }
                     
-
-                } else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime && Llogin <= contractexpired) {
-                    login({
-                        "email": cred.user.email,
-                        "role": role
-                    })
-                    navigate('/dashboard')
                 }
                 
                 else if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
@@ -104,9 +163,14 @@ function Login() {
                     })
                     navigate('bookkeeper/dashboard')
                 }
+                else{
+                    setError("Invalid email or password")
+                }
+                
             })
             .catch((error) => {
                 setError(error.message)
+                console.log(error)
             })
     }
     return (
@@ -119,7 +183,7 @@ function Login() {
                                 <img src={Logo} alt="logo" className={"w-3/4 mx-auto pb-8"} />
                                 <h3 className={"text-2xl font-bold text-center"}>Welcome back!</h3>
                             </div>
-                            {error && <Alert setAlert={"Invalid Email or Password"}>{error}</Alert>}
+                            {error && <Alert setAlert={setError} alert={error} />}
                             <Formik
                                 initialValues={{ email: "", password: "" }}
                                 validationSchema={LoginSchema}

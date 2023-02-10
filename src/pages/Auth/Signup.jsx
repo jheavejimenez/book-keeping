@@ -11,12 +11,18 @@ import { db } from "../../utils/Firebase";
 
 function Signup() {
     const navigate = useNavigate()
+    const now = new Date();
+    const fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
+    const timestamp = fiveYearsFromNow
+    console.log(timestamp)
+
+
     const accsetCollectionRef = collection(db, "users",);
     const handleSubmit = async (email, password) => {
         const role = "client"
         await createUserWithEmailAndPassword(auth, email, password). then((cred) => {
             return setDoc(doc(accsetCollectionRef, cred.user.email),
-             { email, uid: cred.user.uid, role, company: "", fname: "", lname: "", image: "", Llogin: serverTimestamp(), contractexpired: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 5).toLocaleString() })
+             { email, uid: cred.user.uid, role, company: "", fname: "", lname: "", image: "", Llogin: serverTimestamp(), contractexpired: timestamp })
             
 
         })

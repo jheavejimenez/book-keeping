@@ -107,16 +107,6 @@ function ClientRequestTable() {
 
 
 
-
-
-
-
-
-
-
-
-
-
     useEffect(() => {
         // getAllRequestDocumments();
         fetchData();
@@ -154,6 +144,12 @@ function ClientRequestTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
+                            {list.length === 0 ? ( 
+                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                    <td colSpan={5} className={"py-20 pl-56 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                </tr>
+                            ) : null
+                            }
                             {list.map?.((item) => (
                                 <RequestTableRow
                                     Column1={item.documentId}
@@ -164,6 +160,7 @@ function ClientRequestTable() {
                                     Column6={dayjs.unix(item.datereq?.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
+                            
                             </tbody>
                         </table>
                     </div>
