@@ -150,13 +150,13 @@ function Login() {
                     
                 }
                 
-                else if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
+                else if (role === "bookkeeper" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
                     navigate('bookkeeper/account-settings')
-                } else if (role === "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                } else if (role === "bookkeeper" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role

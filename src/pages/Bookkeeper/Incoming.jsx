@@ -12,7 +12,7 @@ import ForbiddenPage from "../Error/ForbiddenPage";
 function Incoming() {
     const { user } = useAuth();
 
-    if (user.role === "admin") {
+    if (user.role === "bookkeeper") {
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
