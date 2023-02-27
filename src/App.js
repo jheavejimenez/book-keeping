@@ -21,6 +21,7 @@ import Users from "./pages/Admin/Users";
 import Searchpage from "./pages/Error/SearchpageClient";
 import SearchpageBookkeeping from "./pages/Error/SearchpageBookkeeper";
 import Archive from "./pages/Admin/Archive";
+import AdminLogin from "./pages/Auth/AdminLogin";
 
 function App() {
   
@@ -32,6 +33,7 @@ function App() {
       
       <Route exact path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/forgot-pass" element={<ForgotPassword />} />
       <Route path="error-404" element={<PageNotFound />} />
