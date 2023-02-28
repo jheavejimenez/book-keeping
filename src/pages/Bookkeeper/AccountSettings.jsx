@@ -159,7 +159,7 @@ function AccountSettings() {
     }, []);
     
 
-    if(user.role === "bookkeeper"){
+    if(user.role === "admin"){
         return (
             <div
                 className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiasing bg-gray-100 text-black"}>

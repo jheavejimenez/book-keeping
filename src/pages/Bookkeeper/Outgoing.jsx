@@ -11,7 +11,7 @@ import FilterDropdown from "../../components/Button/FilterDropdown";
 function Outgoing() {
     const { user } = useAuth();
 
-    if (user.role === "bookkeeper") {
+    if (user.role === "admin") {
     return (
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>

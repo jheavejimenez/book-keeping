@@ -11,7 +11,7 @@ import ForbiddenPage from "../Error/ForbiddenPage";
 function Dashboard() {
     const { user } = useAuth();
 
-    if (user.role === "bookkeeper") {
+    if (user.role === "admin") {
         
     
         return (
