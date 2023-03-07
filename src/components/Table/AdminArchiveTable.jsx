@@ -47,7 +47,7 @@ function AdminArchiveTable() {
 
    
     const fetchData = async () => {
-        const q = query(collection(db, "archive"), limit(5));
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {

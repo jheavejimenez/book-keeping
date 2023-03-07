@@ -86,7 +86,7 @@ function ClientTable(props) {
         else {
 
         const fetchPrevData = async () => {
-            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(5) );
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(5));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {

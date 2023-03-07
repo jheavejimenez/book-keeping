@@ -48,7 +48,7 @@ function AdminUsersTable() {
 
    
     const fetchData = async () => {
-        const q = query(collection(db, "users"), limit(10));
+        const q = query(collection(db, "users"),orderBy("email", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -90,7 +90,7 @@ function AdminUsersTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "users"),endBefore(item.email), limitToLast(5));
+            const q = query(collection(db, "users"),orderBy("email", "desc"), endBefore(item.email), limitToLast(5));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
