@@ -13,8 +13,23 @@ import { useEffect } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { auth } from "../../utils/Firebase";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
+    const toastSuccess = (text) => {
+        toast.success(text, {
+            position: "top-center",
+    });
+    }
+
+    
+    const toastFailed = (text) => {
+        toast.error(text, {
+            position: "top-center",
+    });
+    }
     const {user} = useAuth()
     const [newFile, setNewFile] = useState(null)
     const [error, setError] = useState('');
@@ -30,7 +45,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
     const editFile = async (e) => {
         e.preventDefault();
         if (newFile === null) {
-            alert("no file selected");
+            toastFailed("No file selected")
         } else {
             
         
@@ -44,7 +59,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
                 file: url,
                 filename: inputRef.current.files[0].name,
                 }, {merge: true});
-                alert("File Updated")
+                toastSuccess("File Updated")
                 window.location.reload();
                 console.log(newFile)
                 console.log(url)
@@ -56,7 +71,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
 
         });
         
-        // alert("File Updated")
+
         // window.location.reload();
     }
 }
@@ -73,15 +88,76 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
         return querySnapshot.docs[0].data().company
         
     }
+    
+    const getDate = async () => {
+        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().date)
+        return querySnapshot.docs[0].data().date
+    }
+
+    const getFile = async () => {
+        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().file)
+        return querySnapshot.docs[0].data().file
+    }
+    const getFileExpire = async () => {
+        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().fileexpiry)
+        return querySnapshot.docs[0].data().fileexpiry
+    }
+
+    const getPurpose = async () => {
+        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().purpose)
+        return querySnapshot.docs[0].data().purpose
+    }
+
+    const getSentBy = async () => {
+        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().sentby)
+        return querySnapshot.docs[0].data().sentby
+    }
+
+    
 
     const handleDelete = async (email) => {
         const company = await getCompany(email)
+        const date = await getDate(email)
+        const file = await getFile(email)
+        const purpose = await getPurpose(email)
+        const fileexpire = await getFileExpire(email)
+        const sentby = await getSentBy(email)
         await setDoc(doc(db, "archive", Column1), {
+            date: date,
             docid: Column1,
-            recipient: Column2,
-            file: Column3,
-            datesent: Column4,
+            email: Column2,
+            file: file,
+            filename: Column3,
+            fileexpiry: fileexpire,
+            purpose: purpose,
             company: company,
+            sentby: sentby,
+            sentfrom: 'Outgoing',
             datearchive: serverTimestamp(),
             });
             
@@ -92,7 +168,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
             });
 
 
-        alert("File Archived")
+        toastSuccess("File Archived")
         await deleteDoc(doc(db, "incoming", Column1));
 
         
@@ -102,6 +178,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
         // console.log(updatefile.name)
    
     return (
+        
         <tr className={"hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{Column1}</td>
             <td className={"px-4 py-3 text-sm"}>{Column2}</td>
@@ -114,6 +191,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
             >
                 <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
             </button>
+            <ToastContainer />
             {showModal && (
                 <>
                     <div className={" justify-center items-center flex overflow-x-hidden overflow-y-auto " +

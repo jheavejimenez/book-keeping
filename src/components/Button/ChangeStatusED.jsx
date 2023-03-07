@@ -6,92 +6,15 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import ChooseStatusOptions from '../Options/ChooseStatusOptions'
-import ChangeStatus from "../Button/ChangeStatus";
-import { ToastContainer, toast } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from "../../hooks/useAuth";
-import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt, where, setDoc,doc, updateDoc} from "firebase/firestore";
-import { db } from "../../utils/Firebase";
 
 
-function TableRow({ Column1, Column2, Column3, Column4, Column5, Column6, status  }) {
-    let colors;
-
-    switch (status) {
-        case "Pending":
-            colors = "text-white bg-[#EBB000]";
-            break;
-        case "Completed":
-            colors = "text-white bg-[#28A745]";
-            break;
-        case "In Progress":
-            colors = "text-white bg-[#1F6CDE]";
-            break;
-        case "New":
-            colors = "text-white bg-[#DC3545]";
-            break;
-        default:
-            colors = "text-gray-700 bg-gray-100";
-    }
-
-    const {user} = useAuth()
-    const [error, setError] = useState('');
-    const [data, setData] = useState([]);
-    const notify = () => {
-        
-        toast.info("Status has been changed", {
-            position: "top-center",
-    }   
-    
-    );
-     
-    }
-
-    
-
-    // const getdocumentId = async () => {
-    //     const q = query(collection(db, "request"), where("documentId", "==", Column1));
-    //     const querySnapshot = await getDocs(q);
-    //     if (querySnapshot.empty) {
-    //         setError("No matching documents.");
-    //     }
-    //     console.log(querySnapshot.docs[0].data().documentId)
-    //     return querySnapshot.docs[0].data().documentId
-        
-    // }
-    const handleDelete = async (e) => {
-        e.preventDefault();
-        // const Docid = await getdocumentId()
-        await setDoc(doc(db, "request", Column1), {
-            Status: document.getElementById("status").value,
-            
-        }, { merge: true });
-        notify()
-        
-        // console.log(ref.value)
-        
-    }
-    
-   
+function ChangeStatusED({path, attr}) {
     const [showModal, setShowModal] = useState(false);
+
+    
+
     return (
         <>
-        <ToastContainer />
-        <tr className={"hover:bg-gray-300 text-black"}>
-            <td className={"px-4 py-3 text-sm"}>{Column1}</td>
-            <td className={"px-4 py-3 text-sm"}>{Column2}</td>
-            <td className={"px-4 py-3 text-sm"}>{Column3}</td>
-            <td className={"px-4 py-3 text-xs"}>{Column4}</td>
-            <td className={"px-4 py-3 text-xs"}>{Column5}</td>
-            <td className={"px-4 py-3 text-xs"}>{Column6}</td>
-            <td className={"px-4 py-3 text-sm"}>
-                <span className={`px-2 py-1 font-semibold leading-tight ${colors} rounded-none`}>
-                    {status}
-                </span>
-            </td>
-            <td className={"flex justify-center items-center w-14 h-14"}>
-            <>
             <button
                 type="button"
                 onClick={() => setShowModal(true)}
@@ -135,7 +58,7 @@ function TableRow({ Column1, Column2, Column3, Column4, Column5, Column6, status
                                     >
                                     <form className={" relative space-y-3.5 w-auto shrink "}>
                                         <label className={" font-bold mr-2 "}> 
-                                            Progress Status 
+                                            Account Status 
                                         </label>
 
                                         <Menu as="div" className=" inline-block text-left ">
@@ -146,18 +69,10 @@ function TableRow({ Column1, Column2, Column3, Column4, Column5, Column6, status
                                                     " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 h-auto " + 
                                                     " w-auto shrink "}
                                                 >
-                                                     <select  name="status" id="status">
-                                                            <option value="Pending">Pending</option>
-                                                            <option value="In Progress">In Progress</option>
-                                                            <option value="Completed">Completed</option>
-                                                            <option value="New">New</option>
-                                                    </select>
-                                                    
-
+                                                    Choose Status
+                                                    <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
                                                 </Menu.Button>
-
                                             </div>
-                                            <button type="submit" onClick={handleDelete} className={" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "}>submit</button>
 
                                             <Transition
                                                 as={Fragment}
@@ -176,18 +91,15 @@ function TableRow({ Column1, Column2, Column3, Column4, Column5, Column6, status
 
                                                         {/* Option 1 */}
                                                         
-                                                        {/* <ChooseStatusOptions Option={"Pending"} onClick={() => path(attr)} />
+                                                        <ChooseStatusOptions Option={"Enabled"} onClick={() => path(attr)} />
 
                                                         {/* Option 2 */}
-                                                        {/* <ChooseStatusOptions Option={"In Progress"} onClick={() => path(attr)}  /> */}
+                                                        <ChooseStatusOptions Option={"Disabled"} onClick={() => path(attr)}  />
 
-                                                        {/* Option 3 */}
-                                                        {/* <ChooseStatusOptions Option={"Completed"}  onClick={() => path(attr)} /> */}
-
-                                                        {/* Option 4 */}
-                                                        {/* <ChooseStatusOptions Option={"New"} onClick={() => path(attr)}  /> */}
-
-                                                       
+                                                        <select className="hidden" name="status" id="status" onChange={path}>
+                                                            <option value="Enabled">Enabled</option>
+                                                            <option value="Disabled">Disabled</option>
+                                                        </select>
 
 
                                                     </div>
@@ -218,12 +130,7 @@ function TableRow({ Column1, Column2, Column3, Column4, Column5, Column6, status
                 </>
             )}
         </>
-            </td>
-
-        </tr>
-        </>
     )
-    
 }
 
-export default TableRow;
+export default ChangeStatusED;

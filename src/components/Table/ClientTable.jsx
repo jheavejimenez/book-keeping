@@ -10,8 +10,15 @@ import { useQuery } from "react-query";
 import { getAllRequestDocumments } from "../../utils/helper";
 import { Table, Button, ButtonGroup } from "react-bootstrap";
 import FilterDropdown from "../Button/FilterDropdown";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function ClientTable(props) {
+    const notify = () => toast.warning("No more documents to show", {
+        position: "top-center",
+
+    });
     const { user } = useAuth();
     const titleTable = [
         "DocID",
@@ -41,8 +48,7 @@ function ClientTable(props) {
             
         });
         setList(items);
-            console.log();
-            setPage(page + 1);
+        console.log();
             
         
     };
@@ -51,7 +57,7 @@ function ClientTable(props) {
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -74,7 +80,7 @@ function ClientTable(props) {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -98,7 +104,7 @@ function ClientTable(props) {
 
     const filterExcel = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -123,7 +129,7 @@ function ClientTable(props) {
     }
     const filterPdf = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -150,7 +156,7 @@ function ClientTable(props) {
 useEffect(() => {
     fetchData();
     const interval = setInterval(async () => {
-        // await fetchData();
+        
     }, 5000)
     return () => {
         clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -161,6 +167,7 @@ useEffect(() => {
 
     return (
         <>
+        <ToastContainer />
         <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
         Filter by Type <FilterDropdown 
                 excel={filterExcel}

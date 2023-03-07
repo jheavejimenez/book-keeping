@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -7,9 +7,36 @@ import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { useAuth } from "../../hooks/useAuth";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { boolean } from 'yup';
+
 
 
 function OutgoingButton({ text }) {
+    const notify = () => {
+        toast.success("File Sent", {
+            position: "top-center",
+    });
+    }
+
+    const notifyQue = () => {
+        toast.warning("File Scan has been queued please wait for a moment and try again later with the same file", {
+            position: "top-center",
+            autoClose: 5000
+    }
+        
+    );
+    }
+
+    
+    const notify1 = () => {
+        toast.error("No File Selected", {
+            position: "top-center",
+    });
+    }
+
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
     const [newFile, setNewFile] = useState(null)
@@ -31,14 +58,14 @@ function OutgoingButton({ text }) {
         e.preventDefault();
 
         if (newFile === null) {
-            alert("no file selected");
+            notify1()
         } else {
             
             const imageRef = ref(storage, 'reciepts/' + newFile.name);
             uploadBytes(imageRef, newFile).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setNewFile(url)
-                    alert("File Sent")
+                    notify()
                     
             
 
@@ -51,6 +78,7 @@ function OutgoingButton({ text }) {
                         purpose,
                         date: serverTimestamp(),
                         fileexpiry: timestamp,
+                        // archived: false,
                        
                     });
 
@@ -79,26 +107,43 @@ function OutgoingButton({ text }) {
         setScanStatus('Scanning...');
         const formData = new FormData();
         formData.append('file', inputRef.current.files[0]);
-    
         try {
+
         const response = await axios.post('https://www.virustotal.com/api/v3/files', formData, {
+            method: 'GET',
             headers: {
             
             'Content-Type': 'multipart/form-data',
             'x-apikey': '89c7585856b36502eaf86b50d505a12c94a45c421c48075608c1cd223f21d82d'
+            },
+            params: {
+                priority: 'high'
+              }
+        });
+        const getData = await axios.get(response.data.data.links.self,{
+            headers: {
+                'x-apikey': '89c7585856b36502eaf86b50d505a12c94a45c421c48075608c1cd223f21d82d'
             }
         });
-        setScanResult(response.data);
-        setScanStatus('Scan Completed');
-        } catch (error) {
-        setScanStatus('Scan Failed');
+        setScanResult(getData);
+        if (getData.data.data.attributes.status === 'queued'){
+            notifyQue();
+            setScanStatus(getData.data.data.attributes.status)
         }
+        else{
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        } catch (error) {
+            setScanStatus('Scan Failed');
+            }
+        
     };
-    console.log(scanResult);
+    console.log(scanResult)
+    
 
     return (
         <>
-
+             <ToastContainer />
             <button
                 className={" bg-white text-blue-500 font-bold px-6 py-2 rounded inline-flex items-center "}
                 type="button"
@@ -226,7 +271,7 @@ function OutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
-                                    {scanResult === null ? (
+                                    {scanResult === null   ? (
                                         <button
                                             className={" bg-gray-500 hover:bg-gray-400 text-white " +
                                             " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +

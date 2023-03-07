@@ -10,7 +10,17 @@ import { useState } from 'react'
 
 function Pagination({path, item,list,page }) {
 
-  
+ useEffect(() => {
+  console.log(page);
+
+  if (page <=  1) {
+    document.getElementById("prev").hidden = true;
+  }
+  else {
+    document.getElementById("prev").hidden = false;
+  }
+
+}, [page])
 
 
   return (
@@ -40,14 +50,21 @@ function Pagination({path, item,list,page }) {
         </div>
         <div>
           <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-            <a
-              href="#"
+          {/* {page === 1 ? ( 
+                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                    <td colSpan={5} className={"py-20 pl-56 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                </tr>
+            ) : null
+            } */}
+            <span id="prev">
+            <a              
               className={" relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 " + 
               " py-2 text-sm font-medium text-gray-400 hover:bg-blue-500 hover:text-white focus:z-20 "}
             >
-              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true"  />
               <span   onClick={() => path({ item: list[0] }) } className="not-sr-only">Previous</span>
             </a>
+            </span>
             <button
 
              
@@ -55,7 +72,7 @@ function Pagination({path, item,list,page }) {
               className={" relative z-10 inline-flex items-center border border-gray-300 bg-white px-4 py-2 " + 
               " text-sm font-medium text-blue-500 hover:bg-blue-500 hover:text-white focus:z-20 "}
             >
-             {page !=0 && page === 1 ? 1 : page - 1}
+              {page}
             </button>
             <a
               

@@ -9,6 +9,11 @@ firebase. */
  "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
+import { query , limit , startAfter, endBefore,limitToLast } from "firebase/firestore";
+import FilterDropdownAction from "../Button/FilterDropdownAction";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function AdminAuditTable() {
@@ -19,28 +24,187 @@ function AdminAuditTable() {
         "Activity"
     ]
 
-    const getAllRequestDocumments = async () => {
-        const snapshot = await getDocs(collection(db, "audittrail"));
-        setData(snapshot.docs.map((doc) => doc.data()));
+    // const getAllRequestDocumments = async () => {
+    //     const snapshot = await getDocs(collection(db, "audittrail"));
+    //     setData(snapshot.docs.map((doc) => doc.data()));
+    // }
+    const  notif = () => toast.warning("No more documents to show", {
+        position: "top-center",
+
+    });
+
+    const [page, setPage] = useState(1);
+    const [list, setList] = useState([]);
+
+   
+    const fetchData = async () => {
+        const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        document.getElementById("audit-table").hidden = false;
+        setList(items);
+    };
+
+    const showNextPage = ({item}) => {
+        if (list.length === 0) {
+            notif();
+            window.location.reload();
+        }
+        else {
+            const fetchNextData = async () => {
+                const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(10), startAfter(item.time));
+                const querySnapshot = await getDocs(q)
+                const items = []
+                querySnapshot.forEach((doc) => {
+                    items.push(doc.data())
+
+                   
+                });
+                setList(items);
+                setPage(page + 1);
+                console.log(items[0]);
+               
+            };
+            fetchNextData();
+        }
     }
 
+    const showPrevPage = ({item}) => {
+        if (list.length === 0) {
+            notif();
+            window.location.reload();
+        }
+        else {
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"),endBefore(item.time), limitToLast(10) );
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items);
+            setPage(page - 1);
+            console.log(items[0]);
+        };
+        fetchPrevData();
+    }
+}
+    const filterRequest = () => {
+        if (list.length === 0) {
+            notif();
+            window.location.reload();
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"));
+            const querySnapshot = await getDocs(q)
+            
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+                
+            });
+            // setList(items.filter((item) => item.file.includes(".pdf") && item.email === user.email));
+            document.getElementById("audit-table").hidden = true;
+            
+            // console.log(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Request")));
+            
+            setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Request")));
+            
+            
+           
+                
+        };
+        fetchPrevData();
+
+
+        }
+    }
+    const filterSent = () => {
+        if (list.length === 0) {
+            notif();
+            window.location.reload();
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+                
+            });
+            document.getElementById("audit-table").hidden = true;
+            setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Sent")));
+            
+                
+        };
+        fetchPrevData();
+
+
+        }
+    }
+    const filterArchived = () => {
+        if (list.length === 0) {
+            notif();
+            window.location.reload();
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+                
+            });
+            document.getElementById("audit-table").hidden = true;
+            setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Archived")));
+                
+        };
+        fetchPrevData();
+
+
+        }
+    }
     
 
+
+
+
     useEffect(() => {
-        getAllRequestDocumments();
+        // getAllRequestDocumments();
+        fetchData();
         // getAuditTrailData();
         const interval = setInterval(async () => {
-            await getAllRequestDocumments();
-            // await getAuditTrailData();
+            // await getAllRequestDocumments();
+            // await fetchData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-    console.log(data);
+    // console.log(data);
 
     return (
         <>
+            <ToastContainer />
+            <div  className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}>
+                Filter by Action <FilterDropdownAction 
+                    request={filterRequest}
+                    sent={filterSent}
+                    all={fetchData}
+                    archived={filterArchived}
+            />
+            </div>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
@@ -57,7 +221,7 @@ function AdminAuditTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map?.((item) => (
+                            {list.map?.((item) => (
                                 <AuditTableRow
                                     Column1={dayjs.unix(item.time?.seconds).format("hh:mm A, MMMM D, YYYY")}
                                     Column2={item.user}
@@ -67,7 +231,15 @@ function AdminAuditTable() {
                             </tbody>
                         </table>
                     </div>
-                    <Pagination/>
+                    <div id = "audit-table" >
+                        <Pagination 
+                            path={showPrevPage}
+                            item={showNextPage}
+                            list={list}
+                            page={page}
+                            
+                        />
+                    </div>  
                 </div>
             </div>
         </>

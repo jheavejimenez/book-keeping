@@ -8,8 +8,15 @@ import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import dayjs from "dayjs";
 import FilterDropdown from "../Button/FilterDropdown";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function IncomingTable() {
+    const notify = () => toast.warning("No more documents to show", {
+        position: "top-center",
+
+    });
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const titleTable = [
@@ -36,14 +43,12 @@ function IncomingTable() {
             
         });
         setList(items);
-        // console.log();
-        setPage(page + 1);
-        // console.log(items);
+        
     };
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -67,7 +72,7 @@ function IncomingTable() {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -88,7 +93,7 @@ function IncomingTable() {
 }
 const filterExcel = () => {
     if (list.length === 0) {
-        alert("Thats all we have for now !")
+        notify();
         window.location.reload();
     }
     else {
@@ -113,7 +118,7 @@ const filterExcel = () => {
 }
 const filterPdf = () => {
     if (list.length === 0) {
-        alert("Thats all we have for now !")
+        notify();
         window.location.reload();
     }
     else {
@@ -191,6 +196,7 @@ const checkFileExpire = async () => {
 
     return (
         <>
+        <ToastContainer />
          <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
         Filter by Type <FilterDropdown 
                 excel={filterExcel}

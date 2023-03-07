@@ -10,6 +10,9 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
 
 import ForbiddenPage from "../Error/ForbiddenPage";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 // import ClientTable from "../../components/Table/ClientTable";
 // import Dropdown from "../../components/Button/Dropdown";
@@ -17,6 +20,24 @@ import ForbiddenPage from "../Error/ForbiddenPage";
 
 
 function ClientSettings() {
+    const notifyInfo = (text) => toast.info(text, {
+        position: "top-center",
+
+    });
+    const notifyError = (text) => toast.error(text, {
+        position: "top-center",
+
+    });
+
+    const notfiyWarning = (text) => toast.warning(text, {
+        position: "top-center",
+
+    });
+
+    const notifySuccess = (text) => toast.success(text, {
+        position: "top-center",
+
+    });
     const {logout} = useAuth()
     const [data, setData] = useState([]);
     const { user } = useAuth();
@@ -68,13 +89,13 @@ function ClientSettings() {
             .then(() => {
                 // Password reset email sent!
                 // ..
-                alert("Password reset email sent!")
+                notifyInfo("Password reset email sent");
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
-                alert(errorCode, errorMessage);
+                notifyError(errorMessage);
             });
     };
 
@@ -96,13 +117,13 @@ function ClientSettings() {
             });
             
             
-            alert("Email updated");
+           notifyInfo("Email updated")
             
         
                 
 
         }).catch((error) => {
-            alert(error.message)
+            notifyError(error.message)
         })
     }
     console.log(user.email)
@@ -115,7 +136,7 @@ function ClientSettings() {
 
 
         if (image === null) {
-            alert("No image selected");
+            notfiyWarning("Please select an image");
         }
          else if(image !== null) {
 
@@ -134,7 +155,7 @@ function ClientSettings() {
                 company: company,
                 image: Source
             });
-            alert("Account settings updated");
+            notifySuccess("Profile updated")
         }
 
         
@@ -160,6 +181,8 @@ function ClientSettings() {
     if (user.role === "client") {
 
     return (
+        <>
+        <ToastContainer />
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiasing bg-gray-100 text-black"}>
 
@@ -331,6 +354,7 @@ function ClientSettings() {
                 </div>
             </div>
         </div>
+        </>
     )
     }
     else {

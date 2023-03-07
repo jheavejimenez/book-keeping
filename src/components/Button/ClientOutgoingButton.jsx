@@ -7,8 +7,32 @@ import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { useAuth } from "../../hooks/useAuth";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function ClientOutgoingButton({ text }) {
+    const Success = () => {
+        toast.success("File Sent", {
+            position: "top-center",
+
+        });
+
+    }
+    const notifyQue = () => {
+        toast.warning("File Scan has been queued please wait for a moment and try again later with the same file", {
+            position: "top-center",
+            autoClose: 5000
+    }
+        
+    );
+    }
+    const Error = () => {
+        toast.error("no file selected", {
+            position: "top-center",
+
+        });
+    }
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
     const {user} = useAuth()
@@ -26,14 +50,14 @@ function ClientOutgoingButton({ text }) {
         e.preventDefault();
 
         if (newFile === null) {
-            alert("no file selected");
+            Error()
         } else {
             
             const imageRef = ref(storage, 'files/' + newFile.name); 
             uploadBytes(imageRef, newFile).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setNewFile(url)
-                    alert("File Sent")
+                    Success()
                     
             
 
@@ -74,22 +98,36 @@ function ClientOutgoingButton({ text }) {
         setScanStatus('Scanning...');
         const formData = new FormData();
         formData.append('file', inputRef.current.files[0]);
-    
         try {
+
         const response = await axios.post('https://www.virustotal.com/api/v3/files', formData, {
+            method: 'GET',
             headers: {
             
             'Content-Type': 'multipart/form-data',
             'x-apikey': '89c7585856b36502eaf86b50d505a12c94a45c421c48075608c1cd223f21d82d'
             }
         });
-        setScanResult(response.data);
-        setScanStatus('Scan Completed');
-        } catch (error) {
-        setScanStatus('Scan Failed');
+        const getData = await axios.get(response.data.data.links.self,{
+            headers: {
+                'x-apikey': '89c7585856b36502eaf86b50d505a12c94a45c421c48075608c1cd223f21d82d'
+            }
+        });
+        setScanResult(getData);
+        if (getData.data.data.attributes.status === 'queued'){
+            notifyQue();
+            setScanStatus(getData.data.data.attributes.status)
         }
+        else{
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        } catch (error) {
+            setScanStatus('Scan Failed');
+            }
+        
     };
     console.log(scanResult);
+    console.log(scanStatus);
 
 
     return (
@@ -144,7 +182,7 @@ function ClientOutgoingButton({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
-                                                    value={auth.currentUser.email}
+                                                    value={user.email}
                                                     disabled
                                                 />
                                             </div>
@@ -182,7 +220,6 @@ function ClientOutgoingButton({ text }) {
                                                         Scan
                                                     </button>
                                                     <p className='text-gray-500 py-2 px-4 rounded'>{scanStatus}</p>
-
                                                 </div>
                                             </div>
                                             <div>
@@ -219,7 +256,7 @@ function ClientOutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
-                                    {scanResult === null ? (
+                                    {scanResult === null   ? (
                                         <button
                                             className={" bg-gray-500 hover:bg-gray-400 text-white " +
                                             " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +

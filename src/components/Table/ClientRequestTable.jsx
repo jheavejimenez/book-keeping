@@ -7,9 +7,16 @@ import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, en
 import { useAuth } from "../../hooks/useAuth";
 import dayjs from "dayjs";
 import Tabs from "../../components/Navigation/Tabs";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function ClientRequestTable() {
+    const notify = () => toast.warning("No more documents to show", {
+        position: "top-center",
+
+    });
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const titleTable = [
@@ -49,7 +56,7 @@ function ClientRequestTable() {
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -72,7 +79,7 @@ function ClientRequestTable() {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -121,6 +128,7 @@ function ClientRequestTable() {
 
     return (
         <>
+            <ToastContainer />
             <div className="mt-4 mx-4 pt-2">
                 <Tabs 
                     path={fetchData}

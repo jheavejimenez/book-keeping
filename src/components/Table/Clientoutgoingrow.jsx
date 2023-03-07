@@ -13,10 +13,24 @@ import { useEffect } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { auth } from "../../utils/Firebase";
+import FilterDropdown from "../Button/FilterDropdown";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
 function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
+    const Warning = () => toast.warning("no file selected", {
+        position: "top-center",
+
+    });
+    const Success = () => toast.success("File Updated", {
+        position: "top-center",
+
+    });
+    const successArchive = () => toast.success("File Archived", {
+        position: "top-center",
+
+    });
     const {user} = useAuth()
     const [newFile, setNewFile] = useState(null)
     const [error, setError] = useState('');
@@ -31,7 +45,7 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
     const editFile = async (e) => {
         e.preventDefault();
         if (newFile === null) {
-            alert("no file selected");
+            Warning()
         } else {
             
         
@@ -45,7 +59,7 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
                 file: url,
                 filename: inputRef.current.files[0].name,
                 }, {merge: true});
-                alert("File Updated")
+                Success()
                 window.location.reload();
                 console.log(newFile)
                 console.log(url)
@@ -68,28 +82,28 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
 
     const auditTrailCollectionRef = collection(db, "audittrail");
 
-    const handleDelete = async (email) => {
-        const company = await getCompany(email)
-        await setDoc(doc(db, "archive", Column1), {
-            docid: Column1,
-            recipient: Column2,
-            file: Column3,
-            datesent: Column4,
-            company: company,
-            datearchive: serverTimestamp(),
-            });
+    // const handleDelete = async (email) => {
+    //     const company = await getCompany(email)
+    //     await setDoc(doc(db, "archive", Column1), {
+    //         docid: Column1,
+    //         recipient: Column2,
+    //         file: Column3,
+    //         datesent: Column4,
+    //         company: company,
+    //         datearchive: serverTimestamp(),
+    //         });
 
-            setDoc(doc(auditTrailCollectionRef, Column1), {
-                time : serverTimestamp(),
-                user : user.email,
-                activity : "Archived file:  " + Column3,
-            });
+    //         setDoc(doc(auditTrailCollectionRef, Column1), {
+    //             time : serverTimestamp(),
+    //             user : user.email,
+    //             activity : "Archived file:  " + Column3,
+    //         });
 
-        alert("File Archived")
-        await deleteDoc(doc(db, "outgoing", Column1));
+    //     successArchive()
+    //     await deleteDoc(doc(db, "outgoing", Column1));
 
         
-    }
+    // }
    
     return (
         <tr className={"hover:bg-gray-300 text-black"}>
@@ -104,6 +118,7 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
             >
                 <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
             </button>
+            <ToastContainer />
             {showModal && (
                 <>
                     <div className={" justify-center items-center flex overflow-x-hidden overflow-y-auto " +
@@ -215,9 +230,9 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
             )}
-                <button onClick={handleDelete} className="pl-2">
+                {/* <button onClick={handleDelete} className="pl-2">
                     <ArchiveFile />
-                </button>
+                </button> */}
             </td>   
         </tr>
     )

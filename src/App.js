@@ -18,8 +18,8 @@ import ForbiddenPage from "./pages/Error/ForbiddenPage";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AuditTrail from "./pages/Admin/AuditTrail";
 import Users from "./pages/Admin/Users";
-import Searchpage from "./pages/Error/SearchpageClient";
-import SearchpageBookkeeping from "./pages/Error/SearchpageBookkeeper";
+import Searchpage from "./pages/Search/SearchpageClient";
+import SearchpageBookkeeping from "./pages/Search/SearchpageBookkeeper";
 import Archive from "./pages/Admin/Archive";
 
 function App() {

@@ -8,8 +8,16 @@ import { Field, Form, Formik } from "formik";
 import { SignupSchema } from "../../utils/schema/signUpSchema";
 import { addDoc, collection, doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Signup() {
+    const notifyError = () => toast.error("Email already in use", {
+        position: "top-center",
+        
+    });
     const navigate = useNavigate()
     const now = new Date();
     const fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
@@ -22,10 +30,10 @@ function Signup() {
         const role = "client"
         await createUserWithEmailAndPassword(auth, email, password). then((cred) => {
             return setDoc(doc(accsetCollectionRef, cred.user.email),
-             { email, uid: cred.user.uid, role, company: "", fname: "", lname: "", image: "", Llogin: serverTimestamp(), contractexpired: timestamp })
+             { email, uid: cred.user.uid, role, company: "", fname: "", lname: "", image: "", Llogin: serverTimestamp(), contractexpired: timestamp})
             
 
-        })
+        }) 
         .then(() => {
             sendEmailVerification(auth.currentUser).then(() => {
                 navigate('/verify-email')
@@ -34,13 +42,14 @@ function Signup() {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            alert(errorCode, errorMessage)
+            notifyError()
         });
        
     }
     
     return (
         <>
+            <ToastContainer />
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className="flex rounded-md shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-2xl">
 

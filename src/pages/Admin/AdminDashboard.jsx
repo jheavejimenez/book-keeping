@@ -22,9 +22,7 @@ function AdminDashboard() {
                     {/*statistics cards*/}
                     <AdminStatisticCards />
                     
-                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                        Filter by Company <FilterDropdown />
-                    </div>   
+                    
                     
                     {/*client table*/}
                         <ClientTable />

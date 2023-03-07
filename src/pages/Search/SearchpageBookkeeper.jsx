@@ -6,7 +6,7 @@ import Header from "../../components/Navigation/Header";
 import Tabs from "../../components/Navigation/Tabs";
 import Card from "../../components/Cards/Card";
 import { useAuth } from "../../hooks/useAuth";
-import ForbiddenPage from "./ForbiddenPage";
+import ForbiddenPage from "../Error/ForbiddenPage";
 import { useLocation } from "react-router-dom";
 import TableHeading from "../../components/Table/TableHeading";
 import OutgoingTableRow from "../../components/Table/OutgoingTableRow";
@@ -15,12 +15,20 @@ import { useState } from "react";
 import { collection, getDocs, query, orderBy, limit, where, startAt, endAt } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useEffect } from "react";
+import Sidebar from "../../components/Navigation/Sidebar";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
 
 
-function Searchpage() {
+function SearchpageBookkeeping() {
+    const notfiyWarning = (text) => toast.warning(text, {
+        position: "top-center",
+
+    });
 
     const titleTable = [
         "DocID",
@@ -41,11 +49,12 @@ function Searchpage() {
 
     const fetchData = async () => {
         if (state === "") {
-            alert("Please enter a search term")
+            notfiyWarning("Please enter a search term")
         }
         else{
-        const q = query(collection(db, "outgoing"), orderBy("datesend", "desc"), where("sentby", "==", user.email));
-        const q1 = query(collection(db, "incoming"), orderBy("date", "desc"), where("email", "==", user.email));
+        const q1 = query(collection(db, "incoming"), orderBy("date", "desc"));
+        const q = query(collection(db, "outgoing"), orderBy("datesend", "desc"));
+        
 
          if (q && q1 !== 0 ) {
                 const querySnapshot = await getDocs(q)
@@ -65,6 +74,8 @@ function Searchpage() {
                 setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase())), ...items1.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))]);
             }
         } 
+        console.log(list)
+        console.log(state)
     };
 
     useEffect(() => {
@@ -77,10 +88,11 @@ function Searchpage() {
     
 
     
-    if (user.role === "client") {
+    if (user.role === "admin") {
 
     return (
-        
+        <>
+        <ToastContainer />
         <div 
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
                 
@@ -88,7 +100,7 @@ function Searchpage() {
             <Header />
                 
             {/*sidebar*/}
-            <ClientSidebar />
+            <Sidebar />
             
             <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                     
@@ -128,7 +140,7 @@ function Searchpage() {
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.datesend?.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.datesend?.seconds || item.date?.seconds).format("DD/MM/YYYY")}
                                     
                                 />)
                             )}
@@ -142,7 +154,7 @@ function Searchpage() {
 
 
         </div>
-        
+        </>
     )
     }
     else {
@@ -153,4 +165,4 @@ function Searchpage() {
 }
 
 
-export default Searchpage;
+export default SearchpageBookkeeping;

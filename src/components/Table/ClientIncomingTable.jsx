@@ -8,9 +8,16 @@ import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import IncomingTableRow from "./IncomingTableRow";
 import FilterDropdown from "../Button/FilterDropdown";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function ClientIncomingTable() {
+    const  notif = () => toast.warning("No more documents to show", {
+        position: "top-center",
+
+    });
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const titleTable = [
@@ -51,7 +58,7 @@ function ClientIncomingTable() {
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notif();
             window.location.reload();
         }
         else {
@@ -75,7 +82,7 @@ function ClientIncomingTable() {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notif();
             window.location.reload();
         }
         else {
@@ -96,7 +103,7 @@ function ClientIncomingTable() {
 }
 const filterExcel = () => {
     if (list.length === 0) {
-        alert("Thats all we have for now !")
+        notif();
         window.location.reload();
     }
     else {
@@ -121,7 +128,7 @@ const filterExcel = () => {
 }
 const filterPdf = () => {
     if (list.length === 0) {
-        alert("Thats all we have for now !")
+        notif();
         window.location.reload();
     }
     else {
@@ -202,6 +209,7 @@ const checkFileExpire = async () => {
 
     return (
         <>
+            <ToastContainer />
             <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
                 Filter by Type <FilterDropdown 
                     excel={filterExcel}

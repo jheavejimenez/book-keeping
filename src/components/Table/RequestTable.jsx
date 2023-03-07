@@ -5,8 +5,15 @@ import Pagination from "../Pagination/Pagination";
 import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import dayjs from "dayjs";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function RequestTable() {
+    const notify = () => toast.warning("No more documents to show", {
+        position: "top-center",
+
+    });
     
     const titleTable = [
         "ReqID",
@@ -31,8 +38,6 @@ function RequestTable() {
             
         });
         setList(items);
-       
-            setPage(page + 1);
         
         
     };
@@ -40,7 +45,7 @@ function RequestTable() {
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -64,7 +69,7 @@ function RequestTable() {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -96,6 +101,7 @@ function RequestTable() {
 
     return (
         <>
+            <ToastContainer />
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>

@@ -7,9 +7,16 @@ import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, en
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import FilterDropdown from "../Button/FilterDropdown";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function ClientOutgoingTable() {
     const { user } = useAuth();
+    const notify = () => toast.warning("No more documents to show", {
+        position: "top-center",
+
+    });
 
     const [data, setData] = useState([]);
     const titleTable = [
@@ -58,7 +65,7 @@ function ClientOutgoingTable() {
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -83,7 +90,7 @@ function ClientOutgoingTable() {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -106,7 +113,7 @@ function ClientOutgoingTable() {
     }
     const filterExcel = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -131,7 +138,7 @@ function ClientOutgoingTable() {
     }
     const filterPdf = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notify();
             window.location.reload();
         }
         else {
@@ -216,6 +223,7 @@ function ClientOutgoingTable() {
 
     return (
         <>
+            <ToastContainer />
             <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
             Filter by Type <FilterDropdown 
                     excel={filterExcel}

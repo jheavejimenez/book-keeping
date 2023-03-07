@@ -26,7 +26,7 @@ function Users() {
                     titleText={"Users"}
                 />
                 
-                <DeleteButton text={"Delete"}/>
+                
             
     
             <AdminUsersTable/>

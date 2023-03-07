@@ -11,8 +11,16 @@ import { useAuth } from "../../hooks/useAuth";
 import { collection, getDocs, query, where, doc, updateDoc, setDoc, runTransaction, writeBatch} from "firebase/firestore";
 import Background from "../../../src/assets/bookkeeping-bg-cropped.jpg";
 
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function Login() {
-    
+    const notifyError = () => toast.error("Invalid email or password", {
+        position: "top-center",
+
+    });
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
@@ -23,7 +31,7 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            setError("Invalid Email or Password");
+            notifyError()
         }
         console.log(querySnapshot.docs[0].data())
         return querySnapshot.docs[0].data().role
@@ -34,7 +42,7 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            console.log("No matching documents.");
+            notifyError()
         }
         return querySnapshot.docs[0].data().contractexpired
 
@@ -44,7 +52,7 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            console.log("No matching documents.");
+            notifyError()
         }
         return querySnapshot.docs[0].data().Llogin
 
@@ -164,17 +172,18 @@ function Login() {
                     navigate('bookkeeper/dashboard')
                 }
                 else{
-                    setError("Invalid email or password")
+                    notifyError()
                 }
                 
             })
             .catch((error) => {
                 setError(error.message)
-                console.log(error)
+                notifyError(error)
             })
     }
     return (
         <>
+            <ToastContainer />
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className="flex rounded-md shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-2xl">
                     <>
@@ -183,7 +192,6 @@ function Login() {
                                 <img src={Logo} alt="logo" className={"w-3/4 mx-auto pb-8"} />
                                 <h3 className={"text-2xl font-bold text-center"}>Welcome back!</h3>
                             </div>
-                            {error && <Alert setAlert={setError} alert={error} />}
                             <Formik
                                 initialValues={{ email: "", password: "" }}
                                 validationSchema={LoginSchema}
