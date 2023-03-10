@@ -43,7 +43,7 @@ function Pagination({path, item,list,page }) {
       </div>
       <div className="hidden flex items-end justify-end sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className=" hidden text-sm text-gray-700">
+          <p className=" text-sm text-gray-700">
             Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
             <span className="font-medium">97</span> results
           </p>

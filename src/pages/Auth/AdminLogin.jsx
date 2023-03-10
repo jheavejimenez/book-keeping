@@ -120,13 +120,13 @@ function AdminLogin() {
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('admin/dashboard')
+                    navigate('/admin/dashboard')
                 } else if (role === "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('admin/dashboard')
+                    navigate('/admin/dashboard')
                 }
                 else{
                     setError("Invalid email or password")

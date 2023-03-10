@@ -33,7 +33,7 @@ function App() {
       
       <Route exact path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/admin-login" element={<AdminLogin />} />
+      <Route exact path="/admin" element={<AdminLogin />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/forgot-pass" element={<ForgotPassword />} />
       <Route path="error-404" element={<PageNotFound />} />
