@@ -180,7 +180,7 @@ function AccountSettings() {
     }, []);
     
 
-    if(user.role === "admin"){
+    if(user.role === "bookkeeper"){
         return (
             <>
             <ToastContainer />

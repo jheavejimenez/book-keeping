@@ -11,35 +11,35 @@ import ForbiddenPage from "../Error/ForbiddenPage";
 function RequestPage() {
     const { user } = useAuth();
 
-    if (user.role === "admin") {
-    return (
-        <div
-            className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-            
-            {/*header*/}
-            <Header />
+    if (user.role === "bookkeeper") {
+        return (
+            <div
+                className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                
+                {/*header*/}
+                <Header />
 
-            {/*sidebar*/}
-            <Sidebar />
+                {/*sidebar*/}
+                <Sidebar />
 
-            <div className={"flex justify-between items-center h-14 bg-white header-right"}>
+                <div className={"flex justify-between items-center h-14 bg-white header-right"}>
+                        
+                </div>
+                    
+                <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+                    <Card
+                        titleText={"Requested Documents"}
+                        button={<RequestButton text={"Request"}/>}
+
+                    />
+        
+                    {/*request table*/}
+                    <RequestTable />
+                </div>
+
                     
             </div>
-                
-            <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <Card
-                    titleText={"Requested Documents"}
-                    button={<RequestButton text={"Request"}/>}
-
-                />
-    
-                {/*request table*/}
-                <RequestTable />
-            </div>
-
-                
-        </div>
-    )
+        )
     }
     else {
         return (
