@@ -17,7 +17,12 @@ import 'react-toastify/dist/ReactToastify.css';
 function ClientTable(props) {
     const notify = () => toast.warning("No more documents to show", {
         position: "top-center",
-
+        autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
     });
     const { user } = useAuth();
     const titleTable = [
@@ -39,6 +44,8 @@ function ClientTable(props) {
 
     
     const fetchData = async () => {
+        
+
         const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
@@ -48,8 +55,13 @@ function ClientTable(props) {
             
         });
         setList(items);
-        console.log();
-            
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = false;
+        }
+        
         
     };
     
@@ -58,7 +70,7 @@ function ClientTable(props) {
     const showNextPage = ({item}) => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
+
         }
         else {
             const fetchNextData = async () => {
@@ -81,7 +93,6 @@ function ClientTable(props) {
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
         }
         else {
 
@@ -105,7 +116,6 @@ function ClientTable(props) {
     const filterExcel = () => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
         }
         else {
 
@@ -130,7 +140,6 @@ function ClientTable(props) {
     const filterPdf = () => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
         }
         else {
 
@@ -155,6 +164,7 @@ function ClientTable(props) {
 
 useEffect(() => {
     fetchData();
+   
     const interval = setInterval(async () => {
         
     }, 5000)
@@ -215,15 +225,15 @@ useEffect(() => {
                     </div>
 
 
-                    <Pagination 
-                        path={showPrevPage}
-                        item={showNextPage}
-                        list={list}
-                        page={page}
-                    
-                        
-                    />
-                    
+                    <div id = "audit-table" >
+                        <Pagination 
+                            path={showPrevPage}
+                            item={showNextPage}
+                            list={list}
+                            page={page}
+                            
+                        />
+                    </div>  
                     
                     
                 </div>

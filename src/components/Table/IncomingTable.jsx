@@ -15,6 +15,12 @@ import 'react-toastify/dist/ReactToastify.css';
 function IncomingTable() {
     const notify = () => toast.warning("No more documents to show", {
         position: "top-center",
+        autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
 
     });
     const { user } = useAuth();
@@ -43,13 +49,19 @@ function IncomingTable() {
             
         });
         setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = false;
+        }
         
     };
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
+           
         }
         else {
             const fetchNextData = async () => {
@@ -73,7 +85,7 @@ function IncomingTable() {
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
+           
         }
         else {
         const fetchPrevData = async () => {
@@ -94,7 +106,7 @@ function IncomingTable() {
 const filterExcel = () => {
     if (list.length === 0) {
         notify();
-        window.location.reload();
+       
     }
     else {
 
@@ -119,7 +131,7 @@ const filterExcel = () => {
 const filterPdf = () => {
     if (list.length === 0) {
         notify();
-        window.location.reload();
+        
     }
     else {
 
@@ -249,13 +261,15 @@ const checkFileExpire = async () => {
                             </tbody>
                         </table>
                     </div>
-                    <Pagination 
-                        path={showPrevPage}
-                        item={showNextPage}
-                        list={list}
-                        page={page}
-                        
-                    />     
+                    <div id = "audit-table" >
+                        <Pagination 
+                            path={showPrevPage}
+                            item={showNextPage}
+                            list={list}
+                            page={page}
+                            
+                        />
+                    </div>    
                 </div>
             </div>
         </>

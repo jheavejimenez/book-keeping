@@ -30,6 +30,12 @@ function AdminAuditTable() {
     // }
     const  notif = () => toast.warning("No more documents to show", {
         position: "top-center",
+        autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
 
     });
 
@@ -38,6 +44,8 @@ function AdminAuditTable() {
 
    
     const fetchData = async () => {
+        
+
         const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(10));
         const querySnapshot = await getDocs(q)
         const items = []
@@ -46,14 +54,24 @@ function AdminAuditTable() {
 
             
         });
-        document.getElementById("audit-table").hidden = false;
+        
         setList(items);
-    };
 
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = false;
+        }
+        
+        
+    
+    };
+    
     const showNextPage = ({item}) => {
         if (list.length === 0) {
             notif();
-            window.location.reload();
+            
         }
         else {
             const fetchNextData = async () => {
@@ -77,7 +95,7 @@ function AdminAuditTable() {
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
             notif();
-            window.location.reload();
+            
         }
         else {
         const fetchPrevData = async () => {
@@ -98,7 +116,7 @@ function AdminAuditTable() {
     const filterRequest = () => {
         if (list.length === 0) {
             notif();
-            window.location.reload();
+            
         }
         else {
 
@@ -111,7 +129,7 @@ function AdminAuditTable() {
                 
             });
             // setList(items.filter((item) => item.file.includes(".pdf") && item.email === user.email));
-            document.getElementById("audit-table").hidden = true;
+            // document.getElementById("audit-table").hidden = true;
             
             // console.log(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Request")));
             
@@ -129,7 +147,7 @@ function AdminAuditTable() {
     const filterSent = () => {
         if (list.length === 0) {
             notif();
-            window.location.reload();
+            
         }
         else {
 
@@ -141,7 +159,7 @@ function AdminAuditTable() {
                 console.log(doc.data());
                 
             });
-            document.getElementById("audit-table").hidden = true;
+            // document.getElementById("audit-table").hidden = true;
             setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Sent")));
             
                 
@@ -154,7 +172,7 @@ function AdminAuditTable() {
     const filterArchived = () => {
         if (list.length === 0) {
             notif();
-            window.location.reload();
+           
         }
         else {
 
@@ -166,7 +184,7 @@ function AdminAuditTable() {
                 console.log(doc.data());
                 
             });
-            document.getElementById("audit-table").hidden = true;
+            // document.getElementById("audit-table").hidden = true;
             setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Archived")));
                 
         };
@@ -183,10 +201,13 @@ function AdminAuditTable() {
     useEffect(() => {
         // getAllRequestDocumments();
         fetchData();
-        // getAuditTrailData();
+       
+    
+        
+       
+
         const interval = setInterval(async () => {
-            // await getAllRequestDocumments();
-            // await fetchData();
+           
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -221,6 +242,12 @@ function AdminAuditTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
+                            {list.length === 0 ? ( 
+                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                    <td colSpan={5} className={"py-20 pl-50 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                </tr>
+                            ) : null
+                            }
                             {list.map?.((item) => (
                                 <AuditTableRow
                                     Column1={dayjs.unix(item.time?.seconds).format("hh:mm A, MMMM D, YYYY")}

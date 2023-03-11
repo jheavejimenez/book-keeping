@@ -21,6 +21,12 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
     const toastSuccess = (text) => {
         toast.success(text, {
             position: "top-center",
+            autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
     });
     }
 
@@ -60,7 +66,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
                 filename: inputRef.current.files[0].name,
                 }, {merge: true});
                 toastSuccess("File Updated")
-                window.location.reload();
+                
                 console.log(newFile)
                 console.log(url)
                 console.log(inputRef.current.files[0].name)
@@ -72,7 +78,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
         });
         
 
-        // window.location.reload();
+        
     }
 }
     

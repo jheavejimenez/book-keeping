@@ -39,18 +39,25 @@ function AdminTable(props) {
             
         });
         setList(items);
-            console.log();
-            setPage(page + 1);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = false;
+        }
+        
+
             
         
     };
+    
     
     
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
             alert("Thats all we have for now !")
-            window.location.reload();
+            
         }
         else {
             const fetchNextData = async () => {
@@ -73,7 +80,7 @@ function AdminTable(props) {
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
             alert("Thats all we have for now !")
-            window.location.reload();
+           
         }
         else {
 
@@ -97,7 +104,7 @@ function AdminTable(props) {
     const filterExcel = () => {
         if (list.length === 0) {
             alert("Thats all we have for now !")
-            window.location.reload();
+            
         }
         else {
 
@@ -122,7 +129,7 @@ function AdminTable(props) {
     const filterPdf = () => {
         if (list.length === 0) {
             alert("Thats all we have for now !")
-            window.location.reload();
+            
         }
         else {
 
@@ -205,15 +212,15 @@ useEffect(() => {
                         </table>
                     </div>
 
-
-                    <Pagination 
-                        path={showPrevPage}
-                        item={showNextPage}
-                        list={list}
-                        page={page}
-                    
-                        
-                    />
+                    <div id = "audit-table" >
+                        <Pagination 
+                            path={showPrevPage}
+                            item={showNextPage}
+                            list={list}
+                            page={page}
+                            
+                        />
+                    </div>  
                     
                     
                     

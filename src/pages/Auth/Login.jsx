@@ -144,7 +144,6 @@ function Login() {
                  else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime ) {
                     // if Llogin is greater than contract expired  then print contract expired
                     if(Llogin > contractexpired){
-                         gettingTwoDatabase(email)
                          setError("Your contract has expired")
                         
                     }

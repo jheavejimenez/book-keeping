@@ -15,6 +15,12 @@ import 'react-toastify/dist/ReactToastify.css';
 function OutgoingTable() {
     const notify = () => toast.warning("No more documents to show", {
         position: "top-center",
+        autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
 
     });
     const { user } = useAuth();
@@ -44,28 +50,35 @@ function OutgoingTable() {
   
         
         
-        const fetchData = async () => {
-            const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(5));
-           if (user) {
-               const querySnapshot = await getDocs(q)
-               const items = []
-               querySnapshot.forEach((doc) => {
-                     items.push(doc.data())
-                     
-                     
-               });
-                setList(items.filter((item) => item.sentby === user.email));
-
-           }
-         
-        };
+    const fetchData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(5));
+        if (user) {
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                    items.push(doc.data())
+                    
+                    
+            });
+            setList(items.filter((item) => item.sentby === user.email));
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = false;
+            }
+            
+            
+        }
+        
+    };
 
     
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
+            
         }
         else {
             const fetchNextData = async () => {
@@ -90,7 +103,7 @@ function OutgoingTable() {
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
+           
         }
         else {
         const fetchPrevData = async () => {
@@ -113,7 +126,7 @@ function OutgoingTable() {
     const filterExcel = () => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
+           
         }
         else {
 
@@ -138,7 +151,7 @@ function OutgoingTable() {
     const filterPdf = () => {
         if (list.length === 0) {
             notify();
-            window.location.reload();
+            
         }
         else {
 
@@ -204,6 +217,9 @@ function OutgoingTable() {
 
     useEffect(() => {
         fetchData();
+        if (list.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
         const interval = setInterval(async () => {
             await fetchData();
             await checkFileExpire();
@@ -245,7 +261,7 @@ function OutgoingTable() {
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
                                 <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-20 pl-56 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                    <td colSpan={5} className={"py-20 pl-50 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
                                 </tr>
                             ) : null
                             }
@@ -261,13 +277,15 @@ function OutgoingTable() {
                             </tbody>
                         </table>
                     </div>
-                    <Pagination 
-                        path={showPrevPage}
-                        item={showNextPage}
-                        list={list}
-                        page={page}
-                        
-                    />    
+                    <div id = "audit-table" >
+                        <Pagination 
+                            path={showPrevPage}
+                            item={showNextPage}
+                            list={list}
+                            page={page}
+                            
+                        />
+                    </div>     
                 </div>
             </div>
         </>

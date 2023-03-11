@@ -20,15 +20,22 @@ function AdminArchiveTable() {
         position: "top-center",
 
     });
+    const user = useAuth();
     const  notif1 = () => toast.warning("No more documents to show", {
         position: "top-center",
+        autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
 
     });
     const  notif2 = () => toast.success("File Unarchived", {
         position: "top-center",
 
     });
-    const [data, setData] = useState([]);
+    const auditTrailCollectionRef = collection(db, "audittrail",);
     const [selectedRow, setSelectedRow] = useState([]);
     const titleTable = [
         "Select",
@@ -56,12 +63,20 @@ function AdminArchiveTable() {
             
         });
         setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = false;
+        }
+        
+        
     };
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
             notif1();
-            window.location.reload();
+            
         }
         else {
             const fetchNextData = async () => {
@@ -85,7 +100,7 @@ function AdminArchiveTable() {
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
             notif1();
-            window.location.reload();
+            
         }
         else {
         const fetchPrevData = async () => {
@@ -112,7 +127,7 @@ function AdminArchiveTable() {
                     email:   item.email ? item.email : "",
                     file:  item.file ? item.file : "",
                     filename: item.filename ? item.filename : "",
-                    fileexpire:  item.fileexpire ? item.fileexpire : "",
+                    fileexpiry:  item.fileexpiry ? item.fileexpiry : "",
                     datesent:  item.datesent ? item.datesent : "",
                     company: item.company ? item.company : "",
                     purpose: item.purpose ? item.purpose : "",
@@ -122,7 +137,11 @@ function AdminArchiveTable() {
                     });
                  
 
-
+                 setDoc(doc(auditTrailCollectionRef, item.docid), {
+                    time : serverTimestamp(),
+                    user : user.email,
+                    activity : "Unarchived a file:  " + item.filename,
+                 });
                  deleteDoc(doc(db, "archive",item.docid));
                  notif2();
             }
@@ -134,7 +153,7 @@ function AdminArchiveTable() {
                     email:  item.email ? item.email : "",
                     file:  item.file ? item.file : "",
                     filename: item.filename ? item.filename : "",
-                    fileexpire:  item.fileexpire ? item.fileexpire : "",
+                    fileexpiry:  item.fileexpiry ? item.fileexpiry : "",
                     datesent:   item.datesent ? item.datesent : "",
                     company:  item.company ? item.company : "",
                     purpose: item.purpose ? item.purpose : "",
@@ -142,6 +161,12 @@ function AdminArchiveTable() {
                     sentfrom: item.sentfrom ? item.sentfrom : "",
                     datearchive: item.datearchive ? item.datearchive : serverTimestamp(),
                     date: item.date ? item.date : serverTimestamp(),
+                    });
+                    
+                setDoc(doc(auditTrailCollectionRef, item.docid), {
+                    time : serverTimestamp(),
+                    user : 'Admin',
+                    activity : "Unarchived a file:  " + item.filename,
                     });
                 deleteDoc(doc(db, "archive",item.docid));
                 notif2();
@@ -152,10 +177,15 @@ function AdminArchiveTable() {
         });
     }
 
-
+    
 
     const deleteSelectRow = async() => {
         selectedRow.forEach((item) => {
+            setDoc(doc(auditTrailCollectionRef, item.docid), {
+                time : serverTimestamp(),
+                user : 'Admin',
+                activity : "Deleted a file:  " + item.filename,
+            });
             deleteDoc(doc(db, "archive", item.docid));
             notif();
             setTimeout(() => {
@@ -217,6 +247,12 @@ function AdminArchiveTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
+                            {list.length === 0 ? ( 
+                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                    <td colSpan={5} className={"py-20 pl-50 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                </tr>
+                            ) : null
+                            }
                             {list.map?.((item) => (
                                 
                                     <ArchiveTableRow
@@ -241,13 +277,15 @@ function AdminArchiveTable() {
                             </tbody>
                         </table>
                     </div>
-                    <Pagination 
+                    <div id = "audit-table" >
+                        <Pagination 
                             path={showPrevPage}
                             item={showNextPage}
                             list={list}
                             page={page}
                             
                         />
+                    </div>  
                 </div>
             </div>
         </>
