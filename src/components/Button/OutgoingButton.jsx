@@ -114,7 +114,7 @@ function OutgoingButton({ text }) {
             headers: {
             
             'Content-Type': 'multipart/form-data',
-            'x-apikey': '89c7585856b36502eaf86b50d505a12c94a45c421c48075608c1cd223f21d82d'
+            'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
             },
             params: {
                 priority: 'high'
@@ -122,7 +122,7 @@ function OutgoingButton({ text }) {
         });
         const getData = await axios.get(response.data.data.links.self,{
             headers: {
-                'x-apikey': '89c7585856b36502eaf86b50d505a12c94a45c421c48075608c1cd223f21d82d'
+                'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
             }
         });
         setScanResult(getData);
@@ -271,7 +271,7 @@ function OutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
-                                    {scanResult === null   ? (
+                                    {scanResult === null  || 'queued'  ? (
                                         <button
                                             className={" bg-gray-500 hover:bg-gray-400 text-white " +
                                             " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +
