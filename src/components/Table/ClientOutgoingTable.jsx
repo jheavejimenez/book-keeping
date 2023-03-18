@@ -50,7 +50,7 @@ function ClientOutgoingTable() {
         
         
         const fetchData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"), limit(5));
+            const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
            if (user) {
                const querySnapshot = await getDocs(q)
                const items = []
@@ -82,7 +82,7 @@ function ClientOutgoingTable() {
         }
         else {
             const fetchNextData = async () => {
-                const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"), limit(5), startAfter(item.datesend));
+                const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5), startAfter(item.date));
                 if (user) {
                     const querySnapshot = await getDocs(q)
                     const items = []
@@ -107,7 +107,7 @@ function ClientOutgoingTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"),endBefore(item.datesend), limitToLast(5) );
+            const q = query(collection(db, "outgoing"),orderBy("date", "desc"),endBefore(item.date), limitToLast(5) );
             if (user) {
                 const querySnapshot = await getDocs(q)
                 const items = []
@@ -131,7 +131,7 @@ function ClientOutgoingTable() {
         else {
 
         const fetchPrevData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"),limit(5));
+            const q = query(collection(db, "outgoing"),orderBy("date", "desc"),limit(5));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -156,7 +156,7 @@ function ClientOutgoingTable() {
         else {
 
         const fetchPrevData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"),limit(5));
+            const q = query(collection(db, "outgoing"),orderBy("date", "desc"),limit(5));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -272,7 +272,7 @@ function ClientOutgoingTable() {
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.datesend?.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.date?.seconds).format("YYYY-MM-DD")}
                                 />)
                             )}
                             </tbody>

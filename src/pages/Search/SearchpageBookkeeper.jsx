@@ -53,7 +53,7 @@ function SearchpageBookkeeping() {
         }
         else{
         const q1 = query(collection(db, "incoming"), orderBy("date", "desc"));
-        const q = query(collection(db, "outgoing"), orderBy("datesend", "desc"));
+        const q = query(collection(db, "outgoing"), orderBy("date", "desc"));
         
 
          if (q && q1 !== 0 ) {
@@ -88,7 +88,7 @@ function SearchpageBookkeeping() {
     
 
     
-    if (user.role === "admin") {
+    if (user.role === "bookkeeper") {
 
     return (
         <>
@@ -140,7 +140,7 @@ function SearchpageBookkeeping() {
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.datesend?.seconds || item.date?.seconds).format("DD/MM/YYYY")}
+                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("DD/MM/YYYY")}
                                     
                                 />)
                             )}

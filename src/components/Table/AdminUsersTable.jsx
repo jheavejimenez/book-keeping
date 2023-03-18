@@ -19,7 +19,12 @@ function AdminUsersTable() {
     const docid = nanoid(5);
     const  notif = () => toast.success("User Deleted", {
         position: "top-center",
-
+        autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        }
     });
     const  notif1 = () => toast.warning("No more documents to show", {
         position: "top-center",

@@ -46,7 +46,7 @@ function AdminAuditTable() {
     const fetchData = async () => {
         
 
-        const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(10));
+        const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -75,7 +75,7 @@ function AdminAuditTable() {
         }
         else {
             const fetchNextData = async () => {
-                const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(10), startAfter(item.time));
+                const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(5), startAfter(item.time));
                 const querySnapshot = await getDocs(q)
                 const items = []
                 querySnapshot.forEach((doc) => {
@@ -99,7 +99,7 @@ function AdminAuditTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "audittrail"),orderBy("time", "desc"),endBefore(item.time), limitToLast(10) );
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"),endBefore(item.time), limitToLast(5) );
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -134,7 +134,7 @@ function AdminAuditTable() {
             // console.log(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Request")));
             
             setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Request")));
-            
+            document.getElementById("audit-table").hidden = true;
             
            
                 
@@ -161,7 +161,7 @@ function AdminAuditTable() {
             });
             // document.getElementById("audit-table").hidden = true;
             setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Sent")));
-            
+            document.getElementById("audit-table").hidden = true;
                 
         };
         fetchPrevData();
@@ -186,14 +186,109 @@ function AdminAuditTable() {
             });
             // document.getElementById("audit-table").hidden = true;
             setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Archived")));
-                
+            document.getElementById("audit-table").hidden = true;
         };
         fetchPrevData();
 
 
         }
     }
-    
+    const filterEdit = () => {
+        if (list.length === 0) {
+            notif();
+           
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+                
+            });
+            // document.getElementById("audit-table").hidden = true;
+            setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Edit")));
+            document.getElementById("audit-table").hidden = true;
+        };
+        fetchPrevData();
+
+
+        }
+    }
+    const filterUnarchive = () => {
+        if (list.length === 0) {
+            notif();
+           
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+                
+            });
+            // document.getElementById("audit-table").hidden = true;
+            setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Unarchive")));
+            document.getElementById("audit-table").hidden = true;
+        };
+        fetchPrevData();
+
+
+        }
+    }
+    const filterDeleteFile = () => {
+        if (list.length === 0) {
+            notif();
+           
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+                
+            });
+            // document.getElementById("audit-table").hidden = true;
+            setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Deleted a file")));
+            document.getElementById("audit-table").hidden = true;
+        };
+        fetchPrevData();
+
+
+        }
+    }
+    const filterDeleteUser = () => {
+        if (list.length === 0) {
+            notif();
+           
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+                
+            });
+            // document.getElementById("audit-table").hidden = true;
+            setList(querySnapshot.docs.map((doc) => doc.data()).filter((item) => item.activity.includes("Deleted a user")));
+            document.getElementById("audit-table").hidden = true;
+        };
+        fetchPrevData();
+
+
+        }
+    }
 
 
 
@@ -224,6 +319,10 @@ function AdminAuditTable() {
                     sent={filterSent}
                     all={fetchData}
                     archived={filterArchived}
+                    edit={filterEdit}
+                    unarchived={filterUnarchive}
+                    deleteFile={filterDeleteFile}
+                    deleteUser={filterDeleteUser}
             />
             </div>
             <div className={"mt-10 mx-4"}>

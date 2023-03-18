@@ -42,6 +42,12 @@ function TableRow({ Column1, Column2, Column3, Column4, Column5, Column6, status
         
         toast.info("Status has been changed", {
             position: "top-center",
+            autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
     }   
     
     );

@@ -57,7 +57,7 @@ function ClientRequestTable() {
             
         });
         setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
-        if (items.length === 0) {
+        if (items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed")) {
             document.getElementById("audit-table").hidden = true;
         }
         else {

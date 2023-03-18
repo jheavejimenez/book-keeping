@@ -35,10 +35,10 @@ function Header() {
 
         if (role === "client") {
             
-                navigate(`/search/`, {state: search, replace: true})
+            navigate(`/search/`, {state: search, replace: true})
             
         } 
-        else if (role === "admin") {
+        else if (role === "bookkeeper") {
             
             navigate(`/bookkeeper/search/`, {state: search, replace: true})
             

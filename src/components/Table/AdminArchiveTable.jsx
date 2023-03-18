@@ -128,7 +128,6 @@ function AdminArchiveTable() {
                     file:  item.file ? item.file : "",
                     filename: item.filename ? item.filename : "",
                     fileexpiry:  item.fileexpiry ? item.fileexpiry : "",
-                    datesent:  item.datesent ? item.datesent : "",
                     company: item.company ? item.company : "",
                     purpose: item.purpose ? item.purpose : "",
                     sentby: item.sentby ? item.sentby : "",
@@ -139,7 +138,7 @@ function AdminArchiveTable() {
 
                  setDoc(doc(auditTrailCollectionRef, item.docid), {
                     time : serverTimestamp(),
-                    user : user.email,
+                    user : 'Admin',
                     activity : "Unarchived a file:  " + item.filename,
                  });
                  deleteDoc(doc(db, "archive",item.docid));
@@ -154,7 +153,6 @@ function AdminArchiveTable() {
                     file:  item.file ? item.file : "",
                     filename: item.filename ? item.filename : "",
                     fileexpiry:  item.fileexpiry ? item.fileexpiry : "",
-                    datesent:   item.datesent ? item.datesent : "",
                     company:  item.company ? item.company : "",
                     purpose: item.purpose ? item.purpose : "",
                     sentby:  item.sentby ? item.sentby : "",

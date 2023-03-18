@@ -50,7 +50,7 @@ function Searchpage() {
             notfiyWarning("Please enter a search term")
         }
         else{
-        const q = query(collection(db, "outgoing"), orderBy("datesend", "desc"), where("sentby", "==", user.email));
+        const q = query(collection(db, "outgoing"), orderBy("date", "desc"), where("sentby", "==", user.email));
         const q1 = query(collection(db, "incoming"), orderBy("date", "desc"), where("email", "==", user.email));
 
          if (q && q1 !== 0 ) {
@@ -135,7 +135,7 @@ function Searchpage() {
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.datesend?.seconds || item.date?.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("YYYY-MM-DD")}
                                     
                                 />)
                             )}

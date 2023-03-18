@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import FilterDropdownOptions from '../Options/FilterDropdownOptions'
 
-function FilterDropdownAction({request, sent, edit, archived, unarchived, deleteFile, enable, disable, deleteUser, all}) {
+function FilterDropdownAction({request, sent, edit, archived, unarchived, deleteFile, deleteUser, all}) {
     return (
         <Menu as="div" className="relative inline-block text-left">
 
@@ -74,19 +74,6 @@ function FilterDropdownAction({request, sent, edit, archived, unarchived, delete
                             " focus:outline-none focus:bg-gray-100 focus:text-gray-900 "}>
                             Delete Files
                         </button>
-
-                        <button onClick={() => enable()} className={" flex items-center justify-between w-full px-4 py-2 text-sm " +
-                            " text-gray-700 hover:bg-gray-100 hover:text-gray-900 " +
-                            " focus:outline-none focus:bg-gray-100 focus:text-gray-900 "}>
-                            Enable User
-                        </button>
-
-                        <button onClick={() => disable()} className={" flex items-center justify-between w-full px-4 py-2 text-sm " +
-                            " text-gray-700 hover:bg-gray-100 hover:text-gray-900 " +
-                            " focus:outline-none focus:bg-gray-100 focus:text-gray-900 "}>
-                            Disable User
-                        </button>
-
                         <button onClick={() => deleteUser()} className={" flex items-center justify-between w-full px-4 py-2 text-sm " +
                             " text-gray-700 hover:bg-gray-100 hover:text-gray-900 " +
                             " focus:outline-none focus:bg-gray-100 focus:text-gray-900 "}>

@@ -65,6 +65,11 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
                 file: url,
                 filename: inputRef.current.files[0].name,
                 }, {merge: true});
+                setDoc(doc(auditTrailCollectionRef, Column1), {
+                    time : serverTimestamp(),
+                    user : user.email,
+                    activity : "Edit file:  " + Column3,
+                });
                 toastSuccess("File Updated")
                 
                 console.log(newFile)

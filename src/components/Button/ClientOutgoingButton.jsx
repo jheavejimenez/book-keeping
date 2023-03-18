@@ -68,7 +68,7 @@ function ClientOutgoingButton({ text }) {
                         filename: newFile.name,
                         file: url,
                         purpose,
-                        datesend: serverTimestamp(),
+                        date: serverTimestamp(),
                         fileexpiry: timestamp,
                        
                     });
@@ -256,7 +256,7 @@ function ClientOutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
-                                    {scanResult === null  || 'queued' ? (
+                                    {scanResult === null   ? (
                                         <button
                                             className={" bg-gray-500 hover:bg-gray-400 text-white " +
                                             " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +

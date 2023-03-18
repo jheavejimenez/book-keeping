@@ -40,7 +40,7 @@ function IncomingTable() {
 
    
     const fetchData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"), limit(5));
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -65,7 +65,7 @@ function IncomingTable() {
         }
         else {
             const fetchNextData = async () => {
-                const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"), limit(5), startAfter(item.datesend));
+                const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5), startAfter(item.date));
                 const querySnapshot = await getDocs(q)
                 const items = []
                 querySnapshot.forEach((doc) => {
@@ -89,7 +89,7 @@ function IncomingTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"),endBefore(item.datesend), limitToLast(5) );
+            const q = query(collection(db, "outgoing"),orderBy("date", "desc"),endBefore(item.date), limitToLast(5) );
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -111,7 +111,7 @@ const filterExcel = () => {
     else {
 
     const fetchPrevData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"),limit(5));
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"),limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -136,7 +136,7 @@ const filterPdf = () => {
     else {
 
     const fetchPrevData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("datesend", "desc"),limit(5));
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"),limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -246,7 +246,7 @@ const checkFileExpire = async () => {
                                     Column2={item.sentby}
                                     Column3={item.filename}
                                     Column4={item.purpose}
-                                    Column5={dayjs.unix(item.datesend?.seconds).format("DD/MM/YYYY")} 
+                                    Column5={dayjs.unix(item.date?.seconds).format("DD/MM/YYYY")} 
                                     Column6={
                                         <div className={"flex items-center space-x-4"}>
                                             <button className={"flex items-center justify-center w-8 h-8 text-blue-500 transition-colors duration-150 bg-white rounded-full hover:bg-blue-100"}>

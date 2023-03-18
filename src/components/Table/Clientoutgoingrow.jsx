@@ -88,29 +88,6 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
 
     const auditTrailCollectionRef = collection(db, "audittrail");
 
-    // const handleDelete = async (email) => {
-    //     const company = await getCompany(email)
-    //     await setDoc(doc(db, "archive", Column1), {
-    //         docid: Column1,
-    //         recipient: Column2,
-    //         file: Column3,
-    //         datesent: Column4,
-    //         company: company,
-    //         datearchive: serverTimestamp(),
-    //         });
-
-    //         setDoc(doc(auditTrailCollectionRef, Column1), {
-    //             time : serverTimestamp(),
-    //             user : user.email,
-    //             activity : "Archived file:  " + Column3,
-    //         });
-
-    //     successArchive()
-    //     await deleteDoc(doc(db, "outgoing", Column1));
-
-        
-    // }
-   
     return (
         <tr className={"hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{Column1}</td>
