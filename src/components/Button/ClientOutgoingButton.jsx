@@ -100,7 +100,7 @@ function ClientOutgoingButton({ text }) {
         formData.append('file', inputRef.current.files[0]);
         try {
 
-        const response = await axios.post('https://www.virustotal.com/api/v3/files', formData, {
+        const response = await axios.post(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
             method: 'GET',
             headers: {
             

@@ -8,11 +8,8 @@ import { nanoid } from "nanoid";
 import { useAuth } from "../../hooks/useAuth";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 import { boolean } from 'yup';
-
-
 
 function OutgoingButton({ text }) {
     const notify = () => {
@@ -29,7 +26,6 @@ function OutgoingButton({ text }) {
         
     );
     }
-
     
     const notify1 = () => {
         toast.error("No File Selected", {
@@ -51,8 +47,6 @@ function OutgoingButton({ text }) {
     const now = new Date();
     const fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
     const timestamp = fiveYearsFromNow
-
-    
 
     const add = async (e) => {
         e.preventDefault();
@@ -92,13 +86,8 @@ function OutgoingButton({ text }) {
                     
                 });
             });
-        }
-        
-        
-        
+        }        
     }
-
-    
     const [scanResult, setScanResult] = useState(null);
     const [scanStatus, setScanStatus] = useState(null);
     
@@ -109,7 +98,7 @@ function OutgoingButton({ text }) {
         formData.append('file', inputRef.current.files[0]);
         try {
 
-        const response = await axios.post('https://www.virustotal.com/api/v3/files', formData, {
+        const response = await axios.post(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
             method: 'GET',
             headers: {
             
