@@ -11,6 +11,7 @@ import FilterDropdown from "../Button/FilterDropdown";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import NoDataFound from "../../pages/Error/NoDataFound";
 
 function OutgoingTable() {
     const notify = () => toast.warning("No more documents to show", {
@@ -61,7 +62,7 @@ function OutgoingTable() {
                     
             });
             setList(items.filter((item) => item.sentby === user.email));
-            if (items.length === 0) {
+            if (items.filter((item) => item.sentby === user.email).length === 0) {
                 document.getElementById("audit-table").hidden = true;
             }
             else {
@@ -248,8 +249,8 @@ function OutgoingTable() {
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b dark:border-gray-700 " +
-                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
+                            " text-gray-500 border-b border-gray-700 " +
+                            " bg-gray-100 dark:text-gray-400 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}
@@ -260,8 +261,12 @@ function OutgoingTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-20 pl-50 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                <tr className={"text-sm font-medium text-center text-gray-900 "}>
+                                    <td colSpan={5} className={"pt-10"}>
+                                        <NoDataFound
+                                            text={"No Data"}
+                                        />
+                                    </td>
                                 </tr>
                             ) : null
                             }

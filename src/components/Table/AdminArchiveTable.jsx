@@ -12,6 +12,7 @@ import FilterDropdown from "../../components/Button/FilterDropdown";
 import Button from "../../components/Button/Button";
 
 import 'react-toastify/dist/ReactToastify.css';
+import NoDataFound from "../../pages/Error/NoDataFound";
 
 
 
@@ -221,11 +222,14 @@ function AdminArchiveTable() {
                 </div>
 
                 <div>
-                    <button onClick={unArchive} className={" px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full "}>Unarchive</button>
+                    <button onClick={unArchive} className={" px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg " + 
+                    " hover:bg-blue-600 w-full "}>Unarchive</button>
                 </div>
 
                 <div>
-                    <button onClick={deleteSelectRow} className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mt-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "}>Delete</button>
+                    <button onClick={deleteSelectRow} className={"text-gray-900 bg-gray-100 hover:bg-gray-200 " + 
+                    " border border-gray-400 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm " + 
+                    " px-5 py-2.5 ml-4 mt-4 focus:outline-none "}>Delete</button>
                 </div>
                 
             </div>
@@ -246,8 +250,12 @@ function AdminArchiveTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-20 pl-50 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                <tr className={"text-sm font-medium text-center text-gray-900"}>
+                                    <td colSpan={5} className={"pt-10"}>
+                                        <NoDataFound 
+                                            text={"No Data"}
+                                        />
+                                    </td>
                                 </tr>
                             ) : null
                             }

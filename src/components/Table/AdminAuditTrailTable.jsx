@@ -14,6 +14,7 @@ import FilterDropdownAction from "../Button/FilterDropdownAction";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import NoDataFound from "../../pages/Error/NoDataFound";
 
 
 function AdminAuditTable() {
@@ -342,8 +343,12 @@ function AdminAuditTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-20 pl-50 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                <tr className={"text-sm font-medium text-center text-gray-900"}>
+                                    <td colSpan={5} className={"pt-10"}>
+                                        <NoDataFound 
+                                            text={"No Data"}
+                                        />
+                                    </td>
                                 </tr>
                             ) : null
                             }

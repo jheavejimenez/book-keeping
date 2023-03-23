@@ -10,6 +10,7 @@ import { useQuery } from "react-query";
 import { getAllRequestDocumments } from "../../utils/helper";
 import { Table, Button, ButtonGroup } from "react-bootstrap";
 import FilterDropdown from "../Button/FilterDropdown";
+import NoDataFound from "../../pages/Error/NoDataFound";
 
 function AdminTable(props) {
     const { user } = useAuth();
@@ -194,7 +195,11 @@ useEffect(() => {
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
                                 <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-20 pl-56 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                    <td colSpan={7} className={"pt-10"}>
+                                        <NoDataFound 
+                                            text={"No Data"}
+                                        />
+                                    </td>
                                 </tr>
                             ) : null
                             }

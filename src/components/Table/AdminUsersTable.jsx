@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from "nanoid";
+import NoDataFound from "../../pages/Error/NoDataFound";
 
 
 
@@ -40,8 +41,8 @@ function AdminUsersTable() {
     const [selectedRow, setSelectedRow] = useState([]);
     const titleTable = [
         "Select",
-        "First Name",
-        "Last Name",
+        "Name",
+        "Email",
         "Role",
         "Company",
         "Last Active",
@@ -197,8 +198,12 @@ function AdminUsersTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-20 pl-56 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                <tr className={"text-sm font-medium text-center text-gray-900"}>
+                                    <td colSpan={10} className={"pt-10"}>
+                                        <NoDataFound 
+                                            text={"No Data"}
+                                        />
+                                    </td>
                                 </tr>
                             ) : null
                             }
@@ -217,8 +222,8 @@ function AdminUsersTable() {
                                         </div>
 
                                     }
-                                    Column1={item.fname}
-                                    Column2={item.lname}
+                                    Column1={item.fname + " " + item.lname}
+                                    Column2={item.email}
                                     Column3={item.role}
                                     Column4={item.company}
                                     Column5={dayjs.unix(item.Llogin?.seconds).format("hh:mm A, MMMM D, YYYY")}
