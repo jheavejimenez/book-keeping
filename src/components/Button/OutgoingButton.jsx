@@ -260,7 +260,7 @@ function OutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
-                                    {scanResult === null  || 'queued'  ? (
+                                    {scanResult === null || scanStatus === 'queued' || scanStatus === 'Scanning...' ? (
                                         <button
                                             className={" bg-gray-500 hover:bg-gray-400 text-white " +
                                             " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +

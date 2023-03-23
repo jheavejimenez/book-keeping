@@ -15,10 +15,18 @@ import { XMarkIcon } from '@heroicons/react/20/solid';
 import { auth } from "../../utils/Firebase";
 import FilterDropdown from "../Button/FilterDropdown";
 import { ToastContainer, toast } from 'react-toastify';
-
+import axios from "axios";
 
 
 function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
+    const notifyQue = () => {
+        toast.warning("File Scan has been queued please wait for a moment and try again later with the same file", {
+            position: "top-center",
+            autoClose: 5000
+    }
+        
+    );
+    }
     const Warning = () => toast.warning("no file selected", {
         position: "top-center",
 
@@ -66,6 +74,11 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
                 file: url,
                 filename: inputRef.current.files[0].name,
                 }, {merge: true});
+                setDoc(doc(auditTrailCollectionRef, Column1), {
+                    time : serverTimestamp(),
+                    user : user.email,
+                    activity : "Edit file:  " + Column3,
+                });
                 Success()
                 console.log(newFile)
                 console.log(url)
@@ -75,6 +88,42 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
         });
     }
 }
+const [scanResult, setScanResult] = useState(null);
+    const [scanStatus, setScanStatus] = useState(null);
+    
+    const handleScan = async (e) => {
+        e.preventDefault();
+        setScanStatus('Scanning...');
+        const formData = new FormData();
+        formData.append('file', inputRef.current.files[0]);
+        try {
+
+        const response = await axios.post(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
+            method: 'GET',
+            headers: {
+            
+            'Content-Type': 'multipart/form-data',
+            'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
+            }
+        });
+        const getData = await axios.get(response.data.data.links.self,{
+            headers: {
+                'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
+            }
+        });
+        setScanResult(getData);
+        if (getData.data.data.attributes.status === 'queued'){
+            notifyQue();
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        else{
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        } catch (error) {
+            setScanStatus('Scan Failed');
+            }
+        
+    };
     const getCompany = async () => {
         const q = query(collection(db, "users"), where("email", "==", user.email));
         const querySnapshot = await getDocs(q);
@@ -178,6 +227,14 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
                                                     
                                                 />
                                             </div>
+                                            <div className="flex space-x-2">
+                                                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
+                                                        onClick={handleScan}
+                                                    >
+                                                        Scan
+                                                    </button>
+                                                    <p className='text-gray-500 py-2 px-4 rounded'>{scanStatus}</p>
+                                            </div>
 
                                         </fieldset>
                                     </form>
@@ -196,7 +253,21 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
                                     >
                                         Close
                                     </button>
-                                    <button
+                                    {scanResult === null || scanStatus === 'queued' || scanStatus === 'Scanning...' ? (
+                                        <button
+                                            className={" bg-gray-500 hover:bg-gray-400 text-white " +
+                                            " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +
+                                            " py-3 rounded shadow hover:shadow-lg outline-none " +
+                                            " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
+                                            
+                                            type="button"
+                                            
+                                            disabled
+                                        >
+                                            Update
+                                        </button>
+                                    ):(
+                                        <button
                                         className={" bg-blue-500 hover:bg-blue-400 text-white " + 
                                         " active:bg-emerald-600 font-bold uppercase text-sm px-6 " + 
                                         " py-3 rounded shadow hover:shadow-lg outline-none "+
@@ -206,6 +277,8 @@ function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
                                     >
                                         Update
                                     </button>
+                                    )}
+                                    
                                 </div>
                             </div>
                         </div>
