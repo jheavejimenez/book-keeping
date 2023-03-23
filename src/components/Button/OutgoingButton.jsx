@@ -1,33 +1,65 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, db, storage } from "../../utils/Firebase";
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { nanoid } from "nanoid";
+import { useAuth } from "../../hooks/useAuth";
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { boolean } from 'yup';
 
 function OutgoingButton({ text }) {
+    const notify = () => {
+        toast.success("File Sent", {
+            position: "top-center",
+    });
+    }
+
+    const notifyQue = () => {
+        toast.warning("File Scan has been queued please wait for a moment and try again later with the same file", {
+            position: "top-center",
+            autoClose: 5000
+    }
+        
+    );
+    }
+    
+    const notify1 = () => {
+        toast.error("No File Selected", {
+            position: "top-center",
+    });
+    }
+
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
     const [newFile, setNewFile] = useState(null)
-    const [setPurpose] = useState('')
+    const {user} = useAuth()
+    const [purpose, setPurpose] = useState('')
     const inputRef = useRef()
 
     const OutgoingsetCollectionRef = collection(db, "incoming",);
+    const auditTrailCollectionRef = collection(db, "audittrail",);
     const documentId = nanoid(5)
+    
+    const now = new Date();
+    const fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
+    const timestamp = fiveYearsFromNow
 
     const add = async (e) => {
         e.preventDefault();
 
         if (newFile === null) {
-            alert("no file selected");
+            notify1()
         } else {
             
             const imageRef = ref(storage, 'reciepts/' + newFile.name);
             uploadBytes(imageRef, newFile).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setNewFile(url)
-                    alert("File Sent")
+                    notify()
                     
             
 
@@ -37,24 +69,70 @@ function OutgoingButton({ text }) {
                         email: newEmail,
                         filename: newFile.name,
                         file: url,
+                        purpose,
                         date: serverTimestamp(),
+                        fileexpiry: timestamp,
+                        // archived: false,
                        
+                    });
+
+                    setDoc(doc(auditTrailCollectionRef, documentId), {
+                        time : serverTimestamp(),
+                        user : user.email,
+                        activity : "Sent a file:  " + newFile.name,
                     });
                     
                     
                     
                 });
             });
-        }
-        
-        
-        
+        }        
     }
+    const [scanResult, setScanResult] = useState(null);
+    const [scanStatus, setScanStatus] = useState(null);
+    
+    const handleScan = async (e) => {
+        e.preventDefault();
+        setScanStatus('Scanning...');
+        const formData = new FormData();
+        formData.append('file', inputRef.current.files[0]);
+        try {
 
+        const response = await axios.post(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
+            method: 'GET',
+            headers: {
+            
+            'Content-Type': 'multipart/form-data',
+            'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
+            },
+            params: {
+                priority: 'high'
+              }
+        });
+        const getData = await axios.get(response.data.data.links.self,{
+            headers: {
+                'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
+            }
+        });
+        setScanResult(getData);
+        if (getData.data.data.attributes.status === 'queued'){
+            notifyQue();
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        else{
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        } catch (error) {
+            setScanStatus('Scan Failed');
+            }
+        
+    };
+    console.log(scanResult)
+    
 
     return (
         <>
-
+             <ToastContainer />
             <button
                 className={" bg-white text-blue-500 font-bold px-6 py-2 rounded inline-flex items-center "}
                 type="button"
@@ -104,7 +182,7 @@ function OutgoingButton({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
-                                                    value={auth.currentUser.email}
+                                                    value={user.email}
                                                     disabled
                                                 />
                                             </div>
@@ -135,6 +213,18 @@ function OutgoingButton({ text }) {
                                                     onChange={(e) => setNewFile(inputRef.current.files[0])}
                                                     
                                                 />
+                                                <div className="flex space-x-2">
+                                                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
+                                                        onClick={handleScan}
+                                                    >
+                                                        Scan
+                                                    </button>
+                                                    <p className='text-gray-500 py-2 px-4 rounded'>{scanStatus}</p>
+
+                                                </div>
+                                                        
+                                               
+                                                
                                             </div>
                                             <div>
                                                 <label
@@ -152,7 +242,7 @@ function OutgoingButton({ text }) {
                                                     onChange={(e) => setPurpose(e.target.value)}
                                                 />
                                             </div>
-
+                                            
                                         </fieldset>
                                     </form>
                                 </div>
@@ -170,6 +260,20 @@ function OutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
+                                    {scanResult === null || scanStatus === 'queued' || scanStatus === 'Scanning...' ? (
+                                        <button
+                                            className={" bg-gray-500 hover:bg-gray-400 text-white " +
+                                            " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +
+                                            " py-3 rounded shadow hover:shadow-lg outline-none " +
+                                            " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
+                                            
+                                            type="button"
+                                            
+                                            disabled
+                                        >
+                                            Send
+                                        </button>
+                                    ):(
                                     <button
                                         className={" bg-blue-500 hover:bg-blue-400 text-white " + 
                                         " active:bg-emerald-600 font-bold uppercase text-sm px-6 " + 
@@ -180,6 +284,7 @@ function OutgoingButton({ text }) {
                                     >
                                         Send
                                     </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

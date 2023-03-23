@@ -11,36 +11,34 @@ import FilterDropdown from "../../components/Button/FilterDropdown";
 function Outgoing() {
     const { user } = useAuth();
 
-    if (user.role === "admin") {
-    return (
-        <div
-            className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+    if (user.role === "bookkeeper") {
+        return (
+            <div
+                className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
 
-            {/*header*/}
-            <Header />
+                {/*header*/}
+                <Header />
 
-            {/*sidebar*/}
-            <Sidebar />
+                {/*sidebar*/}
+                <Sidebar />
 
-            <div className={"flex justify-between items-center h-14 bg-white header-right"}>
-                
+                <div className={"flex justify-between items-center h-14 bg-white header-right"}>
+                    
+                </div>
+
+                <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+
+                    <Card 
+                        titleText={"Outgoing Documents"}
+                        button={<OutgoingButton text={"Send Files"}/>}
+                    />
+                    
+                    {/*outgoing table*/}
+                    <OutgoingTable />
+                </div>
+
             </div>
-
-            <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-
-                <Card 
-                    titleText={"Outgoing Documents"}
-                    button={<OutgoingButton text={"Send Files"}/>}
-                />
-                <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                        Filter by Type <FilterDropdown />
-                    </div> 
-                {/*outgoing table*/}
-                <OutgoingTable />
-            </div>
-
-        </div>
-    )
+        )
     }
     else {
         return (

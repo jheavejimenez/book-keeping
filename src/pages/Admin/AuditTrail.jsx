@@ -2,47 +2,50 @@ import React from "react";
 import AdminSidebar from "../../components/Navigation/AdminSidebar";
 import Header from "../../components/Navigation/Header";
 import Card from "../../components/Cards/Card";
-import FilterDropdown from "../../components/Button/FilterDropdown";
+import { useAuth } from "../../hooks/useAuth";
+import FilterDropdownAction from "../../components/Button/FilterDropdownAction";
 import AdminAuditTable from "../../components/Table/AdminAuditTrailTable";
+import ForbiddenPage from "../Error/ForbiddenPage";
 
 function AuditTrail() {
-    return (
-        
-        <div 
-            className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-                
-            {/*header*/}
-            <Header />
-                
-            {/*sidebar*/}
-            <AdminSidebar />
+    const { user } = useAuth();
+
+    if(user.role === "admin") {
+        return (
             
-            <div className={"flex justify-between items-center h-14 bg-white header-right"}>
+            <div 
+                className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
                     
-            </div>
-            
-            <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
-                <Card
-                    titleText={"Audit Trail"}
-                />
+                {/*header*/}
+                <Header />
+                    
+                {/*sidebar*/}
+                <AdminSidebar />
                 
-                <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-                    <div>
-                    Filter by User <FilterDropdown />
-                    </div>
+                <div className={"flex justify-between items-center h-14 bg-white header-right"}>
+                        
+                </div>
+                
+                <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+                    <Card
+                        titleText={"Audit Trail"}
+                    />
                     
-                    <div>
-                    Filter by Action <FilterDropdown />
-                    </div>
+                    
+
+                    <AdminAuditTable/>
+
+
                 </div>
 
-                <AdminAuditTable/>
-
-
             </div>
-
-        </div>
-    )
+        )
+    }
+    else {
+        return (
+            <ForbiddenPage />
+        )
+    }
 }
 
 export default AuditTrail;

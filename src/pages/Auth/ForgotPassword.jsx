@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function ForgotPassword() {
+    const notifyInfo = () => toast.info("Password reset email sent!", {
+        position: "top-center",
+
+    });
+
+    const notifyError = (errorCode, errorMessage) => toast.error(errorMessage, {
+        position: "top-center",
+
+    });
     const [email, setEmail] = useState("");
     const [errors, setError] = useState("");
 
@@ -13,18 +25,19 @@ function ForgotPassword() {
             .then(() => {
                 // Password reset email sent!
                 // ..
-                alert("Password reset email sent!")
+                notifyInfo()
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
-                alert(errorCode, errorMessage);
+                notifyError(errorCode, errorMessage)
             });
     };
 
     return (
         <>
+            <ToastContainer />
             <div className={"bg-gray-100 flex justify-center mx-auto min-h-screen items-center"}>
                 <div className={"bg-white mx-auto p-9 w-96 shadow-lg rounded-lg"}>
                     <div className={""}>

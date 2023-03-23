@@ -9,18 +9,10 @@ import { Field, Form, Formik } from "formik";
 import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
 import { collection, getDocs, query, where, doc, updateDoc, setDoc, runTransaction, writeBatch} from "firebase/firestore";
-import Background from "../../../src/assets/bookkeeping-bg-cropped.jpg";
+import Background from "../../../src/assets/admin-bg-cropped.jpg";
 
-import { ToastContainer, toast } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
-
-
-function Login() {
-    const notifyError = () => toast.error("Invalid email or password", {
-        position: "top-center",
-
-    });
+function AdminLogin() {
+    
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
@@ -31,28 +23,18 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            notifyError()
+            setError("Invalid Email or Password");
         }
         console.log(querySnapshot.docs[0].data())
         return querySnapshot.docs[0].data().role
         
     }
 
-    const getContractExpired = async (email) => {
-        const q = query(collection(db, "users"), where("email", "==", email));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            notifyError()
-        }
-        return querySnapshot.docs[0].data().contractexpired
-
-    }
-
     const getLastlogin = async (email) => {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            notifyError()
+            console.log("No matching documents.");
         }
         return querySnapshot.docs[0].data().Llogin
 
@@ -122,7 +104,6 @@ function Login() {
 
     const handleSubmit = async (email, password) => {
         const role = await getUserRole(email)
-        const contractexpired = await getContractExpired(email)
         const Llogin = await getLastlogin(email)
         
 
@@ -134,63 +115,41 @@ function Login() {
                 });
 
                 const isNewUser = cred.user.metadata.creationTime;
-                if (role === "client" && isNewUser === cred.user.metadata.lastSignInTime) {
+                if (role === "admin" && isNewUser === cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('/account-settings') // it should be navigated to client dashboard
-                } 
-                 else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime ) {
-                    // if Llogin is greater than contract expired  then print contract expired
-                    if(Llogin > contractexpired){
-                         setError("Your contract has expired")
-                        
-                    }
-                    else{
-                        login({
-                            "email": cred.user.email,
-                            "role": role
-                        })
-                        navigate('/dashboard')
-                    }
-                    
-                }
-                
-                else if (role === "bookkeeper" && isNewUser === cred.user.metadata.lastSignInTime) {
+                    navigate('/admin/dashboard')
+                } else if (role === "admin" && isNewUser !== cred.user.metadata.lastSignInTime) {
                     login({
                         "email": cred.user.email,
                         "role": role
                     })
-                    navigate('bookkeeper/account-settings')
-                } else if (role === "bookkeeper" && isNewUser !== cred.user.metadata.lastSignInTime) {
-                    login({
-                        "email": cred.user.email,
-                        "role": role
-                    })
-                    navigate('bookkeeper/dashboard')
+                    navigate('/admin/dashboard')
                 }
                 else{
-                    notifyError()
+                    setError("Invalid email or password")
                 }
                 
             })
             .catch((error) => {
                 setError(error.message)
-                notifyError(error)
+                console.log(error)
             })
     }
     return (
         <>
-            <ToastContainer />
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className="flex rounded-md shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-2xl">
                     <>
                         <div className={"px-8 py-6 text-left bg-white lg:w-3/4"}>
                             <div>
                                 <img src={Logo} alt="logo" className={"w-3/4 mx-auto pb-8"} />
-                                <h3 className={"text-2xl font-bold text-center"}>Welcome back!</h3>
+                                <h3 className={"text-2xl font-bold text-center"}>Welcome back, Admin!</h3>
+                                <h3 className={"text-md text-center"}>Login to manage the system.</h3>
                             </div>
+                            {error && <Alert setAlert={setError} alert={error} />}
                             <Formik
                                 initialValues={{ email: "", password: "" }}
                                 validationSchema={LoginSchema}
@@ -200,7 +159,7 @@ function Login() {
                             >
                                 {({ errors, touched }) => (
                                     <Form>
-                                        <div className={"mt-4"}>
+                                        <div className={"mt-8"}>
                                             <div>
                                                 <Field
                                                     name="email"
@@ -231,14 +190,10 @@ function Login() {
                                             </div>
                                             <div className={"flex flex-col place-items-center mt-2"}>
                                                 <Button text={"Login"} />
+                                                <div className="border-t-2 w-80 mt-3 border-transparent " />
                                                 <a href="/forgot-pass"
-                                                className={"text-sm text-black-600 hover:underline mt-5 "}>Forgot
+                                                className={"text-sm text-black-600 hover:underline mt-2 "}>Forgot
                                                     password?</a>
-                                                <div className="border-t-2 w-80 mt-5 ">
-                                                    <a href={"/signup"}
-                                                    className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-5 "}>Create
-                                                        an account today !</a>
-                                                </div>
                                             </div>
                                         </div>
                                     </Form>
@@ -256,4 +211,4 @@ function Login() {
     )
 }
 
-export default Login
+export default AdminLogin;

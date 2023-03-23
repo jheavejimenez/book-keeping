@@ -6,19 +6,34 @@ import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/
 import { auth } from "../../utils/Firebase";
 import { Field, Form, Formik } from "formik";
 import { SignupSchema } from "../../utils/schema/signUpSchema";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Signup() {
+    const notifyError = () => toast.error("Email already in use", {
+        position: "top-center",
+        
+    });
     const navigate = useNavigate()
-    // const register = document.getElementById("register")
+    const now = new Date();
+    const fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
+    const timestamp = fiveYearsFromNow
+    console.log(timestamp)
+
+
+    const accsetCollectionRef = collection(db, "users",);
     const handleSubmit = async (email, password) => {
         const role = "client"
         await createUserWithEmailAndPassword(auth, email, password). then((cred) => {
-            return addDoc(collection(db, "users"), { email, uid: cred.user.uid, role })
+            return setDoc(doc(accsetCollectionRef, cred.user.email),
+             { email, uid: cred.user.uid, role, company: "", fname: "", lname: "", image: "", Llogin: serverTimestamp(), contractexpired: timestamp})
             
 
-        })
+        }) 
         .then(() => {
             sendEmailVerification(auth.currentUser).then(() => {
                 navigate('/verify-email')
@@ -27,13 +42,14 @@ function Signup() {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            alert(errorCode, errorMessage)
+            notifyError()
         });
        
     }
     
     return (
         <>
+            <ToastContainer />
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className="flex rounded-md shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-2xl">
 
@@ -99,11 +115,13 @@ function Signup() {
                                         
                                         <div className={"flex flex-col place-items-center mt-5"}>
                                             <Button text={"Sign up"} />
-                                            <Link to={"/"}
-                                                className={"text-sm text-black-600 hover:underline mt-5"}
-                                            >
-                                                Already Have an Account ? Login
-                                            </Link>
+                                            <div className="border-t-2 w-80 mt-10">
+                                               <Link to={"/"}
+                                                className={"text-sm text-black-600 hover:underline flex flex-col place-items-center mt-8"}
+                                                >
+                                                    Already have an account? Login
+                                                </Link> 
+                                            </div>
                                         </div>
                                     </div>
                                 </Form>

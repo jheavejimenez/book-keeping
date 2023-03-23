@@ -14,9 +14,14 @@ function StatisticCards() {
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
     const [data3, setData3] = useState([]);
+    const [data4, setData4] = useState([]);
     const getAllRequestDocumments = async () => {
         const snapshot = await getDocs(collection(db, "request"));
         setData(snapshot.docs.map((doc) => doc.data()));
+    }
+    const getAllCompleteDocuments = async () => {
+        const snapshot = await getDocs(collection(db, "request"));
+        setData4(snapshot.docs.map((doc) => doc.data()).filter((item) => item.Status === "Completed"));
     }
     const getAllOutgoingDocumments = async () => {
         const snapshot = await getDocs(collection(db, "outgoing"));
@@ -33,6 +38,7 @@ function StatisticCards() {
         getAllRequestDocumments();
         getAllOutgoingDocumments();
         getAllIncomingDocumments();
+        getAllCompleteDocuments();
         const interval = setInterval(() => {
             getAllRequestDocumments();
         }, 5000)
@@ -111,7 +117,7 @@ function StatisticCards() {
                     " duration-500 ease-in-out "} />
                 </div>
                 <div className={"text-right"}>
-                    <p className={"text-3xl"}>123</p>
+                    <p className={"text-3xl"}>{data4.length}</p>
                     <p>Total Files Completed</p>
                 </div>
             </div>

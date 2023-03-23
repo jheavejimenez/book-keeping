@@ -13,12 +13,12 @@ import { useEffect } from "react";
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { auth } from "../../utils/Firebase";
+import FilterDropdown from "../Button/FilterDropdown";
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 
-import 'react-toastify/dist/ReactToastify.css';
 
-function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
+function ClientOutgoingrow({Column1, Column2, Column3, Column4}) {
     const notifyQue = () => {
         toast.warning("File Scan has been queued please wait for a moment and try again later with the same file", {
             position: "top-center",
@@ -27,24 +27,25 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
         
     );
     }
-    const toastSuccess = (text) => {
-        toast.success(text, {
-            position: "top-center",
-            autoClose: 3000, // auto close after 5 seconds
+    const Warning = () => toast.warning("no file selected", {
+        position: "top-center",
+
+    });
+    const Success = () => toast.success("File Updated", {
+        position: "top-center",
+        autoClose: 3000, // auto close after 5 seconds
         onClose: () => {
             setTimeout(() => {
             window.location.reload(); // reload window after toast is closed
             }, 3000);
         },
-    });
-    }
 
-    
-    const toastFailed = (text) => {
-        toast.error(text, {
-            position: "top-center",
+
     });
-    }
+    const successArchive = () => toast.success("File Archived", {
+        position: "top-center",
+
+    });
     const {user} = useAuth()
     const [newFile, setNewFile] = useState(null)
     const [error, setError] = useState('');
@@ -54,13 +55,12 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
     const inputRef = useRef()
     const [reciepts, setReciepts] = useState([])
     
-    const auditTrailCollectionRef = collection(db, "audittrail",);
-    const incommingCollectionRef = collection(db, "incoming",);
-    
+    const incommingCollectionRef = collection(db, "outgoing",);
+
     const editFile = async (e) => {
         e.preventDefault();
         if (newFile === null) {
-            toastFailed("No file selected")
+            Warning()
         } else {
             
         
@@ -79,121 +79,16 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
                     user : user.email,
                     activity : "Edit file:  " + Column3,
                 });
-                toastSuccess("File Updated")
-                
+                Success()
                 console.log(newFile)
                 console.log(url)
                 console.log(inputRef.current.files[0].name)
                 console.log(reciepts)
-                
-                
             });
-
         });
-        
-
-        
     }
 }
-    
-        
-
-    const getCompany = async () => {
-        const q = query(collection(db, "users"), where("email", "==", user.email));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setError("No matching documents.");
-        }
-        console.log(querySnapshot.docs[0].data().company)
-        return querySnapshot.docs[0].data().company
-        
-    }
-    
-    const getDate = async () => {
-        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setError("No matching documents.");
-        }
-        console.log(querySnapshot.docs[0].data().date)
-        return querySnapshot.docs[0].data().date
-    }
-
-    const getFile = async () => {
-        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setError("No matching documents.");
-        }
-        console.log(querySnapshot.docs[0].data().file)
-        return querySnapshot.docs[0].data().file
-    }
-    const getFileExpire = async () => {
-        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setError("No matching documents.");
-        }
-        console.log(querySnapshot.docs[0].data().fileexpiry)
-        return querySnapshot.docs[0].data().fileexpiry
-    }
-
-    const getPurpose = async () => {
-        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setError("No matching documents.");
-        }
-        console.log(querySnapshot.docs[0].data().purpose)
-        return querySnapshot.docs[0].data().purpose
-    }
-
-    const getSentBy = async () => {
-        const q = query(collection(db, "incoming"), where("docid", "==", Column1));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setError("No matching documents.");
-        }
-        console.log(querySnapshot.docs[0].data().sentby)
-        return querySnapshot.docs[0].data().sentby
-    }
-
-    
-
-    const handleDelete = async (email) => {
-        const company = await getCompany(email)
-        const date = await getDate(email)
-        const file = await getFile(email)
-        const purpose = await getPurpose(email)
-        const fileexpire = await getFileExpire(email)
-        const sentby = await getSentBy(email)
-        await setDoc(doc(db, "archive", Column1), {
-            date: date,
-            docid: Column1,
-            email: Column2,
-            file: file,
-            filename: Column3,
-            fileexpiry: fileexpire,
-            purpose: purpose,
-            company: company,
-            sentby: sentby,
-            sentfrom: 'Outgoing',
-            datearchive: serverTimestamp(),
-            });
-            
-            setDoc(doc(auditTrailCollectionRef, Column1), {
-                time : serverTimestamp(),
-                user : user.email,
-                activity : "Archived file:  " + Column3,
-            });
-
-
-        toastSuccess("File Archived")
-        await deleteDoc(doc(db, "incoming", Column1));
-
-        
-    }
-    const [scanResult, setScanResult] = useState(null);
+const [scanResult, setScanResult] = useState(null);
     const [scanStatus, setScanStatus] = useState(null);
     
     const handleScan = async (e) => {
@@ -229,12 +124,20 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
             }
         
     };
-
-    
-        // console.log(updatefile.name)
-   
-    return (
+    const getCompany = async () => {
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().company)
+        return querySnapshot.docs[0].data().company
         
+    }
+
+    const auditTrailCollectionRef = collection(db, "audittrail");
+
+    return (
         <tr className={"hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{Column1}</td>
             <td className={"px-4 py-3 text-sm"}>{Column2}</td>
@@ -331,7 +234,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
                                                         Scan
                                                     </button>
                                                     <p className='text-gray-500 py-2 px-4 rounded'>{scanStatus}</p>
-                                                </div>
+                                            </div>
 
                                         </fieldset>
                                     </form>
@@ -383,12 +286,12 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
             )}
-                <button onClick={handleDelete} className="pl-2">
+                {/* <button onClick={handleDelete} className="pl-2">
                     <ArchiveFile />
-                </button>
+                </button> */}
             </td>   
         </tr>
     )
 }
 
-export default OutgoingTableRow;
+export default ClientOutgoingrow;

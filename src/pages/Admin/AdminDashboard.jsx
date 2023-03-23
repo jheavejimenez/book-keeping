@@ -4,35 +4,45 @@ import Header from "../../components/Navigation/Header";
 import AdminStatisticCards from "../../components/Cards/AdminStatisticCards";
 import ClientTable from "../../components/Table/ClientTable";
 import FilterDropdown from "../../components/Button/FilterDropdown";
+import { useAuth } from "../../hooks/useAuth";
+import AdminTable from "../../components/Table/AdminTable";
+import ForbiddenPage from "../Error/ForbiddenPage";
 
 function AdminDashboard() {
-    return (
-        <>
-            <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
-                {/*header*/}
-                <Header />
+    const { user } = useAuth();
 
-                {/*sidebar*/}
-                <AdminSidebar />
+    if (user.role === "admin") {
+        return (
+            <>
+                <div className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-100 text-black"}>
+                    {/*header*/}
+                    <Header />
 
-                <div className={"flex justify-between items-center h-14 bg-white header-right"}></div>
-                
-                <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+                    {/*sidebar*/}
+                    <AdminSidebar />
+
+                    <div className={"flex justify-between items-center h-14 bg-white header-right"}></div>
                     
-                    {/*statistics cards*/}
-                    <AdminStatisticCards />
-                    
-                    <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                        Filter by Company <FilterDropdown />
-                    </div>   
-                    
-                    {/*client table*/}
-                        <ClientTable />
-                    
+                    <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
+                        
+                        {/*statistics cards*/}
+                        <AdminStatisticCards />
+                        
+                        
+                        
+                        {/*client table*/}
+                            <AdminTable />
+                        
+                    </div>
                 </div>
-            </div>
-        </>
-    )
+            </>
+        )
+    }
+    else {
+        return (
+            <ForbiddenPage />
+        )
+    }
 }
 
 export default AdminDashboard;

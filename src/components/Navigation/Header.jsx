@@ -2,19 +2,60 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { ArrowRightOnRectangleIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, updateDoc, setDoc, runTransaction, writeBatch, onSnapshot} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
+import { useNavigate } from "react-router-dom";
+
 
 function Header() {
 	const {logout} = useAuth()
     const {user} = useAuth()
     const [imgUrl , setImgUrl] = useState('')
-    const userprofile = (doc(db, "accountsettings", user.email ));
+    const userprofile = (doc(db, "users", user.email ));
+    const [search , setSearch] = useState('')
+    const navigate  = useNavigate()
+
+    const getUserRole = async () => {
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            console.log('No matching documents.');
+        }
+        console.log(querySnapshot.docs[0].data().role)
+        return querySnapshot.docs[0].data().role
+        
+    }
+
+
+
+    const handleSearch = async (email) => {
+        const role = await getUserRole(email)
+        console.log(email)
+        
+
+        if (role === "client") {
+            
+            navigate(`/search/`, {state: search, replace: true})
+            
+        } 
+        else if (role === "bookkeeper") {
+            
+            navigate(`/bookkeeper/search/`, {state: search, replace: true})
+            
+        }
+        
+    }
+
+    
+
+
     useEffect(() => {
         onSnapshot(userprofile, (doc) => {
             setImgUrl(doc.data().image)
         })
     }, [imgUrl, userprofile])
+
+    
 
 
     return (
@@ -36,14 +77,17 @@ function Header() {
             <div className={" flex justify-between items-center h-14 bg-blue-400 text-black header-right "}>
                 <div
                     className={"bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm" + 
-                    "border border-gray-200"}>
+                    "border border-gray-200"}
+                    >
                     
-                    <button className={"outline-none focus:outline-none"}>
+                    <button onClick={handleSearch} className={"outline-none focus:outline-none"}>
                         <MagnifyingGlassIcon className={"w-5 h-5 text-gray-500"} />
                     </button>
-
+                    
                     <input type="search" name="" id="" placeholder="Search" className={"w-full pl-3" + 
-                    "text-sm text-black outline-none focus:outline-none bg-transparent"} />
+                    "text-sm text-black outline-none focus:outline-none bg-transparent"} 
+                    onChange={(e) => setSearch(e.target.value)}
+                    />
                 </div>
                 <ul className={"flex items-center"}>
                     <li>

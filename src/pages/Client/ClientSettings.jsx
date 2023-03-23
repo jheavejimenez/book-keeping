@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Navigation/ClientSidebar";
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 import Header from "../../components/Navigation/Header";
-import { collection, doc, setDoc,getDocs, onSnapshot } from "firebase/firestore";
+import { collection, doc, setDoc,getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { auth, db, storage } from "../../utils/Firebase";
 import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
@@ -10,6 +10,9 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
 
 import ForbiddenPage from "../Error/ForbiddenPage";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 // import ClientTable from "../../components/Table/ClientTable";
 // import Dropdown from "../../components/Button/Dropdown";
@@ -17,13 +20,31 @@ import ForbiddenPage from "../Error/ForbiddenPage";
 
 
 function ClientSettings() {
+    const notifyInfo = (text) => toast.info(text, {
+        position: "top-center",
+
+    });
+    const notifyError = (text) => toast.error(text, {
+        position: "top-center",
+
+    });
+
+    const notfiyWarning = (text) => toast.warning(text, {
+        position: "top-center",
+
+    });
+
+    const notifySuccess = (text) => toast.success(text, {
+        position: "top-center",
+
+    });
     const {logout} = useAuth()
     const [data, setData] = useState([]);
     const { user } = useAuth();
     const [fileInput] = useState("");
 
     const [imgUrl , setImgUrl] = useState('')
-    const userprofile = (doc(db, "accountsettings", user.email ));
+    const userprofile = (doc(db, "users", user.email ));
     useEffect(() => {
         onSnapshot(userprofile, (doc) => {
             setImgUrl(doc.data().image)
@@ -68,13 +89,13 @@ function ClientSettings() {
             .then(() => {
                 // Password reset email sent!
                 // ..
-                alert("Password reset email sent!")
+                notifyInfo("Password reset email sent");
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
-                alert(errorCode, errorMessage);
+                notifyError(errorMessage);
             });
     };
 
@@ -89,32 +110,33 @@ function ClientSettings() {
 
     const update = async () => {
         await updateEmail(auth.currentUser, newEmail).then(() => {
-             setDoc(doc(db, "users", auth.currentUser.uid), {
-                email: newEmail,
-                role : user.role,
-                uid : auth.currentUser.uid,
+                 console.log(auth.currentUser.uid)
+                 updateDoc(doc(db, "users", auth.currentUser.uid), {
+                 email: newEmail,
 
             });
-            alert("Email updated");
-            logout();
+            
+            
+           notifyInfo("Email updated")
+            
         
                 
 
         }).catch((error) => {
-            alert(error.message)
+            notifyError(error.message)
         })
     }
     console.log(user.email)
     
 
-    const accsetCollectionRef = collection(db, "accountsettings",);
+
 
     const add = async (e) => {
         e.preventDefault();
 
 
         if (image === null) {
-            alert("No image selected");
+            notfiyWarning("Please select an image");
         }
          else if(image !== null) {
 
@@ -127,14 +149,13 @@ function ClientSettings() {
                 });
             });
 
-            await setDoc(doc(accsetCollectionRef, auth.currentUser.email), {
+            await updateDoc(doc(db, "users", user.email), {
                 fname: fname,
                 lname: lname,
-                email: user.email,
                 company: company,
                 image: Source
             });
-            alert("Account settings updated");
+            notifySuccess("Profile updated")
         }
 
         
@@ -143,8 +164,8 @@ function ClientSettings() {
     }
 
     const getAllRequestDocumments = async () => {
-        const snapshot = await getDocs(collection(db, "accountsettings"));
-        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
+        const snapshot = await getDocs(collection(db, "users"));
+        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.uid === auth.currentUser.uid));
         console.log(data);
     }
     useEffect(() => {
@@ -160,6 +181,8 @@ function ClientSettings() {
     if (user.role === "client") {
 
     return (
+        <>
+        <ToastContainer />
         <div
             className={"min-h-screen flex flex-col flex-auto flex-shrink-0 antialiasing bg-gray-100 text-black"}>
 
@@ -331,6 +354,7 @@ function ClientSettings() {
                 </div>
             </div>
         </div>
+        </>
     )
     }
     else {

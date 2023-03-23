@@ -9,14 +9,38 @@ import { collection, doc, getDocs, serverTimestamp, setDoc } from "firebase/fire
 import { nanoid } from "nanoid";
 import RequestForm from "../Modal/RequestForm";
 import ReactDatePicker from "react-datepicker";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function RequestButton({ text }) {
+    const notify = () => {
+        toast.success("Request Sent!", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            
+        });
+
+
+    }
+
+    const Error = (error) => {
+        toast.error(error, {
+            position: "top-center",
+            
+        });
+    }
     const { user } = useAuth()
     const [showModal, setShowModal] = useState(false);
     const [reqfrom, setReqfrom] = useState('')
     const [file, setFile] = useState('')
-    
+    const auditTrailCollectionRef = collection(db, "audittrail",);
     const [purpose, setPurpose] = useState('')
     const requestCollectionRef = collection(db, "request");
     const reqby = user.email;
@@ -27,6 +51,7 @@ function RequestButton({ text }) {
         e.preventDefault()
         const documentId = nanoid(5)
         await setDoc(doc(requestCollectionRef, documentId), {
+            
             documentId,
             reqfrom,
             file,
@@ -34,21 +59,31 @@ function RequestButton({ text }) {
             reqby,
             purpose,
             Status: "Pending",
-            dateReq: serverTimestamp()
+            datereq: serverTimestamp()
         })
+
+        
             .then(() => {
-                    alert("Request Submitted")
-                    setShowModal(false)
+                notify()
+                setShowModal(false)
                 }
             )
             .catch((error) => {
-                    alert(error.message)
+                    Error(error)
                 }
             )
+
+        setDoc(doc(auditTrailCollectionRef, documentId), {
+            time : serverTimestamp(),
+            user : user.email,
+            activity : "Request a file:  " + file,
+        });
+
     }
 
     return (
         <>
+        <ToastContainer />
             <button
                 className={" bg-white text-blue-500 font-bold px-6 py-2 rounded inline-flex items-center "}
                 type="button"
@@ -56,6 +91,7 @@ function RequestButton({ text }) {
             >
                 <PlusCircleIcon className="w-7 h-7 mr-1 text-blue-500" />{text}
             </button>
+            
 
             {showModal && (
                 <>
@@ -173,14 +209,22 @@ function RequestButton({ text }) {
                                         type="button"
                                         onClick={handleSubmit}
                                     >
+                                        
                                         Request
                                     </button>
+                                    
+                                    
+                                            
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black" />
+                   
                 </>
+                
+                
             )}
         </>
     )

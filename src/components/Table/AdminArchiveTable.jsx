@@ -3,48 +3,232 @@ import ArchiveTableRow from "./ArchiveTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import axios from "axios";
-// import { collection, getDocs, orderBy } from "firebase/firestore";
-// import { db } from "../../utils/Firebase";
-// import { useAuth } from "../../hooks/useAuth";
+import { collection, getDocs, orderBy, serverTimestamp, deleteDoc,doc,query,limit,startAfter,endBefore,limitToLast,setDoc} from "firebase/firestore";
+import { db } from "../../utils/Firebase";
+import dayjs from "dayjs";
+import { useAuth } from "../../hooks/useAuth";
+import { ToastContainer, toast } from 'react-toastify';
+import FilterDropdown from "../../components/Button/FilterDropdown";
+import Button from "../../components/Button/Button";
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function AdminArchiveTable() {
-    const [data, setData] = useState([]);
+    const  notif = () => toast.success("File has been Deleted", {
+        position: "top-center",
+
+    });
+    const user = useAuth();
+    const  notif1 = () => toast.warning("No more documents to show", {
+        position: "top-center",
+        autoClose: 3000, // auto close after 5 seconds
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
+
+    });
+    const  notif2 = () => toast.success("File Unarchived", {
+        position: "top-center",
+
+    });
+    const auditTrailCollectionRef = collection(db, "audittrail",);
+    const [selectedRow, setSelectedRow] = useState([]);
     const titleTable = [
+        "Select",
         "DocID",
         "File",
         "Company",
-        "DateCreated",
-        "DateArchived"
+        
     ]
 
     // const getAllRequestDocumments = async () => {
-    //     const snapshot = await getDocs(collection(db, "request"));
+    //     const snapshot = await getDocs(collection(db, "archive"));
     //     setData(snapshot.docs.map((doc) => doc.data()));
     // }
+    const [page, setPage] = useState(1);
+    const [list, setList] = useState([]);
 
-    async function getArchiveData() {
-        const response = await axios.get("http://localhost:3000/archive")
-        setData(response.data)
-        console.log(response.data)
-        return response.data
+   
+    const fetchData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = false;
+        }
+        
+        
+    };
+
+    const showNextPage = ({item}) => {
+        if (list.length === 0) {
+            notif1();
+            
+        }
+        else {
+            const fetchNextData = async () => {
+                const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(5), startAfter(item.docid));
+                const querySnapshot = await getDocs(q)
+                const items = []
+                querySnapshot.forEach((doc) => {
+                    items.push(doc.data())
+
+                   
+                });
+                setList(items);
+                setPage(page + 1);
+                console.log(items[0]);
+               
+            };
+            fetchNextData();
+        }
     }
 
+    const showPrevPage = ({item}) => {
+        if (list.length === 0) {
+            notif1();
+            
+        }
+        else {
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "archive"),orderBy("docid", "desc"),endBefore(item.docid), limitToLast(5));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items); 
+                setPage(page - 1);
+                console.log(items[0]);
+        };
+        fetchPrevData();
+    }
+}
+
+    const unArchive = async() => {
+        selectedRow.forEach((item) => {
+            if(item.sentfrom === 'Outgoing'){
+                 setDoc(doc(db, "incoming",  item.docid), {
+                    docid: item.docid ? item.docid : "",
+                    email:   item.email ? item.email : "",
+                    file:  item.file ? item.file : "",
+                    filename: item.filename ? item.filename : "",
+                    fileexpiry:  item.fileexpiry ? item.fileexpiry : "",
+                    company: item.company ? item.company : "",
+                    purpose: item.purpose ? item.purpose : "",
+                    sentby: item.sentby ? item.sentby : "",
+                    datearchive: item.datearchive ? item.datearchive : serverTimestamp(),
+                    date : item.date ? item.date : serverTimestamp(),
+                    });
+                 
+
+                 setDoc(doc(auditTrailCollectionRef, item.docid), {
+                    time : serverTimestamp(),
+                    user : 'Admin',
+                    activity : "Unarchived a file:  " + item.filename,
+                 });
+                 deleteDoc(doc(db, "archive",item.docid));
+                 notif2();
+            }
+            else if(item.sentfrom === 'Incoming'){
+            }
+            else{
+                setDoc(doc(db, "outgoing", item.docid), {
+                    docid: item.docid ? item.docid : "",
+                    email:  item.email ? item.email : "",
+                    file:  item.file ? item.file : "",
+                    filename: item.filename ? item.filename : "",
+                    fileexpiry:  item.fileexpiry ? item.fileexpiry : "",
+                    company:  item.company ? item.company : "",
+                    purpose: item.purpose ? item.purpose : "",
+                    sentby:  item.sentby ? item.sentby : "",
+                    sentfrom: item.sentfrom ? item.sentfrom : "",
+                    datearchive: item.datearchive ? item.datearchive : serverTimestamp(),
+                    date: item.date ? item.date : serverTimestamp(),
+                    });
+                    
+                setDoc(doc(auditTrailCollectionRef, item.docid), {
+                    time : serverTimestamp(),
+                    user : 'Admin',
+                    activity : "Unarchived a file:  " + item.filename,
+                    });
+                deleteDoc(doc(db, "archive",item.docid));
+                notif2();
+                }
+            
+           
+           
+        });
+    }
+
+    
+
+    const deleteSelectRow = async() => {
+        selectedRow.forEach((item) => {
+            setDoc(doc(auditTrailCollectionRef, item.docid), {
+                time : serverTimestamp(),
+                user : 'Admin',
+                activity : "Deleted a file:  " + item.filename,
+            });
+            deleteDoc(doc(db, "archive", item.docid));
+            notif();
+            setTimeout(() => {
+                window.location.reload();
+            }
+            , 3000);
+        });
+        
+        setSelectedRow([]);
+    }
+    
+
     useEffect(() => {
-        // getAllRequestDocumments();
-        getArchiveData();
+        fetchData();
+        // getArchiveData();
         const interval = setInterval(async () => {
             // await getAllRequestDocumments();
-            await getArchiveData();
+            // await getArchiveData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-    console.log(data);
+    //console log selected row docid
+    console.log(selectedRow);
+    
 
     return (
         <>
+            <ToastContainer />
+             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
+                    
+                <div className={"mt-4"}>
+                    Filter by File <FilterDropdown />
+                </div>
+
+                <div>
+                    <button onClick={unArchive} className={" px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8] w-full "}>Unarchive</button>
+                </div>
+
+                <div>
+                    <button onClick={deleteSelectRow} className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mt-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "}>Delete</button>
+                </div>
+                
+            </div>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
@@ -61,19 +245,45 @@ function AdminArchiveTable() {
                             </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {data.map?.((item) => (
-                                <ArchiveTableRow
-                                    DocID={item.docID}
-                                    File={item.file}
-                                    Company={item.company}
-                                    DateCreated={item.dateCreated}
-                                    DateArchived={item.dateArchived}
-                                />)
+                            {list.length === 0 ? ( 
+                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                    <td colSpan={5} className={"py-20 pl-50 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                </tr>
+                            ) : null
+                            }
+                            {list.map?.((item) => (
+                                
+                                    <ArchiveTableRow
+                                        Checkbox={
+                                            <div> 
+                                                <input type="checkbox" className={"form-checkbox h-5 w-5 text-gray-600"} checked={selectedRow.includes(item)}
+                                                onChange={(event) => {
+                                                    if (event.target.checked) {
+                                                        setSelectedRow([...selectedRow, item]);
+                                                    } else {
+                                                        setSelectedRow(selectedRow.filter((row) => row !== item));
+                                                    }
+                                                }}/>
+                                            </div>
+                                        }
+                                        DocID={item.docid}
+                                        File={item.filename}
+                                        Company={item.company}
+                                    />
+                                )
                             )}
                             </tbody>
                         </table>
                     </div>
-                    <Pagination/>
+                    <div id = "audit-table" >
+                        <Pagination 
+                            path={showPrevPage}
+                            item={showNextPage}
+                            list={list}
+                            page={page}
+                            
+                        />
+                    </div>  
                 </div>
             </div>
         </>

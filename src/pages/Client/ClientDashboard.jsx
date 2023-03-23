@@ -37,9 +37,7 @@ function ClientDashboard() {
                 />
 
                 {/*Tabs*/}
-                <div className="mt-4 mx-4 pt-2">
-                    <Tabs />
-                </div>
+                
                 
                 {/*client table*/}
                 <ClientRequestTable/>    

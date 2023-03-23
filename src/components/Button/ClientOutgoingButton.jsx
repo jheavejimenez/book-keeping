@@ -5,28 +5,59 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, db, storage } from "../../utils/Firebase";
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { nanoid } from "nanoid";
+import { useAuth } from "../../hooks/useAuth";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function ClientOutgoingButton({ text }) {
+    const Success = () => {
+        toast.success("File Sent", {
+            position: "top-center",
+
+        });
+
+    }
+    const notifyQue = () => {
+        toast.warning("File Scan has been queued please wait for a moment and try again later with the same file", {
+            position: "top-center",
+            autoClose: 5000
+    }
+        
+    );
+    }
+    const Error = () => {
+        toast.error("no file selected", {
+            position: "top-center",
+
+        });
+    }
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
+    const {user} = useAuth()
     const [newFile, setNewFile] = useState(null)
-    const [setPurpose] = useState('')
+    const [purpose, setPurpose] = useState('')
     const inputRef = useRef()
     const OutgoingsetCollectionRef = collection(db, "outgoing",);
+    const auditTrailCollectionRef = collection(db, "audittrail",);
     const documentId = nanoid(5)
+    const now = new Date();
+    const fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
+    const timestamp = fiveYearsFromNow
 
     const add = async (e) => {
         e.preventDefault();
 
         if (newFile === null) {
-            alert("no file selected");
+            Error()
         } else {
             
             const imageRef = ref(storage, 'files/' + newFile.name); 
             uploadBytes(imageRef, newFile).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setNewFile(url)
-                    alert("File Sent")
+                    Success()
                     
             
 
@@ -36,9 +67,18 @@ function ClientOutgoingButton({ text }) {
                         email: newEmail,
                         filename: newFile.name,
                         file: url,
-                        datesend: serverTimestamp(),
+                        purpose,
+                        date: serverTimestamp(),
+                        fileexpiry: timestamp,
                        
                     });
+
+                    setDoc(doc(auditTrailCollectionRef, documentId), {
+                        time : serverTimestamp(),
+                        user : user.email,
+                        activity : "Sent a file:  " + newFile.name,
+                    });
+
                     
                     
                     
@@ -49,6 +89,45 @@ function ClientOutgoingButton({ text }) {
         
         
     }
+
+    const [scanResult, setScanResult] = useState(null);
+    const [scanStatus, setScanStatus] = useState(null);
+    
+    const handleScan = async (e) => {
+        e.preventDefault();
+        setScanStatus('Scanning...');
+        const formData = new FormData();
+        formData.append('file', inputRef.current.files[0]);
+        try {
+
+        const response = await axios.post(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
+            method: 'GET',
+            headers: {
+            
+            'Content-Type': 'multipart/form-data',
+            'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
+            }
+        });
+        const getData = await axios.get(response.data.data.links.self,{
+            headers: {
+                'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
+            }
+        });
+        setScanResult(getData);
+        if (getData.data.data.attributes.status === 'queued'){
+            notifyQue();
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        else{
+            setScanStatus(getData.data.data.attributes.status)
+        }
+        } catch (error) {
+            setScanStatus('Scan Failed');
+            }
+        
+    };
+    console.log(scanResult);
+    console.log(scanStatus);
 
 
     return (
@@ -103,7 +182,7 @@ function ClientOutgoingButton({ text }) {
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
-                                                    value={auth.currentUser.email}
+                                                    value={user.email}
                                                     disabled
                                                 />
                                             </div>
@@ -134,6 +213,14 @@ function ClientOutgoingButton({ text }) {
                                                     onChange={(e) => setNewFile(inputRef.current.files[0])}
                                                     
                                                 />
+                                                 <div className="flex space-x-2">
+                                                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
+                                                        onClick={handleScan}
+                                                    >
+                                                        Scan
+                                                    </button>
+                                                    <p className='text-gray-500 py-2 px-4 rounded'>{scanStatus}</p>
+                                                </div>
                                             </div>
                                             <div>
                                                 <label
@@ -169,6 +256,20 @@ function ClientOutgoingButton({ text }) {
                                     >
                                         Close
                                     </button>
+                                    {scanResult === null || scanStatus === 'queued' || scanStatus === 'Scanning...' ? (
+                                        <button
+                                            className={" bg-gray-500 hover:bg-gray-400 text-white " +
+                                            " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +
+                                            " py-3 rounded shadow hover:shadow-lg outline-none " +
+                                            " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
+                                            
+                                            type="button"
+                                            
+                                            disabled
+                                        >
+                                            Send
+                                        </button>
+                                    ):(
                                     <button
                                         className={" bg-blue-500 hover:bg-blue-400 text-white " + 
                                         " active:bg-emerald-600 font-bold uppercase text-sm px-6 " + 
@@ -179,6 +280,7 @@ function ClientOutgoingButton({ text }) {
                                     >
                                         Send
                                     </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

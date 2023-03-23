@@ -1,39 +1,34 @@
 import React, { useEffect, useState } from "react";
-import RequestTableRow from "./RequestTableRow";
+import AdminTableRow from "./AdminTableRow";
+import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
-import dayjs from "dayjs";
-import { ToastContainer, toast } from 'react-toastify';
+import { useAuth } from "../../hooks/useAuth";
+import { useQuery } from "react-query";
+import { getAllRequestDocumments } from "../../utils/helper";
+import { Table, Button, ButtonGroup } from "react-bootstrap";
+import FilterDropdown from "../Button/FilterDropdown";
 
-import 'react-toastify/dist/ReactToastify.css';
-
-function RequestTable() {
-    const notify = () => toast.warning("No more documents to show", {
-        position: "top-center",
-        autoClose: 3000, // auto close after 5 seconds
-        onClose: () => {
-            setTimeout(() => {
-            window.location.reload(); // reload window after toast is closed
-            }, 3000);
-        },
-
-    });
-    
+function AdminTable(props) {
+    const { user } = useAuth();
     const titleTable = [
-        "ReqID",
-        "Requested From",
+        "DocID",
         "File",
-        "Purpose",
-        "Due Date",
-        "Date Requested"
+        "",
+        "Sender",
+        "Company",
+        "Date",
+        
     ]
 
+    
+   
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
 
-   
+    
     const fetchData = async () => {
         const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
@@ -51,14 +46,18 @@ function RequestTable() {
             document.getElementById("audit-table").hidden = false;
         }
         
+
+            
         
     };
-
+    
+    
+    
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            notify();
-           
+            alert("Thats all we have for now !")
+            
         }
         else {
             const fetchNextData = async () => {
@@ -71,9 +70,8 @@ function RequestTable() {
                     
                 });
                 setList(items);
-                    setPage(page + 1);
-                    
-               
+                setPage(page + 1);
+                
             };
             fetchNextData();
         }
@@ -81,12 +79,13 @@ function RequestTable() {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            notify();
-            
+            alert("Thats all we have for now !")
+           
         }
         else {
+
         const fetchPrevData = async () => {
-            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(8) );
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(5) );
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -99,30 +98,93 @@ function RequestTable() {
         };
         fetchPrevData();
     }
+}
+
+
+    const filterExcel = () => {
+        if (list.length === 0) {
+            alert("Thats all we have for now !")
+            
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),limit(5));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items.filter((item) => item.file.includes(".xlsx")));
+            
+            console.log(list.filter((item) => item.file.includes(".xlsx")));
+                
+        };
+        fetchPrevData();
+
+
+        }
+    }
+    const filterPdf = () => {
+        if (list.length === 0) {
+            alert("Thats all we have for now !")
+            
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),limit(5));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items.filter((item) => item.file.includes(".pdf")));
+           
+            console.log(list.filter((item) => item.file.includes(".pdf")));
+                
+        };
+        fetchPrevData();
+
+
+        }
     }
 
-    useEffect(() => {
-        fetchData();
-        const interval = setInterval(async () => {
-            await fetchData();
-        }, 5000)
-        return () => {
-            clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
-        };
-    }, []);
+useEffect(() => {
+    fetchData();
+    const interval = setInterval(async () => {
+        // await fetchData();
+    }, 5000)
+    return () => {
+        clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
+    };
+}, []);
+
+
 
     return (
         <>
-            <ToastContainer />
-            <div className={"mt-10 mx-4"}>
+        <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+        Filter by Type <FilterDropdown 
+                excel={filterExcel}
+                pdf={filterPdf}
+                all={fetchData}
+           />
+           
+        </div>   
+            <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b border-gray-700 "}>
-                                {titleTable.map((item) => (
+                            " text-gray-500 border-b dark:border-gray-700 "+
+                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
+                                {titleTable.map((item, index) => (
                                     <TableHeading
+                                        key={index}
                                         text={item}
                                     />
 
@@ -137,19 +199,19 @@ function RequestTable() {
                             ) : null
                             }
                             {list.map?.((item) => (
-                                <RequestTableRow
+                                <AdminTableRow
                                     Column1={item.documentId}
-                                    Column2={item.reqfrom}
-                                    Column3={item.file}
-                                    Column4={item.purpose}
-                                    Column5={dayjs.unix(item.dueDate?.seconds).format("YYYY-MM-DD")}
-                                    Column6={dayjs.unix(item.datereq?.seconds).format("YYYY-MM-DD")}
+                                    Column2={item.file}
+                                    Column4={item.reqby}
+                                    Column5={item.company}
+                                    Column6={dayjs.unix(item.datereq.seconds).format("YYYY-MM-DD")}
+                                    
                                 />)
-
                             )}
                             </tbody>
                         </table>
                     </div>
+
                     <div id = "audit-table" >
                         <Pagination 
                             path={showPrevPage}
@@ -159,10 +221,13 @@ function RequestTable() {
                             
                         />
                     </div>  
+                    
+                    
+                    
                 </div>
             </div>
         </>
     )
 }
 
-export default RequestTable;
+export default AdminTable;
