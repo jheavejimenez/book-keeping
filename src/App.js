@@ -22,6 +22,7 @@ import Searchpage from "./pages/Search/SearchpageClient";
 import SearchpageBookkeeping from "./pages/Search/SearchpageBookkeeper";
 import Archive from "./pages/Admin/Archive";
 import AdminLogin from "./pages/Auth/AdminLogin";
+import SearchpageAdmin from "./pages/Search/SearchpageAdmin";
 
 function App() {
   
@@ -69,6 +70,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Archive />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="admin/search"
+        element={
+          <ProtectedRoute>
+            <SearchpageAdmin />
           </ProtectedRoute>
         }
       />

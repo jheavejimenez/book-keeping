@@ -331,7 +331,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
                                                         Scan
                                                     </button>
                                                     <p className='text-gray-500 py-2 px-4 rounded'>{scanStatus}</p>
-                                                </div>
+                                            </div>
 
                                         </fieldset>
                                     </form>

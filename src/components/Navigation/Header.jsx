@@ -43,6 +43,11 @@ function Header() {
             navigate(`/bookkeeper/search/`, {state: search, replace: true})
             
         }
+        else if (role === "admin") {
+
+            navigate(`/admin/search/`, {state: search, replace: true})
+            
+        }
         
     }
 
