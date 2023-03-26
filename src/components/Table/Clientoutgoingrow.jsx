@@ -101,13 +101,14 @@ const [scanResult, setScanResult] = useState(null);
         const response = await axios.post(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
             method: 'GET',
             headers: {
-            
+                'Access-Control-Allow-Origin': '*',
             'Content-Type': 'multipart/form-data',
             'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
             }
         });
         const getData = await axios.get(response.data.data.links.self,{
             headers: {
+                'Access-Control-Allow-Origin': '*',
                 'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
             }
         });
