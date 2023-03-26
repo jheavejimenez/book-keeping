@@ -105,9 +105,6 @@ function OutgoingButton({ text }) {
             'Content-Type': 'multipart/form-data',
             'x-apikey': process.env.REACT_APP_VIRUSTOTAL_API_KEY
             },
-            params: {
-                priority: 'high'
-              }
         });
         const getData = await axios.get(response.data.data.links.self,{
             headers: {
