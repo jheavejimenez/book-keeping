@@ -15,10 +15,12 @@ import { useState } from "react";
 import { collection, getDocs, query, orderBy, limit, where, startAt, endAt } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useEffect } from "react";
+import NoDataFound from "../Error/NoDataFound";
 import Sidebar from "../../components/Navigation/Sidebar";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -116,8 +118,8 @@ function SearchpageBookkeeping() {
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b dark:border-gray-700 " +
-                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
+                            " text-gray-500 border-b border-gray-700  " +
+                            " bg-gray-100 dark:text-gray-400 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
                                         text={item}
@@ -129,8 +131,12 @@ function SearchpageBookkeeping() {
                             <tbody className={"font-inter divide-y"}>
 
                             {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-4"}>No results found</td>
+                                <tr>
+                                    <td colSpan={5} className={"py-10"}>
+                                        <NoDataFound 
+                                            text={"No results found. Try a different keyword."}
+                                        />
+                                    </td>
                                 </tr>
                             ) : null
                             }

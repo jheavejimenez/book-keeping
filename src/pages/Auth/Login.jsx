@@ -17,7 +17,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
-    const notifyError = () => toast.error("Invalid email or password", {
+
+
+    const notifyError = (Text) => toast.error(Text, {
         position: "top-center",
 
     });
@@ -115,8 +117,8 @@ function Login() {
     
 
 
-    
-    
+
+//   console.log(auth.currentUser.emailVerified)
 
 
 
@@ -129,57 +131,66 @@ function Login() {
         await signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
 
-                updateDoc(doc(db, "users", auth.currentUser.email), {
-                    Llogin : new Date(new Date().getTime())
-                });
+                if (auth.currentUser.emailVerified === true) {
 
-                const isNewUser = cred.user.metadata.creationTime;
-                if (role === "client" && isNewUser === cred.user.metadata.lastSignInTime) {
-                    login({
-                        "email": cred.user.email,
-                        "role": role
-                    })
-                    navigate('/account-settings') // it should be navigated to client dashboard
-                } 
-                 else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime ) {
-                    // if Llogin is greater than contract expired  then print contract expired
-                    if(Llogin > contractexpired){
-                         setError("Your contract has expired")
-                        
-                    }
-                    else{
+                    updateDoc(doc(db, "users", auth.currentUser.email), {
+                        Llogin : new Date(new Date().getTime())
+                    });
+
+                    const isNewUser = cred.user.metadata.creationTime;
+                    if (role === "client" && isNewUser === cred.user.metadata.lastSignInTime) {
                         login({
                             "email": cred.user.email,
                             "role": role
                         })
-                        navigate('/dashboard')
+                        navigate('/account-settings') // it should be navigated to client dashboard
+                    } 
+                    else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime ) {
+                        // if Llogin is greater than contract expired  then print contract expired
+                        if(Llogin > contractexpired){
+                            setError("Your contract has expired")
+                            
+                        }
+                        else{
+                            login({
+                                "email": cred.user.email,
+                                "role": role
+                            })
+                            navigate('/dashboard')
+                        }
+                        
+                    }
+                    
+                    else if (role === "bookkeeper" && isNewUser === cred.user.metadata.lastSignInTime) {
+                        login({
+                            "email": cred.user.email,
+                            "role": role
+                        })
+                        navigate('bookkeeper/account-settings')
+                    } else if (role === "bookkeeper" && isNewUser !== cred.user.metadata.lastSignInTime) {
+                        login({
+                            "email": cred.user.email,
+                            "role": role
+                        })
+                        navigate('bookkeeper/dashboard')
+                    }
+                    else{
+                        notifyError()
                     }
                     
                 }
-                
-                else if (role === "bookkeeper" && isNewUser === cred.user.metadata.lastSignInTime) {
-                    login({
-                        "email": cred.user.email,
-                        "role": role
-                    })
-                    navigate('bookkeeper/account-settings')
-                } else if (role === "bookkeeper" && isNewUser !== cred.user.metadata.lastSignInTime) {
-                    login({
-                        "email": cred.user.email,
-                        "role": role
-                    })
-                    navigate('bookkeeper/dashboard')
-                }
-                else{
-                    notifyError()
+                else {
+                    
+                    notifyError("Please verify your email")
                 }
                 
             })
             .catch((error) => {
                 setError(error.message)
-                notifyError(error)
+                notifyError("Invalid email or password")
             })
     }
+    
     return (
         <>
             <ToastContainer />

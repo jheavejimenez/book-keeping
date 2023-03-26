@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from "nanoid";
+import NoDataFound from "../../pages/Error/NoDataFound";
 
 
 
@@ -40,8 +41,8 @@ function AdminUsersTable() {
     const [selectedRow, setSelectedRow] = useState([]);
     const titleTable = [
         "Select",
-        "First Name",
-        "Last Name",
+        "Name",
+        "Email",
         "Role",
         "Company",
         "Last Active",
@@ -63,7 +64,7 @@ function AdminUsersTable() {
     const auditTrailCollectionRef = collection(db, "audittrail",);
    
     const fetchData = async () => {
-        const q = query(collection(db, "users"),orderBy("email", "desc"), limit(5));
+        const q = query(collection(db, "users"),orderBy("email", "asc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -176,8 +177,9 @@ function AdminUsersTable() {
         <>
             <ToastContainer />
             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-            <button onClick={extendContract} className={" px-6 py-2 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8]"}>Extend Contract</button>
+                <button onClick={extendContract} className={" px-4 py-1 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8]"}>Extend Contract</button>
                 <button onClick={deleteSelectRow} className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mt-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "}>Delete</button>
+                
             </div>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
@@ -197,8 +199,12 @@ function AdminUsersTable() {
                             </thead>
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={5} className={"py-20 pl-56 text-6xl  font-bold font-inter tracking-wide text-gray-200 dark:text-gray-100"}>No Data</td>
+                                <tr className={"text-sm font-medium text-center text-gray-900"}>
+                                    <td colSpan={10} className={"pt-10"}>
+                                        <NoDataFound 
+                                            text={"No Data"}
+                                        />
+                                    </td>
                                 </tr>
                             ) : null
                             }
@@ -217,8 +223,8 @@ function AdminUsersTable() {
                                         </div>
 
                                     }
-                                    Column1={item.fname}
-                                    Column2={item.lname}
+                                    Column1={item.fname + " " + item.lname}
+                                    Column2={item.email}
                                     Column3={item.role}
                                     Column4={item.company}
                                     Column5={dayjs.unix(item.Llogin?.seconds).format("hh:mm A, MMMM D, YYYY")}

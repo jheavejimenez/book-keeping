@@ -10,9 +10,16 @@ import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
 import { collection, getDocs, query, where, doc, updateDoc, setDoc, runTransaction, writeBatch} from "firebase/firestore";
 import Background from "../../../src/assets/admin-bg-cropped.jpg";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdminLogin() {
     
+    const notifyError = (Text) => toast.error(Text, {
+        position: "top-center",
+
+    });
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const { login } = useAuth()
@@ -23,7 +30,7 @@ function AdminLogin() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            setError("Invalid Email or Password");
+            notifyError("Invalid email or password")
         }
         console.log(querySnapshot.docs[0].data())
         return querySnapshot.docs[0].data().role
@@ -129,17 +136,18 @@ function AdminLogin() {
                     navigate('/admin/dashboard')
                 }
                 else{
-                    setError("Invalid email or password")
+                    notifyError("Invalid email or password")
                 }
                 
             })
             .catch((error) => {
                 setError(error.message)
-                console.log(error)
+                notifyError("Invalid email or password")
             })
     }
     return (
         <>
+            <ToastContainer />
             <div className={"flex items-center justify-center min-h-screen bg-gray-100"}>
                 <div className="flex rounded-md shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-2xl">
                     <>
@@ -149,7 +157,7 @@ function AdminLogin() {
                                 <h3 className={"text-2xl font-bold text-center"}>Welcome back, Admin!</h3>
                                 <h3 className={"text-md text-center"}>Login to manage the system.</h3>
                             </div>
-                            {error && <Alert setAlert={setError} alert={error} />}
+                            {/* {error && <Alert setAlert={setError} alert={error} />} */}
                             <Formik
                                 initialValues={{ email: "", password: "" }}
                                 validationSchema={LoginSchema}

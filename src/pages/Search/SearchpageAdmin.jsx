@@ -1,21 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { createContext } from "react";
-import ClientSidebar from "../../components/Navigation/ClientSidebar";
-import ClientRequestTable from "../../components/Table/ClientRequestTable";
 import Header from "../../components/Navigation/Header";
-import Tabs from "../../components/Navigation/Tabs";
 import Card from "../../components/Cards/Card";
 import { useAuth } from "../../hooks/useAuth";
 import ForbiddenPage from "../Error/ForbiddenPage";
 import { useLocation } from "react-router-dom";
 import TableHeading from "../../components/Table/TableHeading";
-import OutgoingTableRow from "../../components/Table/OutgoingTableRow";
+import AdminTableRow from "../../components/Table/AdminTableRow";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { collection, getDocs, query, orderBy, limit, where, startAt, endAt } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../utils/Firebase";
-import NoDataFound from "../Error/NoDataFound";
 import { useEffect } from "react";
+import NoDataFound from "../Error/NoDataFound";
+import AdminSidebar from "../../components/Navigation/AdminSidebar";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,17 +23,18 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-function Searchpage() {
+function SearchpageAdmin() {
     const notfiyWarning = (text) => toast.warning(text, {
         position: "top-center",
 
     });
+
     const titleTable = [
         "DocID",
         "Recipient",
         "File",
         "Date Sent",
-        "Action",
+        // "Action",
 
         
         
@@ -52,27 +51,23 @@ function Searchpage() {
             notfiyWarning("Please enter a search term")
         }
         else{
-        const q = query(collection(db, "outgoing"), orderBy("date", "desc"), where("sentby", "==", user.email));
-        const q1 = query(collection(db, "incoming"), orderBy("date", "desc"), where("email", "==", user.email));
+        const q = query(collection(db, "archive"), orderBy("date", "desc"));
+        
+        
 
-         if (q && q1 !== 0 ) {
+         if (q !== 0 ) {
                 const querySnapshot = await getDocs(q)
-                const querySnapshot1 = await getDocs(q1)
-                const items1 = []
-
-                querySnapshot1.forEach((doc) => {
-                        items1.push(doc.data())
-                });
-
                 const items = []
                 querySnapshot.forEach((doc) => {
                         items.push(doc.data())
                         
 
                 });
-                setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase())), ...items1.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))]);
+                setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase())) ])
             }
         } 
+        console.log(list)
+        console.log(state)
     };
 
     useEffect(() => {
@@ -85,7 +80,7 @@ function Searchpage() {
     
 
     
-    if (user.role === "client") {
+    if (user.role === "admin") {
 
     return (
         <>
@@ -97,7 +92,7 @@ function Searchpage() {
             <Header />
                 
             {/*sidebar*/}
-            <ClientSidebar />
+            < AdminSidebar/>
             
             <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                     
@@ -113,7 +108,7 @@ function Searchpage() {
                         <table className={"w-full"}>
                             <thead>
                             <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b border-gray-700 " +
+                            " text-gray-500 border-b border-gray-700  " +
                             " bg-gray-100 dark:text-gray-400 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading
@@ -128,7 +123,7 @@ function Searchpage() {
                             {list.length === 0 ? ( 
                                 <tr>
                                     <td colSpan={5} className={"py-10"}>
-                                        <NoDataFound
+                                        <NoDataFound 
                                             text={"No results found. Try a different keyword."}
                                         />
                                     </td>
@@ -137,11 +132,11 @@ function Searchpage() {
                             }
 
                             {list.map?.((item) => (
-                                <OutgoingTableRow
+                                <AdminTableRow
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("DD/MM/YYYY")}
                                     
                                 />)
                             )}
@@ -156,7 +151,6 @@ function Searchpage() {
 
         </div>
         </>
-        
     )
     }
     else {
@@ -167,4 +161,4 @@ function Searchpage() {
 }
 
 
-export default Searchpage;
+export default SearchpageAdmin;
