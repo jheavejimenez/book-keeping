@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import React, { useState } from "react";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
-import { collection, doc, getDocs, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, serverTimestamp, setDoc,query,where } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import RequestForm from "../Modal/RequestForm";
 import ReactDatePicker from "react-datepicker";
@@ -36,6 +36,10 @@ function RequestButton({ text }) {
             
         });
     }
+    
+
+
+
     const { user } = useAuth()
     const [showModal, setShowModal] = useState(false);
     const [reqfrom, setReqfrom] = useState('')
@@ -45,10 +49,24 @@ function RequestButton({ text }) {
     const requestCollectionRef = collection(db, "request");
     const reqby = user.email;
 
+    const getCompany = async () => {
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            console.log("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().company)
+        return querySnapshot.docs[0].data().company
+        
+    }
+    
+
     const [dueDate, setStartDate] = useState(null);
     
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e,email) => {
         e.preventDefault()
+        const company = await getCompany(email)
+        
         const documentId = nanoid(5)
         await setDoc(doc(requestCollectionRef, documentId), {
             
@@ -59,10 +77,9 @@ function RequestButton({ text }) {
             reqby,
             purpose,
             Status: "Pending",
+            Company: company,
             datereq: serverTimestamp()
         })
-
-        
             .then(() => {
                 notify()
                 setShowModal(false)
@@ -80,6 +97,7 @@ function RequestButton({ text }) {
         });
 
     }
+
 
     return (
         <>
@@ -201,6 +219,19 @@ function RequestButton({ text }) {
                                     >
                                         Close
                                     </button>
+                                    {!reqfrom || !file || !dueDate || !purpose ? (
+                                        <button
+                                        className={" bg-gray-500 hover:bg-gray-400 text-white " +
+                                        " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +
+                                        " py-3 rounded shadow hover:shadow-lg outline-none " +
+                                        " focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 "}
+                                        
+                                        type="button"
+                                        disabled
+                                    >
+                                        Request
+                                    </button>
+                                    ) : (
                                     <button
                                         className={" bg-blue-500 hover:bg-blue-400 text-white active:bg-emerald-600 "
                                         + " font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg " + 
@@ -212,6 +243,7 @@ function RequestButton({ text }) {
                                         
                                         Request
                                     </button>
+                                    )}
                                     
                                     
                                             

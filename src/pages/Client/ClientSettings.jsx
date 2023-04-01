@@ -7,7 +7,7 @@ import { auth, db, storage } from "../../utils/Firebase";
 import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, updateEmail, sendEmailVerification } from "firebase/auth";
 
 import ForbiddenPage from "../Error/ForbiddenPage";
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,6 +22,17 @@ import 'react-toastify/dist/ReactToastify.css';
 function ClientSettings() {
     const notifyInfo = (text) => toast.info(text, {
         position: "top-center",
+
+    });
+    const notifyEmail = (text) => toast.info(text, {
+        position: "top-center",
+        autoClose: 5000,
+        onClose: () => {
+            setTimeout(() => {
+            logout()
+            }, 3000);
+        },
+        
 
     });
     const notifyError = (text) => toast.error(text, {
@@ -87,8 +98,7 @@ function ClientSettings() {
         const auth = getAuth();
         await sendPasswordResetEmail(auth, email)
             .then(() => {
-                // Password reset email sent!
-                // ..
+                
                 notifyInfo("Password reset email sent");
             })
             .catch((error) => {
@@ -110,20 +120,24 @@ function ClientSettings() {
 
     const update = async () => {
         await updateEmail(auth.currentUser, newEmail).then(() => {
-                 console.log(auth.currentUser.uid)
-                 updateDoc(doc(db, "users", auth.currentUser.uid), {
-                 email: newEmail,
+                 
+            sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    updateDoc(doc(db, "users", user.email), {
+                        email: newEmail,
+                        }, { merge: true });
+                }).catch((err) => {
+                alert(err.message)
+            })
+            notifyEmail("Email updated")
+           
 
-            });
-            
-            
-           notifyInfo("Email updated")
             
         
                 
 
         }).catch((error) => {
-            notifyError(error.message)
+            notifyError('Error updating email')
         })
     }
     console.log(user.email)
@@ -165,11 +179,10 @@ function ClientSettings() {
 
     const getAllRequestDocumments = async () => {
         const snapshot = await getDocs(collection(db, "users"));
-        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.uid === auth.currentUser.uid));
-        console.log(data);
+        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
+        
     }
     useEffect(() => {
-        
         const interval = setInterval(async () => {
             await getAllRequestDocumments();
         }, 5000)
