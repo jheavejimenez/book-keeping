@@ -142,7 +142,7 @@ function AdminLogin() {
             })
             .catch((error) => {
                 setError(error.message)
-                notifyError("Invalid email or password")
+                notifyError(error.message)
             })
     }
     return (

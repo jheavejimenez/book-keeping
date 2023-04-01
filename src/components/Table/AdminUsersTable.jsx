@@ -18,7 +18,7 @@ import NoDataFound from "../../pages/Error/NoDataFound";
 function AdminUsersTable() {
     const auth = useAuth();
     const docid = nanoid(5);
-    const  notif = () => toast.success("User Deleted", {
+    const  notif = (text) => toast.success(text, {
         position: "top-center",
         autoClose: 3000, // auto close after 5 seconds
         onClose: () => {
@@ -27,7 +27,7 @@ function AdminUsersTable() {
             }, 3000);
         }
     });
-    const  notif1 = () => toast.warning("No more documents to show", {
+    const  notif1 = () => toast.warning("No more Users to show", {
         position: "top-center",
         autoClose: 3000, // auto close after 5 seconds
         onClose: () => {
@@ -136,7 +136,7 @@ function AdminUsersTable() {
                 activity : "Deleted a user:  " + item.email,
                 });
             deleteDoc(doc(db, "users", item.email));
-            notif();
+            notif("User deleted successfully");
             
         });
         setSelectedRow([]);
@@ -152,7 +152,7 @@ function AdminUsersTable() {
                 ...item,
                 contractexpired: new Date(fiveYearsFromNow.getTime() + 5 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
             }, { merge: true });
-            notif();
+            notif("Contract extended successfully");
         });
         setSelectedRow([]);
     }

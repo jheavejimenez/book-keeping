@@ -7,7 +7,7 @@ import { auth, db, storage } from "../../utils/Firebase";
 import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { getAuth, sendPasswordResetEmail, updateEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, updateEmail,sendEmailVerification } from "firebase/auth";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,6 +23,17 @@ import ForbiddenPage from "../Error/ForbiddenPage";
 function AccountSettings() {
     const notifyInfo = (text) => toast.info(text, {
         position: "top-center",
+
+    });
+    const notifyEmail = (text) => toast.info(text, {
+        position: "top-center",
+        autoClose: 5000,
+        onClose: () => {
+            setTimeout(() => {
+            logout()
+            }, 3000);
+        },
+        
 
     });
     const notifyError = (text) => toast.error(text, {
@@ -111,14 +122,15 @@ function AccountSettings() {
 
     const update = async () => {
         await updateEmail(auth.currentUser, newEmail).then(() => {
-                 console.log(auth.currentUser.uid)
-                 updateDoc(doc(db, "users", auth.currentUser.uid), {
-                 email: newEmail,
-
-            });
-            
-            
-            notifyInfo("Email updated successfully");
+                sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    updateDoc(doc(db, "users", user.email), {
+                        email: newEmail,
+                        }, { merge: true });
+                }).catch((err) => {
+                alert(err.message)
+            })
+            notifyEmail("Email updated")
             
         
                 
@@ -166,8 +178,8 @@ function AccountSettings() {
 
     const getAllRequestDocumments = async () => {
         const snapshot = await getDocs(collection(db, "users"));
-        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.uid === auth.currentUser.uid));
-        console.log(data);
+        setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.email === user.email));
+        
     }
     useEffect(() => {
         

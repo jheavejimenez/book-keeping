@@ -203,8 +203,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
         formData.append('file', inputRef.current.files[0]);
         try {
 
-        const response = await axios.post(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
-            method: 'GET',
+        const response = await axios.get(process.env.REACT_APP_VIRUSTOTAL_API_URL, formData, {
             headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'multipart/form-data',

@@ -33,9 +33,8 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            notifyError()
+            notifyError("Invalid email or password")
         }
-        console.log(querySnapshot.docs[0].data())
         return querySnapshot.docs[0].data().role
         
     }
@@ -44,7 +43,7 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            notifyError()
+            notifyError("Invalid email or password")
         }
         return querySnapshot.docs[0].data().contractexpired
 
@@ -54,7 +53,7 @@ function Login() {
         const q = query(collection(db, "users"), where("email", "==", email));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            notifyError()
+            notifyError("Invalid email or password")
         }
         return querySnapshot.docs[0].data().Llogin
 
