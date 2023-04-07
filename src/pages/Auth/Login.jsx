@@ -9,7 +9,7 @@ import { Field, Form, Formik } from "formik";
 import { LoginSchema } from "../../utils/schema/logInSchema";
 import { useAuth } from "../../hooks/useAuth";
 import { collection, getDocs, query, where, doc, updateDoc, setDoc, runTransaction, writeBatch} from "firebase/firestore";
-import Background from "../../../src/assets/bookkeeping-bg-cropped.jpg";
+import Background from "../../../src/assets/bookkeeping-bg-cropped-2.png";
 
 import { ToastContainer, toast } from 'react-toastify';
 
