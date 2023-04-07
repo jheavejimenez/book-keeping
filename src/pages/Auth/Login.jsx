@@ -147,7 +147,7 @@ function Login() {
                     else if (role === "client" && isNewUser !== cred.user.metadata.lastSignInTime ) {
                         // if Llogin is greater than contract expired  then print contract expired
                         if(Llogin > contractexpired){
-                            setError("Your contract has expired")
+                            notifyError("Your contract has expired")
                             
                         }
                         else{
@@ -158,6 +158,20 @@ function Login() {
                             navigate('/dashboard')
                         }
                         
+                    }
+                    else if (role === "bookkeeper" && isNewUser !== cred.user.metadata.lastSignInTime ) {
+                        // if Llogin is greater than contract expired  then print contract expired
+                        if(Llogin > contractexpired){
+                            notifyError("Your contract has expired")
+                            
+                        }
+                        else{
+                            login({
+                                "email": cred.user.email,
+                                "role": role
+                            })
+                            navigate('bookkeeper/dashboard')
+                        }
                     }
                     
                     else if (role === "bookkeeper" && isNewUser === cred.user.metadata.lastSignInTime) {

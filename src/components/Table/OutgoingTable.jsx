@@ -132,7 +132,7 @@ function OutgoingTable() {
         else {
 
         const fetchPrevData = async () => {
-            const q = query(collection(db, "incoming"),orderBy("date", "desc"),limit(5));
+            const q = query(collection(db, "incoming"),orderBy("date", "desc"));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -140,7 +140,7 @@ function OutgoingTable() {
                 
             });
             setList(items.filter((item) => item.file.includes(".xlsx")));
-            
+            document.getElementById("audit-table").hidden = true;
             console.log(list.filter((item) => item.file.includes(".xlsx")));
                 
         };
@@ -157,7 +157,7 @@ function OutgoingTable() {
         else {
 
         const fetchPrevData = async () => {
-            const q = query(collection(db, "incoming"),orderBy("date", "desc"),limit(5));
+            const q = query(collection(db, "incoming"),orderBy("date", "desc"));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -165,7 +165,7 @@ function OutgoingTable() {
                 
             });
             setList(items.filter((item) => item.file.includes(".pdf")));
-           
+            document.getElementById("audit-table").hidden = true;
             console.log(list.filter((item) => item.file.includes(".pdf")));
                 
         };
@@ -222,7 +222,7 @@ function OutgoingTable() {
             document.getElementById("audit-table").hidden = true;
         }
         const interval = setInterval(async () => {
-            await fetchData();
+            // await fetchData();
             await checkFileExpire();
 
         }, 5000)

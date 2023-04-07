@@ -121,7 +121,7 @@ function ClientTable(props) {
         else {
 
         const fetchPrevData = async () => {
-            const q = query(collection(db, "request"),orderBy("datereq", "desc"),limit(5));
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -129,7 +129,7 @@ function ClientTable(props) {
                 
             });
             setList(items.filter((item) => item.file.includes(".xlsx")));
-            
+            document.getElementById("audit-table").hidden = true;
             console.log(list.filter((item) => item.file.includes(".xlsx")));
                 
         };
@@ -145,7 +145,7 @@ function ClientTable(props) {
         else {
 
         const fetchPrevData = async () => {
-            const q = query(collection(db, "request"),orderBy("datereq", "desc"),limit(5));
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -153,7 +153,7 @@ function ClientTable(props) {
                 
             });
             setList(items.filter((item) => item.file.includes(".pdf")));
-           
+            document.getElementById("audit-table").hidden = true;
             console.log(list.filter((item) => item.file.includes(".pdf")));
                 
         };

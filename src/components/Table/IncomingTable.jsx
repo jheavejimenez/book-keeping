@@ -112,7 +112,7 @@ const filterExcel = () => {
     else {
 
     const fetchPrevData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("date", "desc"),limit(5));
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -120,7 +120,7 @@ const filterExcel = () => {
             
         });
         setList(items.filter((item) => item.file.includes(".xlsx")));
-        
+        document.getElementById("audit-table").hidden = true;
         console.log(list.filter((item) => item.file.includes(".xlsx")));
             
     };
@@ -137,7 +137,7 @@ const filterPdf = () => {
     else {
 
     const fetchPrevData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("date", "desc"),limit(5));
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -145,7 +145,7 @@ const filterPdf = () => {
             
         });
         setList(items.filter((item) => item.file.includes(".pdf")));
-       
+        document.getElementById("audit-table").hidden = true;
         console.log(list.filter((item) => item.file.includes(".pdf")));
             
     };
@@ -198,7 +198,7 @@ const checkFileExpire = async () => {
     useEffect(() => {
         fetchData();
         const interval = setInterval(async () => {
-            await fetchData();
+            // await fetchData();
             await checkFileExpire();
         }, 5000)
         return () => {
