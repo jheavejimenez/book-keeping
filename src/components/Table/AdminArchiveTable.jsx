@@ -13,6 +13,7 @@ import Button from "../../components/Button/Button";
 
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
+import DeleteButton from "../Button/DeleteButton";
 
 
 
@@ -277,14 +278,16 @@ function AdminArchiveTable() {
             </div>
 
                 <div>
-                    <button onClick={unArchive} className={" px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg " + 
-                    " hover:bg-blue-600 w-full "}>Unarchive</button>
+                    <button onClick={unArchive} className={" px-5 py-2.5 mt-4 ml-4 text-white bg-blue-500 rounded-lg " + 
+                    " hover:bg-blue-600 w-full font-medium text-sm "}>Unarchive</button>
                 </div>
 
                 <div>
-                    <button onClick={deleteSelectRow} className={"text-gray-900 bg-gray-100 hover:bg-gray-200 " + 
-                    " border border-gray-400 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm " + 
-                    " px-5 py-2.5 ml-4 mt-4 focus:outline-none "}>Delete</button>
+                    <DeleteButton 
+                        attr={deleteSelectRow}
+                        warning={"You may be deleting user data. After you delete this, it can't be recovered."}
+                        title={"Delete file"}
+                    />
                 </div>
                 
             </div>
