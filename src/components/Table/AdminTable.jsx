@@ -209,7 +209,7 @@ useEffect(() => {
                                     Column2={item.file}
                                     Column4={item.reqby}
                                     Column5={item.Company}
-                                    Column6={dayjs.unix(item.datereq.seconds).format("YYYY-MM-DD")}
+                                    Column6={dayjs.unix(item.datereq.seconds).format("HH:mm:ss A, MMM DD, YYYY")}
                                     
                                 />)
                             )}

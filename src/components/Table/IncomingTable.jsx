@@ -251,7 +251,7 @@ const checkFileExpire = async () => {
                                     Column2={item.sentby}
                                     Column3={item.filename}
                                     Column4={item.purpose}
-                                    Column5={dayjs.unix(item.date?.seconds).format("DD/MM/YYYY")} 
+                                    Column5={dayjs.unix(item.date?.seconds).format("HH:mm:ss A, MMM DD, YYYY")} 
                                     Column6={
                                         <div className={"flex items-center space-x-4"}>
                                             <button className={"flex items-center justify-center w-8 h-8 text-blue-500 transition-colors duration-150 bg-white rounded-full hover:bg-blue-100"}>

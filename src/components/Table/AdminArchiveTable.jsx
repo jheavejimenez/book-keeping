@@ -37,12 +37,14 @@ function AdminArchiveTable() {
 
     });
     const auditTrailCollectionRef = collection(db, "audittrail",);
+    const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);
     const titleTable = [
         "Select",
         "DocID",
         "File",
         "Company",
+        "Date Archived",
         
     ]
 
@@ -197,11 +199,11 @@ function AdminArchiveTable() {
     }
     const filterExcel = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notif1();
             
         }
-        else {
-
+        else {  
+            
         const fetchPrevData = async () => {
             const q = query(collection(db, "archive"),orderBy("datearchive", "desc"));
             const querySnapshot = await getDocs(q)
@@ -222,7 +224,7 @@ function AdminArchiveTable() {
     }
     const filterPdf = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notif1();
             
         }
         else {
@@ -245,21 +247,41 @@ function AdminArchiveTable() {
 
         }
     }
+    const checkFileExpire = async () => {
+        const q = query(collection(db, "archive"));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            console.log("No matching documents.");
+        }
+        else {
+            querySnapshot.forEach((doc) => {
+                data.push(doc.data());
+            });
+        }
+        
+    }
     
-
+      
     useEffect(() => {
+        checkFileExpire();
+       
+        // checkData();
         fetchData();
         // getArchiveData();
         const interval = setInterval(async () => {
-            // await getAllRequestDocumments();
-            // await getArchiveData();
+            console.log(data);
+            data.forEach((item) => {
+                if (item.datearchive > item.archiveexpiry){
+                    deleteDoc(doc(db, "archive", item.docid));
+                }
+            })
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
     //console log selected row docid
-    console.log(selectedRow);
+    // console.log(selectedRow);
     
 
     return (
@@ -332,6 +354,8 @@ function AdminArchiveTable() {
                                         DocID={item.docid}
                                         File={item.filename}
                                         Company={item.company}
+                                        DateArchived={dayjs.unix(item.datearchive?.seconds).format("hh:mm A, MMMM D, YYYY")}
+                                        
                                     />
                                 )
                             )}

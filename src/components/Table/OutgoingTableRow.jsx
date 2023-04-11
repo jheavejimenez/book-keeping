@@ -158,6 +158,9 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
         return querySnapshot.docs[0].data().sentby
     }
 
+    const currentDate = new Date();
+    const tenYearsFromNow = new Date(currentDate.getFullYear() + 10, currentDate.getMonth(), currentDate.getDate());
+
     
 
     const handleDelete = async (email) => {
@@ -179,6 +182,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
             sentby: sentby,
             sentfrom: 'Outgoing',
             datearchive: serverTimestamp(),
+            archiveexpiry: tenYearsFromNow,
             });
             
             setDoc(doc(auditTrailCollectionRef, Column1), {
