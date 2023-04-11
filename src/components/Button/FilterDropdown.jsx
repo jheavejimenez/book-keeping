@@ -19,7 +19,7 @@ function FilterDropdown({excel, pdf, all}) {
     };
 
     const handlePdfClick = () => {
-        setFilter("Pdf");
+        setFilter("PDF");
         pdf();
     };
 

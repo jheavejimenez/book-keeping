@@ -197,11 +197,15 @@ function AdminUsersTable() {
         <>
             <ToastContainer />
             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-                <button onClick={extendContract} className={" px-4 py-1 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8]"}>Extend Contract</button>
-                <button onClick={changeRole} className={" px-4 py-1 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8]"}>Change Role</button>
+                <button onClick={extendContract} className={" px-4 py-1 mt-4 w-44 text-white bg-blue-500 rounded-lg hover:bg-[#00A2E8]"}>Extend Contract</button>
+                <button onClick={changeRole} className={" px-4 py-1 mt-4 w-36 text-white bg-blue-400 rounded-lg hover:bg-[#00A2E8]"}>Change Role</button>
 
                 <div className="flex justify-end w-full">
-                    <button onClick={deleteSelectRow} className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mt-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "}>Delete</button>
+                    <DeleteButton 
+                        attr={deleteSelectRow}
+                        warning={"After you delete an account, it's permanently deleted. Accounts can't be undeleted."} 
+                        title={"Delete user"}
+                    />
                 </div>
             </div>
             <div className={"mt-10 mx-4"}>
