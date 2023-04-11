@@ -118,29 +118,23 @@ function ClientSettings() {
 
 
 
-    const update = async () => {
-        await updateEmail(auth.currentUser, newEmail).then(() => {
+    // const update = async () => {
+    //     await updateEmail(auth.currentUser, newEmail).then(() => {
                  
-            sendEmailVerification(auth.currentUser)
-                .then(() => {
-                    updateDoc(doc(db, "users", user.email), {
-                        email: newEmail,
-                        }, { merge: true });
-                }).catch((err) => {
-                alert(err.message)
-            })
-            notifyEmail("Email updated")
-           
-
-            
-        
-                
-
-        }).catch((error) => {
-            notifyError('Error updating email')
-        })
-    }
-    console.log(user.email)
+    //         sendEmailVerification(auth.currentUser)
+    //             .then(() => {
+    //                 updateDoc(doc(db, "users", user.email), {
+    //                     email: newEmail,
+    //                     }, { merge: true });
+    //             }).catch((err) => {
+    //             alert(err.message)
+    //         })
+    //         notifyEmail("Email updated")
+    //     }).catch((error) => {
+    //         notifyError('Error updating email')
+    //     })
+    // }
+    // console.log(user.email)
     
 
 
@@ -315,7 +309,7 @@ function ClientSettings() {
                 <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
                     <div className={"flex justify-center mt-8"}>
                         <div className={"w-full"}>
-                            <div className={""}>
+                            {/* <div className={""}>
                                 <div className={"flex justify-between"}>
                                     <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Email Address </h1>
                                     <span className={"sm:ml-24"}>
@@ -343,7 +337,7 @@ function ClientSettings() {
                                     </p>
                                 </div>
 
-                            </div>
+                            </div> */}
                             <div className={"mt-12 w-full"}>
                                 <div className={"flex justify justify-between"}>
                                     <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Password </h1>

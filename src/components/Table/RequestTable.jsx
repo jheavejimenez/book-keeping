@@ -87,7 +87,7 @@ function RequestTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(8) );
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(5) );
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -105,7 +105,7 @@ function RequestTable() {
     useEffect(() => {
         fetchData();
         const interval = setInterval(async () => {
-            await fetchData();
+            // await fetchData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks

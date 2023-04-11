@@ -13,6 +13,7 @@ import Button from "../../components/Button/Button";
 
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
+import DeleteButton from "../Button/DeleteButton";
 
 
 
@@ -195,6 +196,56 @@ function AdminArchiveTable() {
         
         setSelectedRow([]);
     }
+    const filterExcel = () => {
+        if (list.length === 0) {
+            alert("Thats all we have for now !")
+            
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "archive"),orderBy("datearchive", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items.filter((item) => item.file.includes(".xlsx")));
+            document.getElementById("audit-table").hidden = true;
+            console.log(list.filter((item) => item.file.includes(".xlsx")));
+                
+        };
+        fetchPrevData();
+
+
+        }
+    }
+    const filterPdf = () => {
+        if (list.length === 0) {
+            alert("Thats all we have for now !")
+            
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "archive"),orderBy("datearchive", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items.filter((item) => item.file.includes(".pdf")));
+            document.getElementById("audit-table").hidden = true;
+            console.log(list.filter((item) => item.file.includes(".pdf")));
+                
+        };
+        fetchPrevData();
+
+
+        }
+    }
     
 
     useEffect(() => {
@@ -217,19 +268,26 @@ function AdminArchiveTable() {
             <ToastContainer />
              <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
                     
-                <div className={"mt-4"}>
-                    Filter by File <FilterDropdown />
+             <div className={"mt-4"}>
+                Filter by Type <FilterDropdown 
+                    excel={filterExcel}
+                    pdf={filterPdf}
+                    all={fetchData}
+            />
+            
+            </div>
+
+                <div>
+                    <button onClick={unArchive} className={" px-5 py-2.5 mt-4 ml-4 text-white bg-blue-500 rounded-lg " + 
+                    " hover:bg-blue-600 w-full font-medium text-sm "}>Unarchive</button>
                 </div>
 
                 <div>
-                    <button onClick={unArchive} className={" px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg " + 
-                    " hover:bg-blue-600 w-full "}>Unarchive</button>
-                </div>
-
-                <div>
-                    <button onClick={deleteSelectRow} className={"text-gray-900 bg-gray-100 hover:bg-gray-200 " + 
-                    " border border-gray-400 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm " + 
-                    " px-5 py-2.5 ml-4 mt-4 focus:outline-none "}>Delete</button>
+                    <DeleteButton 
+                        attr={deleteSelectRow}
+                        warning={"You may be deleting user data. After you delete this, it can't be recovered."}
+                        title={"Delete file"}
+                    />
                 </div>
                 
             </div>

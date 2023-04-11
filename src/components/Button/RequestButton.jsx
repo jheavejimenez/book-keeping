@@ -219,7 +219,7 @@ function RequestButton({ text }) {
                                     >
                                         Close
                                     </button>
-                                    {!reqfrom || !file || !dueDate || !purpose ? (
+                                    {!reqfrom.includes("@") || !file || !dueDate || !purpose ? (
                                         <button
                                         className={" bg-gray-500 hover:bg-gray-400 text-white " +
                                         " active:bg-emerald-600 font-bold uppercase text-sm px-6 " +

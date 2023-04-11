@@ -27,7 +27,7 @@ function AdminUsersTable() {
             }, 3000);
         }
     });
-    const  notif1 = () => toast.warning("No more Users to show", {
+    const  notif1 = (text) => toast.warning(text, {
         position: "top-center",
         autoClose: 3000, // auto close after 5 seconds
         onClose: () => {
@@ -84,7 +84,7 @@ function AdminUsersTable() {
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
-            notif1();
+            notif1("No more Users to show");
            
         }
         else {
@@ -108,7 +108,7 @@ function AdminUsersTable() {
 
     const showPrevPage = ({item}) => {
         if (list.length === 0) {
-            notif1();
+            notif1("No more Users to show");
            
         }
         else {
@@ -149,13 +149,33 @@ function AdminUsersTable() {
                 activity : "Extended a user's contract:  " + item.email,
                 });
             setDoc(doc(db, "users", item.email), {
-                ...item,
                 contractexpired: new Date(fiveYearsFromNow.getTime() + 5 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
             }, { merge: true });
             notif("Contract extended successfully");
         });
         setSelectedRow([]);
     }
+    
+    const changeRole = async() => {
+        selectedRow.forEach((item) => {
+            if (item.role === "bookkeeper") {
+                notif1("User is already a book keeper");
+            }
+            else {
+                setDoc(doc(auditTrailCollectionRef,docid ), {
+                    time : serverTimestamp(),
+                    user : 'Admin',
+                    activity : "Change Role to book keeper:  " + item.email,
+                    });
+                setDoc(doc(db, "users", item.email), {
+                    role: "bookkeeper",
+                }, { merge: true });
+                notif("Changed role successfully");
+            }
+        });
+        setSelectedRow([]);
+    }
+
     
     
     useEffect(() => {
@@ -177,9 +197,16 @@ function AdminUsersTable() {
         <>
             <ToastContainer />
             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-                <button onClick={extendContract} className={" px-4 py-1 mt-4 text-white bg-[#00A2E8] rounded-lg hover:bg-[#00A2E8]"}>Extend Contract</button>
-                <button onClick={deleteSelectRow} className={"text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mt-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "}>Delete</button>
-                
+                <button onClick={extendContract} className={" px-4 py-1 mt-4 w-44 text-white bg-blue-500 rounded-lg hover:bg-[#00A2E8]"}>Extend Contract</button>
+                <button onClick={changeRole} className={" px-4 py-1 mt-4 w-36 text-white bg-blue-400 rounded-lg hover:bg-[#00A2E8]"}>Change Role</button>
+
+                <div className="flex justify-end w-full">
+                    <DeleteButton 
+                        attr={deleteSelectRow}
+                        warning={"After you delete an account, it's permanently deleted. Accounts can't be undeleted."} 
+                        title={"Delete user"}
+                    />
+                </div>
             </div>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>

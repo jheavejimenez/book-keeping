@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Navigation/Sidebar";
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 import Header from "../../components/Navigation/Header";
-import { collection, doc, setDoc,getDocs, onSnapshot, updateDoc } from "firebase/firestore";
+import { collection, doc, setDoc,getDocs, onSnapshot, updateDoc,query,where } from "firebase/firestore";
 import { auth, db, storage } from "../../utils/Firebase";
 import Input from "../../components/Input/Input";
 import { useAuth } from "../../hooks/useAuth";
@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import ForbiddenPage from "../Error/ForbiddenPage";
+import { set } from "date-fns";
 
 
 // import ClientTable from "../../components/Table/ClientTable";
@@ -75,8 +76,8 @@ function AccountSettings() {
 
         }
     };
-    console.log(user)
-    console.log("image", image);
+    // console.log(user)
+    // console.log("image", image);
 
     const previewFile = (file) => {
         const reader = new FileReader();
@@ -89,6 +90,9 @@ function AccountSettings() {
     const removeImage = () => {
         if (image === null) {
             console.log("No image selected");
+            updateDoc(doc(db, "users", user.email), {
+                image: '',
+                }, { merge: true });
         } else {
             setImage(null);
             setSource(imgUrl?imgUrl:"../../UserDefaultImage.png");
@@ -115,34 +119,46 @@ function AccountSettings() {
     const [fname, setFname] = useState(user.fname);
     const [lname, setLname] = useState(user.lname);
     const [company , setCompany] = useState(user.company);
-
+    const auth = getAuth();
     const [newEmail, setNewEmail] = useState('')
 
-
-
-    const update = async () => {
-        await updateEmail(auth.currentUser, newEmail).then(() => {
-                sendEmailVerification(auth.currentUser)
-                .then(() => {
-                    updateDoc(doc(db, "users", user.email), {
-                        email: newEmail,
-                        }, { merge: true });
-                }).catch((err) => {
-                alert(err.message)
-            })
-            notifyEmail("Email updated")
-            
+    // const update = async () => {
         
-                
+        
+        
+    //     await updateEmail(auth.currentUser, newEmail).then(() => {
+                 
+    //         sendEmailVerification(auth.currentUser)
+    //             .then(() => {
+    //                 const q = query(collection(db, "users"), where("email", "==", user.email));
+    //                 const snapshot = getDocs(q);
+    //                 setData(snapshot.docs.map((doc) => doc.data()));
+    //                 console.log(data)
+    //                 console.log(data.map((doc) => doc.email))
+                    
+    //                 setDoc(doc(db, "users", newEmail), {
+    //                     fname: data.map((doc) => doc.fname),
+    //                     lname: data.map((doc) => doc.lname),
+    //                     company: data.map((doc) => doc.company),
+    //                     email: newEmail,
+    //                     image: data.map((doc) => doc.image),
+    //                     role: data.map((doc) => doc.role),
+    //                     Llogin: data.map((doc) => doc.Llogin),
+    //                     contractexpired : data.map((doc) => doc.contractexpired),
+    //                     uid : data.map((doc) => doc.uid),
+    //                 })
 
-        }).catch((error) => {
-            notifyError(error.message);
-        })
-    }
-    console.log(user.email)
-    
+    //             }).catch((err) => {
+    //             alert(err.message)
+    //         })
+    //         notifyEmail("Email updated")
+    //     }).catch((error) => {
+    //         notifyError(error.message)
+    //     })
+    // }
+    // // console.log(user.email)
 
-    const accsetCollectionRef = collection(db, "accountsettings",);
+    // const accsetCollectionRef = collection(db, "accountsettings",);
 
     const add = async (e) => {
         e.preventDefault();
@@ -315,7 +331,7 @@ function AccountSettings() {
                     <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
                         <div className={"flex justify-center mt-8"}>
                             <div className={"w-full"}>
-                                <div className={""}>
+                                {/* <div className={""}>
                                     <div className={"flex justify-between"}>
                                         <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Email Address </h1>
                                         <span className={"sm:ml-24"}>
@@ -343,7 +359,7 @@ function AccountSettings() {
                                         </p>
                                     </div>
 
-                                </div>
+                                </div> */}
                                 <div className={"mt-12 w-full"}>
                                     <div className={"flex justify justify-between"}>
                                         <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Password </h1>
