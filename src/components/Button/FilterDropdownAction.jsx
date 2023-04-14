@@ -53,7 +53,7 @@ function FilterDropdownAction({request, sent, edit, archived, unarchived, delete
     return (
         <Menu as="div" className="relative inline-block text-left">
         <div>
-            <Menu.Button className={" inline-flex w-56 justify-center w-full " + 
+            <Menu.Button className={" inline-flex w-36 justify-center w-full " + 
                 " rounded-md border border-gray-300 " +
                 " bg-white px-1 py-1 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-50 " + 
                 " focus:outline-none " +
