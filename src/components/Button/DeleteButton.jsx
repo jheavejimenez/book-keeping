@@ -7,7 +7,7 @@ function DeleteButton({ attr, warning, title }) {
     return (
         <>
             <button
-                className={" text-gray-900 bg-gray-100 hover:bg-gray-200 border border-gray-400 focus:ring-4 " + 
+                className={" text-gray-900 bg-gray-100 hover:bg-red-200 hover:text-red-700 border border-gray-400 focus:ring-4 " + 
                 " focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mt-4 focus:outline-none "}
                 type={"button"}
                 onClick={() => setShowModal(true)}>

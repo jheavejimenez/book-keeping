@@ -14,6 +14,7 @@ import Button from "../../components/Button/Button";
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import DeleteButton from "../Button/DeleteButton";
+import FilterTableLimit from "../Button/FilterTableLimit";
 
 
 
@@ -44,6 +45,8 @@ function AdminArchiveTable() {
         "DocID",
         "File",
         "Company",
+        "Date Created",
+        "Date Archived",
         
     ]
 
@@ -266,19 +269,27 @@ function AdminArchiveTable() {
     return (
         <>
             <ToastContainer />
-             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
+            <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
                     
-             <div className={"mt-4"}>
-                Filter by Type <FilterDropdown 
-                    excel={filterExcel}
-                    pdf={filterPdf}
-                    all={fetchData}
-            />
-            
-            </div>
+                <div className={"mt-4"}>
+                    Show <FilterTableLimit 
+                        limit5={""}
+                        limit10={""}
+                        limit15={""}
+                        limit20={""}
+                    /> results
+                </div>
+
+                <div className={"mt-4 ml-4"}>
+                    Filter by Type <FilterDropdown 
+                        excel={filterExcel}
+                        pdf={filterPdf}
+                        all={fetchData}
+                    />
+                </div>
 
                 <div>
-                    <button onClick={unArchive} className={" px-5 py-2.5 mt-4 ml-4 text-white bg-blue-500 rounded-lg " + 
+                    <button onClick={unArchive} className={" px-4 py-2.5 mt-4 ml-6 text-white bg-blue-500 rounded-lg " + 
                     " hover:bg-blue-600 w-full font-medium text-sm "}>Unarchive</button>
                 </div>
 
@@ -309,7 +320,7 @@ function AdminArchiveTable() {
                             <tbody className={"font-inter divide-y"}>
                             {list.length === 0 ? ( 
                                 <tr className={"text-sm font-medium text-center text-gray-900"}>
-                                    <td colSpan={5} className={"pt-10"}>
+                                    <td colSpan={10} className={"pt-10"}>
                                         <NoDataFound 
                                             text={"No Data"}
                                         />
@@ -335,6 +346,8 @@ function AdminArchiveTable() {
                                         DocID={item.docid}
                                         File={item.filename}
                                         Company={item.company}
+                                        DateCreated={dayjs.unix(item.date?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                        DateArchived={dayjs.unix(item.datearchive?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                     />
                                 )
                             )}

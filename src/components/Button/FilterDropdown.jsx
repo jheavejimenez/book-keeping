@@ -26,13 +26,11 @@ function FilterDropdown({excel, pdf, all}) {
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className={" inline-flex w-full justify-center w-full " + 
-                    " rounded-md border border-gray-300 " +
-                    " bg-white px-1 py-1 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-50 " + 
-                    " focus:outline-none " +
-                    " focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 "}>
+                <Menu.Button className={" inline-flex w-20 justify-center rounded-md border border-gray-300 " + 
+                    " bg-white px-1 py-1 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-100 " + 
+                    " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 "}>
                     <FilterDropdownOptions Option={filter === "all" ? "All" : "" + filter} /> 
-                    <ChevronDownIcon className="-mr-1 ml-1 h-5 w-10 mt-2" aria-hidden="true" />
+                    <ChevronDownIcon className="-m-1 h-10 w-12 pr-1 pt-1" aria-hidden="true" />
                     
                 </Menu.Button>
                 
@@ -48,7 +46,7 @@ function FilterDropdown({excel, pdf, all}) {
                 leaveTo="transform opacity-0 scale-95"
             >
                 <Menu.Items
-                    className={" absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg " +
+                    className={" absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-md bg-white shadow-lg " +
                         " ring-1 ring-black ring-opacity-5 focus:outline-none "}>
                     <div className="py-1">
                         <button onClick={handleAllClick} className={" flex items-center justify-between w-full px-4 py-2 text-sm " +

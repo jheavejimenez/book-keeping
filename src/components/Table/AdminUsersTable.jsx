@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from "nanoid";
 import NoDataFound from "../../pages/Error/NoDataFound";
+import FilterTableLimit from "../Button/FilterTableLimit";
 
 
 
@@ -197,10 +198,19 @@ function AdminUsersTable() {
         <>
             <ToastContainer />
             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-                <button onClick={extendContract} className={" px-4 py-1 mt-4 w-44 text-white bg-blue-500 rounded-lg hover:bg-[#00A2E8]"}>Extend Contract</button>
-                <button onClick={changeRole} className={" px-4 py-1 mt-4 w-36 text-white bg-blue-400 rounded-lg hover:bg-[#00A2E8]"}>Change Role</button>
+                <div className={"mt-4"}>
+                    Show <FilterTableLimit 
+                        limit5={""}
+                        limit10={""}
+                        limit15={""}
+                        limit20={""}
+                    /> results
+                </div>
 
-                <div className="flex justify-end w-full">
+                <button onClick={extendContract} className={"ml-5 px-4 py-1 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"}>Extend Contract</button>
+                <button onClick={changeRole} className={" px-4 py-1 mt-4 text-white bg-blue-400 rounded-lg hover:bg-blue-600"}>Change Role</button>
+
+                <div className="flex justify-end w-3/5">
                     <DeleteButton 
                         attr={deleteSelectRow}
                         warning={"After you delete an account, it's permanently deleted. Accounts can't be undeleted."} 
@@ -254,8 +264,8 @@ function AdminUsersTable() {
                                     Column2={item.email}
                                     Column3={item.role}
                                     Column4={item.company}
-                                    Column5={dayjs.unix(item.Llogin?.seconds).format("hh:mm A, MMMM D, YYYY")}
-                                    Column6={dayjs.unix(item.contractexpired?.seconds).format("hh:mm A, MMMM D, YYYY")}
+                                    Column5={dayjs.unix(item.Llogin?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                    Column6={dayjs.unix(item.contractexpired?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                     
                                 />)
 
