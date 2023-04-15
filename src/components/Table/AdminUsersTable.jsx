@@ -64,7 +64,7 @@ function AdminUsersTable() {
     const auditTrailCollectionRef = collection(db, "audittrail",);
    
     const fetchData = async () => {
-        const q = query(collection(db, "users"),orderBy("email", "asc"), limit(5));
+        const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -89,7 +89,7 @@ function AdminUsersTable() {
         }
         else {
             const fetchNextData = async () => {
-                const q = query(collection(db, "users"),orderBy("email", "desc"), limit(5), startAfter(item.email));
+                const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(5), startAfter(item.Llogin));
                 const querySnapshot = await getDocs(q)
                 const items = []
                 querySnapshot.forEach((doc) => {
@@ -113,7 +113,7 @@ function AdminUsersTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "users"),orderBy("email", "desc"), endBefore(item.email), limitToLast(5));
+            const q = query(collection(db, "users"),orderBy("Llogin", "desc"), endBefore(item.Llogin), limitToLast(5));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
