@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
+import FilterTableLimit from "../Button/FilterTableLimit";
 
 
 function ClientRequestTable() {
@@ -147,44 +148,53 @@ function ClientRequestTable() {
                     path={fetchData}
                     attr={done}
                 />
+
+                <div>
+                    Show <FilterTableLimit 
+                        limit5={""}
+                        limit10={""}
+                        limit15={""}
+                        limit20={""}
+                    /> results
+                </div>
             </div>
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b dark:border-gray-700 " + 
-                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
-                                {titleTable.map((item) => (
-                                    <TableHeading
-                                        text={item}
-                                    />
+                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                " text-gray-500 border-b dark:border-gray-700 " + 
+                                " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
+                                    {titleTable.map((item) => (
+                                        <TableHeading
+                                            text={item}
+                                        />
 
-                                ))}
-                            </tr>
+                                    ))}
+                                </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900"}>
-                                    <td colSpan={8} className={"pt-10"}>
-                                        <NoDataFound 
-                                            text={"No Data"}
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null
-                            }
-                            {list.map?.((item) => (
-                                <RequestTableRow
-                                    Column1={item.documentId}
-                                    Column2={item.reqby}
-                                    Column3={item.file}
-                                    Column4={item.purpose}
-                                    Column5={dayjs.unix(item.dueDate?.seconds).format("HH:mm:ss A, MMM DD, YYYY")}
-                                    Column6={dayjs.unix(item.datereq?.seconds).format("HH:mm:ss A, MMM DD, YYYY")}
-                                />)
-                            )}
+                                {list.length === 0 ? ( 
+                                    <tr className={"text-sm font-medium text-center text-gray-900"}>
+                                        <td colSpan={8} className={"pt-10"}>
+                                            <NoDataFound 
+                                                text={"No Data"}
+                                            />
+                                        </td>
+                                    </tr>
+                                ) : null
+                                }
+                                {list.map?.((item) => (
+                                    <RequestTableRow
+                                        Column1={item.documentId}
+                                        Column2={item.reqby}
+                                        Column3={item.file}
+                                        Column4={item.purpose}
+                                        Column5={dayjs.unix(item.dueDate?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                        Column6={dayjs.unix(item.datereq?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                    />)
+                                )}
                             
                             </tbody>
                         </table>

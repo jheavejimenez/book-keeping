@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
+import FilterTableLimit from "../Button/FilterTableLimit";
 
 function IncomingTable() {
     const notify = () => toast.warning("No more documents to show", {
@@ -209,15 +210,25 @@ const checkFileExpire = async () => {
 
     return (
         <>
-        <ToastContainer />
-         <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-        Filter by Type <FilterDropdown 
-                excel={filterExcel}
-                pdf={filterPdf}
-                all={fetchData}
-           />
-           
-        </div> 
+            <ToastContainer />
+            <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                <div>
+                    Show <FilterTableLimit 
+                        limit5={""}
+                        limit10={""}
+                        limit15={""}
+                        limit20={""}
+                    /> results
+                </div>
+
+                <div className={"ml-4"}>
+                    Filter by Type <FilterDropdown 
+                        excel={filterExcel}
+                        pdf={filterPdf}
+                        all={fetchData}
+                    />
+                </div>
+            </div> 
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
@@ -235,34 +246,35 @@ const checkFileExpire = async () => {
                                 </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                    <td colSpan={8} className={"pt-10"}>
-                                        <NoDataFound 
-                                            text={"No Data"}
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null
-                            }
-                            {list.map?.((item) => (
-                                <IncomingTableRow
-                                    Column1={item.docid}
-                                    Column2={item.sentby}
-                                    Column3={item.filename}
-                                    Column4={item.purpose}
-                                    Column5={dayjs.unix(item.date?.seconds).format("HH:mm:ss A, MMM DD, YYYY")} 
-                                    Column6={
-                                        <div className={"flex items-center space-x-4"}>
-                                            <button className={"flex items-center justify-center w-8 h-8 text-blue-500 transition-colors duration-150 bg-white rounded-full hover:bg-blue-100"}>
-                                                <a href={item.file} target = "_blank" download>
-                                                    <ArrowDownTrayIcon className={"w-5 h-5"} />
-                                                </a>
-                                            </button>
-                                        </div>
-                                    }
-                                />)
-                            )}
+                                {list.length === 0 ? ( 
+                                    <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                        <td colSpan={8} className={"pt-10"}>
+                                            <NoDataFound 
+                                                text={"No Data"}
+                                            />
+                                        </td>
+                                    </tr>
+                                ) : null
+                                }
+                                {list.map?.((item) => (
+                                    <IncomingTableRow
+                                        Column1={item.docid}
+                                        Column2={item.sentby}
+                                        Column3={item.filename}
+                                        Column4={item.purpose}
+                                        Column5={dayjs.unix(item.date?.seconds).format("hh:mm:ss A, DD/MM/YYYY")} 
+                                        Column6={
+                                            <div className={"flex items-center space-x-4"}>
+                                                <button className={"flex items-center justify-center w-8 h-8 text-blue-500" + 
+                                                "transition-colors duration-150 bg-white rounded-full hover:bg-blue-100"}>
+                                                    <a href={item.file} target = "_blank" download>
+                                                        <ArrowDownTrayIcon className={"w-5 h-5"} />
+                                                    </a>
+                                                </button>
+                                            </div>
+                                        }
+                                    />)
+                                )}
                             </tbody>
                         </table>
                     </div>

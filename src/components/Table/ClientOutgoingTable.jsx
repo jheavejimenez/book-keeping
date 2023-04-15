@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
+import FilterTableLimit from "../Button/FilterTableLimit";
 
 function ClientOutgoingTable() {
     const { user } = useAuth();
@@ -237,12 +238,23 @@ function ClientOutgoingTable() {
     return (
         <>
             <ToastContainer />
-            <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-            Filter by Type <FilterDropdown 
-                    excel={filterExcel}
-                    pdf={filterPdf}
-                    all={fetchData}
-            />
+            <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                <div>
+                    Show <FilterTableLimit 
+                        limit5={""}
+                        limit10={""}
+                        limit15={""}
+                        limit20={""}
+                    /> results
+                </div>
+
+                <div className={"ml-4"}>
+                    Filter by Type <FilterDropdown 
+                        excel={filterExcel}
+                        pdf={filterPdf}
+                        all={fetchData}
+                    />
+                </div>
             
             </div> 
             <div className={"mt-4 mx-4"}>
@@ -250,36 +262,36 @@ function ClientOutgoingTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
-                            " text-gray-500 border-b dark:border-gray-700 " +
-                            " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
-                                {titleTable.map((item) => (
-                                    <TableHeading
-                                        text={item}
-                                    />
+                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                " text-gray-500 border-b dark:border-gray-700 " +
+                                " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
+                                    {titleTable.map((item) => (
+                                        <TableHeading
+                                            text={item}
+                                        />
 
-                                ))}
-                            </tr>
+                                    ))}
+                                </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                            {list.length === 0 ? ( 
-                                <tr className={"text-sm font-medium text-center text-gray-900"}>
-                                    <td colSpan={5} className={"pt-10"}>
-                                        <NoDataFound 
-                                            text={"No Data"}
-                                        />
-                                    </td>
-                                </tr>
-                            ) : null
-                            }
-                            {list.map?.((item) => (
-                                <Clientoutgoingrow
-                                    Column1={item.docid}
-                                    Column2={item.email}
-                                    Column3={item.filename}
-                                    Column4={dayjs.unix(item.date?.seconds).format("HH:mm:ss A, MMM DD, YYYY")}
-                                />)
-                            )}
+                                {list.length === 0 ? ( 
+                                    <tr className={"text-sm font-medium text-center text-gray-900"}>
+                                        <td colSpan={5} className={"pt-10"}>
+                                            <NoDataFound 
+                                                text={"No Data"}
+                                            />
+                                        </td>
+                                    </tr>
+                                ) : null
+                                }
+                                {list.map?.((item) => (
+                                    <Clientoutgoingrow
+                                        Column1={item.docid}
+                                        Column2={item.email}
+                                        Column3={item.filename}
+                                        Column4={dayjs.unix(item.date?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                    />)
+                                )}
                             </tbody>
                         </table>
                     </div>

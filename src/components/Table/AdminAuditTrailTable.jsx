@@ -15,12 +15,13 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
+import FilterTableLimit from "../Button/FilterTableLimit";
 
 
 function AdminAuditTable() {
     const [data, setData] = useState([]);
     const titleTable = [
-        "Time",
+        "Timestamp",
         "User",
         "Activity"
     ]
@@ -314,17 +315,28 @@ function AdminAuditTable() {
     return (
         <>
             <ToastContainer />
-            <div  className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}>
-                Filter by Action <FilterDropdownAction 
-                    request={filterRequest}
-                    sent={filterSent}
-                    all={fetchData}
-                    archived={filterArchived}
-                    edit={filterEdit}
-                    unarchived={filterUnarchive}
-                    deleteFile={filterDeleteFile}
-                    deleteUser={filterDeleteUser}
-            />
+            <div  className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide gap-4"}>
+                <div className={"mt-4"}>
+                    Show <FilterTableLimit 
+                        limit5={""}
+                        limit10={""}
+                        limit15={""}
+                        limit20={""}
+                    /> results
+                </div>
+                <div className={"ml-4 mt-4"}>
+                    Filter by Action <FilterDropdownAction 
+                        request={filterRequest}
+                        sent={filterSent}
+                        all={fetchData}
+                        archived={filterArchived}
+                        edit={filterEdit}
+                        unarchived={filterUnarchive}
+                        deleteFile={filterDeleteFile}
+                        deleteUser={filterDeleteUser}
+                    />
+                </div>
+                
             </div>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
@@ -354,7 +366,7 @@ function AdminAuditTable() {
                             }
                             {list.map?.((item) => (
                                 <AuditTableRow
-                                    Column1={dayjs.unix(item.time?.seconds).format("hh:mm A, MMMM D, YYYY")}
+                                    Column1={dayjs.unix(item.time?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                     Column2={item.user}
                                     Column3={item.activity}
                                 />)

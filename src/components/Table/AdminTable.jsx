@@ -11,6 +11,7 @@ import { getAllRequestDocumments } from "../../utils/helper";
 import { Table, Button, ButtonGroup } from "react-bootstrap";
 import FilterDropdown from "../Button/FilterDropdown";
 import NoDataFound from "../../pages/Error/NoDataFound";
+import FilterTableLimit from "../Button/FilterTableLimit";
 
 function AdminTable(props) {
     const { user } = useAuth();
@@ -20,7 +21,7 @@ function AdminTable(props) {
         "",
         "Sender",
         "Company",
-        "Date",
+        "Timestamp",
         
     ]
 
@@ -167,12 +168,24 @@ useEffect(() => {
 
     return (
         <>
-        <div className={"px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-        Filter by Type <FilterDropdown 
-                excel={filterExcel}
-                pdf={filterPdf}
-                all={fetchData}
-           />
+        <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide gap-4"}> 
+            <div>
+                Show <FilterTableLimit 
+                    limit5={""}
+                    limit10={""}
+                    limit15={""}
+                    limit20={""}
+                /> results
+            </div>
+            
+            <div className={"ml-4"}>
+                Filter by Type <FilterDropdown 
+                    excel={filterExcel}
+                    pdf={filterPdf}
+                    all={fetchData}
+                />
+            </div>
+            
            
         </div>   
             <div className={"mt-4 mx-4"}>
@@ -209,7 +222,7 @@ useEffect(() => {
                                     Column2={item.file}
                                     Column4={item.reqby}
                                     Column5={item.Company}
-                                    Column6={dayjs.unix(item.datereq.seconds).format("HH:mm:ss A, MMM DD, YYYY")}
+                                    Column6={dayjs.unix(item.datereq.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                     
                                 />)
                             )}
