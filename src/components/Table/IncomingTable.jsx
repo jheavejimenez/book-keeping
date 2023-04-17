@@ -191,24 +191,24 @@ const checkFileExpire = async () => {
     }
    
 }
-const fetchFiveData = async () => {
-    const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
-        const querySnapshot = await getDocs(q)
-        const items = []
-        querySnapshot.forEach((doc) => {
-            items.push(doc.data())
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
 
+                
+            });
+            setList(items);
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = true;
+            }
             
-        });
-        setList(items);
-        if (items.length === 0) {
-            document.getElementById("audit-table").hidden = true;
-        }
-        else {
-            document.getElementById("audit-table").hidden = true;
-        }
-        
-    };
+        };
     
 
 
