@@ -53,7 +53,7 @@ function ClientOutgoingTable() {
         
         const fetchData = async () => {
             const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
-           if (user) {
+            if (user) {
                const querySnapshot = await getDocs(q)
                const items = []
                querySnapshot.forEach((doc) => {
@@ -214,7 +214,74 @@ function ClientOutgoingTable() {
        
         
     }
-    
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+                
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+                
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+     
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())   
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
 
 
 
@@ -241,10 +308,10 @@ function ClientOutgoingTable() {
             <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
                 <div>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
 

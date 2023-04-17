@@ -200,12 +200,81 @@ const checkFileExpire = async () => {
             }
         }
     }
+    }
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
 
+            
+        });
+        setList(items.filter((item) => item.email === user.email));
+        console.log(items[0]);
+        if (items.filter  (item => item.email === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
 
-   
-    
-}
+            
+        });
+        setList(items.filter((item) => item.email === user.email));
+        console.log(items[0]);
+        if (items.filter  (item => item.email === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
 
+            
+        });
+        setList(items.filter((item) => item.email === user.email));
+        console.log(items[0]);
+        if (items.filter  (item => item.email === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "incoming"),orderBy("date", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items.filter((item) => item.email === user.email));
+        console.log(items[0]);
+        if (items.filter  (item => item.email === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
 
 
     useEffect(() => {
@@ -228,10 +297,10 @@ const checkFileExpire = async () => {
             <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
                 <div>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
 

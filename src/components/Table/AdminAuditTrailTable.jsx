@@ -46,8 +46,6 @@ function AdminAuditTable() {
 
    
     const fetchData = async () => {
-        
-
         const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
@@ -291,6 +289,70 @@ function AdminAuditTable() {
 
         }
     }
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
 
 
 
@@ -298,13 +360,7 @@ function AdminAuditTable() {
     useEffect(() => {
         // getAllRequestDocumments();
         fetchData();
-       
-    
-        
-       
-
         const interval = setInterval(async () => {
-           
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
@@ -318,10 +374,10 @@ function AdminAuditTable() {
             <div  className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide gap-4"}>
                 <div className={"mt-4"}>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
                 <div className={"ml-4 mt-4"}>

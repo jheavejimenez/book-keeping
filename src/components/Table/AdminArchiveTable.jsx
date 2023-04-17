@@ -263,7 +263,70 @@ function AdminArchiveTable() {
         }
         
     }
-    
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(5 ? 6 : 5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(10 ? 11 : 10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(15 ? 16 : 15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(20 ? 21 : 20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
       
     useEffect(() => {
         checkFileExpire();
@@ -294,10 +357,10 @@ function AdminArchiveTable() {
                     
                 <div className={"mt-4"}>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                       limit5={fetchFiveData}
+                       limit10={fetchTenData}
+                       limit15={fetchFifteenData}
+                       limit20={fetchTwentyData}
                     /> results
                 </div>
 

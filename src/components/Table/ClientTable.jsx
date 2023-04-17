@@ -163,6 +163,80 @@ function ClientTable(props) {
 
         }
     }
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+        
+    };
 
 useEffect(() => {
     fetchData();
@@ -183,10 +257,10 @@ useEffect(() => {
             <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
                 <div>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
                 
