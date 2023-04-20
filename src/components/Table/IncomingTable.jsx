@@ -50,8 +50,8 @@ function IncomingTable() {
 
             
         });
-        setList(items);
-        if (items.length === 0) {
+        setList(items.filter((item) => item.email === user.email));
+        if (items.filter((item) => item.email === user.email).length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
         else {
@@ -75,7 +75,7 @@ function IncomingTable() {
 
                    
                 });
-                setList(items);
+                setList(items.filter((item) => item.email === user.email));
                 setPage(page + 1);
                 console.log(items[0]);
                
@@ -98,7 +98,7 @@ function IncomingTable() {
                 items.push(doc.data())
                 
             });
-            setList(items);
+            setList(items.filter((item) => item.email === user.email));
                 setPage(page - 1);
                 console.log(items[0]);
         };
@@ -200,7 +200,7 @@ const checkFileExpire = async () => {
 
                 
             });
-            setList(items);
+            setList(items.filter((item) => item.email === user.email));
             if (items.length === 0) {
                 document.getElementById("audit-table").hidden = true;
             }
@@ -221,7 +221,7 @@ const checkFileExpire = async () => {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.email === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -239,7 +239,7 @@ const checkFileExpire = async () => {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.email === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -257,7 +257,7 @@ const checkFileExpire = async () => {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.email === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }

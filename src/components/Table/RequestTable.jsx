@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import { useAuth } from "../../hooks/useAuth";
 
 function RequestTable() {
     const notify = () => toast.warning("No more documents to show", {
@@ -34,10 +35,10 @@ function RequestTable() {
 
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
-
+    const { user } = useAuth();
    
     const fetchData = async () => {
-        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(7));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -45,7 +46,7 @@ function RequestTable() {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.reqby === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -72,7 +73,7 @@ function RequestTable() {
 
                     
                 });
-                setList(items);
+                setList(items.filter((item) => item.reqby === user.email));
                     setPage(page + 1);
                     
                
@@ -88,14 +89,14 @@ function RequestTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(5) );
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(7) );
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
                 items.push(doc.data())
                 
             });
-            setList(items);
+            setList(items.filter((item) => item.reqby === user.email));
                 setPage(page - 1);
                 
         };
@@ -112,8 +113,8 @@ function RequestTable() {
 
             
         });
-        setList(items);
-        if (items.length === 0) {
+        setList(items.filter((item) => item.reqby === user.email));
+        if (items.filter((item) => item.reqby === user.email).length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
         else {
@@ -133,7 +134,7 @@ function RequestTable() {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.reqby === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -151,7 +152,7 @@ function RequestTable() {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.reqby === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -169,7 +170,7 @@ function RequestTable() {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.reqby === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
