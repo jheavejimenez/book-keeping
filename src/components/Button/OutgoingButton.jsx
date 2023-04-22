@@ -78,7 +78,7 @@ function OutgoingButton({ text }) {
                         purpose,
                         date: serverTimestamp(),
                         fileexpiry: timestamp,
-                        // archived: false,
+                        location: "Incoming",
                        
                     });
 

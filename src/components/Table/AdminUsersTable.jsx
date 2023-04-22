@@ -150,7 +150,7 @@ function AdminUsersTable() {
                 activity : "Extended a user's contract:  " + item.email,
                 });
             setDoc(doc(db, "users", item.email), {
-                contractexpired: new Date(fiveYearsFromNow.getTime() + 5 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
+                contractexpired: new Date(fiveYearsFromNow.getTime() + 2 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
             }, { merge: true });
             notif("Contract extended successfully");
         });
@@ -170,6 +170,7 @@ function AdminUsersTable() {
                     });
                 setDoc(doc(db, "users", item.email), {
                     role: "bookkeeper",
+                    contractexpired: ""
                 }, { merge: true });
                 notif("Changed role successfully");
             }

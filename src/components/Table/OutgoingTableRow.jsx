@@ -18,7 +18,7 @@ import axios from "axios";
 
 import 'react-toastify/dist/ReactToastify.css';
 
-function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
+function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
     const notifyQue = () => {
         toast.warning("File Scan has been queued please wait for a moment and try again later with the same file", {
             position: "top-center",
@@ -245,12 +245,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4}) {
             <td className={"px-4 py-3 text-sm"}>{Column3}</td>
             <td className={"px-4 py-3 text-sm"}>{Column4}</td>
             <td className={"flex justify-center items-center w-14 h-14 ml-3"}>
-            <button
-                type="button"
-                onClick={() => setShowModal(true)}
-            >
-                <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
-            </button>
+            
             <ToastContainer />
             {showModal && (
                 <>

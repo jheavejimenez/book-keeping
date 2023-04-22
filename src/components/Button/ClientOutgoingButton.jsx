@@ -15,6 +15,12 @@ function ClientOutgoingButton({ text }) {
     const Success = () => {
         toast.success("File Sent", {
             position: "top-center",
+            autoClose: 3000, // auto close after 5 seconds
+            onClose: () => {
+                setTimeout(() => {
+                window.location.reload(); // reload window after toast is closed
+                }, 3000);
+            },
 
         });
 
@@ -70,6 +76,7 @@ function ClientOutgoingButton({ text }) {
                         purpose,
                         date: serverTimestamp(),
                         fileexpiry: timestamp,
+                        location: "Outgoing",
                        
                     });
 
