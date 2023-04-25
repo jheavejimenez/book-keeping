@@ -98,7 +98,7 @@ function AdminUsersTable() {
 
                    
                 });
-                setList(items);
+                setList(items.filter((item) => item.email !== auth.user.email));
                 setPage(page + 1);
                 console.log(items[0]);
                
@@ -121,7 +121,7 @@ function AdminUsersTable() {
                 items.push(doc.data())
                 
             });
-            setList(items); 
+            setList(items.filter((item) => item.email !== auth.user.email));
                 setPage(page - 1);
                 console.log(items[0]);
         };
