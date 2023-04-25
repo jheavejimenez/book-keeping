@@ -245,6 +245,12 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
             <td className={"px-4 py-3 text-sm"}>{Column3}</td>
             <td className={"px-4 py-3 text-sm"}>{Column4}</td>
             <td className={"flex justify-center items-center w-14 h-14 ml-3"}>
+            <button
+                type="button"
+                onClick={() => setShowModal(true)}
+            >
+                <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
+            </button>
             
             <ToastContainer />
             {showModal && (
