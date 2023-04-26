@@ -11,7 +11,7 @@ import { useState } from 'react'
 function Pagination({path, item,list,page }) {
 
  useEffect(() => {
-  console.log(page);
+  // console.log(page);
 
   if (page <=  1) {
     document.getElementById("prev").hidden = true;

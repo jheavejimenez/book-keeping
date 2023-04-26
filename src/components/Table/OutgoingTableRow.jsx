@@ -27,26 +27,21 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
         
     );
     }
-
+    const auditTrailCollectionRef = collection(db, "audittrail",);
+    const incommingCollectionRef = collection(db, "incoming",);
     const [undoData, setUndoData] = useState(null);
     const toastRef = useRef(null);
 
-    const handleUndo = () => {
-        //setUndoData(null);
-        toastUndo("Action undone.")
-    }
-
     const toastSuccess = (text) => {
         //setUndoData(undoData);
-
         toast.success(text, {
             position: "top-center",
-            autoClose: 3000, // auto close after 5 seconds
-            closeButton: <button onClick={handleUndo}>UNDO</button>,
+            autoClose: 5000, // auto close after 5 seconds
+            closeButton: <button className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75" onClick={handleUndo}>UNDO</button>,
         onClose: () => {
             setTimeout(() => {
             window.location.reload(); // reload window after toast is closed
-            }, 3000);
+            }, 5000);
         },
     });
     }
@@ -72,8 +67,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
     const inputRef = useRef()
     const [reciepts, setReciepts] = useState([])
     
-    const auditTrailCollectionRef = collection(db, "audittrail",);
-    const incommingCollectionRef = collection(db, "incoming",);
+    
     
     const editFile = async (e) => {
         e.preventDefault();
@@ -179,6 +173,54 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
     const currentDate = new Date();
     const tenYearsFromNow = new Date(currentDate.getFullYear() + 10, currentDate.getMonth(), currentDate.getDate());
 
+    const getDateArchive = async () => {
+        const q = query(collection(db, "archive"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().date)
+        return querySnapshot.docs[0].data().date
+    }
+
+    const getFileArchive = async () => {
+        const q = query(collection(db, "archive"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().file)
+        return querySnapshot.docs[0].data().file
+    }
+    const getFileExpireArchive = async () => {
+        const q = query(collection(db, "archive"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().fileexpiry)
+        return querySnapshot.docs[0].data().fileexpiry
+    }
+
+    const getPurposeArchive = async () => {
+        const q = query(collection(db, "archive"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().purpose)
+        return querySnapshot.docs[0].data().purpose
+    }
+
+    const getSentByArchive = async () => {
+        const q = query(collection(db, "archive"), where("docid", "==", Column1));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setError("No matching documents.");
+        }
+        console.log(querySnapshot.docs[0].data().sentby)
+        return querySnapshot.docs[0].data().sentby
+    }
     
 
     const handleDelete = async (email) => {
@@ -214,6 +256,25 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
         await deleteDoc(doc(db, "incoming", Column1));
 
         
+    }
+    const handleUndo = async(email) => {
+        const date = await getDateArchive(email)
+        const file = await getFileArchive(email)
+        const purpose = await getPurposeArchive(email)
+        const fileexpire = await getFileExpireArchive(email)
+        const sentby = await getSentByArchive(email)
+        await setDoc(doc(db, "incoming", Column1), {
+            date: date,
+            docid: Column1,
+            email: Column2,
+            file: file,
+            filename: Column3,
+            fileexpiry: fileexpire,
+            purpose: purpose,
+            location: 'Incoming',
+            sentby: sentby,
+            });
+        toastUndo("Action undone.")
     }
     const [scanResult, setScanResult] = useState(null);
     const [scanStatus, setScanStatus] = useState(null);

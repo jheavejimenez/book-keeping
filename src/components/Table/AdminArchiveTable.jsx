@@ -96,7 +96,7 @@ function AdminArchiveTable() {
                 });
                 setList(items);
                 setPage(page + 1);
-                console.log(items[0]);
+                // console.log(items[0]);
                
             };
             fetchNextData();
@@ -119,7 +119,7 @@ function AdminArchiveTable() {
             });
             setList(items); 
                 setPage(page - 1);
-                console.log(items[0]);
+                // console.log(items[0]);
         };
         fetchPrevData();
     }
@@ -217,7 +217,7 @@ function AdminArchiveTable() {
             });
             setList(items.filter((item) => item.file.includes(".xlsx")));
             document.getElementById("audit-table").hidden = true;
-            console.log(list.filter((item) => item.file.includes(".xlsx")));
+            // console.log(list.filter((item) => item.file.includes(".xlsx")));
                 
         };
         fetchPrevData();
@@ -242,7 +242,7 @@ function AdminArchiveTable() {
             });
             setList(items.filter((item) => item.file.includes(".pdf")));
             document.getElementById("audit-table").hidden = true;
-            console.log(list.filter((item) => item.file.includes(".pdf")));
+            // console.log(list.filter((item) => item.file.includes(".pdf")));
                 
         };
         fetchPrevData();
@@ -335,7 +335,7 @@ function AdminArchiveTable() {
         fetchData();
         // getArchiveData();
         const interval = setInterval(async () => {
-            console.log(data);
+            // console.log(data);
             data.forEach((item) => {
                 if (item.datearchive > item.archiveexpiry){
                     deleteDoc(doc(db, "archive", item.docid));
