@@ -76,7 +76,7 @@ function RequestButton({ text }) {
             dueDate,
             reqby,
             purpose,
-            Status: "Pending",
+            Status: "New",
             Company: company,
             datereq: serverTimestamp()
         })

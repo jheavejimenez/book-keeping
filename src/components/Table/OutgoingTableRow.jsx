@@ -29,27 +29,34 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
     }
     const auditTrailCollectionRef = collection(db, "audittrail",);
     const incommingCollectionRef = collection(db, "incoming",);
-    const [undoData, setUndoData] = useState(null);
-    const toastRef = useRef(null);
+
+    const toastID = useRef(null);
+    const customID = "undo";
 
     const toastSuccess = (text) => {
-        //setUndoData(undoData);
-        toast.success(text, {
-            position: "top-center",
-            autoClose: 5000, // auto close after 5 seconds
-            closeButton: <button className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75" onClick={handleUndo}>UNDO</button>,
-        onClose: () => {
-            setTimeout(() => {
-            window.location.reload(); // reload window after toast is closed
-            }, 5000);
-        },
-    });
+        if(!toast.isActive(toastID.current)) {
+            toastID.current = toast.success(text, {
+                position: "top-center",
+                autoClose: 5000, // auto close after 5 seconds
+                closeButton: <button className={"px-2 text-blue-500 font-semibold hover:rounded-md hover:bg-blue-100"} onClick={handleUndo}>UNDO</button>,
+                onClose: () => {
+                    setTimeout(() => {
+                    window.location.reload(); // reload window after toast is closed
+                    }, 5000);
+                },
+            });
+        }
     }
 
     const toastUndo = (text) => {
         toast.info(text, {
-            position: "top-center",
-            autoClose: false,
+            position: "top-right",
+            autoClose: 3000,
+            toastId: customID,
+            onOpen: () => {
+                toast.dismiss(toastID.current);
+            },
+            
         });
     }
 
@@ -257,6 +264,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
 
         
     }
+
     const handleUndo = async(email) => {
         const date = await getDateArchive(email)
         const file = await getFileArchive(email)
@@ -276,6 +284,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
             });
         toastUndo("Action undone.")
     }
+
     const [scanResult, setScanResult] = useState(null);
     const [scanStatus, setScanStatus] = useState(null);
     
@@ -331,7 +340,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                 <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
             </button>
             
-            <ToastContainer ref={toastRef} />
+            <ToastContainer />
             {showModal && (
                 <>
                     <div className={" justify-center items-center flex overflow-x-hidden overflow-y-auto " +
