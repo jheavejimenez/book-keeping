@@ -105,7 +105,7 @@ function Searchpage() {
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
-                    titleText={"Search Filename Results for: " + state}
+                    titleText={"Search results for filename: " + state}
                 />
             </div>
             
@@ -141,7 +141,7 @@ function Searchpage() {
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("HH:mm:ss A, MMM DD, YYYY")}
+                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("hh:mm:ss A, MMM DD, YYYY")}
                                     Column5={item.location}
                                     
                                 />)
