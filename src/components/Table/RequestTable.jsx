@@ -208,7 +208,7 @@ function RequestTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                                 " text-gray-500 border-b border-gray-700 "}>
                                     {titleTable.map((item) => (
                                         <TableHeading
@@ -235,8 +235,8 @@ function RequestTable() {
                                     Column2={item.reqfrom}
                                     Column3={item.file}
                                     Column4={item.purpose}
-                                    Column5={dayjs.unix(item.dueDate?.seconds).format("YYYY-MM-DD")}
-                                    Column6={dayjs.unix(item.datereq?.seconds).format("YYYY-MM-DD")}
+                                    Column5={dayjs.unix(item.dueDate?.seconds).format("DD/MM/YYYY")}
+                                    Column6={dayjs.unix(item.datereq?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                 />)
 
                                 )}

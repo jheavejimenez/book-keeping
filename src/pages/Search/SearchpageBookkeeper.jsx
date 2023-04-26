@@ -110,14 +110,14 @@ function SearchpageBookkeeping() {
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
-                    titleText={"Search Filename Results for: " + state}
+                    titleText={"Search results for filename: " + state}
                 />
             </div>
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                            <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                             " text-gray-500 border-b border-gray-700  " +
                             " bg-gray-100 dark:text-gray-400 "}>
                                 {titleTable.map((item) => (
@@ -146,7 +146,7 @@ function SearchpageBookkeeping() {
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("DD/MM/YYYY")}
+                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                     Column5={item.location}
                                     
                                 />)
