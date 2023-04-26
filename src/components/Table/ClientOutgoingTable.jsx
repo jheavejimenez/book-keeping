@@ -34,14 +34,14 @@ function ClientOutgoingTable() {
         "Date Sent",
         "Action",
         
-        
     ]
+    
     // const getAllRequestDocumments = async () => {
     //     const snapshot = await getDocs(collection(db, "outgoing"));
     //     if (user) {
     //         setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.sentby === user.email));
     //     }
-        
+    
 
     //     console.log(data);
     // }
@@ -51,29 +51,26 @@ function ClientOutgoingTable() {
   
         
         
-        const fetchData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
-            if (user) {
-               const querySnapshot = await getDocs(q)
-               const items = []
-               querySnapshot.forEach((doc) => {
-                     items.push(doc.data())
+    const fetchData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
+        if (user) {
+            const querySnapshot = await getDocs(q)
+            const items = []
+           querySnapshot.forEach((doc) => {
+                    items.push(doc.data())
                      
                      
-               });
-                setList(items.filter((item) => item.sentby === user.email));
-                if (items.filter((item) => item.sentby === user.email).length === 0) {
-                    document.getElementById("audit-table").hidden = true;
-                }
-                else {
-                    document.getElementById("audit-table").hidden = false;
-                }
-                
-                
-
-           }
+            });
+            setList(items.filter((item) => item.sentby === user.email));
+            if (items.filter((item) => item.sentby === user.email).length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = false;
+            }
+        }
          
-        };
+    };
 
     
 

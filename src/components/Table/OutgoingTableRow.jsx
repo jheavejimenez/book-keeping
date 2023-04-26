@@ -27,10 +27,22 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
         
     );
     }
+
+    const [undoData, setUndoData] = useState(null);
+    const toastRef = useRef(null);
+
+    const handleUndo = () => {
+        //setUndoData(null);
+        toastUndo("Action undone.")
+    }
+
     const toastSuccess = (text) => {
+        //setUndoData(undoData);
+
         toast.success(text, {
             position: "top-center",
             autoClose: 3000, // auto close after 5 seconds
+            closeButton: <button onClick={handleUndo}>UNDO</button>,
         onClose: () => {
             setTimeout(() => {
             window.location.reload(); // reload window after toast is closed
@@ -39,7 +51,13 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
     });
     }
 
-    
+    const toastUndo = (text) => {
+        toast.info(text, {
+            position: "top-center",
+            autoClose: false,
+        });
+    }
+
     const toastFailed = (text) => {
         toast.error(text, {
             position: "top-center",
@@ -252,7 +270,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                 <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
             </button>
             
-            <ToastContainer />
+            <ToastContainer ref={toastRef} />
             {showModal && (
                 <>
                     <div className={" justify-center items-center flex overflow-x-hidden overflow-y-auto " +
