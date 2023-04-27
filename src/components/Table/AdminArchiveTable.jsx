@@ -36,6 +36,12 @@ function AdminArchiveTable() {
     });
     const  notif2 = () => toast.success("File Unarchived", {
         position: "top-center",
+        autoClose: 3000,
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
 
     });
     const auditTrailCollectionRef = collection(db, "audittrail",);

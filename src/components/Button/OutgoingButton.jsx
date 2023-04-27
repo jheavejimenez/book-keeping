@@ -233,7 +233,7 @@ function OutgoingButton({ text }) {
                                             <div>
                                                 <label
                                                     htmlFor="purpose"
-                                                    className="block mb-1 mb-3 text-base font-medium text-black"
+                                                    className="block mb-1 mt-3 text-base font-medium text-black"
                                                 >
                                                     Purpose
                                                 </label>
