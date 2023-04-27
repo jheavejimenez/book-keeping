@@ -77,6 +77,7 @@ function ClientOutgoingButton({ text }) {
                         date: serverTimestamp(),
                         fileexpiry: timestamp,
                         location: "Outgoing",
+                        location1:"Incoming",
                        
                     });
 
@@ -134,8 +135,8 @@ function ClientOutgoingButton({ text }) {
             }
         
     };
-    console.log(scanResult);
-    console.log(scanStatus);
+    // console.log(scanResult);
+    // console.log(scanStatus);
 
 
     return (

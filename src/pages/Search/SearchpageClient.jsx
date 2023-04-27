@@ -70,7 +70,7 @@ function Searchpage() {
                         
 
                 });
-                setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase())) && items.filter((item) => item.sentby === user.email)])
+                setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))  ,  ...items1.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))])
             }
         } 
     };

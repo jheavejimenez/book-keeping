@@ -147,7 +147,7 @@ function SearchpageBookkeeping() {
                                     Column2={item.email}
                                     Column3={item.filename}
                                     Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
-                                    Column5={item.location}
+                                    Column5={item.location1 ? item.location1 : item.location}
                                     
                                 />)
                             )}
