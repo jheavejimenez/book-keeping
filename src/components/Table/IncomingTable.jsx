@@ -120,7 +120,7 @@ const filterExcel = () => {
             items.push(doc.data())
             
         });
-        setList(items.filter((item) => item.file.includes(".xlsx")));
+        setList(items.filter((item) => item.file.includes(".xlsx") && item.email === user.email));
         document.getElementById("audit-table").hidden = true;
         console.log(list.filter((item) => item.file.includes(".xlsx")));
             
@@ -145,7 +145,7 @@ const filterPdf = () => {
             items.push(doc.data())
             
         });
-        setList(items.filter((item) => item.file.includes(".pdf")));
+        setList(items.filter((item) => item.file.includes(".pdf") && item.email === user.email));
         document.getElementById("audit-table").hidden = true;
         console.log(list.filter((item) => item.file.includes(".pdf")));
             
