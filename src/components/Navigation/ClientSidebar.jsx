@@ -5,7 +5,7 @@ import LinkToSidebar from "../Links/LinkToSidebar";
 import SidebarTitle from "../Title/SidebarTitle";
 
 
-function ClientSidebar () {
+function ClientSidebar ({page}) {
     return (
         <>
             {/* Dashboard */}
@@ -20,18 +20,21 @@ function ClientSidebar () {
                         
                         <LinkToSidebar
                             link={"/dashboard"}
+                            current={page === "dashboard"}
                             icon={<HomeIcon className="w-6 h-6"/>}
                             title={"Dashboard"}
                         />
                        
                         <LinkToSidebar
                             link={"/incoming"}
+                            current={page === "incoming"}
                             icon={<DocumentArrowDownIcon className="w-6 h-6"/>}
                             title={"Incoming"}
                         />
 
                         <LinkToSidebar
                             link={"/outgoing"}
+                            current={page === "outgoing"}
                             icon={<DocumentArrowUpIcon className="w-6 h-6"/>}
                             title={"Outgoing"}
                         />
@@ -40,6 +43,7 @@ function ClientSidebar () {
                         
                         <LinkToSidebar
                             link={"/account-settings"}
+                            current={page === "settings"}
                             icon={<Cog8ToothIcon className="w-6 h-6"/>}
                             title={"Account Settings"}
                         />

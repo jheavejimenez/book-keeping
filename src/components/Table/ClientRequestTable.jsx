@@ -66,7 +66,7 @@ function ClientRequestTable() {
             document.getElementById("audit-table").hidden = false;
         }
         
-    };
+    }
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
@@ -212,12 +212,18 @@ function ClientRequestTable() {
         <>
             <ToastContainer />
             <div className="mt-4 mx-4 pt-2">
-                <Tabs 
-                    path={fetchData}
-                    attr={done}
-                />
+                <div className={"flex flex-row border-b border-gray-400"}>
+                    <Tabs 
+                        path={fetchData}
+                        name={"Requested"}
+                    />
+                    <Tabs 
+                        path={done}
+                        name={"Done"}
+                    />
+                </div>
 
-                <div>
+                <div className="mt-4">
                     Show <FilterTableLimit 
                         limit5={fetchFiveData}
                         limit10={fetchTenData}

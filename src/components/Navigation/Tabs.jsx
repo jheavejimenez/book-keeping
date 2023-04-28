@@ -1,31 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Tabs ({path, attr}) {
+function Tabs ({path, attr, name, current}) {
     return (
         <>
            
             <div 
-                className={" text-sm font-medium text-center text-gray-500 border-b " + 
-                " border-gray-400 dark:text-gray-400 dark:border-gray-300 "}
+                className={" text-sm font-medium text-center text-gray-500 "}
+                
             >
-                <ul className={"flex flex-wrap -mb-px"}>
-                    <li className="mr-2">
+                <ul className={"flex flex-wrap w-full md:w-max"}>
+                    <li className="mr-1" aria-current={current ? "page" : undefined}>
+
                         <Link to="" 
                             onClick={path}
-                            className={" text-black inline-block p-4 rounded-t-lg border-b-2 border-transparent " + 
-                            " hover:text-gray-600 hover:border-blue-500 dark:hover:text-blue-500 "}>
-                            Requested
+                            className={`${current && 'border-blue-500 text-blue-500'} text-black
+                            inline-block p-4 rounded-t-lg border-b-2 border-transparent
+                            text-gray-600 hover:border-blue-500 hover:text-blue-500`}>
+                            {name}
                         </Link>
                     </li>
-                    <li className="mr-2">
+                    {/* <li className="mr-1">
                         <Link to="" 
                             onClick={attr}
-                            className={" text-black inline-block p-4 rounded-t-lg border-b-2 border-transparent " + 
-                            " hover:text-gray-600 hover:border-blue-500 dark:hover:text-blue-500 "}>
+                            className={`${attr && 'border-blue-500 text-blue-500'} text-black
+                            inline-block p-4 rounded-t-lg border-b-2 border-transparent 
+                            text-gray-600 hover:border-blue-500 hover:text-blue-500`}>
                             Done
                         </Link>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
  
