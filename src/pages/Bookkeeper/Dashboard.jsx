@@ -21,7 +21,7 @@ function Dashboard() {
                     <Header />
 
                     {/*sidebar*/}
-                    <Sidebar />
+                    <Sidebar page={"dashboard"} />
 
                     <div className={"flex justify-between items-center h-14 bg-white header-right"}></div>
                     

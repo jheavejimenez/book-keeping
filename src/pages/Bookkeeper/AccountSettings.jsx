@@ -219,7 +219,7 @@ function AccountSettings() {
                 <Header />
 
                 {/*sidebar*/}
-                <Sidebar />
+                <Sidebar page={"settings"} />
 
                 <div className={"flex justify-between items-center h-5 bg-white header-right"}>
 
@@ -239,7 +239,7 @@ function AccountSettings() {
                     </div>
 
                     {/*Update information*/}
-                    <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
+                    <div className={"ml-7 mr-5 mt-12 sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
                         <div className={"flex justify-between mb-5"}>
                             <h1 className={"text-2xl font-bold tracking-wide pt-4 truncate"}>
                                 Add / Update information 
@@ -322,14 +322,14 @@ function AccountSettings() {
 
                 {/*Start of Security*/}
 
-                <div className={"h-full ml-14 mb-10 md:ml-64"}>
+                <div className={"h-full ml-14 mt-12 mb-10 md:ml-64"}>
                     <div className={"flex mt-5 text-3xl font-bold tracking-wide border-y-4 border-blue-300 mx-5"}>
                         <span className={"ml-6 pt-2"}><KeyIcon className={"w-12 h-12"} /></span>
                         <span className={"ml-4 pt-3 pb-4"}> Security</span>
                     </div>
                     {/*Change email and password*/}
-                    <div className={"sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
-                        <div className={"flex justify-center mt-8"}>
+                    <div className={"ml-7 mr-5 sm:ml-20 sm:mr-20 md:ml-10 md:mr-10 lg:ml-32 xl:mx-64 2xl:mx-96"}>
+                        <div className={"flex justify-center mt-5"}>
                             <div className={"w-full"}>
                                 {/* <div className={""}>
                                     <div className={"flex justify-between"}>
@@ -360,7 +360,7 @@ function AccountSettings() {
                                     </div>
 
                                 </div> */}
-                                <div className={"mt-12 w-full"}>
+                                <div className={"mt-5 w-full"}>
                                     <div className={"flex justify justify-between"}>
                                         <h1 className={"text-2xl font-bold tracking-wide mt-6"}>Change Password </h1>
                                         <span className={"sm:ml-24"}>
