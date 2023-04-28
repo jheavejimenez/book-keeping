@@ -19,7 +19,7 @@ function AdminDashboard() {
                     <Header />
 
                     {/*sidebar*/}
-                    <AdminSidebar />
+                    <AdminSidebar page={"dashboard"} />
 
                     <div className={"flex justify-between items-center h-14 bg-white header-right"}></div>
                     

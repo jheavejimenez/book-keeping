@@ -20,7 +20,7 @@ function Archive() {
                 <Header />
                     
                 {/*sidebar*/}
-                <AdminSidebar />
+                <AdminSidebar page={"archives"} />
                 
                 <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                         

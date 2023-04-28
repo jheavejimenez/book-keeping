@@ -4,7 +4,7 @@ import LinkToSidebar from "../Links/LinkToSidebar";
 import SidebarTitle from "../Title/SidebarTitle";
 
 
-function AdminSidebar () {
+function AdminSidebar ({page}) {
     return (
         <>
             {/* Dashboard */}
@@ -19,24 +19,28 @@ function AdminSidebar () {
                         
                         <LinkToSidebar
                             link={"/admin/dashboard"}
+                            current={page === "dashboard"}
                             icon={<HomeIcon className="w-6 h-6"/>}
                             title={"Dashboard"}
                         />
                        
                         <LinkToSidebar
                             link={"/admin/audit-trail"}
+                            current={page === "audit-trail"}
                             icon={<BookOpenIcon className="w-6 h-6"/>}
                             title={"Audit Trail"}
                         />
 
                         <LinkToSidebar
                             link={"/admin/users"}
+                            current={page === "users"}
                             icon={<UsersIcon className="w-6 h-6"/>}
                             title={"Users"}
                         />
                         
                         <LinkToSidebar
                             link={"/admin/archives"}
+                            current={page === "archives"}
                             icon={<ArchiveBoxArrowDownIcon className="w-6 h-6"/>}
                             title={"Archives"}
                         />

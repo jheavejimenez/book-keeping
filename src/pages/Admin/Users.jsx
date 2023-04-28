@@ -20,7 +20,7 @@ function Users() {
                 <Header />
                     
                 {/*sidebar*/}
-                <AdminSidebar />
+                <AdminSidebar page={"users"} />
                 
                 <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                         
@@ -32,8 +32,6 @@ function Users() {
                     />
                     
                     
-                
-        
                 <AdminUsersTable/>
                 </div>
 
