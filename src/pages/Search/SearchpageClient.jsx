@@ -9,7 +9,7 @@ import { useAuth } from "../../hooks/useAuth";
 import ForbiddenPage from "../Error/ForbiddenPage";
 import { useLocation } from "react-router-dom";
 import TableHeading from "../../components/Table/TableHeading";
-import OutgoingTableRow from "../../components/Table/OutgoingTableRow";
+import SearchTableRow from "../../components/Table/SearchTableRow";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { collection, getDocs, query, orderBy, limit, where, startAt, endAt } from "firebase/firestore";
@@ -35,7 +35,7 @@ function Searchpage() {
         "Recipient",
         "File",
         "Date Sent",
-        "Action",
+        "Location",
 
         
         
@@ -52,10 +52,10 @@ function Searchpage() {
             notfiyWarning("Please enter a search term")
         }
         else{
-        const q = query(collection(db, "outgoing"), orderBy("date", "desc"), where("sentby", "==", user.email));
-        const q1 = query(collection(db, "incoming"), orderBy("date", "desc"), where("email", "==", user.email));
+        const q = query(collection(db, "outgoing"), where("sentby", "==", user.email));
+        const q1 = query(collection(db, "incoming"), where("email", "==", user.email));
 
-         if (q && q1 !== 0 ) {
+         if (q !== 0 ) {
                 const querySnapshot = await getDocs(q)
                 const querySnapshot1 = await getDocs(q1)
                 const items1 = []
@@ -70,7 +70,7 @@ function Searchpage() {
                         
 
                 });
-                setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase())), ...items1.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))]);
+                setList([...items.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))  ,  ...items1.filter((item) => item.filename.toLowerCase().includes(state.toLowerCase()))])
             }
         } 
     };
@@ -105,14 +105,14 @@ function Searchpage() {
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
-                    titleText={"Search Filename Results for: " + state}
+                    titleText={"Search results for filename: " + state}
                 />
             </div>
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                            <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                             " text-gray-500 border-b border-gray-700 " +
                             " bg-gray-100 dark:text-gray-400 "}>
                                 {titleTable.map((item) => (
@@ -137,11 +137,12 @@ function Searchpage() {
                             }
 
                             {list.map?.((item) => (
-                                <OutgoingTableRow
+                                <SearchTableRow
                                     Column1={item.docid}
                                     Column2={item.email}
                                     Column3={item.filename}
-                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("YYYY-MM-DD")}
+                                    Column4={dayjs.unix(item.date?.seconds || item.date?.seconds).format("hh:mm:ss A, MMM DD, YYYY")}
+                                    Column5={item.location}
                                     
                                 />)
                             )}

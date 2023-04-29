@@ -50,8 +50,8 @@ function IncomingTable() {
 
             
         });
-        setList(items);
-        if (items.length === 0) {
+        setList(items.filter((item) => item.email === user.email));
+        if (items.filter((item) => item.email === user.email).length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
         else {
@@ -75,7 +75,7 @@ function IncomingTable() {
 
                    
                 });
-                setList(items);
+                setList(items.filter((item) => item.email === user.email));
                 setPage(page + 1);
                 console.log(items[0]);
                
@@ -98,7 +98,7 @@ function IncomingTable() {
                 items.push(doc.data())
                 
             });
-            setList(items);
+            setList(items.filter((item) => item.email === user.email));
                 setPage(page - 1);
                 console.log(items[0]);
         };
@@ -120,7 +120,7 @@ const filterExcel = () => {
             items.push(doc.data())
             
         });
-        setList(items.filter((item) => item.file.includes(".xlsx")));
+        setList(items.filter((item) => item.file.includes(".xlsx") && item.email === user.email));
         document.getElementById("audit-table").hidden = true;
         console.log(list.filter((item) => item.file.includes(".xlsx")));
             
@@ -145,7 +145,7 @@ const filterPdf = () => {
             items.push(doc.data())
             
         });
-        setList(items.filter((item) => item.file.includes(".pdf")));
+        setList(items.filter((item) => item.file.includes(".pdf") && item.email === user.email));
         document.getElementById("audit-table").hidden = true;
         console.log(list.filter((item) => item.file.includes(".pdf")));
             
@@ -189,12 +189,83 @@ const checkFileExpire = async () => {
             }
         }
     }
-
-
    
-    
 }
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
 
+                
+            });
+            setList(items.filter((item) => item.email === user.email));
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = true;
+            }
+            
+        };
+    
+
+
+    const fetchTenData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.email === user.email));
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.email === user.email));
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.email === user.email));
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
 
     useEffect(() => {
         fetchData();
@@ -214,10 +285,10 @@ const checkFileExpire = async () => {
             <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
                 <div>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
 
@@ -234,7 +305,7 @@ const checkFileExpire = async () => {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                                 " text-gray-500 border-b dark:border-gray-700 " + 
                                 " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
                                     {titleTable.map((item) => (

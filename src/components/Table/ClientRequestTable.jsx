@@ -66,7 +66,7 @@ function ClientRequestTable() {
             document.getElementById("audit-table").hidden = false;
         }
         
-    };
+    }
 
     const showNextPage = ({item}) => {
         if (list.length === 0) {
@@ -125,6 +125,74 @@ function ClientRequestTable() {
         });
         setList(items.filter((item) => item.reqfrom === user.email && item.Status === "Completed"));
     }
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
+        if (items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed")) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = false;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+                
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+     
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())   
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
 
 
 
@@ -144,17 +212,23 @@ function ClientRequestTable() {
         <>
             <ToastContainer />
             <div className="mt-4 mx-4 pt-2">
-                <Tabs 
-                    path={fetchData}
-                    attr={done}
-                />
+                <div className={"flex flex-row border-b border-gray-400"}>
+                    <Tabs 
+                        path={fetchData}
+                        name={"Requested"}
+                    />
+                    <Tabs 
+                        path={done}
+                        name={"Done"}
+                    />
+                </div>
 
-                <div>
+                <div className="mt-4">
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
             </div>
@@ -163,7 +237,7 @@ function ClientRequestTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                                 " text-gray-500 border-b dark:border-gray-700 " + 
                                 " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
                                     {titleTable.map((item) => (

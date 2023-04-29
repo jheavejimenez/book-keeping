@@ -100,14 +100,14 @@ function SearchpageAdmin() {
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
-                    titleText={"Search Filename on Archives Results for: " + state}
+                    titleText={"Search results for archived file: " + state}
                 />
             </div>
             
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                            <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                             " text-gray-500 border-b border-gray-700  " +
                             " bg-gray-100 dark:text-gray-400 "}>
                                 {titleTable.map((item) => (

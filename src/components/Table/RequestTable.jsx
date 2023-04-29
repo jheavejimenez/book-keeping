@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import { useAuth } from "../../hooks/useAuth";
 
 function RequestTable() {
     const notify = () => toast.warning("No more documents to show", {
@@ -34,10 +35,10 @@ function RequestTable() {
 
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
-
+    const { user } = useAuth();
    
     const fetchData = async () => {
-        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(7));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -45,7 +46,7 @@ function RequestTable() {
 
             
         });
-        setList(items);
+        setList(items.filter((item) => item.reqby === user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -72,7 +73,7 @@ function RequestTable() {
 
                     
                 });
-                setList(items);
+                setList(items.filter((item) => item.reqby === user.email));
                     setPage(page + 1);
                     
                
@@ -88,20 +89,96 @@ function RequestTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(5) );
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(7) );
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
                 items.push(doc.data())
                 
             });
-            setList(items);
+            setList(items.filter((item) => item.reqby === user.email));
                 setPage(page - 1);
                 
         };
         fetchPrevData();
     }
     }
+
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.reqby === user.email));
+        if (items.filter((item) => item.reqby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+            
+    };
+    
+
+
+    const fetchTenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.reqby === user.email));
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.reqby === user.email));
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+
+            
+        });
+        setList(items.filter((item) => item.reqby === user.email));
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
 
     useEffect(() => {
         fetchData();
@@ -119,10 +196,10 @@ function RequestTable() {
             <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}>
                 <div>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
             </div>
@@ -131,7 +208,7 @@ function RequestTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                                 " text-gray-500 border-b border-gray-700 "}>
                                     {titleTable.map((item) => (
                                         <TableHeading
@@ -142,25 +219,25 @@ function RequestTable() {
                                 </tr>
                             </thead>
                             <tbody className={"font-inter divide-y"}>
-                                {list.length === 0 ? ( 
-                                    <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
-                                        <td colSpan={8} className={"pt-10"}>
-                                            <NoDataFound 
-                                                text={"No Data"}
-                                            />
-                                        </td>
-                                    </tr>
-                                ) : null
-                                }
-                                {list.map?.((item) => (
-                                    <RequestTableRow
-                                        Column1={item.documentId}
-                                        Column2={item.reqfrom}
-                                        Column3={item.file}
-                                        Column4={item.purpose}
-                                        Column5={dayjs.unix(item.dueDate?.seconds).format("DD/MM/YYYY")}
-                                        Column6={dayjs.unix(item.datereq?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
-                                    />)
+                            {list.length === 0 ? ( 
+                                <tr className={"text-sm font-medium text-center text-gray-900 dark:text-gray-100"}>
+                                    <td colSpan={8} className={"pt-10"}>
+                                        <NoDataFound 
+                                            text={"No Data"}
+                                        />
+                                    </td>
+                                </tr>
+                            ) : null
+                            }
+                            {list.map?.((item) => (
+                                <RequestTableRow
+                                    Column1={item.documentId}
+                                    Column2={item.reqfrom}
+                                    Column3={item.file}
+                                    Column4={item.purpose}
+                                    Column5={dayjs.unix(item.dueDate?.seconds).format("DD/MM/YYYY")}
+                                    Column6={dayjs.unix(item.datereq?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                />)
 
                                 )}
                             </tbody>

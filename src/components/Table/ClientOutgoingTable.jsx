@@ -34,14 +34,14 @@ function ClientOutgoingTable() {
         "Date Sent",
         "Action",
         
-        
     ]
+    
     // const getAllRequestDocumments = async () => {
     //     const snapshot = await getDocs(collection(db, "outgoing"));
     //     if (user) {
     //         setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.sentby === user.email));
     //     }
-        
+    
 
     //     console.log(data);
     // }
@@ -51,29 +51,26 @@ function ClientOutgoingTable() {
   
         
         
-        const fetchData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
-           if (user) {
-               const querySnapshot = await getDocs(q)
-               const items = []
-               querySnapshot.forEach((doc) => {
-                     items.push(doc.data())
+    const fetchData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
+        if (user) {
+            const querySnapshot = await getDocs(q)
+            const items = []
+           querySnapshot.forEach((doc) => {
+                    items.push(doc.data())
                      
                      
-               });
-                setList(items.filter((item) => item.sentby === user.email));
-                if (items.filter((item) => item.sentby === user.email).length === 0) {
-                    document.getElementById("audit-table").hidden = true;
-                }
-                else {
-                    document.getElementById("audit-table").hidden = false;
-                }
-                
-                
-
-           }
+            });
+            setList(items.filter((item) => item.sentby === user.email));
+            if (items.filter((item) => item.sentby === user.email).length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = false;
+            }
+        }
          
-        };
+    };
 
     
 
@@ -214,7 +211,74 @@ function ClientOutgoingTable() {
        
         
     }
-    
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+                
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+                
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+     
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+                items.push(doc.data())   
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
 
 
 
@@ -241,10 +305,10 @@ function ClientOutgoingTable() {
             <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
                 <div>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
 
@@ -262,7 +326,7 @@ function ClientOutgoingTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                                <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                                <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                                 " text-gray-500 border-b dark:border-gray-700 " +
                                 " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
                                     {titleTable.map((item) => (

@@ -83,150 +83,116 @@ function TableRow({ Column1, Column2, Column3, Column4, Column5, Column6, status
     const [showModal, setShowModal] = useState(false);
     return (
         <>
-        <ToastContainer />
-        <tr className={"hover:bg-gray-300 text-black"}>
-            <td className={"px-4 py-3 text-sm"}>{Column1}</td>
-            <td className={"px-4 py-3 text-sm"}>{Column2}</td>
-            <td className={"px-4 py-3 text-sm"}>{Column3}</td>
-            <td className={"px-4 py-3 text-xs"}>{Column4}</td>
-            <td className={"px-4 py-3 text-xs"}>{Column5}</td>
-            <td className={"px-4 py-3 text-xs"}>{Column6}</td>
-            <td className={"px-4 py-3 text-sm"}>
-                <span className={`px-2 py-1 font-semibold leading-tight ${colors} rounded-none`}>
-                    {status}
-                </span>
-            </td>
-            <td className={"flex justify-center items-center w-14 h-14"}>
-            <>
-            <button
-                type="button"
-                onClick={() => setShowModal(true)}
-            >
-                <PencilSquareIcon className={" w-6 h-6 text-blue-500 group-hover:text-blue-700 "} />
-            </button>
-            {showModal && (
-                <>
-                    <div
-                        className={" flex justify-center items-center flex overflow-x-hidden overflow-y-auto " + 
-                        " fixed inset-0 z-50 outline-none focus:outline-none "}>
-                        {/* <div className=" w-1/4 my-6 md:w-2/3 mx-auto max-w-md "> */}
-                        
-                            {/*content*/}
-                            <div className={" flex justify-center border-0 rounded-lg " +
-                                " shadow-lg absolute m-auto flex-col md:shrink w-auto " +
-                                " bg-white outline-none focus:outline-none "}
-                            >
-                                {/*header*/}
+            <ToastContainer />
+            <tr className={"hover:bg-gray-300 text-black"}>
+                <td className={"px-4 py-3 text-sm"}>{Column1}</td>
+                <td className={"px-4 py-3 text-sm"}>{Column2}</td>
+                <td className={"px-4 py-3 text-sm"}>{Column3}</td>
+                <td className={"px-4 py-3 text-sm"}>{Column4}</td>
+                <td className={"px-4 py-3 text-sm"}>{Column5}</td>
+                <td className={"px-4 py-3 text-sm"}>{Column6}</td>
+                <td className={"px-4 py-3 text-sm"}>
+                    <span className={`px-2 py-1 font-semibold leading-tight ${colors} rounded-none`}>
+                        {status}
+                    </span>
+                </td>
+                <td className={"flex justify-center items-center w-14 h-14"}>
+                    <>
+                        <button
+                            type="button"
+                            onClick={() => setShowModal(true)}
+                        >
+                            <PencilSquareIcon className={" w-6 h-6 text-blue-500 group-hover:text-blue-700 "} />
+                        </button>
+                        {showModal && (
+                            <>
                                 <div
-                                    className={" flex items-center sm:items-start p-5 " + 
-                                    " border-b border-solid border-slate-200 rounded-t "}
-                                >
-                                    <h3 className="text-2xl font-bold text-black">
-                                        Edit Status
-                                    </h3>
+                                    className={" flex justify-center items-center flex overflow-x-hidden overflow-y-auto " + 
+                                    " fixed inset-0 z-50 outline-none focus:outline-none shadow-lg "}>
+                                    <div className=" container w-72 my-6 md:w-80 mx-auto max-w-md ">
+                                    
+                                        {/*content*/}
+                                        <div className={" relative py-6 px-6 md:px-6 bg-white shadow-md rounded-lg border " +
+                                            " border-gray-400 "}
+                                        >
+                                            {/*header*/}
+                                            <div
+                                                className={" flex items-start justify-between p-3 border-b border-solid " + 
+                                                " border-slate-200 rounded-t-md "}
+                                            >
+                                                <h3 className="text-2xl font-bold text-black">
+                                                    Edit Status
+                                                </h3>
 
-                                    <button
-                                        className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " + 
-                                        " float-right text-3xl leading-none font-semi-bold outline-none " + 
-                                        " focus:outline-none "}
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        <XMarkIcon className="w-7 h-7" />
-                                    </button>
-                                </div>
-                                {/*body*/}
-                                <div
-                                    className={" flex space-y-6 px-6 lg:px-6 pb-4 sm:pb-6 xl:pb-6 " + 
-                                    "items-center justify-center p-5 "}
-                                    >
-                                    <form className={" relative space-y-3.5 w-auto shrink "}>
-                                        <label className={" font-bold mr-2 "}> 
-                                            Progress Status 
-                                        </label>
-
-                                        <Menu as="div" className=" inline-block text-left ">
-
-                                            <div>
-                                                <Menu.Button className={" relative inline-flex justify-center rounded-md border border-gray-300 " +
-                                                    " bg-white px-2 py-2 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-50" + 
-                                                    " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 h-auto " + 
-                                                    " w-auto shrink "}
+                                                <button
+                                                    className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " + 
+                                                    " float-right text-3xl leading-none font-semi-bold outline-none " + 
+                                                    " focus:outline-none "}
+                                                    onClick={() => setShowModal(false)}
                                                 >
-                                                     <select  name="status" id="status">
-                                                            <option value="Pending">Pending</option>
-                                                            <option value="In Progress">In Progress</option>
-                                                            <option value="Completed">Completed</option>
-                                                            <option value="New">New</option>
-                                                    </select>
-                                                    
+                                                    <XMarkIcon className="w-7 h-7" />
+                                                </button>
+                                            </div>
+                                            {/*body*/}
+                                            <div
+                                                className={"space-y-6 px-6 lg:px-6 pb-4 sm:pb-6 xl:pb-6 " + 
+                                                "items-center justify-center"}
+                                                >
+                                                <form className={"flex flex-col px-5 pt-5"}>
+                                                    <label className={" font-bold mr-5 "}> 
+                                                        Progress Status 
+                                                    </label>
 
-                                                </Menu.Button>
+                                                    <Menu as="div" className="relative inline-block text-left ">
+                                                        
+                                                        <div>
+                                                            <Menu.Button className={" inline-flex justify-center rounded-md border border-gray-300 " +
+                                                                " bg-white px-2 py-2 text-sm font-medium text-gray-400 shadow-sm hover:bg--50" + 
+                                                                " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 h-auto " + 
+                                                                " w-40 md:w-48 "}
+                                                            >
+                                                                <select className='w-40 md:w-48' name="status" id="status">
+                                                                    <option value="Pending">Pending</option>
+                                                                    <option value="In Progress">In Progress</option>
+                                                                    <option value="Completed">Completed</option>
+                                                                    <option value="New">New</option>
+                                                                </select>
+                                                                
+
+                                                            </Menu.Button>
+
+                                                        </div>
+                                                        <button type="submit" onClick={handleDelete} className={" bg-blue-500 hover:bg-blue-700 " + 
+                                                        "text-white font-bold mt-4 h-10 w-40 md:w-48 rounded-md "}>Submit</button>
+
+                                                    </Menu>
+                                                    
+                                                </form>
+                                            </div>
+                                            {/*footer*/}
+                                            <div className="flex items-center justify-center pt-2 sm:pt-2 lg:pt-1">
+                                                <button
+                                                    className={" text-blue-500 background-transparent font-bold " + 
+                                                    " uppercase px-6 py-2 text-sm " + 
+                                                    " outline-none focus:outline-none mr-1 mb-1 ease-linear " + 
+                                                    " transition-all duration-150 "}
+                                                    type=" button "
+                                                    onClick={() => setShowModal(false)}
+                                                >
+                                                    Close
+                                                </button>
 
                                             </div>
-                                            <button type="submit" onClick={handleDelete} className={" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "}>submit</button>
-
-                                            <Transition
-                                                as={Fragment}
-                                                enter="transition ease-out duration-100"
-                                                enterFrom="transform opacity-0 scale-95"
-                                                enterTo="transform opacity-100 scale-100"
-                                                leave="transition ease-in duration-75"
-                                                leaveFrom="transform opacity-100 scale-100"
-                                                leaveTo="transform opacity-0 scale-95"
-                                            >
-                                                <Menu.Items
-                                                    className={" absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg " +
-                                                        " ring-1 ring-black ring-opacity-5 focus:outline-none "}
-                                                >
-                                                    <div className="py-1">
-
-                                                        {/* Option 1 */}
-                                                        
-                                                        {/* <ChooseStatusOptions Option={"Pending"} onClick={() => path(attr)} />
-
-                                                        {/* Option 2 */}
-                                                        {/* <ChooseStatusOptions Option={"In Progress"} onClick={() => path(attr)}  /> */}
-
-                                                        {/* Option 3 */}
-                                                        {/* <ChooseStatusOptions Option={"Completed"}  onClick={() => path(attr)} /> */}
-
-                                                        {/* Option 4 */}
-                                                        {/* <ChooseStatusOptions Option={"New"} onClick={() => path(attr)}  /> */}
-
-                                                       
-
-
-                                                    </div>
-                                                </Menu.Items>
-                                            </Transition>
-                                        </Menu>
-                                        
-                                    </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                {/*footer*/}
-                                <div className="flex items-center justify-center p-2">
-                                    <button
-                                        className={" text-blue-500 background-transparent font-bold " + 
-                                        " uppercase px-6 py-2 text-sm " + 
-                                        " outline-none focus:outline-none mr-1 mb-1 ease-linear " + 
-                                        " transition-all duration-150 "}
-                                        type=" button "
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        Close
-                                    </button>
+                                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                            </>
+                        )}
+                    </>
+                </td>
 
-                                </div>
-                            </div>
-                        {/* </div> */}
-                    </div>
-                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                </>
-            )}
-        </>
-            </td>
-
-        </tr>
+            </tr>
         </>
     )
     

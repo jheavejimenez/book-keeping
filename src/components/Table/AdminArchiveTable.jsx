@@ -36,9 +36,16 @@ function AdminArchiveTable() {
     });
     const  notif2 = () => toast.success("File Unarchived", {
         position: "top-center",
+        autoClose: 3000,
+        onClose: () => {
+            setTimeout(() => {
+            window.location.reload(); // reload window after toast is closed
+            }, 3000);
+        },
 
     });
     const auditTrailCollectionRef = collection(db, "audittrail",);
+    const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);
     const titleTable = [
         "Select",
@@ -95,7 +102,7 @@ function AdminArchiveTable() {
                 });
                 setList(items);
                 setPage(page + 1);
-                console.log(items[0]);
+                // console.log(items[0]);
                
             };
             fetchNextData();
@@ -118,7 +125,7 @@ function AdminArchiveTable() {
             });
             setList(items); 
                 setPage(page - 1);
-                console.log(items[0]);
+                // console.log(items[0]);
         };
         fetchPrevData();
     }
@@ -201,11 +208,11 @@ function AdminArchiveTable() {
     }
     const filterExcel = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notif1();
             
         }
-        else {
-
+        else {  
+            
         const fetchPrevData = async () => {
             const q = query(collection(db, "archive"),orderBy("datearchive", "desc"));
             const querySnapshot = await getDocs(q)
@@ -216,7 +223,7 @@ function AdminArchiveTable() {
             });
             setList(items.filter((item) => item.file.includes(".xlsx")));
             document.getElementById("audit-table").hidden = true;
-            console.log(list.filter((item) => item.file.includes(".xlsx")));
+            // console.log(list.filter((item) => item.file.includes(".xlsx")));
                 
         };
         fetchPrevData();
@@ -226,7 +233,7 @@ function AdminArchiveTable() {
     }
     const filterPdf = () => {
         if (list.length === 0) {
-            alert("Thats all we have for now !")
+            notif1();
             
         }
         else {
@@ -241,7 +248,7 @@ function AdminArchiveTable() {
             });
             setList(items.filter((item) => item.file.includes(".pdf")));
             document.getElementById("audit-table").hidden = true;
-            console.log(list.filter((item) => item.file.includes(".pdf")));
+            // console.log(list.filter((item) => item.file.includes(".pdf")));
                 
         };
         fetchPrevData();
@@ -249,21 +256,104 @@ function AdminArchiveTable() {
 
         }
     }
-    
-
+    const checkFileExpire = async () => {
+        const q = query(collection(db, "archive"));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            console.log("No matching documents.");
+        }
+        else {
+            querySnapshot.forEach((doc) => {
+                data.push(doc.data());
+            });
+        }
+        
+    }
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(5 ? 6 : 5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(10 ? 11 : 10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(15 ? 16 : 15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "archive"),orderBy("docid", "desc"), limit(20 ? 21 : 20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items);
+        if (items.length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+      
     useEffect(() => {
+        checkFileExpire();
+       
+        // checkData();
         fetchData();
         // getArchiveData();
         const interval = setInterval(async () => {
-            // await getAllRequestDocumments();
-            // await getArchiveData();
+            // console.log(data);
+            data.forEach((item) => {
+                if (item.datearchive > item.archiveexpiry){
+                    deleteDoc(doc(db, "archive", item.docid));
+                }
+            })
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
     //console log selected row docid
-    console.log(selectedRow);
+    // console.log(selectedRow);
     
 
     return (
@@ -273,10 +363,10 @@ function AdminArchiveTable() {
                     
                 <div className={"mt-4"}>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                       limit5={fetchFiveData}
+                       limit10={fetchTenData}
+                       limit15={fetchFifteenData}
+                       limit20={fetchTwentyData}
                     /> results
                 </div>
 
@@ -307,7 +397,7 @@ function AdminArchiveTable() {
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " +
+                            <tr className={" text-sm font-bold font-inter tracking-wide text-left " +
                                 " text-gray-500 border-b border-gray-700 "}>
                                 {titleTable.map((item) => (
                                     <TableHeading

@@ -55,7 +55,7 @@ function RequestButton({ text }) {
         if (querySnapshot.empty) {
             console.log("No matching documents.");
         }
-        console.log(querySnapshot.docs[0].data().company)
+        // console.log(querySnapshot.docs[0].data().company)
         return querySnapshot.docs[0].data().company
         
     }
@@ -76,7 +76,7 @@ function RequestButton({ text }) {
             dueDate,
             reqby,
             purpose,
-            Status: "Pending",
+            Status: "New",
             Company: company,
             datereq: serverTimestamp()
         })

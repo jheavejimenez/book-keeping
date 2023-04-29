@@ -15,6 +15,12 @@ function OutgoingButton({ text }) {
     const notify = () => {
         toast.success("File Sent", {
             position: "top-center",
+            autoClose: 3000, // auto close after 5 seconds
+            onClose: () => {
+                setTimeout(() => {
+                window.location.reload(); // reload window after toast is closed
+                }, 3000);
+            },
     });
     }
 
@@ -72,7 +78,7 @@ function OutgoingButton({ text }) {
                         purpose,
                         date: serverTimestamp(),
                         fileexpiry: timestamp,
-                        // archived: false,
+                        location: "Incoming",
                        
                     });
 
@@ -163,7 +169,7 @@ function OutgoingButton({ text }) {
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
-                                        <XMarkIcon className=" -7 h-7" />
+                                        <XMarkIcon className=" w-7 h-7" />
                                     </button>
                                 </div>
                                 {/*body*/}
@@ -227,7 +233,7 @@ function OutgoingButton({ text }) {
                                             <div>
                                                 <label
                                                     htmlFor="purpose"
-                                                    className="block mb-1 text-base font-medium text-black"
+                                                    className="block mb-1 mt-3 text-base font-medium text-black"
                                                 >
                                                     Purpose
                                                 </label>

@@ -65,7 +65,7 @@ function AdminUsersTable() {
     const auditTrailCollectionRef = collection(db, "audittrail",);
    
     const fetchData = async () => {
-        const q = query(collection(db, "users"),orderBy("email", "asc"), limit(5));
+        const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
@@ -90,7 +90,7 @@ function AdminUsersTable() {
         }
         else {
             const fetchNextData = async () => {
-                const q = query(collection(db, "users"),orderBy("email", "desc"), limit(5), startAfter(item.email));
+                const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(5), startAfter(item.Llogin));
                 const querySnapshot = await getDocs(q)
                 const items = []
                 querySnapshot.forEach((doc) => {
@@ -98,7 +98,7 @@ function AdminUsersTable() {
 
                    
                 });
-                setList(items);
+                setList(items.filter((item) => item.email !== auth.user.email));
                 setPage(page + 1);
                 console.log(items[0]);
                
@@ -114,14 +114,14 @@ function AdminUsersTable() {
         }
         else {
         const fetchPrevData = async () => {
-            const q = query(collection(db, "users"),orderBy("email", "desc"), endBefore(item.email), limitToLast(5));
+            const q = query(collection(db, "users"),orderBy("Llogin", "desc"), endBefore(item.Llogin), limitToLast(5));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
                 items.push(doc.data())
                 
             });
-            setList(items); 
+            setList(items.filter((item) => item.email !== auth.user.email));
                 setPage(page - 1);
                 console.log(items[0]);
         };
@@ -150,7 +150,7 @@ function AdminUsersTable() {
                 activity : "Extended a user's contract:  " + item.email,
                 });
             setDoc(doc(db, "users", item.email), {
-                contractexpired: new Date(fiveYearsFromNow.getTime() + 5 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
+                contractexpired: new Date(fiveYearsFromNow.getTime() + 2 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
             }, { merge: true });
             notif("Contract extended successfully");
         });
@@ -170,6 +170,7 @@ function AdminUsersTable() {
                     });
                 setDoc(doc(db, "users", item.email), {
                     role: "bookkeeper",
+                    contractexpired: ""
                 }, { merge: true });
                 notif("Changed role successfully");
             }
@@ -177,7 +178,70 @@ function AdminUsersTable() {
         setSelectedRow([]);
     }
 
-    
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(5 ? 6 : 5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items.filter((item) => item.email !== auth.user.email));
+        if (items.filter((item) => item.email !== auth.user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(10 ? 11 : 10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items.filter((item) => item.email !== auth.user.email));
+        if (items.filter((item) => item.email !== auth.user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(15 ? 16 : 15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items.filter((item) => item.email !== auth.user.email));
+        if (items.filter((item) => item.email !== auth.user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "users"),orderBy("Llogin", "desc"), limit(20 ? 21 : 20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        setList(items.filter((item) => item.email !== auth.user.email));
+        if (items.filter((item) => item.email !== auth.user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
     
     useEffect(() => {
         // getAllRequestDocumments();
@@ -200,10 +264,10 @@ function AdminUsersTable() {
             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
                 <div className={"mt-4"}>
                     Show <FilterTableLimit 
-                        limit5={""}
-                        limit10={""}
-                        limit15={""}
-                        limit20={""}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                     /> results
                 </div>
 
@@ -223,7 +287,7 @@ function AdminUsersTable() {
                     <div className={"w-full overflow-hidden"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                            <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                             " text-gray-500 border-b border-gray-700 "}>
                                 {titleTable.map((item, index) => (
                                     <TableHeading

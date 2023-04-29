@@ -21,7 +21,7 @@ function Incoming() {
                 <Header />
 
                 {/*sidebar*/}
-                <Sidebar />
+                <Sidebar page={"incoming"} />
 
                 <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                         
@@ -33,7 +33,6 @@ function Incoming() {
                     />
 
                     
-
                     {/*client table*/}
                     <IncomingTable />
                 </div>

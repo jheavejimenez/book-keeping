@@ -7,8 +7,9 @@ function ArchiveTableRow({ DocID, File, Company, DateCreated, DateArchived,Check
             <td className={"px-4 py-3 text-sm"}>{DocID}</td>
             <td className={"px-4 py-3 text-sm"}>{File}</td>
             <td className={"px-4 py-3 text-sm"}>{Company}</td>
-            <td className={"px-4 py-3 text-sm"}>{DateCreated}</td>
             <td className={"px-4 py-3 text-sm"}>{DateArchived}</td>
+            <td className={"px-4 py-3 text-sm"}>{DateCreated}</td>
+            
         </tr>
     )
 }

@@ -25,7 +25,7 @@ function ClientDashboard() {
             <Header />
                 
             {/*sidebar*/}
-            <ClientSidebar />
+            <ClientSidebar page={"dashboard"} />
             
             <div className={"flex justify-between items-center h-14 bg-white header-right"}>
                     
@@ -35,12 +35,10 @@ function ClientDashboard() {
                 <Card
                     titleText={"To-Do / Reminders"}
                 />
-
-                {/*Tabs*/}
                 
                 
                 {/*client table*/}
-                <ClientRequestTable/>    
+                <ClientRequestTable />    
             </div>
 
 
