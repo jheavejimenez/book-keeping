@@ -112,7 +112,7 @@ function Searchpage() {
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                            <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                             " text-gray-500 border-b border-gray-700 " +
                             " bg-gray-100 dark:text-gray-400 "}>
                                 {titleTable.map((item) => (

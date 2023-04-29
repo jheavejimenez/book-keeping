@@ -287,7 +287,7 @@ function AdminUsersTable() {
                     <div className={"w-full overflow-hidden"}>
                         <table className={"w-full"}>
                             <thead>
-                            <tr className={" text-xs font-bold font-inter tracking-wide text-left " + 
+                            <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
                             " text-gray-500 border-b border-gray-700 "}>
                                 {titleTable.map((item, index) => (
                                     <TableHeading
