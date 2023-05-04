@@ -23,6 +23,7 @@ import SearchpageBookkeeping from "./pages/Search/SearchpageBookkeeper";
 import Archive from "./pages/Admin/Archive";
 import AdminLogin from "./pages/Auth/AdminLogin";
 import SearchpageAdmin from "./pages/Search/SearchpageAdmin";
+import BkprArchive from "./pages/Bookkeeper/BkprArchive";
 
 function App() {
   
@@ -31,7 +32,6 @@ function App() {
 
   return (
     <Routes>
-      
       <Route exact path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route exact path="/admin" element={<AdminLogin />} />
@@ -39,7 +39,6 @@ function App() {
       <Route path="/forgot-pass" element={<ForgotPassword />} />
       <Route path="error-404" element={<PageNotFound />} />
       <Route path="error-403" element={<ForbiddenPage />} />
-      
 
       <Route
         path="admin/dashboard"
@@ -97,7 +96,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-      
 
       <Route
         path="bookkeeper/incoming"
@@ -120,6 +118,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Outgoing />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="bookkeeper/archives"
+        element={
+          <ProtectedRoute>
+            <BkprArchive />
           </ProtectedRoute>
         }
       />
@@ -173,7 +179,6 @@ function App() {
       />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
-
   );
 }
 
