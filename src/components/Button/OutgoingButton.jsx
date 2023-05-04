@@ -157,20 +157,26 @@ function OutgoingButton({ text }) {
                             >
                                 {/*header*/}
                                 <div
-                                    className={" flex items-start justify-between pb-3 border-b " + 
-                                    " border-solid border-slate-200 rounded-t-md "}>
-                                    <h3 className="text-2xl font-semi-bold text-black">
-                                        Send a New File
-                                    </h3>
-                                    <button
-                                        className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " +
-                                        " float-right text-3xl leading-none font-semi-bold outline-none "+
-                                        " focus:outline-none "}
-                                        type="button"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        <XMarkIcon className=" w-7 h-7" />
-                                    </button>
+                                    className={" pb-3 border-b border-solid border-slate-200 rounded-t-md "}>
+                                    <div className="flex items-start justify-between">
+                                        <h3 className="text-2xl font-semi-bold text-black">
+                                            Send a New File
+                                        </h3>
+                                        <button
+                                            className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " +
+                                            " float-right text-3xl leading-none font-semi-bold outline-none "+
+                                            " focus:outline-none "}
+                                            type="button"
+                                            onClick={() => setShowModal(false)}
+                                        >
+                                            <XMarkIcon className=" w-7 h-7" />
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-600 text-sm">
+                                            Fields with <span style={{color: "red"}}> *</span> are required.
+                                        </p>
+                                    </div>
                                 </div>
                                 {/*body*/}
                                 <div className="space-y-6 px-6 lg:px-6 pb-4 sm:pb-6 xl:pb-6">
@@ -178,11 +184,11 @@ function OutgoingButton({ text }) {
                                         <fieldset className="pt-3">
                                             <div>
                                                 <label htmlFor="reqFrom" className={" text-black "}>
-                                                    Sent by:
+                                                    Sent by: <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <input id="reqFrom"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
-                                                    " pl-3 border-gray-400 font-normal " +
+                                                    " pl-3 border-gray-400 font-normal bg-blue-100 " +
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
@@ -192,7 +198,7 @@ function OutgoingButton({ text }) {
                                             </div>
                                             <div>
                                                 <label htmlFor="reqFrom" className={" text-black "}>
-                                                    Recipient
+                                                    Recipient <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <input id="reqFrom"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
@@ -205,7 +211,7 @@ function OutgoingButton({ text }) {
                                             </div>
                                             <div>
                                                 <label htmlFor="fileName" className={" text-black "}>
-                                                    Attach files
+                                                    Attach files <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <input id="fileName"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
@@ -235,7 +241,7 @@ function OutgoingButton({ text }) {
                                                     htmlFor="purpose"
                                                     className="block mb-1 mt-3 text-base font-medium text-black"
                                                 >
-                                                    Purpose
+                                                    Purpose <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <textarea
                                                     id="purpose" rows={1}

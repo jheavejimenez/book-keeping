@@ -122,20 +122,27 @@ function RequestButton({ text }) {
                                 "border-gray-400"}>
                                 {/*header*/}
                                 <div
-                                    className={" flex items-start justify-between pb-3 border-b border-solid " + 
+                                    className={"pb-3 border-b border-solid " + 
                                     " border-slate-200 rounded-t-md "}>
-                                    <h3 className="text-2xl font-semi-bold text-black">
-                                        Request a File
-                                    </h3>
-                                    <button
-                                        className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " + 
-                                        " float-right text-3xl leading-none font-semi-bold outline-none " + 
-                                        " focus:outline-none "}
-                                        type="button"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        <XMarkIcon className="w-7 h-7" />
-                                    </button>
+                                    <div className="flex items-start justify-between">
+                                        <h3 className="text-2xl font-semi-bold text-black">
+                                            Request a File
+                                        </h3>
+                                        <button
+                                            className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " + 
+                                            " float-right text-3xl leading-none font-semi-bold outline-none " + 
+                                            " focus:outline-none "}
+                                            type="button"
+                                            onClick={() => setShowModal(false)}
+                                        >
+                                            <XMarkIcon className="w-7 h-7" />
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-600 text-sm">
+                                            Fields with <span style={{color: "red"}}> *</span> are required.
+                                        </p>
+                                    </div>
                                 </div>
                                 {/*body*/}
                                 <div className="space-y-6 px-6 lg:px-6 pb-4 sm:pb-6 xl:pb-6">
@@ -159,7 +166,7 @@ function RequestButton({ text }) {
                                                 targetValue={(e) => setFile(e.target.value)}
                                             />
                                             <header>
-                                                <label  className={"text-black"}>Due Date</label>
+                                                <label  className={"text-black"}>Due Date <span style={{color: "red"}}> *</span></label>
                                             </header>
                                             <ReactDatePicker
                                                 
@@ -192,7 +199,7 @@ function RequestButton({ text }) {
                                                     htmlFor="purpose"
                                                     className="block mb-1 text-base font-medium text-black"
                                                 >
-                                                    Purpose
+                                                    Purpose <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <textarea
                                                     id="purpose" rows={2}
