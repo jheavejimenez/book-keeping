@@ -38,6 +38,12 @@ function OutgoingButton({ text }) {
             position: "top-center",
     });
     }
+    const Error1 = () => {
+        toast.error("File must be less than 10mb", {
+            position: "top-center",
+
+        });
+    }
 
     const [showModal, setShowModal] = useState(false);
     const [newEmail, setNewEmail] = useState('')
@@ -131,7 +137,7 @@ function OutgoingButton({ text }) {
             }
         
     };
-    console.log(scanResult)
+    // console.log(scanResult)
     
 
     return (
@@ -169,7 +175,7 @@ function OutgoingButton({ text }) {
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
-                                        <XMarkIcon className=" w-7 h-7" />
+                                        <XMarkIcon className=" -7 h-7" />
                                     </button>
                                 </div>
                                 {/*body*/}
@@ -214,9 +220,23 @@ function OutgoingButton({ text }) {
                                                     type={"file"}
                                                     accept={".pdf, .xls, .xlsx, .doc, .docx"}
                                                     ref={inputRef}
-                                                    onChange={(e) => setNewFile(inputRef.current.files[0])}
+                                                    onChange={(e) => {
+                                                        const selectedFile = inputRef.current.files[0];
+                                                        if (selectedFile && selectedFile.size > 10 * 1024 * 1024) {
+                                                          // If the selected file is larger than 10 MB, show an error message
+                                                          Error1();
+                                                          // Reset the input field
+                                                          inputRef.current.value = "";
+                                                        } else {
+                                                          // If the selected file is valid, set it as the new file
+                                                          setNewFile(selectedFile);
+                                                        }
+                                                      }}
                                                     
                                                 />
+                                                <p className={" text-gray-500 text-sm mb-3 "}>
+                                                    File size should be less than 10MB
+                                                </p>
                                                 <div className="flex space-x-2">
                                                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
                                                         onClick={handleScan}
@@ -233,7 +253,7 @@ function OutgoingButton({ text }) {
                                             <div>
                                                 <label
                                                     htmlFor="purpose"
-                                                    className="block mb-1 mt-3 text-base font-medium text-black"
+                                                    className="block mb-1 text-base font-medium text-black"
                                                 >
                                                     Purpose
                                                 </label>

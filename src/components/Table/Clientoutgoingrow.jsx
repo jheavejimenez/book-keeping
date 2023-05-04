@@ -228,6 +228,9 @@ const [scanResult, setScanResult] = useState(null);
                                                     
                                                 />
                                             </div>
+                                            <p className={" text-gray-500 text-sm mb-3 "}>
+                                                    File size should be less than 10MB
+                                                </p>
                                             <div className="flex space-x-2">
                                                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
                                                         onClick={handleScan}

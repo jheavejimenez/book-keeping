@@ -149,10 +149,15 @@ function AdminUsersTable() {
                 user : 'Admin',
                 activity : "Extended a user's contract:  " + item.email,
                 });
-            setDoc(doc(db, "users", item.email), {
-                contractexpired: new Date(fiveYearsFromNow.getTime() + 2 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
-            }, { merge: true });
-            notif("Contract extended successfully");
+            if (item.role === "bookkeeper") {
+                notif1("User is a book keeper");
+            }
+            else {
+                setDoc(doc(db, "users", item.email), {
+                    contractexpired: new Date(fiveYearsFromNow.getTime() + 2 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
+                }, { merge: true });
+                notif("Contract extended successfully");
+             }
         });
         setSelectedRow([]);
     }
