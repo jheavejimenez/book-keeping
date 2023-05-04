@@ -33,7 +33,8 @@ function ClientRequestTable() {
         "File",
         "Purpose",
         "Due Date",
-        "Date Requested"
+        "Date Requested",
+        "Action",
         
     ]
     // const getAllRequestDocumments = async () => {

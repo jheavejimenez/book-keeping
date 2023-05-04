@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Cog8ToothIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, EnvelopeIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxArrowDownIcon, Cog8ToothIcon, DocumentArrowDownIcon, DocumentArrowUpIcon, EnvelopeIcon, HomeIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import LinkToSidebar from "../Links/LinkToSidebar";
 import SidebarTitle from "../Title/SidebarTitle";
@@ -43,6 +43,13 @@ function Sidebar({page}) {
                             current={page === "outgoing"}
                             icon={<DocumentArrowUpIcon className="w-6 h-6" />} 
                             title={"Outgoing"} />
+                        
+                        {/* Archive */}
+                        <LinkToSidebar 
+                            link={"/bookkeeper/archives"} 
+                            current={page === "archives"}
+                            icon={<ArchiveBoxArrowDownIcon className="w-6 h-6" />} 
+                            title={"Archives"} />
 
                         <SidebarTitle title={"Settings"} />
 

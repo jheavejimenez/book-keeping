@@ -5,7 +5,7 @@ function RequestForm({titleFor, title, titleID, placeholderTitle, typeName, targ
     
     return (
         <div>
-            <label htmlFor={titleFor} className={"text-black"}>{title}</label>
+            <label htmlFor={titleFor} className={"text-black"}>{title}<span style={{color: "red"}}> *</span></label>
             <input id={titleID}
                 className={" border rounded-md mb-3 mt-1 h-10 pl-3 " +
                     " border-gray-400 font-normal placeholder-gray-400 " +
