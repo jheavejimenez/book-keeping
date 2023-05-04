@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RequestTableRow from "./RequestTableRow";
+import ClientRequestTableRow from "./ClientRequestTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { db } from "../../utils/Firebase";
@@ -261,7 +261,7 @@ function ClientRequestTable() {
                                 ) : null
                                 }
                                 {list.map?.((item) => (
-                                    <RequestTableRow
+                                    <ClientRequestTableRow
                                         Column1={item.documentId}
                                         Column2={item.reqby}
                                         Column3={item.file}
