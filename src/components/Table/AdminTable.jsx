@@ -12,6 +12,8 @@ import { Table, Button, ButtonGroup } from "react-bootstrap";
 import FilterDropdown from "../Button/FilterDropdown";
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import SearchDocs from "../Navigation/SearchDocs";
+import DateRange from "../Button/DateRange";
 
 function AdminTable(props) {
     const { user } = useAuth();
@@ -233,26 +235,35 @@ useEffect(() => {
 
     return (
         <>
-        <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-            <div>
-                Show <FilterTableLimit 
-                    limit5={fetchFiveData}
-                    limit10={fetchTenData}
-                    limit15={fetchFifteenData}
-                    limit20={fetchTwentyData}
-                /> results
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+
+                <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                    <div className="mt-2">
+                        Show <FilterTableLimit 
+                            limit5={fetchFiveData}
+                            limit10={fetchTenData}
+                            limit15={fetchFifteenData}
+                            limit20={fetchTwentyData}
+                        /> results
+                    </div>
+                    
+                    <div className={"mt-2 ml-4"}>
+                        Filter by Type <FilterDropdown 
+                            excel={filterExcel}
+                            pdf={filterPdf}
+                            all={fetchData}
+                        />
+                    </div>
+
+                    <div className="mt-2 ml-4">
+                        <DateRange />
+                    </div>
+                </div>   
+                <div className="pt-7 mt-6">
+                    <SearchDocs />
+                </div>
             </div>
-            
-            <div className={"ml-4"}>
-                Filter by Type <FilterDropdown 
-                    excel={filterExcel}
-                    pdf={filterPdf}
-                    all={fetchData}
-                />
-            </div>
-            
-           
-        </div>   
+
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>

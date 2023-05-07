@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import DeleteButton from "../Button/DeleteButton";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import SearchDocs from "../Navigation/SearchDocs";
+import DateRange from "../Button/DateRange";
 
 
 
@@ -360,26 +362,8 @@ function AdminArchiveTable() {
         <>
             <ToastContainer />
             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-                    
-                <div className={"mt-4"}>
-                    Show <FilterTableLimit 
-                       limit5={fetchFiveData}
-                       limit10={fetchTenData}
-                       limit15={fetchFifteenData}
-                       limit20={fetchTwentyData}
-                    /> results
-                </div>
-
-                <div className={"mt-4 ml-4"}>
-                    Filter by Type <FilterDropdown 
-                        excel={filterExcel}
-                        pdf={filterPdf}
-                        all={fetchData}
-                    />
-                </div>
-
                 <div>
-                    <button onClick={unArchive} className={" px-4 py-2.5 mt-4 ml-6 text-white bg-blue-500 rounded-lg " + 
+                    <button onClick={unArchive} className={" px-4 py-2.5 mt-4 text-white bg-blue-500 rounded-lg " + 
                     " hover:bg-blue-600 w-full font-medium text-sm "}>Unarchive</button>
                 </div>
 
@@ -390,9 +374,38 @@ function AdminArchiveTable() {
                         title={"Delete file"}
                     />
                 </div>
-                
             </div>
-            <div className={"mt-10 mx-4"}>
+
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+
+                <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-3 mt-2 text-sm font-medium tracking-wide"}> 
+                    <div>
+                        Show <FilterTableLimit 
+                            limit5={fetchFiveData}
+                            limit10={fetchTenData}
+                            limit15={fetchFifteenData}
+                            limit20={fetchTwentyData}
+                        /> results
+                    </div>
+                    
+                    <div className={"ml-4"}>
+                        Filter by Type <FilterDropdown 
+                            excel={filterExcel}
+                            pdf={filterPdf}
+                            all={fetchData}
+                        />
+                    </div>
+
+                    <div className="ml-4">
+                        <DateRange />
+                    </div>
+                </div>   
+                <div className="pt-3 mt-4">
+                    <SearchDocs />
+                </div>
+            </div>
+
+            <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>

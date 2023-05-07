@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import DateRange from "../Button/DateRange";
 
 
 function AdminAuditTable() {
@@ -392,7 +393,9 @@ function AdminAuditTable() {
                         deleteUser={filterDeleteUser}
                     />
                 </div>
-                
+                <div className="mt-4 ml-4">
+                    <DateRange />
+                </div>
             </div>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
