@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import DateRange from "../Button/DateRange";
 
 
 function ClientRequestTable() {
@@ -224,7 +225,9 @@ function ClientRequestTable() {
                     />
                 </div>
 
-                <div className="mt-4">
+            </div>
+            <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                <div className="mt-2">
                     Show <FilterTableLimit 
                         limit5={fetchFiveData}
                         limit10={fetchTenData}
@@ -232,7 +235,12 @@ function ClientRequestTable() {
                         limit20={fetchTwentyData}
                     /> results
                 </div>
+
+                <div className="mt-2 ml-4">
+                    <DateRange />
+                </div>
             </div>
+
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
