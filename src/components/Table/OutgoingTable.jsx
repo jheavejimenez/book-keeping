@@ -13,6 +13,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import DateRange from "../Button/DateRange";
+import SearchDocs from "../Navigation/SearchDocs";
 
 function OutgoingTable() {
     const notify = () => toast.warning("No more documents to show", {
@@ -324,25 +326,35 @@ function OutgoingTable() {
     return (
         <>
             <ToastContainer />
-            <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                <div>
-                    Show <FilterTableLimit 
-                        limit5={fetchFiveData}
-                        limit10={fetchTenData}
-                        limit15={fetchFifteenData}
-                        limit20={fetchTwentyData}
-                    /> results
-                </div>
+            <div className="flex flex-col sm:flex-row items-center justify-between">
 
-                <div className={"ml-4"}>
-                    Filter by Type <FilterDropdown 
-                        excel={filterExcel}
-                        pdf={filterPdf}
-                        all={fetchData}
-                    />
+                <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                    <div>
+                        Show <FilterTableLimit 
+                            limit5={fetchFiveData}
+                            limit10={fetchTenData}
+                            limit15={fetchFifteenData}
+                            limit20={fetchTwentyData}
+                        /> results
+                    </div>
+                    
+                    <div className={"ml-4"}>
+                        Filter by Type <FilterDropdown 
+                            excel={filterExcel}
+                            pdf={filterPdf}
+                            all={fetchData}
+                        />
+                    </div>
+
+                    <div className="ml-4">
+                        <DateRange />
+                    </div>
+                </div>   
+                <div className="pt-7 mt-4">
+                    <SearchDocs />
                 </div>
-            
-            </div>   
+            </div>
+
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>

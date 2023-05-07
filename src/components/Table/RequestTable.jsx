@@ -11,6 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
 import { useAuth } from "../../hooks/useAuth";
+import DateRange from "../Button/DateRange";
+import SearchDocs from "../Navigation/SearchDocs";
 
 function RequestTable() {
     const notify = () => toast.warning("No more documents to show", {
@@ -193,17 +195,28 @@ function RequestTable() {
     return (
         <>
             <ToastContainer />
-            <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}>
-                <div>
-                    Show <FilterTableLimit 
-                        limit5={fetchFiveData}
-                        limit10={fetchTenData}
-                        limit15={fetchFifteenData}
-                        limit20={fetchTwentyData}
-                    /> results
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+
+                <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                    <div>
+                        Show <FilterTableLimit 
+                            limit5={fetchFiveData}
+                            limit10={fetchTenData}
+                            limit15={fetchFifteenData}
+                            limit20={fetchTwentyData}
+                        /> results
+                    </div>
+
+                    <div className="ml-4">
+                        <DateRange />
+                    </div>
+                </div>   
+                <div className="pt-7 mt-4">
+                    <SearchDocs />
                 </div>
             </div>
-            <div className={"mt-10 mx-4"}>
+
+            <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
