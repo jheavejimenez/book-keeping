@@ -329,7 +329,7 @@ function OutgoingTable() {
             <div className="flex flex-col sm:flex-row items-center justify-between">
 
                 <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                    <div>
+                    <div className="mt-4">
                         Show <FilterTableLimit 
                             limit5={fetchFiveData}
                             limit10={fetchTenData}
@@ -338,7 +338,7 @@ function OutgoingTable() {
                         /> results
                     </div>
                     
-                    <div className={"ml-4"}>
+                    <div className={"mt-4 ml-4"}>
                         Filter by Type <FilterDropdown 
                             excel={filterExcel}
                             pdf={filterPdf}
@@ -346,11 +346,11 @@ function OutgoingTable() {
                         />
                     </div>
 
-                    <div className="ml-4">
+                    <div className="mt-4 ml-4">
                         <DateRange />
                     </div>
                 </div>   
-                <div className="pt-7 mt-4">
+                <div className="pt-7 mt-8">
                     <SearchDocs />
                 </div>
             </div>
