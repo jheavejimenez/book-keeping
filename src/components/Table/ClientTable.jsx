@@ -3,7 +3,7 @@ import TableRow from "./TableRow";
 import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
-import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt} from "firebase/firestore";
+import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt,where} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
 import { useQuery } from "react-query";
@@ -15,6 +15,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import DateRange from "../Button/DateRange";
+import SearchDocs from "../Navigation/SearchDocs";
 
 function ClientTable(props) {
     const notify = () => toast.warning("No more documents to show", {
@@ -43,6 +46,9 @@ function ClientTable(props) {
    
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+    const [search, setSearch] = useState("");
 
     
     const fetchData = async () => {
@@ -238,6 +244,52 @@ function ClientTable(props) {
         
     };
 
+    const dataRange = async () => {
+        if (list.length === 0) {
+            notify();
+        }
+        else {
+            const startDate = new Date(start)
+            const endDate = new Date(end)
+
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"), where("datereq", ">=", startDate), where("datereq", "<=", endDate));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            });
+            setList(items);
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = true;
+            }
+        }
+    }
+
+    const searchDoc = async () => {
+        if (search === "") {
+            notify();
+        }
+        else {
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            });
+            setList(items.filter((item) => item.file.toLowerCase().includes(search.toLowerCase())));
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = true;
+            }
+        }
+    }
+
+            
 useEffect(() => {
     fetchData();
    
@@ -254,25 +306,81 @@ useEffect(() => {
     return (
         <>
             <ToastContainer />
-            <div className={"flex flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                <div>
-                    Show <FilterTableLimit 
-                        limit5={fetchFiveData}
-                        limit10={fetchTenData}
-                        limit15={fetchFifteenData}
-                        limit20={fetchTwentyData}
-                    /> results
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+
+                <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                    <div className="mt-2">
+                        Show <FilterTableLimit 
+                            limit5={fetchFiveData}
+                            limit10={fetchTenData}
+                            limit15={fetchFifteenData}
+                            limit20={fetchTwentyData}
+                        /> results
+                    </div>
+                    
+                    <div className={"mt-2 ml-4"}>
+                        Filter by Type <FilterDropdown 
+                            excel={filterExcel}
+                            pdf={filterPdf}
+                            all={fetchData}
+                        />
+                    </div>
+
+                    <div className="mt-2 ml-4">
+                                <div class="flex flex-col items-center sm:flex-col lg:flex-row">
+                        <div class="relative">
+                            <input 
+                            name="start"
+                            type="date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                            placeholder="Select date start"
+                            onChange={(e) => setStart(e.target.value)}
+                            
+                            />
+                        </div>
+                        <div class="mx-4 text-gray-500">to</div>
+                        <div class="relative">
+                        <input 
+                            name="start"
+                            type="date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                            placeholder="Select date start"
+                            onChange={(e) => setEnd(e.target.value)}
+                            
+                            />
+                            
+                        </div>
+                        <div class="relative">
+                        <button onClick={dataRange} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Search
+                        </button>
+                            
+                        </div>
+
+                        </div>
+                    </div>
+                </div>   
+                <div className="pt-7 mt-6">
+                        <div className="flex justify-end">
+                    <div className={"bg-white rounded flex items-center w-52 max-w-xl mr-4 p-2 shadow-sm" + 
+                        "border border-gray-300"}
+                    >
+                        
+                        <button onClick={searchDoc} className={"outline-none focus:outline-none"}>
+                            <MagnifyingGlassIcon className={"w-5 h-5 text-gray-500"} />
+                            
+                        </button>
+                        
+                        <input type="search" name="" id="" placeholder="Search documents" className={"w-full pl-3" + 
+                            "text-sm text-black outline-none focus:outline-none bg-transparent"} 
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
+                    </div>
                 </div>
-                
-                <div className={"ml-4"}>
-                    Filter by Type <FilterDropdown 
-                        excel={filterExcel}
-                        pdf={filterPdf}
-                        all={fetchData}
-                    />
-                </div>
+            </div>
             
-            </div>   
+
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>

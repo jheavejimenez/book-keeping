@@ -21,7 +21,7 @@ function Header() {
         if (querySnapshot.empty) {
             console.log('No matching documents.');
         }
-        console.log(querySnapshot.docs[0].data().role)
+        // console.log(querySnapshot.docs[0].data().role)
         return querySnapshot.docs[0].data().role
         
     }
@@ -30,7 +30,7 @@ function Header() {
 
     const handleSearch = async (email) => {
         const role = await getUserRole(email)
-        console.log(email)
+        // console.log(email)
         
 
         if (role === "client") {
