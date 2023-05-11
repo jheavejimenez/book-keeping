@@ -51,6 +51,8 @@ function ClientIncomingTable() {
 
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
 
    
     const fetchData = async () => {
@@ -276,7 +278,30 @@ const checkFileExpire = async () => {
         }
         
     };
+    
+    const dataRange = async () => {
+        if (list.length === 0) {
+            notif();
+        }
+        else {
+            const startDate = new Date(start)
+            const endDate = new Date(end)
 
+            const q = query(collection(db, "incoming"),orderBy("datereq", "desc"), where("date", ">=", startDate), where("date", "<=", endDate));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            });
+            setList(items.filter((item) => item.email === user.email));
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = true;
+            }
+        }
+    }
 
     useEffect(() => {
     //    getAllRequestDocumments();
@@ -313,10 +338,41 @@ const checkFileExpire = async () => {
                     />
                 </div>
 
-                <div className="mt-4 ml-4">
-                    <DateRange />
-                </div>
-            </div>
+                <div className="mt-2 ml-4">
+                                <div class="flex flex-col items-center sm:flex-col lg:flex-row">
+                        <div class="relative">
+                            <input 
+                            name="start"
+                            type="date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                            placeholder="Select date start"
+                            onChange={(e) => setStart(e.target.value)}
+                            
+                            />
+                        </div>
+                        <div class="mx-4 text-gray-500">to</div>
+                        <div class="relative">
+                        <input 
+                            name="start"
+                            type="date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                            placeholder="Select date start"
+                            onChange={(e) => setEnd(e.target.value)}
+                            
+                            />
+                            
+                        </div>
+                        <div class="relative">
+                        <button onClick={dataRange} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Search
+                        </button>
+                            
+                        </div>
+
+                        </div>
+                    </div>
+                </div>   
+
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
