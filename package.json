@@ -14,7 +14,7 @@
     "dayjs": "^1.11.5",
     "eslint": "8.22.0",
     "firebase": "^9.10.0",
-    "firebase-admin": "^11.3.0",
+    "firebase-admin": "^11.4.1",
     "formik": "^2.2.9",
     "jquery": "^3.6.1",
     "json-server": "^0.17.1",

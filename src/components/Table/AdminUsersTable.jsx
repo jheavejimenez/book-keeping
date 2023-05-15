@@ -60,7 +60,7 @@ function AdminUsersTable() {
        
     // }
     const now = new Date();
-    let fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
+    let twoYearsFromNow = new Date(now.getTime() + 2 * 365 * 24 * 60 * 60 * 1000);
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
     const auditTrailCollectionRef = collection(db, "audittrail",);
@@ -155,7 +155,7 @@ function AdminUsersTable() {
             }
             else {
                 setDoc(doc(db, "users", item.email), {
-                    contractexpired: new Date(fiveYearsFromNow.getTime() + 2 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
+                    contractexpired: new Date(twoYearsFromNow.getTime()  + 2 * 365 * 24 * 60 * 60 * 1000), 
                 }, { merge: true });
                 notif("Contract extended successfully");
              }
@@ -262,7 +262,7 @@ function AdminUsersTable() {
         };
     }, []);
     // console.log(selectedRow);
-    console.log(fiveYearsFromNow);
+    console.log(twoYearsFromNow);
     
     return (
         <>

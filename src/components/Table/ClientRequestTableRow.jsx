@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Column6 }) {
+function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Column6,recipient }) {
     const Success = () => {
         toast.success("File Sent", {
             position: "top-center",
@@ -40,7 +40,7 @@ function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Co
         });
     }
     const [showModal, setShowModal] = useState(false);
-    const [newEmail, setNewEmail] = useState('')
+    const [newEmail, setNewEmail] = useState(Column2);
     const {user} = useAuth()
     const [newFile, setNewFile] = useState(null)
     const [purpose, setPurpose] = useState('')
@@ -135,6 +135,8 @@ function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Co
             }
         
     };
+    
+    
     // console.log(scanResult);
     // console.log(scanStatus);
 
@@ -214,8 +216,8 @@ function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Co
                                                         " pl-3 border-gray-400 font-normal " +
                                                         " placeholder-gray-400 text-black text-base w-full "}
                                                         type="email"
-                                                        placeholder="Enter recipient email"
-                                                        onChange={(e) => setNewEmail(e.target.value)}
+                                                        value={Column2}
+                                                        disabled
                                                     />
                                                 </div>
                                                 <div>
