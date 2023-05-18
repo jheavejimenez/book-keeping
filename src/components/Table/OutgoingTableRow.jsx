@@ -385,7 +385,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                                                 </label>
                                                 <input id="sentBy"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
-                                                    " pl-3 border-gray-400 font-normal " +
+                                                    " pl-3 border-gray-400 font-normal bg-blue-100" +
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
