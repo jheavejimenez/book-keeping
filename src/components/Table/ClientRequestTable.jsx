@@ -64,10 +64,10 @@ function ClientRequestTable({tab}) {
         });
         setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
         if (items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed")) {
-            document.getElementById("audit-table").hidden = true;
+            document.getElementById("audit-table").hidden = false;
         }
         else {
-            document.getElementById("audit-table").hidden = false;
+            document.getElementById("audit-table").hidden = true;
         }
         
     }
