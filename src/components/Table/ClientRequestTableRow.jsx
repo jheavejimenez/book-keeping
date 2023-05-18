@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Column6,recipient }) {
+function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Column6, recipient }) {
     const Success = () => {
         toast.success("File Sent", {
             position: "top-center",
@@ -37,6 +37,11 @@ function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Co
         toast.error("no file selected", {
             position: "top-center",
 
+        });
+    }
+    const Error1 = () => {
+        toast.error("File must be less than 10MB", {
+            position: "top-center",
         });
     }
     const [showModal, setShowModal] = useState(false);
@@ -199,7 +204,7 @@ function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Co
                                                     </label>
                                                     <input id="reqFrom"
                                                         className={" border rounded-md mb-3 mt-1 h-10 " + 
-                                                        " pl-3 border-gray-400 font-normal " +
+                                                        " pl-3 border-gray-400 font-normal bg-blue-100 " +
                                                         " placeholder-gray-400 text-black text-base w-full "}
                                                         type="email"
                                                         placeholder="Enter recipient email"
@@ -231,9 +236,23 @@ function ClientRequestTableRow({ Column1, Column2, Column3, Column4, Column5, Co
                                                         type={"file"}
                                                         accept={".pdf, .xls, .xlsx, .doc, .docx"}
                                                         ref={inputRef}
-                                                        onChange={(e) => setNewFile(inputRef.current.files[0])}
+                                                        onChange={(e) => {
+                                                            const selectedFile = inputRef.current.files[0];
+                                                            if (selectedFile && selectedFile.size > 10 * 1024 * 1024) {
+                                                                // If the selected file is larger than 10 MB, show an error message
+                                                                Error1();
+                                                                // Reset the input field
+                                                                inputRef.current.value = "";
+                                                            } else {
+                                                                // If the selected file is valid, set it as the new file
+                                                                setNewFile(selectedFile);
+                                                            }
+                                                        }}
                                                         
                                                     />
+                                                    <p className={"text-gray-500 text-sm mb-3"}>
+                                                        File size should be less than 10MB
+                                                    </p>
                                                     <div className="flex space-x-2">
                                                         <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
                                                             onClick={handleScan}

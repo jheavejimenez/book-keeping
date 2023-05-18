@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ClientRequestTableRow from "./ClientRequestTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { db } from "../../utils/Firebase";
@@ -8,14 +7,14 @@ import { useAuth } from "../../hooks/useAuth";
 import dayjs from "dayjs";
 import Tabs from "../../components/Navigation/Tabs";
 import { ToastContainer, toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
 import DateRange from "../Button/DateRange";
+import ClientDoneTableRow from "./ClientDoneTableRow";
 
 
-function ClientRequestTable({tab}) {
+function ClientDoneTable({tab}) {
     const notify = () => toast.warning("No more documents to show", {
         position: "top-center",
         autoClose: 3000, // auto close after 5 seconds
@@ -35,7 +34,6 @@ function ClientRequestTable({tab}) {
         "Purpose",
         "Due Date",
         "Date Requested",
-        "Action",
         
     ]
     // const getAllRequestDocumments = async () => {
@@ -53,13 +51,24 @@ function ClientRequestTable({tab}) {
     const [end, setEnd] = useState("");
 
     
-    const fetchData = async () => {
+    const done = async () => {
         const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
             items.push(doc.data())
-
+            
+            
+        });
+        setList(items.filter((item) => item.reqfrom === user.email && item.Status === "Completed"));
+    }
+    const fetchFiveData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+            
             
         });
         setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
@@ -70,8 +79,58 @@ function ClientRequestTable({tab}) {
             document.getElementById("audit-table").hidden = false;
         }
         
-    }
-
+    };
+    const fetchTenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+            
+            
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    const fetchFifteenData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(15));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+            
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+    };
+    const fetchTwentyData = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(20));
+        const querySnapshot = await getDocs(q)
+        const items = []
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())   
+        });
+        setList(items.filter((item) => item.sentby === user.email));
+        if (items.filter((item) => item.sentby === user.email).length === 0) {
+            document.getElementById("audit-table").hidden = true;
+        }
+        else {
+            document.getElementById("audit-table").hidden = true;
+        }
+        
+    };
+    
     const showNextPage = ({item}) => {
         if (list.length === 0) {
             notify();
@@ -118,75 +177,6 @@ function ClientRequestTable({tab}) {
     }
 }
 
-    const fetchFiveData = async () => {
-        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
-        const querySnapshot = await getDocs(q)
-        const items = []
-        querySnapshot.forEach((doc) => {
-            items.push(doc.data())
-
-            
-        });
-        setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
-        if (items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed")) {
-            document.getElementById("audit-table").hidden = true;
-        }
-        else {
-            document.getElementById("audit-table").hidden = false;
-        }
-        
-    };
-    const fetchTenData = async () => {
-        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
-        const querySnapshot = await getDocs(q)
-        const items = []
-        querySnapshot.forEach((doc) => {
-                items.push(doc.data())
-                
-                
-        });
-        setList(items.filter((item) => item.sentby === user.email));
-        if (items.filter((item) => item.sentby === user.email).length === 0) {
-            document.getElementById("audit-table").hidden = true;
-        }
-        else {
-            document.getElementById("audit-table").hidden = true;
-        }
-        
-    };
-    const fetchFifteenData = async () => {
-        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(15));
-        const querySnapshot = await getDocs(q)
-        const items = []
-        querySnapshot.forEach((doc) => {
-                items.push(doc.data())
-     
-        });
-        setList(items.filter((item) => item.sentby === user.email));
-        if (items.filter((item) => item.sentby === user.email).length === 0) {
-            document.getElementById("audit-table").hidden = true;
-        }
-        else {
-            document.getElementById("audit-table").hidden = true;
-        }
-    };
-    const fetchTwentyData = async () => {
-        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(20));
-        const querySnapshot = await getDocs(q)
-        const items = []
-        querySnapshot.forEach((doc) => {
-                items.push(doc.data())   
-        });
-        setList(items.filter((item) => item.sentby === user.email));
-        if (items.filter((item) => item.sentby === user.email).length === 0) {
-            document.getElementById("audit-table").hidden = true;
-        }
-        else {
-            document.getElementById("audit-table").hidden = true;
-        }
-        
-    };
-
     const dataRange = async () => {
         if (list.length === 0) {
             notify();
@@ -213,7 +203,7 @@ function ClientRequestTable({tab}) {
 
     useEffect(() => {
         // getAllRequestDocumments();
-        fetchData();
+        done();
         const interval = setInterval(async () => {
             // await  fetchData();
         }, 5000)
@@ -312,7 +302,7 @@ function ClientRequestTable({tab}) {
                                 ) : null
                                 }
                                 {list.map?.((item) => (
-                                    <ClientRequestTableRow
+                                    <ClientDoneTableRow
                                         Column1={item.documentId}
                                         Column2={item.reqby}
                                         Column3={item.file}
@@ -340,4 +330,4 @@ function ClientRequestTable({tab}) {
     )
 }
 
-export default ClientRequestTable;
+export default ClientDoneTable;

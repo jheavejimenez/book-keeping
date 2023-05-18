@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import ClientSidebar from "../../components/Navigation/ClientSidebar";
-import ClientRequestTable from "../../components/Table/ClientRequestTable";
 import Header from "../../components/Navigation/Header";
 import Tabs from "../../components/Navigation/Tabs";
 import Card from "../../components/Cards/Card";
 import { useAuth } from "../../hooks/useAuth";
 import ForbiddenPage from "../Error/ForbiddenPage";
+import ClientDoneTable from "../../components/Table/ClientDoneTable";
 
-function ClientDashboard() {
+function ClientDashboardv2() {
 
 
     const { user } = useAuth();
@@ -38,7 +38,7 @@ function ClientDashboard() {
                 
                 
                 {/*client table*/}
-                <ClientRequestTable tab={"request"} />    
+                <ClientDoneTable tab={"done"} />    
             </div>
 
 
@@ -54,4 +54,4 @@ function ClientDashboard() {
 }
 
 
-export default ClientDashboard;
+export default ClientDashboardv2;
