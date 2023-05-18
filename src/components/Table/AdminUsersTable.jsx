@@ -10,6 +10,8 @@ import { useAuth } from "../../hooks/useAuth";
 import dayjs from "dayjs";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import { nanoid } from "nanoid";
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
@@ -279,17 +281,22 @@ function AdminUsersTable() {
 
                 <button onClick={extendContract} className={" px-4 py-1 mt-4 text-white bg-blue-500" + 
                     " rounded-lg hover:bg-blue-600 inline-flex items-center"} >
-                    Extend Contract <QuestionMarkCircleIcon className="w-5 h-5 ml-1" 
-                    data-tooltip-target="tooltip-light" data-tooltip-style="light" />
+                    Extend Contract 
+                    <a data-tooltip-id="user-tooltip"><QuestionMarkCircleIcon className="w-5 h-5 ml-1" /></a>
+                    <Tooltip id="user-tooltip">
+                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <span>Return account access to clients</span>
+                            <span>and adds another 2 years based on</span>
+                            <span>the contract made with MindWorx</span>
+                            <span>Bookkeeping Services.</span>
+                        </div>
+                    </Tooltip>
                 </button>
-                <div id="tooltip-light" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip">
-                    Return account access to clients
-                    and adds another 2 years based on
-                    the contract made with MindWorx
-                    Bookkeeping Services.
-                    <div className="tooltip-arrow" data-popper-arrow></div>
-                </div>
-                <button onClick={changeRole} className={" px-4 py-1 mt-4 text-white bg-blue-400 rounded-lg hover:bg-blue-600"}>Change Role</button>
+                <a data-tooltip-id="user-tooltip" data-tooltip-html="Change role to<br />bookkeeper only">
+                    <button onClick={changeRole} className={" px-4 py-1 mt-4 text-white bg-blue-400 rounded-lg hover:bg-blue-600"}>
+                        Change Role
+                    </button>
+                </a>
 
                 <div className="flex justify-end w-3/5">
                     <DeleteButton 

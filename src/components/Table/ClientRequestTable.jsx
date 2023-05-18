@@ -31,7 +31,7 @@ function ClientRequestTable({tab}) {
     const titleTable = [
         "ReqID",
         "Requested By",
-        "File",
+        "Requested File",
         "Purpose",
         "Due Date",
         "Date Requested",

@@ -30,7 +30,7 @@ function ClientDoneTable({tab}) {
     const titleTable = [
         "ReqID",
         "Requested By",
-        "File",
+        "Submitted File",
         "Purpose",
         "Due Date",
         "Date Requested",
