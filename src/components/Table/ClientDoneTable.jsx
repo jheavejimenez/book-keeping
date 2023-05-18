@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Clientoutgoingrow from "./Clientoutgoingrow";
-import dayjs from "dayjs";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
-import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt, setDoc, writeBatch, where, doc} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
+import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, where} from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth";
-import FilterDropdown from "../Button/FilterDropdown";
+import dayjs from "dayjs";
+import Tabs from "../../components/Navigation/Tabs";
 import { ToastContainer, toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
 import DateRange from "../Button/DateRange";
+import ClientDoneTableRow from "./ClientDoneTableRow";
 
-function ClientOutgoingTable() {
-    const { user } = useAuth();
+
+function ClientDoneTable({tab}) {
     const notify = () => toast.warning("No more documents to show", {
         position: "top-center",
         autoClose: 3000, // auto close after 5 seconds
@@ -26,23 +25,23 @@ function ClientOutgoingTable() {
         },
 
     });
-
+    const { user } = useAuth();
     const [data, setData] = useState([]);
     const titleTable = [
-        "DocID",
-        "Recipient",
-        "File",
-        "Date Sent",
-        "Action",
+        "ReqID",
+        "Requested By",
+        "Submitted File",
+        "Purpose",
+        "Due Date",
+        "Date Requested",
         
     ]
-    
     // const getAllRequestDocumments = async () => {
-    //     const snapshot = await getDocs(collection(db, "outgoing"));
+    //     const snapshot = await getDocs(collection(db, "request"));
     //     if (user) {
-    //         setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.sentby === user.email));
+    //         setData(snapshot.docs.map((doc) => doc.data()).filter((item) => item.reqfrom === user.email));
     //     }
-    
+        
 
     //     console.log(data);
     // }
@@ -51,195 +50,44 @@ function ClientOutgoingTable() {
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
 
-  
-        
-        
-    const fetchData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
-        if (user) {
-            const querySnapshot = await getDocs(q)
-            const items = []
-           querySnapshot.forEach((doc) => {
-                    items.push(doc.data())
-                     
-                     
-            });
-            setList(items.filter((item) => item.sentby === user.email));
-            if (items.filter((item) => item.sentby === user.email).length === 0) {
-                document.getElementById("audit-table").hidden = true;
-            }
-            else {
-                document.getElementById("audit-table").hidden = false;
-            }
-        }
-         
-    };
-
     
-
-    const showNextPage = ({item}) => {
-        if (list.length === 0) {
-            notify();
-         
-        }
-        else {
-            const fetchNextData = async () => {
-                const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5), startAfter(item.date));
-                if (user) {
-                    const querySnapshot = await getDocs(q)
-                    const items = []
-                    querySnapshot.forEach((doc) => {
-                        items.push(doc.data())
-        
-                    });
-                    setList(items.filter((item) => item.sentby === user.email));
-                    setPage(page + 1);
-                    console.log(items);
-                }
-               
-            };
-            fetchNextData();
-        }
-    }
-
-    const showPrevPage = ({item}) => {
-        if (list.length === 0) {
-            notify();
-          
-        }
-        else {
-        const fetchPrevData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("date", "desc"),endBefore(item.date), limitToLast(5) );
-            if (user) {
-                const querySnapshot = await getDocs(q)
-                const items = []
-                querySnapshot.forEach((doc) => {
-                    items.push(doc.data())
-                });
-                setList(items.filter((item) => item.sentby === user.email));
-                console.log();
-                setPage(page - 1);
-                console.log(items);
-            }
-        };
-        fetchPrevData();
-    }
-    }
-    const filterExcel = () => {
-        if (list.length === 0) {
-            notify();
-            
-        }
-        else {
-
-        const fetchPrevData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("date", "desc"));
-            const querySnapshot = await getDocs(q)
-            const items = []
-            querySnapshot.forEach((doc) => {
-                items.push(doc.data())
-                
-            });
-            setList(items.filter((item) => item.file.includes(".xlsx") && item.sentby === user.email));
-            document.getElementById("audit-table").hidden = true;
-            console.log(list.filter((item) => item.file.includes(".xlsx")));
-                
-        };
-        fetchPrevData();
-
-
-        }
-    }
-    const filterPdf = () => {
-        if (list.length === 0) {
-            notify();
-            
-        }
-        else {
-
-        const fetchPrevData = async () => {
-            const q = query(collection(db, "outgoing"),orderBy("date", "desc"));
-            const querySnapshot = await getDocs(q)
-            const items = []
-            querySnapshot.forEach((doc) => {
-                items.push(doc.data())
-                
-            });
-            setList(items.filter((item) => item.file.includes(".pdf") && item.sentby === user.email));
-            document.getElementById("audit-table").hidden = true;
-            console.log(list.filter((item) => item.file.includes(".pdf")));
-                
-        };
-        fetchPrevData();
-
-
-        }
-    }
-    const getLastlogin = async (email) => {
-        const q = query(collection(db, "users"), where("email", "==", user.email));
+    const done = async () => {
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
             items.push(doc.data())
             
-        }
-        );
-        // console.log(items[0].Llogin);
-        return items[0].Llogin;
-
-    };
-
-    const checkFileExpire = async () => {
-        const lastlogin = await getLastlogin(user.email);
-        const batch = writeBatch(db);
-        const q = query(collection(db, "outgoing"), where("sentby", "==", user.email));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            console.log("No matching documents.");
-        }
-        else {
-            const docRef = doc(db, "archive", querySnapshot.docs[0].id);
-            for (let i = 0; i < querySnapshot.docs.length; i++) {
-                const doc = querySnapshot.docs[i];
-                const data = doc.data(); 
-                if (lastlogin > data.fileexpiry) {
-                    batch.set(docRef, data);
-                    batch.delete(doc.ref);
-                    await batch.commit();
-                }
-            }
-        }
-
-
-       
-        
+            
+        });
+        setList(items.filter((item) => item.reqfrom === user.email && item.Status === "Completed"));
     }
     const fetchFiveData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(5));
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
-                items.push(doc.data())
-                
-                
+            items.push(doc.data())
+            
+            
         });
-        setList(items.filter((item) => item.sentby === user.email));
-        if (items.filter((item) => item.sentby === user.email).length === 0) {
+        setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
+        if (items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed")) {
             document.getElementById("audit-table").hidden = true;
         }
         else {
-            document.getElementById("audit-table").hidden = true;
+            document.getElementById("audit-table").hidden = false;
         }
         
     };
     const fetchTenData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(10));
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
-                items.push(doc.data())
-                
-                
+            items.push(doc.data())
+            
+            
         });
         setList(items.filter((item) => item.sentby === user.email));
         if (items.filter((item) => item.sentby === user.email).length === 0) {
@@ -251,12 +99,12 @@ function ClientOutgoingTable() {
         
     };
     const fetchFifteenData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(15));
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(15));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
-                items.push(doc.data())
-     
+            items.push(doc.data())
+            
         });
         setList(items.filter((item) => item.sentby === user.email));
         if (items.filter((item) => item.sentby === user.email).length === 0) {
@@ -267,11 +115,11 @@ function ClientOutgoingTable() {
         }
     };
     const fetchTwentyData = async () => {
-        const q = query(collection(db, "outgoing"),orderBy("date", "desc"), limit(20));
+        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(20));
         const querySnapshot = await getDocs(q)
         const items = []
         querySnapshot.forEach((doc) => {
-                items.push(doc.data())   
+            items.push(doc.data())   
         });
         setList(items.filter((item) => item.sentby === user.email));
         if (items.filter((item) => item.sentby === user.email).length === 0) {
@@ -282,6 +130,52 @@ function ClientOutgoingTable() {
         }
         
     };
+    
+    const showNextPage = ({item}) => {
+        if (list.length === 0) {
+            notify();
+            
+        }
+        else {
+            const fetchNextData = async () => {
+                const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5), startAfter(item.datereq));
+                const querySnapshot = await getDocs(q)
+                const items = []
+                querySnapshot.forEach((doc) => {
+                    items.push(doc.data())
+
+                    
+                });
+                setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
+                setPage(page + 1);
+                
+            };
+            fetchNextData();
+        }
+    }
+
+    const showPrevPage = ({item}) => {
+        if (list.length === 0) {
+            notify();
+            
+        }
+        else {
+
+        const fetchPrevData = async () => {
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"),endBefore(item.datereq), limitToLast(5) );
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+                
+            });
+            setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
+                setPage(page - 1);
+                
+        };
+        fetchPrevData();
+    }
+}
 
     const dataRange = async () => {
         if (list.length === 0) {
@@ -291,7 +185,7 @@ function ClientOutgoingTable() {
             const startDate = new Date(start)
             const endDate = new Date(end)
 
-            const q = query(collection(db, "outgoing"),orderBy("date", "desc"), where("date", ">=", startDate), where("date", "<=", endDate));
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"), where("datereq", ">=", startDate), where("datereq", "<=", endDate));
             const querySnapshot = await getDocs(q)
             const items = []
             querySnapshot.forEach((doc) => {
@@ -308,26 +202,37 @@ function ClientOutgoingTable() {
     }
 
     useEffect(() => {
-        fetchData();
-        getLastlogin();
-        // checkFileExpire();
+        // getAllRequestDocumments();
+        done();
         const interval = setInterval(async () => {
-            
-            // await fetchData();
-            await checkFileExpire();
+            // await  fetchData();
         }, 5000)
         return () => {
             clearInterval(interval); // need to clear the interval when the component unmounts to prevent memory leaks
         };
     }, []);
-    console.log(data);
-
+    // console.log(data);
 
     return (
         <>
             <ToastContainer />
+            <div className="mt-4 mx-4 pt-2">
+                <div className={"flex flex-row border-b border-gray-400"}>
+                    <Tabs 
+                        path={"/dashboard"}
+                        name={"Requested"}
+                        current={tab === "request"}
+                    />
+                    <Tabs 
+                        path={"/dashboard/done"}
+                        name={"Done"}
+                        current={tab === "done"}
+                    />
+                </div>
+
+            </div>
             <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
-                <div className="mt-4">
+                <div className="mt-2">
                     Show <FilterTableLimit 
                         limit5={fetchFiveData}
                         limit10={fetchTenData}
@@ -335,16 +240,8 @@ function ClientOutgoingTable() {
                         limit20={fetchTwentyData}
                     /> results
                 </div>
-                
-                <div className={"mt-4 ml-4"}>
-                    Filter by Type <FilterDropdown 
-                        excel={filterExcel}
-                        pdf={filterPdf}
-                        all={fetchData}
-                    />
-                </div>
 
-                <div className="mt-4 ml-4">
+                <div className="mt-2 ml-4">
                     <div className="flex flex-col items-center sm:flex-col lg:flex-row">
                         <div className="relative">
                             <input 
@@ -376,13 +273,14 @@ function ClientOutgoingTable() {
                     </div>
                 </div>
             </div>   
+
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
                         <table className={"w-full"}>
                             <thead>
                                 <tr className={" text-sm font-bold font-inter tracking-wide text-left " + 
-                                " text-gray-500 border-b dark:border-gray-700 " +
+                                " text-gray-500 border-b dark:border-gray-700 " + 
                                 " bg-gray-50 dark:text-gray-400 dark:bg-gray-100 "}>
                                     {titleTable.map((item) => (
                                         <TableHeading
@@ -395,7 +293,7 @@ function ClientOutgoingTable() {
                             <tbody className={"font-inter divide-y"}>
                                 {list.length === 0 ? ( 
                                     <tr className={"text-sm font-medium text-center text-gray-900"}>
-                                        <td colSpan={5} className={"pt-10"}>
+                                        <td colSpan={8} className={"pt-10"}>
                                             <NoDataFound 
                                                 text={"No Data"}
                                             />
@@ -404,13 +302,16 @@ function ClientOutgoingTable() {
                                 ) : null
                                 }
                                 {list.map?.((item) => (
-                                    <Clientoutgoingrow
-                                        Column1={item.docid}
-                                        Column2={item.email}
-                                        Column3={item.filename}
-                                        Column4={dayjs.unix(item.date?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                    <ClientDoneTableRow
+                                        Column1={item.documentId}
+                                        Column2={item.reqby}
+                                        Column3={item.file}
+                                        Column4={item.purpose}
+                                        Column5={dayjs.unix(item.dueDate?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
+                                        Column6={dayjs.unix(item.datereq?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                     />)
                                 )}
+                            
                             </tbody>
                         </table>
                     </div>
@@ -422,11 +323,11 @@ function ClientOutgoingTable() {
                             page={page}
                             
                         />
-                    </div>    
+                    </div>  
                 </div>
             </div>
         </>
     )
 }
 
-export default ClientOutgoingTable;
+export default ClientDoneTable;

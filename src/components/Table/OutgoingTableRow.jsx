@@ -354,20 +354,26 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                             >
                                 {/*header*/}
                                 <div
-                                    className={" flex items-start justify-between pb-3 border-b " + 
-                                    " border-solid border-slate-200 rounded-t-md "}>
-                                    <h3 className="text-2xl font-semi-bold text-black">
-                                        Edit Sent File
-                                    </h3>
-                                    <button
-                                        className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " +
-                                        " float-right text-3xl leading-none font-semi-bold outline-none "+
-                                        " focus:outline-none "}
-                                        type="button"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        <XMarkIcon className=" -7 h-7" />
-                                    </button>
+                                    className={" pb-3 border-b border-solid border-slate-200 rounded-t-md "}>
+                                    <div className="flex items-start justify-between">
+                                        <h3 className="text-2xl font-semi-bold text-black">
+                                            Edit Sent File
+                                        </h3>
+                                        <button
+                                            className={" p-1 ml-auto text-gray-400 hover:text-black opacity-50 " +
+                                            " float-right text-3xl leading-none font-semi-bold outline-none "+
+                                            " focus:outline-none "}
+                                            type="button"
+                                            onClick={() => setShowModal(false)}
+                                        >
+                                            <XMarkIcon className=" -7 h-7" />
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-600 text-sm">
+                                            Fields with <span style={{color: "red"}}> *</span> are required.
+                                        </p>
+                                    </div>
                                 </div>
                                 {/*body*/}
                                 <div className="space-y-6 px-6 lg:px-6 pb-4 sm:pb-6 xl:pb-6">
@@ -375,11 +381,11 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                                         <fieldset className="pt-3">
                                             <div>
                                                 <label htmlFor="sentBy" className={" text-black "}>
-                                                    Sent by:
+                                                    Sent by: <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <input id="sentBy"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
-                                                    " pl-3 border-gray-400 font-normal " +
+                                                    " pl-3 border-gray-400 font-normal bg-blue-100" +
                                                     " placeholder-gray-400 text-black text-base w-full "}
                                                     type="email"
                                                     placeholder="Enter recipient email"
@@ -389,7 +395,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                                             </div>
                                             <div>
                                                 <label htmlFor="recipient" className={" text-black "}>
-                                                    Recipient
+                                                    Recipient <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <input id="recipient"
 
@@ -404,7 +410,7 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                                             </div>
                                             <div>
                                                 <label htmlFor="fileName" className={" text-black "}>
-                                                    Attach files
+                                                    Attach files <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <input id="fileName"
                                                     className={" border rounded-md mb-3 mt-1 h-10 " + 
@@ -417,6 +423,9 @@ function OutgoingTableRow({Column1, Column2, Column3, Column4,Column5}) {
                                                     
                                                 />
                                             </div>
+                                            <p className={" text-gray-500 text-sm mb-3 "}>
+                                                    File size should be less than 10MB
+                                            </p>
                                             <div className="flex space-x-2">
                                                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
                                                         onClick={handleScan}

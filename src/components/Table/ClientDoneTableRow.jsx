@@ -1,7 +1,6 @@
 import React from 'react'
 
-function RequestTableRow({ Column1, Column2, Column3, Column4, Column5, Column6 }) {
-
+function ClientDoneTableRow({ Column1, Column2, Column3, Column4, Column5, Column6 }) {
     return (
         <tr className={"hover:bg-gray-300 text-black"}>
             <td className={"px-4 py-3 text-sm"}>{Column1}</td>
@@ -14,4 +13,4 @@ function RequestTableRow({ Column1, Column2, Column3, Column4, Column5, Column6 
     )
 }
 
-export default RequestTableRow;
+export default ClientDoneTableRow;

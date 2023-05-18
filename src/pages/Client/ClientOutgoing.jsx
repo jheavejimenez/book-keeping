@@ -30,7 +30,7 @@ function ClientOutgoing () {
             <div className={"h-full ml-14 mt-14 mb-10 md:ml-64"}>
                 <Card
                     titleText={"Outgoing Documents"}
-                    button={<ClientOutgoingButton text={"Send Files"}/>}
+                    // button={<ClientOutgoingButton text={"Send Files"}/>}
                 />
 
                 

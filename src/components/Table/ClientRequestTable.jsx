@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import RequestTableRow from "./RequestTableRow";
+import ClientRequestTableRow from "./ClientRequestTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import { db } from "../../utils/Firebase";
-import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, startAt} from "firebase/firestore";
+import { collection, getDocs, limit, limitToLast, orderBy, query, startAfter, endBefore, where} from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth";
 import dayjs from "dayjs";
 import Tabs from "../../components/Navigation/Tabs";
@@ -12,9 +12,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import DateRange from "../Button/DateRange";
 
 
-function ClientRequestTable() {
+function ClientRequestTable({tab}) {
     const notify = () => toast.warning("No more documents to show", {
         position: "top-center",
         autoClose: 3000, // auto close after 5 seconds
@@ -30,10 +31,11 @@ function ClientRequestTable() {
     const titleTable = [
         "ReqID",
         "Requested By",
-        "File",
+        "Requested File",
         "Purpose",
         "Due Date",
-        "Date Requested"
+        "Date Requested",
+        "Action",
         
     ]
     // const getAllRequestDocumments = async () => {
@@ -47,6 +49,8 @@ function ClientRequestTable() {
     // }
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
 
     
     const fetchData = async () => {
@@ -60,10 +64,10 @@ function ClientRequestTable() {
         });
         setList(items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed"));
         if (items.filter((item) => item.reqfrom === user.email && item.Status !== "Completed")) {
-            document.getElementById("audit-table").hidden = true;
+            document.getElementById("audit-table").hidden = false;
         }
         else {
-            document.getElementById("audit-table").hidden = false;
+            document.getElementById("audit-table").hidden = true;
         }
         
     }
@@ -114,17 +118,6 @@ function ClientRequestTable() {
     }
 }
 
-    const done = async () => {
-        const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(10));
-        const querySnapshot = await getDocs(q)
-        const items = []
-        querySnapshot.forEach((doc) => {
-            items.push(doc.data())
-
-            
-        });
-        setList(items.filter((item) => item.reqfrom === user.email && item.Status === "Completed"));
-    }
     const fetchFiveData = async () => {
         const q = query(collection(db, "request"),orderBy("datereq", "desc"), limit(5));
         const querySnapshot = await getDocs(q)
@@ -194,7 +187,29 @@ function ClientRequestTable() {
         
     };
 
+    const dataRange = async () => {
+        if (list.length === 0) {
+            notify();
+        }
+        else {
+            const startDate = new Date(start)
+            const endDate = new Date(end)
 
+            const q = query(collection(db, "request"),orderBy("datereq", "desc"), where("datereq", ">=", startDate), where("datereq", "<=", endDate));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            });
+            setList(items.filter((item) => item.sentby === user.email));
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = true;
+            }
+        }
+    }
 
     useEffect(() => {
         // getAllRequestDocumments();
@@ -214,16 +229,20 @@ function ClientRequestTable() {
             <div className="mt-4 mx-4 pt-2">
                 <div className={"flex flex-row border-b border-gray-400"}>
                     <Tabs 
-                        path={fetchData}
+                        path={"/dashboard"}
                         name={"Requested"}
+                        current={tab === "request"}
                     />
                     <Tabs 
-                        path={done}
+                        path={"/dashboard/done"}
                         name={"Done"}
+                        current={tab === "done"}
                     />
                 </div>
 
-                <div className="mt-4">
+            </div>
+            <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-7 mt-4 text-sm font-medium tracking-wide"}> 
+                <div className="mt-2">
                     Show <FilterTableLimit 
                         limit5={fetchFiveData}
                         limit10={fetchTenData}
@@ -231,7 +250,40 @@ function ClientRequestTable() {
                         limit20={fetchTwentyData}
                     /> results
                 </div>
-            </div>
+
+                <div className="mt-2 ml-4">
+                    <div className="flex flex-col items-center sm:flex-col lg:flex-row">
+                        <div className="relative">
+                            <input 
+                                name="start"
+                                type="date"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                                placeholder="Select date start"
+                                onChange={(e) => setStart(e.target.value)}
+                            />
+                        </div>
+                        <div className="mx-4 text-gray-500">to</div>
+                        <div className="relative">
+                            <input 
+                                name="start"
+                                type="date"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                                placeholder="Select date start"
+                                onChange={(e) => setEnd(e.target.value)}
+                            />
+                            
+                        </div>
+                        <div className="relative">
+                            <button onClick={dataRange} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Search
+                            </button>
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>   
+
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
                     <div className={"w-full overflow-x-auto"}>
@@ -260,7 +312,7 @@ function ClientRequestTable() {
                                 ) : null
                                 }
                                 {list.map?.((item) => (
-                                    <RequestTableRow
+                                    <ClientRequestTableRow
                                         Column1={item.documentId}
                                         Column2={item.reqby}
                                         Column3={item.file}

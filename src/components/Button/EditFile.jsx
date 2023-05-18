@@ -9,8 +9,8 @@ function EditFile({ text, recipient, file, editFile }) {
     const [setPurpose] = useState('')
     const inputRef = useRef()
 
-    console.log(recipient)
-    console.log(file)
+    // console.log(recipient)
+    // console.log(file)
 
 
     return (
@@ -22,7 +22,6 @@ function EditFile({ text, recipient, file, editFile }) {
             >
                 <PencilSquareIcon className=" w-6 h-6 text-blue-500 group-hover:text-blue-700 "/>
             </button>
-
             {showModal && (
                 <>
                     <div className={" justify-center items-center flex overflow-x-hidden overflow-y-auto " +
@@ -48,7 +47,7 @@ function EditFile({ text, recipient, file, editFile }) {
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                     >
-                                        <XMarkIcon className=" w-7 h-7" />
+                                        <XMarkIcon className=" -7 h-7" />
                                     </button>
                                 </div>
                                 {/*body*/}

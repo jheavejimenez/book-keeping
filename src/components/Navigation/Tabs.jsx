@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Tabs ({path, attr, name, current}) {
+function Tabs ({path, name, current}) {
     return (
         <>
            
@@ -12,12 +12,13 @@ function Tabs ({path, attr, name, current}) {
                 <ul className={"flex flex-wrap w-full md:w-max"}>
                     <li className="mr-1" aria-current={current ? "page" : undefined}>
 
-                        <Link to="" 
-                            onClick={path}
-                            className={`${current && 'border-blue-500 text-blue-500'} text-black
-                            inline-block p-4 rounded-t-lg border-b-2 border-transparent
+                        <Link to={path}
+                            className={`${current && "border-blue-500 text-blue-500"}
+                            inline-block p-4 rounded-t-xl border-b-2 w-24
                             text-gray-600 hover:border-blue-500 hover:text-blue-500`}>
-                            {name}
+                            <p>
+                                {name}
+                            </p>
                         </Link>
                     </li>
                     {/* <li className="mr-1">

@@ -9,13 +9,14 @@ firebase. */
  "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import { useAuth } from "../../hooks/useAuth";
-import { query , limit , startAfter, endBefore,limitToLast } from "firebase/firestore";
+import { query , limit , startAfter, endBefore,limitToLast,where } from "firebase/firestore";
 import FilterDropdownAction from "../Button/FilterDropdownAction";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import DateRange from "../Button/DateRange";
 
 
 function AdminAuditTable() {
@@ -43,7 +44,8 @@ function AdminAuditTable() {
 
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
-
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
    
     const fetchData = async () => {
         const q = query(collection(db, "audittrail"),orderBy("time", "desc"), limit(5));
@@ -354,8 +356,29 @@ function AdminAuditTable() {
         
     };
 
+    const dataRange = async () => {
+        if (list.length === 0) {
+            notif();
+        }
+        else {
+            const startDate = new Date(start)
+            const endDate = new Date(end)
 
-
+            const q = query(collection(db, "audittrail"),orderBy("time", "desc"), where("time", ">=", startDate), where("time", "<=", endDate));
+            const querySnapshot = await getDocs(q)
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            });
+            setList(items);
+            if (items.length === 0) {
+                document.getElementById("audit-table").hidden = true;
+            }
+            else {
+                document.getElementById("audit-table").hidden = true;
+            }
+        }
+    }
 
     useEffect(() => {
         // getAllRequestDocumments();
@@ -392,7 +415,39 @@ function AdminAuditTable() {
                         deleteUser={filterDeleteUser}
                     />
                 </div>
-                
+                <div className="mt-4 ml-4">
+                    <div className="flex flex-col items-center sm:flex-col lg:flex-row">
+                        <div className="relative">
+                            <input 
+                                name="start"
+                                type="date"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                                placeholder="Select date start"
+                                onChange={(e) => setStart(e.target.value)}
+                            
+                            />
+                        </div>
+                        <div className="mx-4 text-gray-500">to</div>
+                        <div className="relative">
+                            <input 
+                                name="start"
+                                type="date"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
+                                placeholder="Select date start"
+                                onChange={(e) => setEnd(e.target.value)}
+                            
+                            />
+                            
+                        </div>
+                        <div className="relative">
+                            <button onClick={dataRange} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Search
+                            </button>
+                            
+                        </div>
+
+                    </div>
+                </div>
             </div>
             <div className={"mt-10 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import ArchiveTableRow from "./ArchiveTableRow";
+import BkprArchiveTableRow from "./BkprArchiveTableRow";
 import TableHeading from "./TableHeading";
 import Pagination from "../Pagination/Pagination";
 import axios from "axios";
-import { collection, getDocs, orderBy, serverTimestamp, deleteDoc,doc,query,limit,startAfter,endBefore,limitToLast,setDoc, where} from "firebase/firestore";
+import { collection, getDocs, orderBy, serverTimestamp, deleteDoc,doc,query,limit,startAfter,endBefore,limitToLast,setDoc,where} from "firebase/firestore";
 import { db } from "../../utils/Firebase";
 import dayjs from "dayjs";
 import { useAuth } from "../../hooks/useAuth";
@@ -15,13 +15,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import NoDataFound from "../../pages/Error/NoDataFound";
 import DeleteButton from "../Button/DeleteButton";
 import FilterTableLimit from "../Button/FilterTableLimit";
-import SearchDocs from "../Navigation/SearchDocs";
 import DateRange from "../Button/DateRange";
+import SearchDocs from "../Navigation/SearchDocs";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 
-
-function AdminArchiveTable() {
+function BkprArchiveTable() {
     const  notif = () => toast.success("File has been Deleted", {
         position: "top-center",
 
@@ -50,14 +49,11 @@ function AdminArchiveTable() {
     const auditTrailCollectionRef = collection(db, "audittrail",);
     const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);
-    const [start, setStart] = useState("");
-    const [end, setEnd] = useState("");
-    const [search, setSearch] = useState("");
     const titleTable = [
         "Select",
         "DocID",
         "File",
-        "Company",
+        "Recipient",
         "Date Created",
         "Date Archived",
         
@@ -69,6 +65,9 @@ function AdminArchiveTable() {
     // }
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+    const [search, setSearch] = useState("");
 
    
     const fetchData = async () => {
@@ -80,7 +79,7 @@ function AdminArchiveTable() {
 
             
         });
-        setList(items);
+        setList(items.filter((items)=> items.sentby === user.user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -106,7 +105,7 @@ function AdminArchiveTable() {
 
                    
                 });
-                setList(items);
+                setList(items.filter((items)=> items.sentby === user.user.email));
                 setPage(page + 1);
                 // console.log(items[0]);
                
@@ -129,7 +128,7 @@ function AdminArchiveTable() {
                 items.push(doc.data())
                 
             });
-            setList(items); 
+            setList(items.filter((items)=> items.sentby === user.user.email));
                 setPage(page - 1);
                 // console.log(items[0]);
         };
@@ -193,25 +192,6 @@ function AdminArchiveTable() {
         });
     }
 
-    
-
-    const deleteSelectRow = async() => {
-        selectedRow.forEach((item) => {
-            setDoc(doc(auditTrailCollectionRef, item.docid), {
-                time : serverTimestamp(),
-                user : 'Admin',
-                activity : "Deleted a file:  " + item.filename,
-            });
-            deleteDoc(doc(db, "archive", item.docid));
-            notif();
-            setTimeout(() => {
-                window.location.reload();
-            }
-            , 3000);
-        });
-        
-        setSelectedRow([]);
-    }
     const filterExcel = () => {
         if (list.length === 0) {
             notif1();
@@ -282,7 +262,7 @@ function AdminArchiveTable() {
         querySnapshot.forEach((doc) => {
             items.push(doc.data())
         });
-        setList(items);
+        setList(items.filter((items)=> items.sentby === user.user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -298,7 +278,7 @@ function AdminArchiveTable() {
         querySnapshot.forEach((doc) => {
             items.push(doc.data())
         });
-        setList(items);
+        setList(items.filter((items)=> items.sentby === user.user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -314,7 +294,7 @@ function AdminArchiveTable() {
         querySnapshot.forEach((doc) => {
             items.push(doc.data())
         });
-        setList(items);
+        setList(items.filter((items)=> items.sentby === user.user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -330,7 +310,7 @@ function AdminArchiveTable() {
         querySnapshot.forEach((doc) => {
             items.push(doc.data())
         });
-        setList(items);
+        setList(items.filter((items)=> items.sentby === user.user.email));
         if (items.length === 0) {
             document.getElementById("audit-table").hidden = true;
         }
@@ -339,7 +319,6 @@ function AdminArchiveTable() {
         }
         
     };
-
     const dataRange = async () => {
         if (list.length === 0) {
             notif1();
@@ -354,7 +333,7 @@ function AdminArchiveTable() {
             querySnapshot.forEach((doc) => {
                 items.push(doc.data())
             });
-            setList(items);
+            setList(items.filter((items)=> items.sentby === user.user.email));
             if (items.length === 0) {
                 document.getElementById("audit-table").hidden = true;
             }
@@ -375,7 +354,7 @@ function AdminArchiveTable() {
             querySnapshot.forEach((doc) => {
                 items.push(doc.data())
             });
-            setList(items.filter((item) => item.file.toLowerCase().includes(search.toLowerCase())));
+            setList(items.filter((item) => item.filename.toLowerCase().includes(search.toLowerCase()) && item.sentby === user.user.email)); 
             if (items.length === 0) {
                 document.getElementById("audit-table").hidden = true;
             }
@@ -410,33 +389,25 @@ function AdminArchiveTable() {
     return (
         <>
             <ToastContainer />
-            <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
+            <div className={"flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}>
                 <div>
                     <button onClick={unArchive} className={" px-4 py-2.5 mt-4 text-white bg-blue-500 rounded-lg " + 
                     " hover:bg-blue-600 w-full font-medium text-sm "}>Unarchive</button>
                 </div>
-
-                <div>
-                    <DeleteButton 
-                        attr={deleteSelectRow}
-                        warning={"You may be deleting user data. After you delete this, it can't be recovered."}
-                        title={"Delete file"}
-                    />
-                </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between">
-
+            <div className={"flex flex-col sm:flex-row items-center justify-between"}>
                 <div className={"flex flex-col sm:flex-row lg:flex-row px-7 pt-3 mt-2 text-sm font-medium tracking-wide"}> 
+                        
                     <div>
                         Show <FilterTableLimit 
-                            limit5={fetchFiveData}
-                            limit10={fetchTenData}
-                            limit15={fetchFifteenData}
-                            limit20={fetchTwentyData}
+                        limit5={fetchFiveData}
+                        limit10={fetchTenData}
+                        limit15={fetchFifteenData}
+                        limit20={fetchTwentyData}
                         /> results
                     </div>
-                    
+
                     <div className={"ml-4"}>
                         Filter by Type <FilterDropdown 
                             excel={filterExcel}
@@ -445,16 +416,15 @@ function AdminArchiveTable() {
                         />
                     </div>
 
-                    <div className={"ml-4"}>
-                        <div className={"flex flex-col items-center sm:flex-col lg:flex-row"}>
-                            <div className={"relative"}>
+                    <div className="ml-4">
+                        <div className="flex flex-col items-center sm:flex-col lg:flex-row">
+                            <div className="relative">
                                 <input 
                                     name="start"
                                     type="date"
-                                    className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
                                     placeholder="Select date start"
                                     onChange={(e) => setStart(e.target.value)}
-                                
                                 />
                             </div>
                             <div className="mx-4 text-gray-500">to</div>
@@ -462,24 +432,22 @@ function AdminArchiveTable() {
                                 <input 
                                     name="start"
                                     type="date"
-                                    className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 p-2.5"
                                     placeholder="Select date start"
                                     onChange={(e) => setEnd(e.target.value)}
-                                    
                                 />
                                 
                             </div>
                             <div className="relative">
-                                <button onClick={dataRange} className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
+                                <button onClick={dataRange} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                     Search
                                 </button>
-                                
                             </div>
 
                         </div>
                     </div>
                 </div>   
-                <div className="pt-7 mt-2">
+                <div className="pt-7 ">
                     <div className="flex justify-end">
                         <div className={"bg-white rounded flex items-center w-52 max-w-xl mr-4 p-2 shadow-sm" + 
                             "border border-gray-300"}
@@ -498,6 +466,9 @@ function AdminArchiveTable() {
                     </div>
                 </div>
             </div>
+
+
+           
 
             <div className={"mt-4 mx-4"}>
                 <div className={"w-full overflow-hidden rounded-lg shadow-xs"}>
@@ -527,7 +498,7 @@ function AdminArchiveTable() {
                             }
                             {list.map?.((item) => (
                                 
-                                    <ArchiveTableRow
+                                    <BkprArchiveTableRow
                                         Checkbox={
                                             <div> 
                                                 <input type="checkbox" className={"form-checkbox h-5 w-5 text-gray-600"} checked={selectedRow.includes(item)}
@@ -542,7 +513,7 @@ function AdminArchiveTable() {
                                         }
                                         DocID={item.docid}
                                         File={item.filename}
-                                        Company={item.company}
+                                        Recipient={item.email}
                                         DateCreated={dayjs.unix(item.date?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                         DateArchived={dayjs.unix(item.datearchive?.seconds).format("hh:mm:ss A, DD/MM/YYYY")}
                                     />
@@ -566,4 +537,4 @@ function AdminArchiveTable() {
     )
 }
 
-export default AdminArchiveTable;
+export default BkprArchiveTable;

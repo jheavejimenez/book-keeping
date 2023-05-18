@@ -10,9 +10,12 @@ import { useAuth } from "../../hooks/useAuth";
 import dayjs from "dayjs";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import { nanoid } from "nanoid";
 import NoDataFound from "../../pages/Error/NoDataFound";
 import FilterTableLimit from "../Button/FilterTableLimit";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 
 
 
@@ -59,7 +62,7 @@ function AdminUsersTable() {
        
     // }
     const now = new Date();
-    let fiveYearsFromNow = new Date(now.getTime() + 5 * 365 * 24 * 60 * 60 * 1000);
+    let twoYearsFromNow = new Date(now.getTime() + 2 * 365 * 24 * 60 * 60 * 1000);
     const [page, setPage] = useState(1);
     const [list, setList] = useState([]);
     const auditTrailCollectionRef = collection(db, "audittrail",);
@@ -149,10 +152,15 @@ function AdminUsersTable() {
                 user : 'Admin',
                 activity : "Extended a user's contract:  " + item.email,
                 });
-            setDoc(doc(db, "users", item.email), {
-                contractexpired: new Date(fiveYearsFromNow.getTime() + 2 * 365 * 24 * 60 * 60 * 1000), // add 5 years to current date
-            }, { merge: true });
-            notif("Contract extended successfully");
+            if (item.role === "bookkeeper") {
+                notif1("User is a book keeper");
+            }
+            else {
+                setDoc(doc(db, "users", item.email), {
+                    contractexpired: new Date(twoYearsFromNow.getTime()  + 2 * 365 * 24 * 60 * 60 * 1000), 
+                }, { merge: true });
+                notif("Contract extended successfully");
+             }
         });
         setSelectedRow([]);
     }
@@ -256,13 +264,13 @@ function AdminUsersTable() {
         };
     }, []);
     // console.log(selectedRow);
-    console.log(fiveYearsFromNow);
+    console.log(twoYearsFromNow);
     
     return (
         <>
             <ToastContainer />
             <div className={" flex flex-row px-7 pt-4 mt-4 text-sm font-medium tracking-wide gap-4"}> 
-                <div className={"mt-4"}>
+                <div className={"mt-4 w-48"}>
                     Show <FilterTableLimit 
                         limit5={fetchFiveData}
                         limit10={fetchTenData}
@@ -271,8 +279,24 @@ function AdminUsersTable() {
                     /> results
                 </div>
 
-                <button onClick={extendContract} className={"ml-5 px-4 py-1 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"}>Extend Contract</button>
-                <button onClick={changeRole} className={" px-4 py-1 mt-4 text-white bg-blue-400 rounded-lg hover:bg-blue-600"}>Change Role</button>
+                <button onClick={extendContract} className={" px-4 py-1 mt-4 text-white bg-blue-500" + 
+                    " rounded-lg hover:bg-blue-600 inline-flex items-center"} >
+                    Extend Contract 
+                    <a data-tooltip-id="user-tooltip"><QuestionMarkCircleIcon className="w-5 h-5 ml-1" /></a>
+                    <Tooltip id="user-tooltip">
+                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <span>Return account access to clients</span>
+                            <span>and adds another 2 years based on</span>
+                            <span>the contract made with MindWorx</span>
+                            <span>Bookkeeping Services.</span>
+                        </div>
+                    </Tooltip>
+                </button>
+                <a data-tooltip-id="user-tooltip" data-tooltip-html="Change role to<br />bookkeeper only">
+                    <button onClick={changeRole} className={" px-4 py-1 mt-4 text-white bg-blue-400 rounded-lg hover:bg-blue-600"}>
+                        Change Role
+                    </button>
+                </a>
 
                 <div className="flex justify-end w-3/5">
                     <DeleteButton 
