@@ -24,7 +24,6 @@ import Archive from "./pages/Admin/Archive";
 import AdminLogin from "./pages/Auth/AdminLogin";
 import SearchpageAdmin from "./pages/Search/SearchpageAdmin";
 import BkprArchive from "./pages/Bookkeeper/BkprArchive";
-import ClientDoneTable from "./components/Table/ClientRequestTable";
 import ClientDashboardv2 from "./pages/Client/ClientDashboardv2";
 
 function App() {
